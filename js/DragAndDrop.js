@@ -1,64 +1,65 @@
-let dragSrcEl = null;
-let dragList = null;
-let dropList = null;
+function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
+  let dragSrcEl = null
+  let dragList = null
+  let dropList = null
 
-function handleDragStart(e) {
-  dragSrcEl = this;
-  dragList = e.target.closest(".todo-list");
-  e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData("text/html", this.outerHTML);
-  this.classList.add("dragElem");
-}
-
-function handleDragOver(e) {
-  if (e.preventDefault) {
-    e.preventDefault();
+  function handleDragStart(e) {
+    dragSrcEl = this
+    dragList = e.target.closest(dragItemsWrapperList)
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/html', this.outerHTML)
+    this.classList.add('dragElem')
   }
-  this.classList.add("over");
-  e.dataTransfer.dropEffect = "move";
-  return false;
-}
 
-function handleDragEnter(e) {}
-
-function handleDragLeave(e) {
-  this.classList.remove("over");
-}
-
-function handleDrop(e) {
-  if (e.stopPropagation) {
-    e.stopPropagation();
+  function handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault()
+    }
+    this.classList.add('over')
+    e.dataTransfer.dropEffect = 'move'
   }
-  dropList = this.closest(".todo-list");
-  if (dragSrcEl === this) {
-    return;
+
+  function handleDragEnter(e) {}
+
+  function handleDragLeave(e) {
+    this.classList.remove('over')
   }
-  if (dragList === dropList) {
-    dropList.removeChild(dragSrcEl);
-  } else {
-    dragList.removeChild(dragSrcEl);
+
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation()
+    }
+    if (dragSrcEl === this) {
+      return
+    }
+    dropList = this.closest(dragItemsWrapperList)
+    dragList === dropList ? dropList.removeChild(dragSrcEl) : dragList.removeChild(dragSrcEl)
+    const dropHTML = e.dataTransfer.getData('text/html')
+    this.insertAdjacentHTML('beforebegin', dropHTML)
+    const dropElem = this.previousSibling
+    addDnDHandlers(dropElem)
+    this.classList.remove('over')
   }
-  const dropHTML = e.dataTransfer.getData("text/html");
-  this.insertAdjacentHTML("beforebegin", dropHTML);
-  const dropElem = this.previousSibling;
-  addDnDHandlers(dropElem);
-  this.classList.remove("over");
-  return false;
+
+  function handleDragEnd(e) {
+    this.classList.remove('over')
+  }
+
+  function addDnDHandlers(elem) {
+    elem.setAttribute('draggable', true)
+    elem.addEventListener('dragstart', handleDragStart)
+    elem.addEventListener('dragenter', handleDragEnter)
+    elem.addEventListener('dragover', handleDragOver)
+    elem.addEventListener('dragleave', handleDragLeave)
+    elem.addEventListener('drop', handleDrop)
+    elem.addEventListener('dragend', handleDragEnd)
+  }
+
+  const $todoItems = document.querySelectorAll(draggableItemClass)
+  $todoItems.forEach(addDnDHandlers)
 }
 
-function handleDragEnd(e) {
-  this.classList.remove("over");
-}
-
-function addDnDHandlers(elem) {
-  elem.setAttribute("draggable", true);
-  elem.addEventListener("dragstart", handleDragStart, false);
-  elem.addEventListener("dragenter", handleDragEnter, false);
-  elem.addEventListener("dragover", handleDragOver, false);
-  elem.addEventListener("dragleave", handleDragLeave, false);
-  elem.addEventListener("drop", handleDrop, false);
-  elem.addEventListener("dragend", handleDragEnd, false);
-}
-
-const cols = document.querySelectorAll(".todo-list-item");
-[].forEach.call(cols, addDnDHandlers);
+new DragAndDropApp({
+  draggableItemClass: '.todo-list-item',
+  dragItemsWrapperList: '.todo-list'
+})

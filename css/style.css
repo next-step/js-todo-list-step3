@@ -22,7 +22,7 @@ button {
 }
 
 body {
-  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.4em;
   background: #f5f5f5;
   color: #4d4d4d;
@@ -32,6 +32,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
+  overflow-y: hidden;
 }
 
 :focus {
@@ -39,7 +40,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 #app {
@@ -62,21 +63,11 @@ body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-.todoapps-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.todoapps-container .todoapp-container {
-  padding: 20px;
-  width: 550px;
-}
-
 .todoapp {
   background: #fff;
   position: relative;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 5px 50px 0 rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
 .todoapp .todo-list-item {
@@ -148,6 +139,8 @@ body {
   position: relative;
   z-index: 2;
   border-top: 1px solid #e6e6e6;
+  height: calc(100% - 110px);
+  overflow-y: auto;
 }
 
 .toggle-all {
@@ -172,7 +165,7 @@ body {
 }
 
 .toggle-all + label:before {
-  content: "❯";
+  content: '❯';
   font-size: 22px;
   color: #e6e6e6;
   padding: 10px 27px 10px 27px;
@@ -232,18 +225,18 @@ body {
 }
 
 .todo-list li .toggle + label {
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E");
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
   background-repeat: no-repeat;
   background-position: center left;
 }
 
 .todo-list li .toggle:checked + label {
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E");
+  background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
 }
 
 .todo-list li label {
   word-break: break-all;
-  padding: 15px 15px 15px 60px;
+  padding: 10px 15px 15px 60px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
@@ -274,7 +267,7 @@ body {
 }
 
 .todo-list li .destroy:after {
-  content: "×";
+  content: '×';
 }
 
 .todo-list li:hover .destroy {
@@ -298,15 +291,14 @@ body {
 }
 
 .count-container:before {
-  content: "";
+  content: '';
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   height: 50px;
   overflow: hidden;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
-    0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
     0 17px 2px -6px rgba(0, 0, 0, 0.2);
 }
 
@@ -410,8 +402,7 @@ html .clear-completed:active {
   transition: background 0.6s;
 }
 .ripple:hover {
-  background: #616161 radial-gradient(circle, transparent 1%, #616161 1%)
-    center/15000%;
+  background: #bdbdbd radial-gradient(circle, transparent 1%, #bdbdbd 1%) center/15000%;
 }
 .ripple:active {
   background-color: #9e9e9e;
@@ -420,7 +411,7 @@ html .clear-completed:active {
 }
 
 button.ripple.active {
-  background-color: #424242;
+  background-color: #bdbdbd;
   color: white;
 }
 
@@ -474,14 +465,15 @@ button.ripple {
 
 .chip {
   width: 40px;
-  display: block;
   font-size: 10px;
+  display: inline-block;
   color: #fff;
   font-weight: normal;
   border-radius: 15px;
   text-align: center;
   left: 60px;
   top: 3px;
+  cursor: pointer;
 }
 
 .chip.primary {
@@ -496,4 +488,101 @@ select.chip {
   border-color: #e0e0e0;
   color: #bdbdbd;
   width: 45px;
+}
+
+.todoapp-container {
+  padding: 20px;
+  min-width: 550px;
+  height: calc(100% - 100px);
+  list-style: none;
+}
+
+.todoapp-container.over {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 2px solid dimgray;
+}
+
+.flex-column-container {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  overflow-y: hidden;
+  overflow-x: auto;
+  height: calc(100vh - 170px);
+}
+
+.add-user-button-container {
+  min-width: 550px;
+  height: calc(100% - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.add-user-button-container #add-user-button {
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+
+.add-user-button-container #add-user-button .material-icons {
+  position: relative;
+  top: 2px;
+}
+
+.card {
+  background-color: #fff;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.87);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.team-list-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-gap: 10px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 10px 20px;
+}
+
+.team-list-container .card {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.team-list-container .team-card-container {
+  padding: 0 5px;
+}
+
+.team-list-container .card .card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.add-team-button-container {
+  padding: 0 5px;
+}
+
+.add-team-button-container #add-team-button {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  bottom: 2px;
+  box-shadow: none;
+  color: dimgray;
+}
+
+.add-team-button-container #add-team-button.ripple {
 }
