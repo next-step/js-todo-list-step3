@@ -1,5 +1,5 @@
 function App() {
-  const $todoApps = document.querySelector('.todoapp-container')
+  const $todoApps = document.querySelector('.todoapp-list-container')
   $todoApps.addEventListener('click', e => {
     const $target = e.target
     const targetClassList = $target.classList
