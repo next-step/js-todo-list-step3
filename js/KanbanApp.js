@@ -49,13 +49,17 @@ export default class KanbanApp {
       teamId,
       $targetTodoAppListContainer,
       onToggleTodoItem: async (memberId, itemId) => {
-        await rootApi.fetchToggleTodoItem(this.teamId, memberId, itemId)
+        await rootApi.fetchToggleTodoItem(this.teamId, memberId, itemId);
         this.kanbanMemberList.render();
       },
       onDeleteTodoItem: async (memberId, itemId) => {
-        await rootApi.fetchDeleteTodoItem(this.teamId, memberId, itemId)
+        await rootApi.fetchDeleteTodoItem(this.teamId, memberId, itemId);
         this.kanbanMemberList.render();
-      }
+      },
+      onUpdateTodoItem: async (memberId, itemId, todo) => {
+        await rootApi.fetchUpdateTodoItem(this.teamId, memberId, itemId, todo);
+        this.kanbanMemberList.render();
+      },
     });
 
     // const $todoApps = document.querySelector('.todoapp-list-container');
