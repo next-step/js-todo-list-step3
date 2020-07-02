@@ -15,8 +15,8 @@ export default class KanbanTodoInput {
       const { className } = e.target;
       if (className !== 'new-todo') return;
       if (e.key !== KEY_NAME.ENTER || e.target.value === '') return;
-      const { id } = e.target.closest('.todoapp-container').dataset;
-      onKeyAddTodoItem(id, e.target.value);
+      const { memberId } = e.target.closest('.todoapp-container').dataset;
+      onKeyAddTodoItem(memberId, e.target.value);
       e.target.value = '';
     });
   }

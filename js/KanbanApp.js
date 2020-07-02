@@ -3,6 +3,7 @@ import KanbanMemberList from './KanbanMemberList.js';
 import KanbanMemberInput from './KanbanMemberInput.js';
 import KanbanTodoInput from './KanbanTodoInput.js';
 import rootApi from './api/apiHandler.js';
+import KanbanTodoList from './KanbanTodoList.js';
 
 export default class KanbanApp {
   constructor({
@@ -38,10 +39,19 @@ export default class KanbanApp {
     this.kanbanTodoInput = new KanbanTodoInput({
       teamId,
       $targetTodoAppListContainer,
-      onKeyAddTodoItem: async (id, todo) => {
-        await rootApi.fetchMemberAddTodoItem(this.teamId, id, todo)
+      onKeyAddTodoItem: async (memberId, todo) => {
+        await rootApi.fetchMemberAddTodoItem(this.teamId, memberId, todo);
         await this.kanbanMemberList.render();
-      }
+      },
+    });
+
+    this.kanbanTodoList = new KanbanTodoList({
+      teamId,
+      $targetTodoAppListContainer,
+      onToggleTodoItem: async (memberId, itemId) => {
+        await rootApi.fetchToggleTodoItem(this.teamId, memberId, itemId)
+        await this.kanbanMemberList.render();
+      },
     });
 
     // const $todoApps = document.querySelector('.todoapp-list-container');

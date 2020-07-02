@@ -56,9 +56,9 @@ export const TodoListTemplate = (todoList) =>
   todoList
     .map(
       (todo) => `
-      <li class=${
+      <li class='${
         todo.isCompleted ? 'todo-list-item completed' : 'todo-list-item'
-      } data-id=${todo._id}>
+      }' data-item-id=${todo._id}>
         <div class="view">
           <input class="toggle" type="checkbox" ${
             todo.isCompleted ? 'checked' : ''
@@ -81,7 +81,7 @@ export const MemberListTemplate = (memberList) =>
   memberList
     .map(
       (member) => `
-      <li class="todoapp-container" data-id=${member._id}>
+      <li class="todoapp-container" data-member-id=${member._id}>
       <h2>
         <span><strong>${member.name}</strong>'s Todo List</span>
       </h2>
