@@ -81,7 +81,7 @@ export const MemberListTemplate = (memberList) =>
   memberList
     .map(
       (member) => `
-      <li class="todoapp-container">
+      <li class="todoapp-container" data-id=${member._id}>
       <h2>
         <span><strong>${member.name}</strong>'s Todo List</span>
       </h2>

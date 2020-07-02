@@ -5,3 +5,8 @@ export const MEANING = {
   PRIMARY: '1',
   SECONDARY: '2',
 };
+
+export const KEY_NAME = {
+  ENTER: 'Enter',
+  ESC: 'Escape',
+};

@@ -1,10 +1,16 @@
 import KanbanTeamTitle from './KanbanTeamTitle.js';
-import KanbanMemberList from './kanbanMemberList.js';
+import KanbanMemberList from './KanbanMemberList.js';
 import KanbanMemberInput from './KanbanMemberInput.js';
+import KanbanTodoInput from './KanbanTodoInput.js';
 import rootApi from './api/apiHandler.js';
 
 export default class KanbanApp {
-  constructor({ teamName, teamId, $targetTeamTitle, $targetTodoAppListContainer }) {
+  constructor({
+    teamName,
+    teamId,
+    $targetTeamTitle,
+    $targetTodoAppListContainer,
+  }) {
     this.teamName = teamName;
     this.teamId = teamId;
     this.$targetTeamTitle = $targetTeamTitle;
@@ -24,24 +30,31 @@ export default class KanbanApp {
       teamId,
       $targetTodoAppListContainer,
       onClickAddMember: async (addMember) => {
-        await rootApi.fetchAddMember(this.teamId, addMember)
-        await this.kanbanMemberList.render()
+        await rootApi.fetchAddMember(this.teamId, addMember);
+        await this.kanbanMemberList.render();
+      },
+    });
+
+    this.kanbanTodoInput = new KanbanTodoInput({
+      teamId,
+      $targetTodoAppListContainer,
+      onKeyAddTodoItem: async (id, todo) => {
+        await rootApi.fetchMemberAddTodoItem(this.teamId, id, todo)
+        await this.kanbanMemberList.render();
       }
-    })
-
-
+    });
 
     // const $todoApps = document.querySelector('.todoapp-list-container');
     this.$targetTodoAppListContainer.addEventListener('click', (e) => {
       const $target = e.target;
       const targetClassList = $target.classList;
       if (targetClassList.contains('chip')) {
-        console.log($target)
+        console.log($target);
         const $chipSelect = $target
           .closest('.chip-container')
           .querySelector('select');
         $target.classList.add('hidden');
-        console.log($chipSelect)
+        console.log($chipSelect);
         $chipSelect.classList.remove('hidden');
       }
     });
