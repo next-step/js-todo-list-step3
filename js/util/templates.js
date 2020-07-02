@@ -25,24 +25,27 @@ export const TeamTitleTemplate = (teamName) => `
       <span><strong>${teamName}</strong>'s Todo List</span>
     `;
 
-const PRIORITY = {
-  [MEANING.NOTHING]: `<select class="chip select">
-                        <option value="0" selected>순위</option>
-                        <option value="1">1순위</option>
-                        <option value="2">2순위</option>
-                      </select>`,
-  [MEANING.PRIMARY]: `<span class="chip primary">1순위</span>
-                      <select class="chip select hidden">
-                        <option value="0" selected>순위</option>
-                        <option value="1">1순위</option>
-                        <option value="2">2순위</option>
-                      </select>`,
-  [MEANING.SECONDARY]: `  <span class="chip secondary">2순위</span>
-                          <select class="chip select hidden">
-                            <option value="0" selected>순위</option>
-                            <option value="1">1순위</option>
-                            <option value="2">2순위</option>
-                          </select>`,
+const subTodoPriorityTemplate = (priority) => `
+  ${
+    priority === MEANING.PRIMARY
+      ? '<span class="chip primary">1순위</span>'
+      : ''
+  }
+  ${
+    priority === MEANING.SECONDARY
+      ? '<span class="chip secondary">2순위</span>'
+      : ''
+  }
+  <select class="chip select ${priority !== MEANING.NOTHING && 'hidden'}">
+    <option value="0" selected>순위</option>
+    <option value="1">1순위</option>
+    <option value="2">2순위</option>
+  </select>`;
+
+const TodoPriorityTemplate = {
+  [MEANING.NOTHING]: subTodoPriorityTemplate(MEANING.NOTHING),
+  [MEANING.PRIMARY]: subTodoPriorityTemplate(MEANING.PRIMARY),
+  [MEANING.SECONDARY]: subTodoPriorityTemplate(MEANING.SECONDARY),
 };
 
 export const TodoCountTemplate = (todoCount) => `
@@ -62,7 +65,7 @@ export const TodoListTemplate = (todoList) =>
           } />
           <label class="label">
           <div class="chip-container">
-            ${PRIORITY[todo.priority]}
+            ${TodoPriorityTemplate[todo.priority]}
           </div>
             ${todo.contents}
           </label>
