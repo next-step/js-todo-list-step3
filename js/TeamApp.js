@@ -9,7 +9,9 @@ export default class TeamApp {
     this.teamInput = new TeamInput({
       $targetTeamList,
       onInputTeam: async (teamName) => {
-        await rootApi.fetchAddTeam(teamName);
+        const existTeamList = await rootApi.fetchTeamList()
+        const existTeamNameList = existTeamList.map(team => team.name)
+        !existTeamNameList.includes(teamName) && await rootApi.fetchAddTeam(teamName);
         this.render();
       },
     });
