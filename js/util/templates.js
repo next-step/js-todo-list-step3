@@ -21,6 +21,10 @@ export const TeamListTemplate = (teamList) =>
       </div>
       `);
 
+export const TeamTitleTemplate = (teamName) => `
+      <span><strong>${teamName}</strong>'s Todo List</span>
+    `;
+
 const PRIORITY = {
   [MEANING.NOTHING]: `<select class="chip select">
                         <option value="0" selected>순위</option>
@@ -29,15 +33,15 @@ const PRIORITY = {
                       </select>`,
   [MEANING.PRIMARY]: `<span class="chip primary">1순위</span>
                       <select class="chip select hidden">
-                        <option value="0">순위</option>
-                        <option value="1" selected>1순위</option>
+                        <option value="0" selected>순위</option>
+                        <option value="1">1순위</option>
                         <option value="2">2순위</option>
                       </select>`,
   [MEANING.SECONDARY]: `  <span class="chip secondary">2순위</span>
                           <select class="chip select hidden">
-                            <option value="0">순위</option>
+                            <option value="0" selected>순위</option>
                             <option value="1">1순위</option>
-                            <option value="2" selected>2순위</option>
+                            <option value="2">2순위</option>
                           </select>`,
 };
 
@@ -84,13 +88,15 @@ export const MemberListTemplate = (memberList) =>
         </section>
         <section class="main">
           <ul class="todo-list">
-            ${TodoListTemplate(member.todoList)}
+            ${(member.todoList && TodoListTemplate(member.todoList)) || ''}
           </ul>
         </section>
         <div class="count-container">
-          <span class="todo-count">${TodoCountTemplate(
-            member.todoList.length,
-          )}</span>
+          <span class="todo-count">${
+            member.todoList
+              ? TodoCountTemplate(member.todoList.length)
+              : TodoCountTemplate(0)
+          }</span>
           <ul class="filters">
             <li>
               <a href="#all" class="selected">전체보기</a>
@@ -118,7 +124,3 @@ export const MemberListTemplate = (memberList) =>
           </button>
         </li>
 `);
-
-export const TeamTitleTemplate = (teamName) => `
-  <span><strong>${teamName}</strong>'s Todo List</span>
-`;
