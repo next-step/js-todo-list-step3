@@ -1,9 +1,12 @@
 import { ERROR_TYPE } from './util/constants.js';
 import * as functions from './util/functions.js';
+import rootApi from './api/apiHandler.js';
+import { TodoListTemplate } from './util/templates.js';
 
 export default class KanbanTodoList {
   constructor({
     teamId,
+    memberId,
     $targetTodoAppListContainer,
     onToggleTodoItem,
     onDeleteTodoItem,
@@ -11,16 +14,17 @@ export default class KanbanTodoList {
     onPriorityTodoItem,
   }) {
     this.teamId = teamId;
+    this.memberId = memberId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
 
     this.$targetTodoAppListContainer.addEventListener('click', (e) => {
       const { className } = e.target;
       if (className !== 'toggle' && className !== 'destroy') return;
-      const { memberId } = e.target.closest('.todoapp-container').dataset;
+      this.memberId = e.target.closest('.todoapp-container').dataset.memberId;
       const { itemId } = e.target.closest('.todo-list-item').dataset;
       const selectAction = {
-        toggle: () => onToggleTodoItem(memberId, itemId),
-        destroy: () => onDeleteTodoItem(memberId, itemId),
+        toggle: () => onToggleTodoItem(this.memberId, itemId),
+        destroy: () => onDeleteTodoItem(this.memberId, itemId),
       };
       selectAction[className]
         ? selectAction[className]()
@@ -46,7 +50,7 @@ export default class KanbanTodoList {
     this.$targetTodoAppListContainer.addEventListener('keyup', (e) => {
       const { className } = e.target;
       if (className !== 'edit') return;
-      const { memberId } = e.target.closest('.todoapp-container').dataset;
+      this.memberId = e.target.closest('.todoapp-container').dataset.memberId;
       const $targetLi = e.target.closest('.todo-list-item');
       const selectAction = {
         Escape: () => {
@@ -56,7 +60,7 @@ export default class KanbanTodoList {
         Enter: () => {
           const { itemId } = $targetLi.dataset;
           const todo = e.target.value;
-          todo && onUpdateTodoItem(memberId, itemId, todo);
+          todo && onUpdateTodoItem(this.memberId, itemId, todo);
           functions.backToOriginalToggle($targetLi);
         },
       };
@@ -68,9 +72,9 @@ export default class KanbanTodoList {
     this.$targetTodoAppListContainer.addEventListener('change', (e) => {
       const { className } = e.target;
       if (className !== 'chip select') return;
-      const { memberId } = e.target.closest('.todoapp-container').dataset;
+      this.memberId = e.target.closest('.todoapp-container').dataset.memberId;
       const { itemId } = e.target.closest('.todo-list-item').dataset;
-      onPriorityTodoItem(memberId, itemId, e.target.value);
+      onPriorityTodoItem(this.memberId, itemId, e.target.value);
     });
 
     this.$targetTodoAppListContainer.addEventListener('click', (e) => {
@@ -84,5 +88,23 @@ export default class KanbanTodoList {
         $chipSelect.classList.remove('hidden');
       }
     });
+    // this.render();
+  }
+
+  // setState(currentMemberId) {
+  //   this.memberId = currentMemberId;
+  //   this.render();
+  // }
+
+  async render() {
+    if (!this.memberId) return;
+    const response = await rootApi.fetchMemberTodoList(
+      this.teamId,
+      this.memberId,
+    );
+    const { todoList } = response;
+    const $targetTodoList = document.querySelector(
+      `[data-member-id='${this.memberId}']`).querySelector('.todo-list');
+    $targetTodoList.innerHTML = TodoListTemplate(todoList);
   }
 }

@@ -47,22 +47,24 @@ export default class KanbanApp {
 
     this.kanbanTodoList = new KanbanTodoList({
       teamId,
+      memberId: '',
       $targetTodoAppListContainer,
       onToggleTodoItem: async (memberId, itemId) => {
         await rootApi.fetchToggleTodoItem(this.teamId, memberId, itemId);
-        this.kanbanMemberList.render();
+        this.kanbanTodoList.render()
       },
       onDeleteTodoItem: async (memberId, itemId) => {
         await rootApi.fetchDeleteTodoItem(this.teamId, memberId, itemId);
-        this.kanbanMemberList.render();
+        this.kanbanTodoList.render()
+
       },
       onUpdateTodoItem: async (memberId, itemId, todo) => {
         await rootApi.fetchUpdateTodoItem(this.teamId, memberId, itemId, todo);
-        this.kanbanMemberList.render();
+        this.kanbanTodoList.render()
       },
       onPriorityTodoItem: async (memberId, itemId, priority) => {
         await rootApi.fetchPriorityTodoItem(this.teamId, memberId, itemId, priority);
-        this.kanbanMemberList.render();
+        this.kanbanTodoList.render()
       }
     });
   }
