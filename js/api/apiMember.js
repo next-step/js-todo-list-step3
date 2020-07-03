@@ -72,7 +72,7 @@ const apiMember = {
       options.PRIORITY(priority),
     );
   },
-  fetchDeleteAllTodoItem: (teamId, memberId) => {
+  fetchDeleteAllTodoItems: (teamId, memberId) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
       options.DELETE(),

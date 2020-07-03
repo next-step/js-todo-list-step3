@@ -87,7 +87,7 @@ export const MemberListTemplate = (memberList) =>
       </h2>
       <div class="todoapp">
         <section class="input-container">
-          <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
+          <input class="new-todo" placeholder="할 일을 입력해주세요." />
         </section>
         <section class="main">
           <ul class="todo-list">
@@ -102,16 +102,16 @@ export const MemberListTemplate = (memberList) =>
           }</span>
           <ul class="filters">
             <li>
-              <a href="#all" class="selected">전체보기</a>
+              <a href="#${member._id}/all" class="selected">전체보기</a>
             </li>
             <li>
-              <a href="#priority">우선 순위</a>
+              <a href="#${member._id}/priority">우선 순위</a>
             </li>
             <li>
-              <a href="#active">해야할 일</a>
+              <a href="#${member._id}/active">해야할 일</a>
             </li>
             <li>
-              <a href="#completed">완료한 일</a>
+              <a href="#${member._id}/completed">완료한 일</a>
             </li>
           </ul>
           <button class="clear-completed">모두 삭제</button>

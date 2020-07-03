@@ -91,20 +91,29 @@ export default class KanbanTodoList {
     // this.render();
   }
 
-  // setState(currentMemberId) {
-  //   this.memberId = currentMemberId;
-  //   this.render();
-  // }
+  setState(currentMemberId) {
+    this.memberId = currentMemberId;
+    this.render();
+  }
 
   async render() {
     if (!this.memberId) return;
-    const response = await rootApi.fetchMemberTodoList(
-      this.teamId,
-      this.memberId,
-    );
-    const { todoList } = response;
-    const $targetTodoList = document.querySelector(
-      `[data-member-id='${this.memberId}']`).querySelector('.todo-list');
-    $targetTodoList.innerHTML = TodoListTemplate(todoList);
+    try {
+      const response = await rootApi.fetchMemberTodoList(
+        this.teamId,
+        this.memberId,
+      );
+      const { todoList } = response;
+      const $targetTodoList = document
+        .querySelector(`[data-member-id='${this.memberId}']`)
+        .querySelector('.todo-list');
+      $targetTodoList.innerHTML = TodoListTemplate(todoList);
+    } catch (e) {
+      const $targetTodoList = document
+      .querySelector(`[data-member-id='${this.memberId}']`)
+      .querySelector('.todo-list');
+      $targetTodoList.innerHTML = '';
+      console.error(ERROR_TYPE.CAN_NOT_LOAD);
+    }
   }
 }
