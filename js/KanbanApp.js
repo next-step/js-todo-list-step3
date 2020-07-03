@@ -30,7 +30,7 @@ export default class KanbanApp {
     this.kanbanMemberInput = new KanbanMemberInput({
       teamId,
       $targetTodoAppListContainer,
-      onClickAddMember: async (addMember) => {
+      onAddMember: async (addMember) => {
         await rootApi.fetchAddMember(this.teamId, addMember);
         await this.kanbanMemberList.render();
       },
@@ -39,7 +39,7 @@ export default class KanbanApp {
     this.kanbanTodoInput = new KanbanTodoInput({
       teamId,
       $targetTodoAppListContainer,
-      onKeyAddTodoItem: async (memberId, todo) => {
+      onAddTodoItem: async (memberId, todo) => {
         await rootApi.fetchMemberAddTodoItem(this.teamId, memberId, todo);
         await this.kanbanMemberList.render();
       },
@@ -60,28 +60,11 @@ export default class KanbanApp {
         await rootApi.fetchUpdateTodoItem(this.teamId, memberId, itemId, todo);
         this.kanbanMemberList.render();
       },
-    });
-
-    // const $todoApps = document.querySelector('.todoapp-list-container');
-    this.$targetTodoAppListContainer.addEventListener('click', (e) => {
-      const $target = e.target;
-      const targetClassList = $target.classList;
-      if (targetClassList.contains('chip')) {
-        console.log($target);
-        const $chipSelect = $target
-          .closest('.chip-container')
-          .querySelector('select');
-        $target.classList.add('hidden');
-        console.log($chipSelect);
-        $chipSelect.classList.remove('hidden');
+      onPriorityTodoItem: async (memberId, itemId, priority) => {
+        await rootApi.fetchPriorityTodoItem(this.teamId, memberId, itemId, priority);
+        this.kanbanMemberList.render();
       }
     });
-
-    // const $addUserButton = document.querySelector('#add-user-button');
-    // $addUserButton.addEventListener('click', (e) => {
-    //   console.log(e.target)
-    //   const result = prompt('새로운 팀원 이름을 입력해주세요');
-    // });
   }
 
   setState() {}

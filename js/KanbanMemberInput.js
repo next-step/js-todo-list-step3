@@ -1,5 +1,5 @@
 export default class KanbanMemberInput {
-  constructor({ teamId, $targetTodoAppListContainer, onClickAddMember }) {
+  constructor({ teamId, $targetTodoAppListContainer, onAddMember }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
 
@@ -9,7 +9,7 @@ export default class KanbanMemberInput {
       const { id } = $targetAddButton;
       if (id !== 'add-user-button') return;
       const addMember = prompt('새로운 팀원 이름을 입력해주세요');
-      addMember && onClickAddMember(addMember);
+      addMember && onAddMember(addMember);
     });
   }
 }

@@ -8,6 +8,7 @@ export default class KanbanTodoList {
     onToggleTodoItem,
     onDeleteTodoItem,
     onUpdateTodoItem,
+    onPriorityTodoItem,
   }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
@@ -62,6 +63,26 @@ export default class KanbanTodoList {
       selectAction[e.key]
         ? selectAction[e.key]()
         : console.error(ERROR_TYPE.NO_MATCH_KEY);
+    });
+
+    this.$targetTodoAppListContainer.addEventListener('change', (e) => {
+      const { className } = e.target;
+      if (className !== 'chip select') return;
+      const { memberId } = e.target.closest('.todoapp-container').dataset;
+      const { itemId } = e.target.closest('.todo-list-item').dataset;
+      onPriorityTodoItem(memberId, itemId, e.target.value);
+    });
+
+    this.$targetTodoAppListContainer.addEventListener('click', (e) => {
+      const $target = e.target;
+      const targetClassList = $target.classList;
+      if (targetClassList.contains('chip')) {
+        const $chipSelect = $target
+          .closest('.chip-container')
+          .querySelector('select');
+        $target.classList.add('hidden');
+        $chipSelect.classList.remove('hidden');
+      }
     });
   }
 }

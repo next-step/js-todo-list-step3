@@ -1,7 +1,7 @@
 import { KEY_NAME } from './util/constants.js';
 
 export default class KanbanTodoInput {
-  constructor({ teamId, $targetTodoAppListContainer, onKeyAddTodoItem }) {
+  constructor({ teamId, $targetTodoAppListContainer, onAddTodoItem }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
 
@@ -16,7 +16,7 @@ export default class KanbanTodoInput {
       if (className !== 'new-todo') return;
       if (e.key !== KEY_NAME.ENTER || e.target.value === '') return;
       const { memberId } = e.target.closest('.todoapp-container').dataset;
-      onKeyAddTodoItem(memberId, e.target.value);
+      onAddTodoItem(memberId, e.target.value);
       e.target.value = '';
     });
   }

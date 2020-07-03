@@ -36,7 +36,7 @@ const subTodoPriorityTemplate = (priority) => `
       ? '<span class="chip secondary">2순위</span>'
       : ''
   }
-  <select class="chip select ${priority !== MEANING.NOTHING && 'hidden'}">
+  <select class="chip select ${priority !== MEANING.NOTHING ? 'hidden' : ''}">
     <option value="0" selected>순위</option>
     <option value="1">1순위</option>
     <option value="2">2순위</option>
