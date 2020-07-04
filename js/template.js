@@ -1,3 +1,21 @@
+export const teamItemTemplate = item => (
+  `<div class="team-card-container">
+    <a href="/kanban.html?id=${item._id}" class="card">
+      <div class="card-title">
+        ${item.name}
+      </div>
+    </a>
+  </div>`
+);
+
+export const teamAddItemTemplate = () => (
+  `<div class="add-team-button-container">
+    <button id="add-team-button" class="ripple">
+      <span class="material-icons">add</span>
+    </button>
+  </div>`
+);
+
 export const todoItemTemplate = item => (
   `<li id="${item._id}" class="${item.isCompleted ? 'completed' : ''} ${item.editing ? 'editing' : ''}">
     <div class="view">

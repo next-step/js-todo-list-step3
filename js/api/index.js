@@ -14,11 +14,14 @@ const getApiOption = (method, data) => {
   return option;
 }
 
-export async function addTeam(name) {
-  const url = `${BASE_URL}/api/teams`;
-  const option = getApiOption(METHOD.POST, { name });
-  const res = await requestApi(url, option);
-  return res;
+export async function getTeams() {
+  return await requestApi(`${BASE_URL}/api/teams`, getApiOption(METHOD.GET));
 }
 
+export async function addTeam(name) {
+  return await requestApi(`${BASE_URL}/api/teams`, getApiOption(METHOD.POST, { name }));
+}
 
+export async function getTeamByTeamId(teamId) {
+  return await requestApi(`${BASE_URL}/api/teams/${teamId}`, getApiOption(METHOD.GET));
+}
