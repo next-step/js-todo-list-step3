@@ -1,5 +1,8 @@
 import { CLASS_NAME } from './constants.js'
 
+export const teamHeaderTemplate =
+  "<span><strong>Team</strong>'s Todo Lists</span>"
+
 export const loadingComponentTemplate = ` 
                 <li>
                     <div class="view">
@@ -20,25 +23,35 @@ export const todoCountComponentTemplate = (totalCount, completedCount) => {
 }
 
 const getPriorityClassName = (priority) => {
-  return priority === '1' ? CLASS_NAME.PRIORITY_FIRST : CLASS_NAME.PRIORITY_SECOND
+  return priority === '1'
+    ? CLASS_NAME.PRIORITY_FIRST
+    : CLASS_NAME.PRIORITY_SECOND
 }
 
 const getPriorityHTML = (priority) => {
-  return priority ?
-    `<span class="chip ${getPriorityClassName(priority)}">${priority}순위</span>`
-    :
-    `<select class="chip select">
+  return priority
+    ? `<span class="chip ${getPriorityClassName(
+        priority
+      )}">${priority}순위</span>`
+    : `<select class="chip select">
          <option value="0" selected>순위</option>
          <option value="1">1순위</option>
          <option value="2">2순위</option>
       </select>`
 }
 
-export const todoItemHTMLTemplate = ({ _id, contents, priority, isCompleted }, index) => {
+export const todoItemHTMLTemplate = (
+  { _id, contents, priority, isCompleted },
+  index
+) => {
   return `
-      <li data-id=${_id} data-index=${index} class=${isCompleted ? 'completed' : ''}>
+      <li data-id=${_id} data-index=${index} class=${
+    isCompleted ? 'completed' : ''
+  }>
           <div class="view">
-            <input class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
+            <input class="toggle" type="checkbox" ${
+              isCompleted ? 'checked' : ''
+            }/>
             <label class="label">
                 ${getPriorityHTML(priority)}
                 ${contents}
