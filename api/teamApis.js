@@ -6,6 +6,9 @@ const api = (() => {
     getTeams() {
       return requestWithReturn(API_URL + '/api/teams')
     },
+    getTeamOne(id) {
+      return requestWithReturn(API_URL + `/api/teams/${id}`)
+    },
   }
 })()
 

@@ -1,8 +1,7 @@
 import { CLASS_NAME } from './constants.js'
 
-/* Team Page Teamplte Start */
-export const teamHeaderTemplate =
-  "<span><strong>Team</strong>'s Todo Lists</span>"
+/* Team Page Template Start */
+export const teamHeaderTemplate = '<span><strong>Team</strong> Lists</span>'
 
 export const teamButtonTemplate = ({ _id, name }) => `
         <div class="team-card-container">
@@ -13,8 +12,19 @@ export const teamButtonTemplate = ({ _id, name }) => `
           </a>
         </div>
 `
+export const createTeamButtonTemplate = () => `
+        <div class="add-team-button-container">
+          <button id="add-team-button" class="ripple">
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+`
 
-/* Team Page Teamplte End */
+/* Team Page Templte End */
+
+/* Kanban Page Template Start */
+export const kanbanHeaderTemplate = (teamName) =>
+  `<span><strong>${teamName}</strong>\'s Todo List</span>`
 
 export const loadingComponentTemplate = ` 
                 <li>

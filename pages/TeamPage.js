@@ -1,4 +1,4 @@
-import TeamContainer from '../containers/TeamContainer.js'
+import { TeamContainer } from '../containers/index.js'
 
 try {
   new TeamContainer()

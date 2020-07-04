@@ -11,7 +11,7 @@ export default function TeamList({ selector }) {
       this.teams = await teamApis.getTeams()
       this.render()
     } catch (e) {
-      console.error(e)
+      this.teams = []
     }
   }
 
