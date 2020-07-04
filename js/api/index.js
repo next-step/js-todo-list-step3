@@ -1,93 +1,24 @@
-const BASE_URL = 'https://blackcoffee-todolist.df.r.appspot.com/api/u';
+import { requestApi } from '../util.js';
+import { METHOD } from '../constants.js';
 
-export async function getTodoList(username) {
-  try {
-    const response = await fetch(`${BASE_URL}/${username}/item`);
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
+const BASE_URL = 'https://blackcoffee-todolist.df.r.appspot.com';
+
+const getApiOption = (method, data) => {
+  const option = {
+    method,
+    headers: { 'Content-Type': 'application/json' }
   }
+  if (data) {
+    option.body = JSON.stringify(data)
+  }
+  return option;
 }
 
-export async function postTodoItem(username, contents) {
-  try {
-    const response = await fetch(`${BASE_URL}/${username}/item/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ contents }),
-    });
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
+export async function addTeam(name) {
+  const url = `${BASE_URL}/api/teams`;
+  const option = getApiOption(METHOD.POST, { name });
+  const res = await requestApi(url, option);
+  return res;
 }
 
-export async function deleteTodoItem(username, id) {
-  try {
-    const response = await fetch(`${BASE_URL}/${username}/item/${id}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
 
-export async function toggleTodoItem(username, id) {
-  try {
-    const response = await fetch(`${BASE_URL}/${username}/item/${id}/toggle`, {
-      method: 'PUT',
-    });
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function editTodoItem(username, id, contents) {
-  try {
-    const response = await fetch(`${BASE_URL}/${username}/item/${id}/`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents,
-      }),
-    });
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getUsers() {
-  try {
-    const response = await fetch(`${BASE_URL}`, {
-      method: 'GET',
-    });
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return await response.json();
-  } catch (error) {
-    console.log(error);
-  }
-}

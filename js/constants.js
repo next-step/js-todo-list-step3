@@ -6,3 +6,10 @@ export const FILTER_TYPE = {
   ACTIVE: 'active',
   COMPLETED: 'completed'
 }
+
+export const METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+}
