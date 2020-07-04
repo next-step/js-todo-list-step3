@@ -29,13 +29,27 @@ const options = {
       body: JSON.stringify({ contents }),
     };
   },
-  // DRAGDROP_ITEM: (contents) => {
-  //   return {
-  //     method: 'PUT',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ contents }),
-  //   };
-  // },
+  DRAGDROP_ITEM: (originMemberId, targetMemberId, newPosition) => {
+    return {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        originMemberId,
+        targetMemberId,
+        newPosition,
+      }),
+    };
+  },
+  DRAGDROP_LIST: (memberId, newPosition) => {
+    return {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        memberId,
+        newPosition,
+      }),
+    };
+  },
 };
 
 const apiMember = {
@@ -78,12 +92,24 @@ const apiMember = {
       options.DELETE(),
     );
   },
-  // fetchDragDropTodoItem: (teamId, memberId) => {
-  //   return request(
-  //     `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
-  //     options.DELETE(),
-  //   );
-  // },
+  fetchDragDropTodoItem: (
+    teamId,
+    itemId,
+    originMemberId,
+    targetMemberId,
+    newPosition,
+  ) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/items/${itemId}/sort`,
+      options.DRAGDROP_ITEM(originMemberId, targetMemberId, newPosition),
+    );
+  },
+  fetchDragDropMember: (teamId, itemId, memberId, newPosition) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/items/${itemId}/sort`,
+      options.DRAGDROP_LIST(memberId, newPosition),
+    );
+  },
 };
 
 export default apiMember;
