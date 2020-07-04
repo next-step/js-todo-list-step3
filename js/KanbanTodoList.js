@@ -104,10 +104,12 @@ export default class KanbanTodoList {
         this.memberId,
       );
       const { todoList } = response;
+      const hash = location.hash.substring(1).split('/')[1];
+      const filteredTodoList =  functions.filteringTodoList(hash, todoList);
       const $targetTodoList = document
         .querySelector(`[data-member-id='${this.memberId}']`)
         .querySelector('.todo-list');
-      $targetTodoList.innerHTML = TodoListTemplate(todoList);
+      $targetTodoList.innerHTML = TodoListTemplate(filteredTodoList);
     } catch (e) {
       const $targetTodoList = document
       .querySelector(`[data-member-id='${this.memberId}']`)

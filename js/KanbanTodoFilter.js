@@ -1,7 +1,5 @@
 import { MESSAGE, FILTER_NAME } from './util/constants.js';
-// import rootApi from './api/apiHandler.js';
 import { TodoListTemplate } from './util/templates.js';
-// import * as functions from './util/functions.js';
 
 export default class KanbanTodoFilter {
   constructor({
@@ -38,13 +36,6 @@ export default class KanbanTodoFilter {
     window.addEventListener('hashchange', async () => {
       this.memberId = location.hash.substring(1).split('/')[0];
       const hash = location.hash.substring(1).split('/')[1];
-
-      // const { todoList } = await rootApi.fetchMemberTodoList(
-      //   this.teamId,
-      //   this.memberId,
-      // );
-      // this.filteredTodoList = functions.filteringTodoList(hash, todoList);
-      // console.log(this.filteredTodoList);
       onSelectFilter(this.memberId, hash);
     });
   }
@@ -58,7 +49,6 @@ export default class KanbanTodoFilter {
     const $targetTodoList = document
       .querySelector(`[data-member-id='${this.memberId}']`)
       .querySelector('.todo-list');
-
     $targetTodoList.innerHTML = TodoListTemplate(this.filteredTodoList);
   }
 }

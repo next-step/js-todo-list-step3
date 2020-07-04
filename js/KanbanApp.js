@@ -44,7 +44,9 @@ export default class KanbanApp {
       $targetTodoAppListContainer,
       onAddTodoItem: async (memberId, todo) => {
         await rootApi.fetchMemberAddTodoItem(this.teamId, memberId, todo);
-        this.kanbanMemberList.render();
+        // this.kanbanMemberList.render();
+        this.kanbanTodoList.render();
+
       },
     });
 
@@ -96,7 +98,6 @@ export default class KanbanApp {
           memberId,
         );
         this.filteredTodoList = functions.filteringTodoList(hash, todoList);
-          console.log(this.filteredTodoList)
         this.kanbanTodoFilter.setState(this.filteredTodoList);
         this.kanbanTodoCount.setState(this.filteredTodoList);
       },

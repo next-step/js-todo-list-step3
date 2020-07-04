@@ -11,7 +11,16 @@ export const backToOriginalToggle = (target) => {
 export const filteringTodoList = (hash, todoList) => {
   if (!todoList) return;
   const selectAction = {
-    [FILTER_NAME.PRIORITY]: () => {},
+    [FILTER_NAME.PRIORITY]: (data) => {
+      const noPriorityLength = data.filter((todo) => todo.priority === 0)
+        .length;
+      console.log(noPriorityLength);
+      const preSortedArray = data.sort(
+        (a, b) => parseInt(a.priority) - parseInt(b.priority),
+      );
+      const noPriorityArray = preSortedArray.splice(0, noPriorityLength);
+      return preSortedArray.concat(noPriorityArray);
+    },
     [FILTER_NAME.ALL]: (data) => data,
     [FILTER_NAME.ACTIVE]: (data) =>
       data.filter((todo) => todo.isCompleted === false),
