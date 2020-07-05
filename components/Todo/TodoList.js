@@ -2,22 +2,33 @@ import { TAG_NAME, CLASS_NAME, KEY_NAME } from '../../utils/constants.js'
 import todoApis from '../../api/member.js'
 import { todoItemHTMLTemplate } from '../../utils/templates.js'
 
+TodoList.prototype.init = function () {
+  this.render()
+  this.bindEvents()
+}
+
+TodoList.prototype.render = function () {
+  this.$target.innerHTML = this.todos.map(todoItemHTMLTemplate).join('')
+}
+
+TodoList.prototype.setState = function (todos) {
+  this.todos = todos
+  this.render()
+}
+
 export default function TodoList(props) {
   if (new.target !== TodoList) {
     return new TodoList(props)
   }
   const { $target, todos, teamId, memberId, getTodos } = props
 
-  this.init = () => {
-    this.$target = $target
-    this.todos = todos
-    this.teamId = teamId
-    this.memberId = memberId
-    this.render()
-    this.bindEvent()
-  }
+  this.$target = $target
+  this.todos = todos
+  this.teamId = teamId
+  this.memberId = memberId
+  this.getTodos = getTodos
 
-  this.bindEvent = () => {
+  this.bindEvents = () => {
     const onClickTodoItemHandler = async ({ target }) => {
       const li = target.closest('li')
       const { id } = li.dataset
@@ -112,20 +123,6 @@ export default function TodoList(props) {
     this.$target.addEventListener('keyup', onEditTodoItemHandler)
     this.$target.addEventListener('focusout', onFocusOutTodoItemHandler)
     this.$target.addEventListener('change', onChangePriorityHandler) // chip select
-  }
-
-  this.render = () => {
-    console.log(this.$target)
-    this.$target.innerHTML = this.todos.map(todoItemHTMLTemplate).join('')
-  }
-
-  this.setState = (username, todos) => {
-    this.username = username
-    if (todos) {
-      // username 만 update 하는 경우를 생각해서 조건문 처리하였습니당
-      this.todos = todos
-      this.render()
-    }
   }
 
   this.init()

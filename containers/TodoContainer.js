@@ -12,7 +12,6 @@ import { todoHeaderTemplate } from '../utils/templates.js'
 import memberApis from '../api/member.js'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
-
 const getTodoHash = (todos) => {
   return {
     [FILTER_STATUS.ALL]: todos,
@@ -21,11 +20,45 @@ const getTodoHash = (todos) => {
   }
 }
 
+TodoContainer.prototype.setState = function () {
+  const renderTodos = this.todoHash[this.filterStatus]
+  this.$todoList.setState(renderTodos)
+  this.$todoCount.setState(
+    renderTodos.length,
+    renderTodos.filter(({ isCompleted }) => isCompleted === true).length
+  )
+}
+
 export default function TodoContainer(props) {
   if (new.target !== TodoContainer) {
     return new TodoContainer(props)
   }
   const { name: userName, _id: memberId, teamId, todoList, selector } = props
+
+  this.memberId = memberId
+  this.userName = userName
+  this.teamId = teamId
+  this.todoList = todoList
+  this.selector = selector
+
+  TodoContainer.prototype.getTodos = async () => {
+    // this 를 TodoContainer에 바인딩하기 위해 '=>' 사용
+    // this.$loading.render() // loading on
+    // await delay(500) // delay 주고 싶다면 추가
+    try {
+      const { todoList } = await memberApis.getTodosByMember(
+        this.teamId,
+        this.memberId
+      )
+      this.todos = todoList ? todoList : []
+      this.todoHash = getTodoHash(this.todos)
+      this.setState()
+    } catch (e) {
+      console.error(e)
+      this.todos = []
+      this.setState()
+    }
+  }
 
   this.init = async () => {
     const { getTodos, onFilter } = this
@@ -47,7 +80,7 @@ export default function TodoContainer(props) {
     const $todoHeaderContainer = document.createElement('h2')
     this.$header = new TodoHeader({
       $target: $todoHeaderContainer,
-      textContent: todoHeaderTemplate(userName),
+      textContent: todoHeaderTemplate(this.userName),
     })
     $todoAppContainer.appendChild($todoHeaderContainer)
 
@@ -115,36 +148,12 @@ export default function TodoContainer(props) {
     //   selector: '.todo-list',
     // })
 
-    // this.getTodos()
+    this.getTodos()
   }
 
   this.onFilter = (status) => {
     this.filterStatus = status
     this.setState()
-  }
-
-  this.setState = () => {
-    const renderTodos = this.todoHash[this.filterStatus]
-    this.$todoList.setState(this.username, renderTodos)
-    this.$todoCount.setState(
-      renderTodos.length,
-      renderTodos.filter(({ isCompleted }) => isCompleted === true).length
-    )
-  }
-
-  this.getTodos = async () => {
-    this.$loading.render() // loading on
-    // await delay(500) // delay 주고 싶다면 추가
-    try {
-      const { todoList } = await memberApis.getTodos(this.username)
-      this.todos = todoList ? todoList : []
-      this.todoHash = getTodoHash(this.todos)
-      this.setState()
-    } catch (e) {
-      console.error(e)
-      this.todos = [] // 없는 유저인 경우
-      this.setState()
-    }
   }
 
   this.onDeleteAll = async () => {
