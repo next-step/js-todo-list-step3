@@ -1,5 +1,5 @@
 import { TAG_NAME, CLASS_NAME, KEY_NAME } from '../../utils/constants.js'
-import todoApis from '../../api/todoApis.js'
+import todoApis from '../../api/member.js'
 import { todoItemHTMLTemplate } from '../../utils/templates.js'
 
 export default function TodoList(props) {

@@ -8,3 +8,5 @@ export const getURLQueryArray = (queries) => {
     .map((element) => element.split('='))
     .map(([key, value]) => ({ [key]: value }))
 }
+
+export const redirectToMainPage = () => (window.location.href = '/index.html')

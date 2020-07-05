@@ -9,7 +9,7 @@ import {
 } from '../components/todo/index.js'
 import { FILTER_STATUS, CLASS_NAME } from '../utils/constants.js'
 import { todoHeaderTemplate } from '../utils/templates.js'
-import todoApis from '../api/todoApis.js'
+import memberApis from '../api/member.js'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
 
@@ -136,7 +136,7 @@ export default function TodoContainer(props) {
     this.$loading.render() // loading on
     // await delay(500) // delay 주고 싶다면 추가
     try {
-      const { todoList } = await todoApis.getTodos(this.username)
+      const { todoList } = await memberApis.getTodos(this.username)
       this.todos = todoList ? todoList : []
       this.todoHash = getTodoHash(this.todos)
       this.setState()
@@ -149,7 +149,7 @@ export default function TodoContainer(props) {
 
   this.onDeleteAll = async () => {
     try {
-      await todoApis.deleteTodoAll(this.username)
+      await memberApis.deleteTodoAll(this.username)
       this.getTodos()
     } catch (e) {
       console.error(e)

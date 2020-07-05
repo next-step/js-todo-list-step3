@@ -1,34 +1,47 @@
 import { Header } from '../components/common/index.js'
 import { AddMemberButton } from '../components/kanban/index.js'
 import { TodoContainer } from '../containers/index.js'
-import teamApis from '../api/teamApis.js'
-import { getURLQueryArray } from '../utils/functions.js'
+import teamApis from '../api/team.js'
+import { getURLQueryArray, redirectToMainPage } from '../utils/functions.js'
 import { kanbanHeaderTemplate } from '../utils/templates.js'
 
 export default function KanBanContainer() {
   if (new.target !== KanBanContainer) {
     return new KanBanContainer()
   }
-
-  this.init = async () => {
+  this.init = () => {
     try {
       const queries = getURLQueryArray(window.location.search)
-      const teamId = queries[0]['teamId']
-      const { name, members } = await teamApis.getTeamOne(teamId)
-      console.log(members)
+      this.teamId = queries[0]['teamId']
+      this.teamName = queries[1]['teamName']
+      if (!this.teamId || !this.teamName) {
+        redirectToMainPage()
+      }
       new Header({
         selector: '#user-title',
-        textContent: kanbanHeaderTemplate(name),
+        textContent: kanbanHeaderTemplate(this.teamName),
       })
+      this.render()
+    } catch (e) {
+      redirectToMainPage()
+    }
+  }
+
+  this.render = async () => {
+    try {
+      const { members } = await teamApis.getTeamOne(this.teamId)
+      console.log(members)
       members.forEach((member) => {
         new TodoContainer({
           ...member,
-          teamId,
           selector: '.todoapp-list-container',
+          teamId: this.teamId,
         })
       })
       new AddMemberButton({
         selector: '.todoapp-list-container',
+        teamId: this.teamId,
+        renderKanbanPage: this.render,
       })
     } catch (e) {
       console.error(e)

@@ -1,6 +1,6 @@
 import { createTeamButtonTemplate } from '../../utils/templates.js'
 import { TAG_NAME } from '../../utils/constants.js'
-import teamApis from '../../api/teamApis.js'
+import teamApis from '../../api/team.js'
 
 export default function CreateTeamButton({ selector, renderTeamList }) {
   if (new.target !== CreateTeamButton) {

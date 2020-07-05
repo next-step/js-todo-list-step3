@@ -5,7 +5,7 @@ export const teamHeaderTemplate = '<span><strong>Team</strong> Lists</span>'
 
 export const teamButtonTemplate = ({ _id, name }) => `
         <div class="team-card-container">
-          <a href="/kanban.html?teamId=${_id}" class="card">
+          <a href="/kanban.html?teamId=${_id}&teamName=${name}" class="card">
             <div class="card-title">
               ${name}
             </div>
@@ -45,11 +45,9 @@ export const todoFilterTemplate = `
 `
 
 export const addMemberButtonTemplate = `
-          <li class="add-user-button-container">
             <button id="add-user-button" class="ripple">
               <span class="material-icons">add</span>
             </button>
-          </li>
 `
 
 export const loadingComponentTemplate = ` 

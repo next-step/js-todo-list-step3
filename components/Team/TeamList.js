@@ -1,5 +1,5 @@
 import { CreateTeamButton } from '../../components/team/index.js'
-import teamApis from '../../api/teamApis.js'
+import teamApis from '../../api/team.js'
 import { teamButtonTemplate } from '../../utils/templates.js'
 
 export default function TeamList({ selector }) {

@@ -3,6 +3,12 @@ import { API_URL } from '../utils/constants.js'
 
 const api = (() => {
   return {
+    addTeamMember(teamId, memberName) {
+      return request(
+        API_URL + `/api/teams/${teamId}/members`,
+        METHOD.POST({ name: memberName })
+      )
+    },
     createTodo({ teamId, memberId, contents }) {
       return request(
         API_URL + `/api/teams/${teamId}/members/${memberId}/items`,
