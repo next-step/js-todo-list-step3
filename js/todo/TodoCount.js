@@ -1,23 +1,24 @@
-import { TodoCountTemplate } from '../util/templates.js'
+import { TodoCountTemplate } from '../util/templates.js';
+import * as functions from '../util/functions.js';
 
 export default class TodoCount {
-  constructor({ memberId, filteredTodoList, $targetTodoAppListContainer }) {
-    this.memberId = memberId;
-    this.filteredTodoList = filteredTodoList;
-    this.$targetTodoAppListContainer = $targetTodoAppListContainer;
+  constructor({ data, filteredData, $targetTodoCount }) {
+    this.data = data;
+    this.filteredData = filteredData;
+    this.$targetTodoCount = $targetTodoCount;
   }
 
-  setState(newFilteredTodoList) {
-    this.filteredTodoList = newFilteredTodoList;
+  setState(nextData) {
+    this.data = nextData;
     this.render();
   }
-  render() {
-    this.memberId = location.hash.substring(1).split('/')[0];
 
-    if (!this.filteredTodoList) return;
-    const $targetTodoCount = document
-    .querySelector(`[data-member-id='${this.memberId}']`)
-    .querySelector('.todo-count');
-    $targetTodoCount.innerHTML = TodoCountTemplate(this.filteredTodoList.length)
+  render() {
+    if (!this.data) return;
+    const hash = location.hash.substring(1);
+    this.filteredData = functions.filteringTodoList(this.data, hash);
+    this.$targetTodoCount.innerHTML = TodoCountTemplate(
+      this.filteredData.length,
+    );
   }
 }

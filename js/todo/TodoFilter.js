@@ -3,52 +3,32 @@ import { TodoListTemplate } from '../util/templates.js';
 
 export default class TodoFilter {
   constructor({
-    teamId,
-    memberId,
-    filteredTodoList,
-    $targetTodoAppListContainer,
+    data,
+    filteredData,
+    $targetCountContainer,
+    $targetFilter,
     onDeleteAllTodoItems,
     onSelectFilter,
   }) {
-    this.teamId = teamId;
-    this.memberId = memberId;
-    this.filteredTodoList = filteredTodoList;
-    this.$targetTodoAppListContainer = $targetTodoAppListContainer;
+    this.data = data;
+    this.filteredData = filteredData;
+    this.$targetCountContainer = $targetCountContainer;
+    this.$targetFilter = $targetFilter;
 
-    this.$targetTodoAppListContainer.addEventListener('click', (e) => {
+    this.$targetCountContainer.addEventListener('click', (e) => {
       const { className, tagName } = e.target;
       if (className === FILTER_NAME.CLEAR_ALL) {
-        this.memberId = e.target.closest('.todoapp-container').dataset.memberId;
         const deleteAllConfirm = confirm(MESSAGE.CONFIRM);
-        deleteAllConfirm && onDeleteAllTodoItems(this.memberId);
+        deleteAllConfirm && onDeleteAllTodoItems();
         return;
       }
       if (tagName === 'A') {
-        const $targetFilters = e.target
-          .closest('.filters')
-          .querySelectorAll('a');
-        $targetFilters.forEach((node) => node.classList.remove('selected'));
+        const $targetFilterType = this.$targetFilter.querySelectorAll('a');
+        $targetFilterType.forEach((node) => node.classList.remove('selected'));
         e.target.classList.add('selected');
+        onSelectFilter();
         return;
       }
     });
-
-    window.addEventListener('hashchange', async () => {
-      this.memberId = location.hash.substring(1).split('/')[0];
-      const hash = location.hash.substring(1).split('/')[1];
-      onSelectFilter(this.memberId, hash);
-    });
-  }
-  setState(newFilteredTodoList) {
-    this.filteredTodoList = newFilteredTodoList;
-    this.render();
-  }
-
-  render() {
-    if (!this.filteredTodoList) return;
-    const $targetTodoList = document
-      .querySelector(`[data-member-id='${this.memberId}']`)
-      .querySelector('.todo-list');
-    $targetTodoList.innerHTML = TodoListTemplate(this.filteredTodoList);
   }
 }

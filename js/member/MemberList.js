@@ -6,7 +6,6 @@ export default class MemberList {
   constructor({ teamId, $targetTodoAppListContainer }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
-    // this.render();
   }
   async render() {
     try {

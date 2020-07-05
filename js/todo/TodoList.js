@@ -1,15 +1,12 @@
 import { ERROR_TYPE, MEANING } from '../util/constants.js';
 import * as functions from '../util/functions.js';
-import rootApi from '../api/apiHandler.js';
 import { TodoListTemplate } from '../util/templates.js';
 
 export default class TodoList {
   constructor({
     data,
     filteredData,
-    // filterType,
     $targetTodoList,
-    $targetFilters,
     onToggleTodoItem,
     onDeleteTodoItem,
     onUpdateTodoItem,
@@ -17,9 +14,7 @@ export default class TodoList {
   }) {
     this.data = data;
     this.filteredData = filteredData;
-    // this.filterType = filterType;
     this.$targetTodoList = $targetTodoList;
-    this.$targetFilters = $targetFilters;
 
     this.$targetTodoList.addEventListener('click', (e) => {
       const { className } = e.target;
@@ -78,7 +73,6 @@ export default class TodoList {
     });
 
     this.$targetTodoList.addEventListener('click', (e) => {
-      console.log(e.target);
       const $target = e.target;
       const targetClassList = $target.classList;
       if (
@@ -95,10 +89,12 @@ export default class TodoList {
       }
     });
   }
+
   setState(nextData) {
     this.data = nextData;
     this.render();
   }
+
   render() {
     const hash = location.hash.substring(1);
     this.filteredData = functions.filteringTodoList(this.data, hash);

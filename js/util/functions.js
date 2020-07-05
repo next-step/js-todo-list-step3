@@ -14,7 +14,6 @@ export const filteringTodoList = (todoList, hash) => {
     [FILTER_NAME.PRIORITY]: (data) => {
       const noPriorityLength = data.filter((todo) => todo.priority === 0)
         .length;
-      console.log(noPriorityLength);
       const preSortedArray = data.sort(
         (a, b) => parseInt(a.priority) - parseInt(b.priority),
       );

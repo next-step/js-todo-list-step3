@@ -3,7 +3,7 @@ import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoFilter from './TodoFilter.js';
 import rootApi from '../api/apiHandler.js';
-import { FILTER_NAME, ERROR_TYPE } from '../util/constants.js';
+import { ERROR_TYPE } from '../util/constants.js';
 
 export default class TodoApp {
   constructor({
@@ -13,8 +13,9 @@ export default class TodoApp {
     $targetTodoApp,
     $targetNewTodo,
     $targetTodoList,
+    $targetCountContainer,
     $targetTodoCount,
-    $targetFilters,
+    $targetFilter,
   }) {
     this.data = data;
     this.teamId = teamId;
@@ -22,8 +23,9 @@ export default class TodoApp {
     this.$targetTodoApp = $targetTodoApp;
     this.$targetNewTodo = $targetNewTodo;
     this.$targetTodoList = $targetTodoList;
+    this.$targetCountContainer = $targetCountContainer;
     this.$targetTodoCount = $targetTodoCount;
-    this.$targetFilters = $targetFilters;
+    this.$targetFilter = $targetFilter;
 
     this.todoInput = new TodoInput({
       data,
@@ -46,7 +48,6 @@ export default class TodoApp {
       data,
       filteredData: [],
       $targetTodoList,
-      $targetFilters,
       onToggleTodoItem: async (itemId) => {
         try {
           const toggledTodoItem = await rootApi.fetchToggleTodoItem(
@@ -61,7 +62,7 @@ export default class TodoApp {
           nextData[index] = toggledTodoItem;
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAT_NOT_TOGGLE);
+          console.error(ERROR_TYPE.CAN_NOT_TOGGLE);
         }
       },
       onDeleteTodoItem: async (itemId) => {
@@ -72,46 +73,83 @@ export default class TodoApp {
           nextData.splice(index, 1);
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAT_NOT_DELETE);
+          console.error(ERROR_TYPE.CAN_NOT_DELETE);
         }
       },
       onUpdateTodoItem: async (itemId, contents) => {
-        const updatedTodoItem = await rootApi.fetchUpdateTodoItem(
-          this.teamId,
-          this.memberId,
-          itemId,
-          contents,
-        );
-        const index = this.data.findIndex(
-          (todo) => todo._id === updatedTodoItem._id,
-        );
-        let nextData = [...this.data];
-        nextData[index] = updatedTodoItem;
-        this.setState(nextData);
+        try {
+          const updatedTodoItem = await rootApi.fetchUpdateTodoItem(
+            this.teamId,
+            this.memberId,
+            itemId,
+            contents,
+          );
+          const index = this.data.findIndex(
+            (todo) => todo._id === updatedTodoItem._id,
+          );
+          let nextData = [...this.data];
+          nextData[index] = updatedTodoItem;
+          this.setState(nextData);
+        } catch (e) {
+          console.error(ERROR_TYPE.CAN_NOT_UPDATE);
+        }
       },
       onPriorityTodoItem: async (itemId, priority) => {
-        const setPriorityTodoItem = await rootApi.fetchPriorityTodoItem(
-          this.teamId,
-          this.memberId,
-          itemId,
-          priority,
-        );
-        const index = this.data.findIndex(
-          (todo) => todo._id === setPriorityTodoItem._id,
-        );
-        let nextData = [...this.data];
-        nextData[index] = setPriorityTodoItem;
-        this.setState(nextData);
+        try {
+          const setPriorityTodoItem = await rootApi.fetchPriorityTodoItem(
+            this.teamId,
+            this.memberId,
+            itemId,
+            priority,
+          );
+          const index = this.data.findIndex(
+            (todo) => todo._id === setPriorityTodoItem._id,
+          );
+          let nextData = [...this.data];
+          nextData[index] = setPriorityTodoItem;
+          this.setState(nextData);
+        } catch (e) {
+          console.error(ERROR_TYPE.CAN_NOT_SET_PRIORITY);
+        }
       },
     });
 
     this.todoCount = new TodoCount({
-      
-    })
+      data,
+      filteredData: [],
+      $targetTodoCount,
+    });
+
+    this.todoFilter = new TodoFilter({
+      data,
+      filteredData: [],
+      $targetCountContainer,
+      $targetFilter,
+      onDeleteAllTodoItems: async () => {
+        try {
+          await rootApi.fetchDeleteAllTodoItems(this.teamId, this.memberId);
+          this.setState([]);
+        } catch (e) {
+          console.error(ERROR_TYPE.CAN_NOT_DELETE_ALL);
+        }
+      },
+      onSelectFilter: async () => {
+        try {
+          const { todoList } = await rootApi.fetchMemberTodoList(
+            this.teamId,
+            this.memberId,
+          );
+          this.setState(todoList);
+        } catch (e) {
+          console.error(ERROR_TYPE.CAN_NOT_LOAD);
+        }
+      },
+    });
   }
 
   setState(nextData) {
     this.data = nextData;
     this.todoList.setState(nextData);
+    this.todoCount.setState(nextData);
   }
 }
