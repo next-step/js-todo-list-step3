@@ -134,6 +134,5 @@ export default function TodoList(props) {
   this.teamId = teamId
   this.memberId = memberId
   this.getTodos = getTodos
-
   this.init()
 }

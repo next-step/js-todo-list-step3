@@ -8,10 +8,11 @@ TodoFilter.prototype.init = function () {
 
 TodoFilter.prototype.bindEvent = function () {
   const onFilterTodoListListener = (e) => {
-    if (e.target.tagName === TAG_NAME.A) {
-      e.preventDefault()
-      this.onFilter(e.target.className)
+    if (e.target.tagName !== TAG_NAME.A) {
+      return
     }
+    e.preventDefault()
+    this.onFilter(e.target.className)
   }
 
   this.$target.addEventListener('click', onFilterTodoListListener)

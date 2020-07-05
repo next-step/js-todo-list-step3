@@ -15,6 +15,9 @@ const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
 const getTodoHash = (todos) => {
   return {
     [FILTER_STATUS.ALL]: todos,
+    [FILTER_STATUS.PRIORITY]: todos.sort(
+      (a, b) => Number(a.priority) - Number(b.priority)
+    ),
     [FILTER_STATUS.ACTIVE]: todos.filter(({ isCompleted }) => !isCompleted),
     [FILTER_STATUS.COMPLETED]: todos.filter(({ isCompleted }) => isCompleted),
   }
@@ -29,13 +32,6 @@ TodoContainer.prototype.init = function () {
     getTodos,
     onFilter,
   } = this
-  this.todos = []
-  this.todoHash = {
-    [FILTER_STATUS.ALL]: this.todos,
-    [FILTER_STATUS.ACTIVE]: [],
-    [FILTER_STATUS.COMPLETED]: [],
-  }
-  this.filterStatus = FILTER_STATUS.ALL
 
   this.$target = document.querySelector(selector)
   const $fragment = document.createDocumentFragment() // $target에 append하기 전 fragment에 모두 뭉침
@@ -113,11 +109,10 @@ TodoContainer.prototype.init = function () {
   // this.$loading = new Loading({
   //   selector: '.todo-list',
   // })
-
   this.getTodos()
 }
-
 TodoContainer.prototype.setState = function () {
+  console.log(this)
   const renderTodos = this.todoHash[this.filterStatus]
   this.$todoList.setState(renderTodos)
   this.$todoCount.setState(
@@ -125,7 +120,6 @@ TodoContainer.prototype.setState = function () {
     renderTodos.filter(({ isCompleted }) => isCompleted === true).length
   )
 }
-
 export default function TodoContainer(props) {
   if (new.target !== TodoContainer) {
     return new TodoContainer(props)
@@ -137,6 +131,7 @@ export default function TodoContainer(props) {
   this.teamId = teamId
   this.todoList = todoList
   this.selector = selector
+  this.filterStatus = FILTER_STATUS.ALL
 
   TodoContainer.prototype.getTodos = async () => {
     // this 를 TodoContainer에 바인딩하기 위해 TodoCounter 안에서 '=>' 사용
@@ -147,8 +142,8 @@ export default function TodoContainer(props) {
         this.teamId,
         this.memberId
       )
-      this.todos = todoList ? todoList : []
-      this.todoHash = getTodoHash(this.todos)
+      this.todoList = todoList ? todoList : []
+      this.todoHash = getTodoHash(this.todoList)
       this.setState()
     } catch (e) {
       console.error(e)
@@ -160,15 +155,6 @@ export default function TodoContainer(props) {
   TodoContainer.prototype.onFilter = (status) => {
     this.filterStatus = status
     this.setState()
-  }
-
-  TodoContainer.prototype.onDeleteAll = async () => {
-    try {
-      await memberApis.deleteTodoAll(this.username)
-      this.getTodos()
-    } catch (e) {
-      console.error(e)
-    }
   }
 
   this.init()

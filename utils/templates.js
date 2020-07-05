@@ -34,13 +34,13 @@ export const todoFilterTemplate = `
             <a href="#all" class="selected">전체보기</a>
           </li>
           <li>
-            <a href="#priority">우선 순위</a>
+            <a href="#priority" class="priority">우선 순위</a>
           </li>
           <li>
-            <a href="#active">해야할 일</a>
+            <a href="#active" class="active">해야할 일</a>
           </li>
           <li>
-            <a href="#completed">완료한 일</a>
+            <a href="#completed" class="completed">완료한 일</a>
           </li>
 `
 
@@ -92,7 +92,7 @@ export const todoItemHTMLTemplate = (
   index
 ) => {
   return `
-      <li data-id=${_id} data-index=${index} class="todo-list-item ${
+    <li data-id=${_id} data-index=${index} class="todo-list-item ${
     isCompleted ? 'completed' : ''
   }">
           <div class="view">

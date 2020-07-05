@@ -25,6 +25,7 @@ export const KEY_NAME = {
 
 export const FILTER_STATUS = {
   ALL: 'all selected',
+  PRIORITY: 'priority',
   ACTIVE: 'active',
   COMPLETED: 'completed',
 }
