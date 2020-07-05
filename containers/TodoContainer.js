@@ -13,9 +13,10 @@ import memberApis from '../api/member.js'
 
 const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
 const getTodoHash = (todos) => {
+  const copyTodos = [...todos] // sort()로 인한 불변성 깨짐방지.
   return {
     [FILTER_STATUS.ALL]: todos,
-    [FILTER_STATUS.PRIORITY]: todos.sort(
+    [FILTER_STATUS.PRIORITY]: copyTodos.sort(
       (a, b) => Number(a.priority) - Number(b.priority)
     ),
     [FILTER_STATUS.ACTIVE]: todos.filter(({ isCompleted }) => !isCompleted),
@@ -112,7 +113,7 @@ TodoContainer.prototype.init = function () {
   this.getTodos()
 }
 TodoContainer.prototype.setState = function () {
-  console.log(this)
+  console.log('status', this.filterStatus)
   const renderTodos = this.todoHash[this.filterStatus]
   this.$todoList.setState(renderTodos)
   this.$todoCount.setState(
@@ -120,6 +121,7 @@ TodoContainer.prototype.setState = function () {
     renderTodos.filter(({ isCompleted }) => isCompleted === true).length
   )
 }
+
 export default function TodoContainer(props) {
   if (new.target !== TodoContainer) {
     return new TodoContainer(props)
@@ -147,7 +149,8 @@ export default function TodoContainer(props) {
       this.setState()
     } catch (e) {
       console.error(e)
-      this.todos = []
+      this.todoList = []
+      this.todoHash = getTodoHash(this.todoList)
       this.setState()
     }
   }

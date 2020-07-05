@@ -1,10 +1,9 @@
 import { todoCountComponentTemplate } from '../../utils/templates.js'
 
 TodoCount.prototype.init = function () {
-  const { totalCount, completedCount } = this
   this.$target.innerHTML = todoCountComponentTemplate(
-    totalCount,
-    completedCount
+    this.totalCount,
+    this.completedCount
   )
 }
 
