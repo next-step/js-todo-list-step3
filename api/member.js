@@ -15,9 +15,16 @@ const api = (() => {
         METHOD.POST({ contents })
       )
     },
-    getTodosByMember(teamId, memberId) {
+    getMemberTodos(teamId, memberId) {
       return requestWithReturn(
         API_URL + `/api/teams/${teamId}/members/${memberId}`
+      )
+    },
+    toggleMemberTodos({ teamId, memberId, itemId }) {
+      return request(
+        API_URL +
+          `/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+        METHOD.PUT()
       )
     },
   }
