@@ -1,6 +1,6 @@
-import { TAG_NAME, CLASS_NAME, KEY_NAME } from '../utils/constants.js'
-import api from '../api/api.js'
-import { todoItemHTMLTemplate } from '../utils/templates.js'
+import { TAG_NAME, CLASS_NAME, KEY_NAME } from '../../utils/constants.js'
+import todoApis from '../../api/todoApis.js'
+import { todoItemHTMLTemplate } from '../../utils/templates.js'
 
 export default function TodoList(props) {
   const { selector, todos, username, getTodos } = props
@@ -25,14 +25,14 @@ export default function TodoList(props) {
         target.className === CLASS_NAME.TOGGLE
       ) {
         try {
-          await api.toggleTodo(this.username, id)
+          await todoApis.toggleTodo(this.username, id)
           getTodos()
         } catch (e) {
           console.error(e)
         }
       } else if (target.tagName === TAG_NAME.BUTTON) {
         try {
-          await api.deleteTodo(this.username, id)
+          await todoApis.deleteTodo(this.username, id)
           getTodos()
         } catch (e) {
           console.error(e)
@@ -60,7 +60,7 @@ export default function TodoList(props) {
         li.classList.remove(CLASS_NAME.EDITING)
         const { id } = li.dataset
         try {
-          await api.updateTodoContent({
+          await todoApis.updateTodoContent({
             username: this.username,
             id,
             data: { contents: e.target.value.trim() },
@@ -91,9 +91,10 @@ export default function TodoList(props) {
       }
       const li = e.target.closest('li')
       const { id } = li.dataset
-      if (e.target.value !== 0) { // option을 선택하지 않은 경우는 제외
+      if (e.target.value !== 0) {
+        // option을 선택하지 않은 경우는 제외
         try {
-          await api.updateTodoPriority({
+          await todoApis.updateTodoPriority({
             username: this.username,
             id,
             data: { priority: e.target.value },
@@ -118,7 +119,8 @@ export default function TodoList(props) {
 
   this.setState = (username, todos) => {
     this.username = username
-    if (todos) { // username 만 update 하는 경우를 생각해서 조건문 처리하였습니당
+    if (todos) {
+      // username 만 update 하는 경우를 생각해서 조건문 처리하였습니당
       this.todos = todos
       this.render()
     }
@@ -126,4 +128,3 @@ export default function TodoList(props) {
 
   this.init()
 }
-

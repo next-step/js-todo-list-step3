@@ -1,15 +1,17 @@
-import { KEY_NAME } from '../utils/constants.js'
-import api from '../api/api.js'
+import { KEY_NAME } from '../../utils/constants.js'
+import todoApis from '../../api/todoApis.js'
 
 export default function TodoInput(props) {
   if (new.target !== TodoInput) {
     return new TodoInput(props)
   }
-  const { selector, username, getTodos } = props
+  const { $target, teamId, memberId, getTodos } = props
+  this.$target = $target
+  this.teamId = teamId
+  this.memberId = memberId
+  this.getTodos = getTodos
 
   this.init = () => {
-    this.$target = document.querySelector(selector)
-    this.username = username
     this.bindEvent()
   }
 
@@ -17,7 +19,11 @@ export default function TodoInput(props) {
     const onAddTodoItemHandler = async (e) => {
       if (e.key === KEY_NAME.ENTER && e.target.value.trim()) {
         try {
-          await api.createTodo(this.username, { contents: e.target.value })
+          await todoApis.createTodo({
+            teamId,
+            memberId,
+            contents: e.target.value,
+          })
           getTodos()
         } catch (e) {
           console.error(e)

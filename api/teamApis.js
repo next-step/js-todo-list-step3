@@ -9,6 +9,9 @@ const api = (() => {
     getTeamOne(id) {
       return requestWithReturn(API_URL + `/api/teams/${id}`)
     },
+    create(name) {
+      return request(API_URL + '/api/teams', METHOD.POST({ name }))
+    },
   }
 })()
 

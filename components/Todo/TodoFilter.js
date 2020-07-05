@@ -1,4 +1,4 @@
-import { TAG_NAME } from '../utils/constants.js'
+import { TAG_NAME } from '../../utils/constants.js'
 
 export default function TodoFilter({ selector, onFilter }) {
   if (new.target !== TodoFilter) {

@@ -13,11 +13,9 @@ export const teamButtonTemplate = ({ _id, name }) => `
         </div>
 `
 export const createTeamButtonTemplate = () => `
-        <div class="add-team-button-container">
           <button id="add-team-button" class="ripple">
             <span class="material-icons">add</span>
           </button>
-        </div>
 `
 
 /* Team Page Templte End */
@@ -25,6 +23,12 @@ export const createTeamButtonTemplate = () => `
 /* Kanban Page Template Start */
 export const kanbanHeaderTemplate = (teamName) =>
   `<span><strong>${teamName}</strong>\'s Todo List</span>`
+
+export const todoHeaderTemplate = (userName) => `
+  <h2>
+    <span><strong>${userName}</strong>'s Todo List</span>
+  </h2>
+`
 
 export const loadingComponentTemplate = ` 
                 <li>

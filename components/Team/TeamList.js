@@ -1,3 +1,4 @@
+import { CreateTeamButton } from '../../components/team/index.js'
 import teamApis from '../../api/teamApis.js'
 import { teamButtonTemplate } from '../../utils/templates.js'
 
@@ -5,19 +6,19 @@ export default function TeamList({ selector }) {
   if (new.target !== TeamList) {
     return new TeamList({ selector })
   }
-  this.init = async () => {
+  this.render = async () => {
     try {
       this.$target = document.querySelector(selector)
       this.teams = await teamApis.getTeams()
-      this.render()
     } catch (e) {
       this.teams = []
     }
-  }
-
-  this.render = () => {
     this.$target.innerHTML = this.teams.map(teamButtonTemplate).join('')
+    new CreateTeamButton({
+      selector: '.team-list-container',
+      renderTeamList: this.render,
+    }) // 동기적으로 실행시키기 위해 여기서 인스턴스 생성.
   }
 
-  this.init()
+  this.render()
 }
