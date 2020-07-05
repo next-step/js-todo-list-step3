@@ -2,7 +2,11 @@ import { Header } from '../components/common/index.js'
 import { AddMemberButton } from '../components/kanban/index.js'
 import { TodoContainer } from '../containers/index.js'
 import teamApis from '../api/team.js'
-import { getURLQueryArray, redirectToMainPage } from '../utils/functions.js'
+import {
+  getURLQueryArray,
+  redirectToMainPage,
+  clearChildNode,
+} from '../utils/functions.js'
 import { kanbanHeaderTemplate } from '../utils/templates.js'
 
 export default function KanBanContainer() {
@@ -29,6 +33,8 @@ export default function KanBanContainer() {
 
   this.render = async () => {
     try {
+      clearChildNode('.todoapp-list-container') // todoapp-list-container 초기화
+
       const { members } = await teamApis.getTeamOne(this.teamId)
       console.log(members)
       members.forEach((member) => {

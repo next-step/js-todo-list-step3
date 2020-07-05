@@ -5,6 +5,8 @@ export const TAG_NAME = {
   INPUT: 'INPUT',
   BUTTON: 'BUTTON',
   SELECT: 'SELECT',
+  SPAN: 'SPAN',
+  UL: 'UL',
 }
 
 export const CLASS_NAME = {

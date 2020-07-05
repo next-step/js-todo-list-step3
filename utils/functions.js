@@ -10,3 +10,8 @@ export const getURLQueryArray = (queries) => {
 }
 
 export const redirectToMainPage = () => (window.location.href = '/index.html')
+
+export const clearChildNode = (selector) => {
+  const $target = document.querySelector(selector)
+  $target.innerHTML = ''
+}

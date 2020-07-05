@@ -19,8 +19,8 @@ export default function AddMemberButton(props) {
   }
 
   this.bindEvent = () => {
-    const onAddMemberListener = async (e) => {
-      if (e.target.tagName !== TAG_NAME.BUTTON) {
+    const onAddMemberListener = async ({ target: { tagName } }) => {
+      if (tagName !== TAG_NAME.SPAN && tagName !== TAG_NAME.BUTTON) {
         return
       }
       const memberName = prompt('새로운 팀원 이름을 입력해주세요')
