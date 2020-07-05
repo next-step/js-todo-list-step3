@@ -33,6 +33,12 @@ const api = (() => {
         METHOD.DELETE()
       )
     },
+    deleteAllTodo(teamId, memberId) {
+      return request(
+        API_URL + `/api/teams/${teamId}/members/${memberId}/items`,
+        METHOD.DELETE()
+      )
+    },
     updateTodoContent(args) {
       const { teamId, memberId, itemId, contents } = args
       return request(

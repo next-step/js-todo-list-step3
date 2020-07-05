@@ -100,6 +100,9 @@ TodoContainer.prototype.init = function () {
   // RemoveAllButton
   new RemoveAllButton({
     $target: $countContainer,
+    teamId,
+    memberId,
+    getTodos,
   })
   $todoApp.appendChild($countContainer)
   /* TodoApp Element End */
@@ -145,14 +148,12 @@ export default function TodoContainer(props) {
         this.memberId
       )
       this.todoList = todoList ? todoList : []
-      this.todoHash = getTodoHash(this.todoList)
-      this.setState()
     } catch (e) {
       console.error(e)
       this.todoList = []
-      this.todoHash = getTodoHash(this.todoList)
-      this.setState()
     }
+    this.todoHash = getTodoHash(this.todoList)
+    this.setState()
   }
 
   TodoContainer.prototype.onFilter = (status) => {

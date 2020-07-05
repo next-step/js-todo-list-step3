@@ -1,3 +1,5 @@
+import memberApis from '../../api/member.js'
+
 RemoveAllButton.prototype.init = function () {
   this.$button = document.createElement('button')
   this.$button.className = 'clear-completed'
@@ -9,7 +11,7 @@ RemoveAllButton.prototype.init = function () {
 RemoveAllButton.prototype.bindEvent = function () {
   const deleteAllTodosListener = async (e) => {
     try {
-      await memberApis.deleteTodoAll(this.username)
+      await memberApis.deleteAllTodo(this.teamId, this.memberId)
       this.getTodos()
     } catch (e) {
       console.error(e)
@@ -18,11 +20,15 @@ RemoveAllButton.prototype.bindEvent = function () {
   this.$button.addEventListener('click', deleteAllTodosListener)
 }
 
-export default function RemoveAllButton({ $target }) {
+export default function RemoveAllButton(props) {
   if (new.target !== RemoveAllButton) {
-    return new RemoveAllButton({ $target })
+    return new RemoveAllButton(props)
   }
+  const { $target, teamId, memberId, getTodos } = props
   this.$target = $target
+  this.teamId = teamId
+  this.memberId = memberId
+  this.getTodos = getTodos
 
   this.init()
 }
