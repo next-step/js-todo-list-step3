@@ -3,15 +3,16 @@ import todoApis from '../../api/todoApis.js'
 import { todoItemHTMLTemplate } from '../../utils/templates.js'
 
 export default function TodoList(props) {
-  const { selector, todos, username, getTodos } = props
   if (new.target !== TodoList) {
     return new TodoList(props)
   }
+  const { $target, todos, teamId, memberId, getTodos } = props
 
   this.init = () => {
-    this.$target = document.querySelector(selector)
+    this.$target = $target
     this.todos = todos
-    this.username = username
+    this.teamId = teamId
+    this.memberId = memberId
     this.render()
     this.bindEvent()
   }
@@ -114,6 +115,7 @@ export default function TodoList(props) {
   }
 
   this.render = () => {
+    console.log(this.$target)
     this.$target.innerHTML = this.todos.map(todoItemHTMLTemplate).join('')
   }
 

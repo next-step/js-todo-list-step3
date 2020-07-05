@@ -1,12 +1,14 @@
 import { TAG_NAME } from '../../utils/constants.js'
+import { todoFilterTemplate } from '../../utils/templates.js'
 
-export default function TodoFilter({ selector, onFilter }) {
+export default function TodoFilter({ $target, onFilter }) {
   if (new.target !== TodoFilter) {
-    return new TodoFilter({ selector, onFilter })
+    return new TodoFilter({ $target, onFilter })
   }
+  this.$target = $target
 
   this.init = () => {
-    this.$target = document.querySelector(selector)
+    this.$target.innerHTML = todoFilterTemplate
     this.bindEvent()
   }
 

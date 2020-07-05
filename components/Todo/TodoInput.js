@@ -12,6 +12,12 @@ export default function TodoInput(props) {
   this.getTodos = getTodos
 
   this.init = () => {
+    this.$input = document.createElement('input')
+    this.$input.className = 'new-todo'
+    this.$input.placeholder = '할 일을 입력해주세요.'
+    this.$input.autofocus = true
+
+    this.$target.appendChild(this.$input)
     this.bindEvent()
   }
 

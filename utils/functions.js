@@ -1,9 +1,9 @@
-export const getURLQueryArray = (quires) => {
-  if (!quires) {
-    throw new Error('quires are empty')
+export const getURLQueryArray = (queries) => {
+  if (!queries) {
+    throw new Error('queries are empty')
   }
-  return quires
-    .slice(1, quires.length)
+  return queries
+    .slice(1, queries.length) // '?'이후 값 부터.
     .split('&')
     .map((element) => element.split('='))
     .map(([key, value]) => ({ [key]: value }))

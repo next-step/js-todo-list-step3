@@ -25,9 +25,31 @@ export const kanbanHeaderTemplate = (teamName) =>
   `<span><strong>${teamName}</strong>\'s Todo List</span>`
 
 export const todoHeaderTemplate = (userName) => `
-  <h2>
-    <span><strong>${userName}</strong>'s Todo List</span>
-  </h2>
+          <h2>
+            <span><strong>${userName}</strong>'s Todo List</span>
+          </h2>
+`
+export const todoFilterTemplate = `
+          <li>
+            <a href="#all" class="selected">전체보기</a>
+          </li>
+          <li>
+            <a href="#priority">우선 순위</a>
+          </li>
+          <li>
+            <a href="#active">해야할 일</a>
+          </li>
+          <li>
+            <a href="#completed">완료한 일</a>
+          </li>
+`
+
+export const addMemberButtonTemplate = `
+          <li class="add-user-button-container">
+            <button id="add-user-button" class="ripple">
+              <span class="material-icons">add</span>
+            </button>
+          </li>
 `
 
 export const loadingComponentTemplate = ` 
@@ -72,9 +94,9 @@ export const todoItemHTMLTemplate = (
   index
 ) => {
   return `
-      <li data-id=${_id} data-index=${index} class=${
+      <li data-id=${_id} data-index=${index} class="todo-list-item ${
     isCompleted ? 'completed' : ''
-  }>
+  }">
           <div class="view">
             <input class="toggle" type="checkbox" ${
               isCompleted ? 'checked' : ''

@@ -5,6 +5,7 @@ import {
   TodoFilter,
   TodoHeader,
   Loading,
+  RemoveAllButton,
 } from '../components/todo/index.js'
 import { FILTER_STATUS, CLASS_NAME } from '../utils/constants.js'
 import { todoHeaderTemplate } from '../utils/templates.js'
@@ -48,46 +49,71 @@ export default function TodoContainer(props) {
       $target: $todoHeaderContainer,
       textContent: todoHeaderTemplate(userName),
     })
-    $fragment.appendChild($todoHeaderContainer)
+    $todoAppContainer.appendChild($todoHeaderContainer)
 
+    /* TodoApp Element Start */
     const $todoApp = document.createElement('div')
-    $todoApp.className = 'todoApp'
+    $todoApp.className = 'todoapp'
 
-    //TodoInput
+    // TodoInput
+    const $todoInputContainer = document.createElement('section')
+    $todoInputContainer.className = 'input-container'
     this.$todoInput = new TodoInput({
-      $target: this.$target,
+      $target: $todoInputContainer,
       teamId,
       memberId,
       getTodos,
     })
+    $todoApp.appendChild($todoInputContainer)
 
+    // TodoList
+    const $mainSection = document.createElement('section')
+    $mainSection.className = 'main'
+    const $ul = document.createElement('ul')
+    $ul.className = 'todo-list'
+    this.$todoList = new TodoList({
+      $target: $ul,
+      todos: todoList,
+      teamId,
+      memberId,
+      getTodos,
+    })
+    $mainSection.appendChild($ul)
+    $todoApp.appendChild($mainSection)
+
+    // TodoCount
+    const $countContainer = document.createElement('div')
+    $countContainer.className = 'count-container'
+
+    this.$todoCount = new TodoCount({
+      $target: $countContainer,
+      totalCount: todoList.length,
+      completedCount: todoList.filter(({ isCompleted }) => isCompleted).length,
+    })
+
+    // TodoFilter
+    const $filterUl = document.createElement('ul')
+    $filterUl.className = 'filters'
+    new TodoFilter({
+      $target: $filterUl,
+      onFilter,
+    })
+    $countContainer.appendChild($filterUl)
+
+    // RemoveAllButton
+    new RemoveAllButton({
+      $target: $countContainer,
+    })
+
+    $todoApp.appendChild($countContainer)
+    /* TodoApp Element End */
+    $todoAppContainer.appendChild($todoApp)
+    $fragment.appendChild($todoAppContainer)
     this.$target.appendChild($fragment)
-
-    // this.$todoList = new TodoList({
-    //   selector: '.todo-list',
-    //   todos: this.todos,
-    //   username: this.username,
-    //   getTodos,
-    // })
-
-    // this.$todoCount = new TodoCount({
-    //   selector: '.todo-counter',
-    //   totalCount: this.todos.length,
-    //   completedCount: this.todos.filter(({ isCompleted }) => isCompleted)
-    //     .length,
-    // })
-
-    // new TodoFilter({
-    //   selector: '.filters',
-    //   onFilter,
-    // })
 
     // this.$loading = new Loading({
     //   selector: '.todo-list',
     // })
-
-    // this.$removeAllBtn = document.querySelector(`.${CLASS_NAME.REMOVE_ALL}`)
-    // this.$removeAllBtn.addEventListener('click', this.onDeleteAll)
 
     // this.getTodos()
   }

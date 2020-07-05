@@ -4,10 +4,10 @@ export default function TodoCount(props) {
   if (new.target !== TodoCount) {
     return new TodoCount(props)
   }
-  const { selector, totalCount, completedCount } = props
+  const { $target, totalCount, completedCount } = props
+  this.$target = $target
 
   this.init = () => {
-    this.$target = document.querySelector(selector)
     this.setState(totalCount, completedCount)
   }
 
