@@ -25,7 +25,7 @@ TodoList.prototype.bindEvents = function () {
       target.className === CLASS_NAME.TOGGLE
     ) {
       try {
-        await memberApis.toggleMemberTodos({
+        await memberApis.toggleTodo({
           teamId: this.teamId,
           memberId: this.memberId,
           itemId: id,
@@ -36,7 +36,11 @@ TodoList.prototype.bindEvents = function () {
       }
     } else if (target.tagName === TAG_NAME.BUTTON) {
       try {
-        await memberApis.deleteTodo(this.username, id)
+        await memberApis.deleteTodo({
+          teamId: this.teamId,
+          memberId: this.memberId,
+          itemId: id,
+        })
         this.getTodos()
       } catch (e) {
         console.error(e)
@@ -65,9 +69,10 @@ TodoList.prototype.bindEvents = function () {
       const { id } = li.dataset
       try {
         await memberApis.updateTodoContent({
-          username: this.username,
-          id,
-          data: { contents: e.target.value.trim() },
+          teamId: this.teamId,
+          memberId: this.memberId,
+          itemId: id,
+          contents: e.target.value.trim(),
         })
         this.getTodos()
       } catch (e) {
@@ -99,9 +104,10 @@ TodoList.prototype.bindEvents = function () {
       // option을 선택하지 않은 경우는 제외
       try {
         await memberApis.updateTodoPriority({
-          username: this.username,
-          id,
-          data: { priority: e.target.value },
+          teamId: this.teamId,
+          memberId: this.memberId,
+          itemId: id,
+          priority: e.target.value,
         })
         this.getTodos()
       } catch (e) {

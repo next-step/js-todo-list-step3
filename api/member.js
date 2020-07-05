@@ -20,11 +20,32 @@ const api = (() => {
         API_URL + `/api/teams/${teamId}/members/${memberId}`
       )
     },
-    toggleMemberTodos({ teamId, memberId, itemId }) {
+    toggleTodo({ teamId, memberId, itemId }) {
       return request(
         API_URL +
           `/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
         METHOD.PUT()
+      )
+    },
+    deleteTodo({ teamId, memberId, itemId }) {
+      return request(
+        API_URL + `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+        METHOD.DELETE()
+      )
+    },
+    updateTodoContent(args) {
+      const { teamId, memberId, itemId, contents } = args
+      return request(
+        API_URL + `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+        METHOD.PUT({ contents })
+      )
+    },
+    updateTodoPriority(args) {
+      const { teamId, memberId, itemId, priority } = args
+      return request(
+        API_URL +
+          `/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
+        METHOD.PUT({ priority })
       )
     },
   }
