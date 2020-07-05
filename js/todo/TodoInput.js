@@ -1,6 +1,6 @@
-import { KEY_NAME } from './util/constants.js';
+import { KEY_NAME } from '../util/constants.js';
 
-export default class KanbanTodoInput {
+export default class TodoInput {
   constructor({ teamId, $targetTodoAppListContainer, onAddTodoItem }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;

@@ -1,7 +1,7 @@
-import { MESSAGE, FILTER_NAME } from './util/constants.js';
-import { TodoListTemplate } from './util/templates.js';
+import { MESSAGE, FILTER_NAME } from '../util/constants.js';
+import { TodoListTemplate } from '../util/templates.js';
 
-export default class KanbanTodoFilter {
+export default class TodoFilter {
   constructor({
     teamId,
     memberId,

@@ -1,10 +1,10 @@
-import KanbanApp from './KanbanApp.js';
+import MemberApp from './MemberApp.js';
 
 const parsedUrl = new URL(window.location.href);
 const teamName = parsedUrl.searchParams.get('name');
 const teamId = parsedUrl.searchParams.get('id');
 
-new KanbanApp({ 
+new MemberApp({ 
   teamName,
   teamId,
   $targetTeamTitle: document.querySelector('#user-title'),

@@ -1,6 +1,6 @@
-import { TodoCountTemplate } from './util/templates.js'
+import { TodoCountTemplate } from '../util/templates.js'
 
-export default class KanbanTodoCount {
+export default class TodoCount {
   constructor({ memberId, filteredTodoList, $targetTodoAppListContainer }) {
     this.memberId = memberId;
     this.filteredTodoList = filteredTodoList;

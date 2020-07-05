@@ -1,6 +1,6 @@
-import { MESSAGE } from './util/constants.js';
+import { MESSAGE } from '../util/constants.js';
 
-export default class KanbanMemberInput {
+export default class MemberInput {
   constructor({ teamId, $targetTodoAppListContainer, onAddMember }) {
     this.teamId = teamId;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;

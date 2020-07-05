@@ -1,4 +1,4 @@
-import { MESSAGE } from './util/constants.js';
+import { MESSAGE } from '../util/constants.js';
 
 export default class TeamInput {
   constructor({ $targetTeamList, onInputTeam }) {

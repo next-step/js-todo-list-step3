@@ -1,6 +1,6 @@
-import { TeamTitleTemplate } from './util/templates.js';
+import { TeamTitleTemplate } from '../util/templates.js';
 
-export default class KanbanTeamTitle {
+export default class MemberTitle {
   constructor({ teamName, $targetTeamTitle }) {
     this.teamName = teamName;
     this.$targetTeamTitle = $targetTeamTitle;

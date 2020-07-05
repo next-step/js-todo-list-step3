@@ -1,6 +1,6 @@
-import { MemberListTemplate } from './util/templates.js';
-import rootApi from './api/apiHandler.js';
-import { ERROR_TYPE } from './util/constants.js';
+import { MemberListTemplate } from '../util/templates.js';
+import rootApi from '../api/apiHandler.js';
+import { ERROR_TYPE } from '../util/constants.js';
 
 export default class KanbanMemberList {
   constructor({ teamId, $targetTodoAppListContainer }) {

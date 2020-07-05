@@ -1,4 +1,4 @@
-import rootApi from './api/apiHandler.js';
+import rootApi from '../api/apiHandler.js';
 import TeamList from './TeamList.js';
 import TeamInput from './TeamInput.js';
 

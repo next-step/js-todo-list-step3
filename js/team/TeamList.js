@@ -1,5 +1,5 @@
-import rootApi from './api/apiHandler.js';
-import { TeamListTemplate } from './util/templates.js';
+import rootApi from '../api/apiHandler.js';
+import { TeamListTemplate } from '../util/templates.js';
 
 export default class TeamList {
   constructor({ teamNameList, $targetTeamList }) {

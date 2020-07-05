@@ -1,9 +1,9 @@
-import { ERROR_TYPE } from './util/constants.js';
-import * as functions from './util/functions.js';
-import rootApi from './api/apiHandler.js';
-import { TodoListTemplate } from './util/templates.js';
+import { ERROR_TYPE } from '../util/constants.js';
+import * as functions from '../util/functions.js';
+import rootApi from '../api/apiHandler.js';
+import { TodoListTemplate } from '../util/templates.js';
 
-export default class KanbanTodoList {
+export default class TodoList {
   constructor({
     teamId,
     memberId,
