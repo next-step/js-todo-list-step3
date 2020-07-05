@@ -5,7 +5,7 @@ export const TeamListTemplate = (teamList) =>
     .map(
       (team) => `
           <div class="team-card-container">
-            <a href="/kanban.html?name=${team.name}&id=${team._id}" class="card">
+            <a href="/kanban.html?name=${team.name}&id=${team._id}#all" class="card">
               <div class="card-title">
                 ${team.name}
               </div>
@@ -36,7 +36,7 @@ const subTodoPriorityTemplate = (priority) => `
       ? '<span class="chip secondary">2순위</span>'
       : ''
   }
-  <select class="chip select ${priority !== MEANING.NOTHING ? 'hidden' : ''}">
+  <select class="chip select${priority !== MEANING.NOTHING ? ' hidden' : ''}">
     <option value="0" selected>순위</option>
     <option value="1">1순위</option>
     <option value="2">2순위</option>
@@ -102,16 +102,16 @@ export const MemberListTemplate = (memberList) =>
           }</span>
           <ul class="filters">
             <li>
-              <a href="#${member._id}/all" class="selected">전체보기</a>
+              <a href="#all" class="selected">전체보기</a>
             </li>
             <li>
-              <a href="#${member._id}/priority">우선 순위</a>
+              <a href="#priority">우선 순위</a>
             </li>
             <li>
-              <a href="#${member._id}/active">해야할 일</a>
+              <a href="#active">해야할 일</a>
             </li>
             <li>
-              <a href="#${member._id}/completed">완료한 일</a>
+              <a href="#completed">완료한 일</a>
             </li>
           </ul>
           <button class="clear-completed">모두 삭제</button>

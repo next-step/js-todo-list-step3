@@ -8,7 +8,7 @@ export const backToOriginalToggle = (target) => {
   }
 };
 
-export const filteringTodoList = (hash, todoList) => {
+export const filteringTodoList = (todoList, hash) => {
   if (!todoList) return;
   const selectAction = {
     [FILTER_NAME.PRIORITY]: (data) => {

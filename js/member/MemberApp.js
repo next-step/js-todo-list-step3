@@ -22,17 +22,17 @@ export default class MemberApp {
     this.$targetTeamTitle = $targetTeamTitle;
     this.$targetTodoAppListContainer = $targetTodoAppListContainer;
 
-    this.MemberTeamTitle = new MemberTitle({
+    this.memberTitle = new MemberTitle({
       teamName: this.teamName,
       $targetTeamTitle,
     });
 
-    this.MemberMemberList = new MemberList({
+    this.memberList = new MemberList({
       teamId,
       $targetTodoAppListContainer,
     });
 
-    this.MemberMemberInput = new MemberInput({
+    this.memberInput = new MemberInput({
       teamId,
       $targetTodoAppListContainer,
       onAddMember: async (addMember) => {
@@ -109,24 +109,31 @@ export default class MemberApp {
   }
 
   async makeInstanceTodo() {
+    await this.memberList.render();
     try {
-      console.log(this.teamId);
       const { members } = await rootApi.fetchTeam(this.teamId);
-      console.log(members);
-      const $targetTodoApps = document.querySelectorAll('.todoapp');
-      console.log($targetTodoApps);
-      await members.map(
-        (member, index) =>
-          new TodoApp({
-            data: members[index],
-            teamId: this.teamId,
-            memberId: member._id,
-            $target: $targetTodoApps[index],
-          }),
-      );
+      this.members = members;
     } catch (e) {
       console.error(ERROR_TYPE.CAN_NOT_LOAD);
     }
+    const $targetTodoAppAll = document.querySelectorAll('.todoapp');
+    const $targetNewTodoAll = document.querySelectorAll('.new-todo');
+    const $targetTodoListAll = document.querySelectorAll('.todo-list');
+    const $targetTodoCountAll = document.querySelectorAll('.todo-count');
+    const $targetFiltersAll = document.querySelectorAll('.filters');
+
+    await this.members.map((member, index) => {
+      new TodoApp({
+        data: member.todoList,
+        teamId: this.teamId,
+        memberId: member._id,
+        $targetTodoApp: $targetTodoAppAll[index],
+        $targetNewTodo: $targetNewTodoAll[index],
+        $targetTodoList: $targetTodoListAll[index],
+        $targetTodoCount: $targetTodoCountAll[index],
+        $targetFilters: $targetFiltersAll[index],
+      });
+    });
   }
 
   setState() {}

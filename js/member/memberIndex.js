@@ -7,6 +7,7 @@ const teamId = parsedUrl.searchParams.get('id');
 new MemberApp({ 
   teamName,
   teamId,
+  members: [], 
   $targetTeamTitle: document.querySelector('#user-title'),
   $targetTodoAppListContainer: document.querySelector('.todoapp-list-container')
 });
