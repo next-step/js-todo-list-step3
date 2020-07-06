@@ -10,23 +10,23 @@ export const request = async (url, option) => {
   }
 };
 
-const subOption = ({ method, body: { key, value } }) => {
+const subOption = ({ method, body }) => {
   return {
     method,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ [key]: value }),
+    body: JSON.stringify({ ...body }),
   };
 };
 
 export const options = {
-  POST: (key, value) => subOption({ method: 'POST', body: { key, value } }),
+  POST: (body) => subOption({ method: 'POST', body }),
   DELETE: () => {
     return { method: 'DELETE' };
   },
   TOGGLE: () => {
     return { method: 'PUT' };
   },
-  PUT: (key, value) => subOption({ method: 'PUT', body: { key, value } }),
+  PUT: (body) => subOption({ method: 'PUT', body }),
   DRAGDROP_ITEM: (originMemberId, targetMemberId, newPosition) => {
     return {
       method: 'PUT',

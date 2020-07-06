@@ -9,7 +9,7 @@ const apiTeam = {
     return request(`${BASE_URL}/api/teams`);
   },
   fetchAddTeam: (name) => {
-    return request(`${BASE_URL}/api/teams`, options.POST('name', name));
+    return request(`${BASE_URL}/api/teams`, options.POST({ name }));
   },
   fetchDeleteTeam: (teamId) => {
     return request(`${BASE_URL}/api/teams/${teamId}`, options.DELETE());
@@ -17,7 +17,7 @@ const apiTeam = {
   fetchAddMember: (teamId, name) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members`,
-      options.POST('name', name),
+      options.POST({ name }),
     );
   },
 };

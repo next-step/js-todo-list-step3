@@ -5,10 +5,10 @@ const apiMember = {
   fetchMemberTodoList: (teamId, memberId) => {
     return request(`${BASE_URL}/api/teams/${teamId}/members/${memberId}`);
   },
-  fetchMemberAddTodoItem: (teamId, memberId, text) => {
+  fetchMemberAddTodoItem: (teamId, memberId, contents) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
-      options.POST('contents', text),
+      options.POST({ contents }),
     );
   },
   fetchDeleteTodoItem: (teamId, memberId, itemId) => {
@@ -23,16 +23,16 @@ const apiMember = {
       options.TOGGLE(),
     );
   },
-  fetchUpdateTodoItem: (teamId, memberId, itemId, text) => {
+  fetchUpdateTodoItem: (teamId, memberId, itemId, contents) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-      options.PUT('contents', text),
+      options.PUT({ contents }),
     );
   },
   fetchPriorityTodoItem: (teamId, memberId, itemId, priority) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
-      options.PUT('priority', priority),
+      options.PUT({ priority }),
     );
   },
   fetchDeleteAllTodoItems: (teamId, memberId) => {
