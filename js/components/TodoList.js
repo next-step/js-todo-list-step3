@@ -1,6 +1,7 @@
 import { memberTodoItem } from '../utils/template.js';
 import api from '../utils/api.js';
 import { isEnterKey, isEscKey } from '../utils/validator.js';
+import DragAndDropApp from '../utils/DragAndDrop.js';
 
 export default class TodoList {
   constructor({ $element, list, memberInfo, onToggleItem, onEditItem, onDeleteItem }) {
@@ -104,12 +105,42 @@ export default class TodoList {
     });
   }
 
+  handleDragEnd(draggedItemId, originMemberId, targetMemberId) {
+    if (originMemberId !== this.memberId && targetMemberId !== this.memberId) {
+      return;
+    }
+
+    const $todoItemUl = document.querySelector(`.todo-list.member-${targetMemberId}`);
+    const todoItemList = $todoItemUl.children;
+    const newPosition = [...todoItemList].findIndex(
+      item => item.querySelector('label').htmlFor === draggedItemId
+    );
+    if (newPosition < 0) {
+      return;
+    }
+
+    api.moveOrderMemberTodoItem(
+      this.teamId,
+      draggedItemId,
+      originMemberId,
+      targetMemberId,
+      newPosition
+    );
+  }
+
   render() {
     this.$element.innerHTML = this.todoItems.map(item => memberTodoItem(item)).join('');
+
+    new DragAndDropApp({
+      memberId: this.memberId,
+      draggableItemClass: '.todo-list-item',
+      dragItemsWrapperList: '.todo-list',
+      onDragEnd: this.handleDragEnd.bind(this)
+    });
   }
 
   setState(newTodoItems) {
-    this.todoItems = newTodoItems;
+    this.todoItems = newTodoItems || [];
     this.render();
   }
 }

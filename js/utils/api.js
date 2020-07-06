@@ -148,6 +148,32 @@ const deleteMemberTodoItem = async (teamId, memberId, itemId) => {
   }
 };
 
+const moveOrderMemberTodoItem = async (
+  teamId,
+  itemId,
+  originMemberId,
+  targetMemberId,
+  newPosition
+) => {
+  try {
+    return await responseHandler(() =>
+      fetch(`${BASE_URL}/${teamId}/items/${itemId}/sort`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          originMemberId,
+          targetMemberId,
+          newPosition
+        })
+      })
+    );
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const api = {
   fetchTeamList,
   addTeam,
@@ -158,7 +184,8 @@ const api = {
   addMemberTodoItem,
   toggleMemberTodoItem,
   editMemberTodoItem,
-  deleteMemberTodoItem
+  deleteMemberTodoItem,
+  moveOrderMemberTodoItem
 };
 
 export default api;

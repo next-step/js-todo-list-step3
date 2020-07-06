@@ -1,8 +1,8 @@
 import { memberTodoCountContainer, memberHeader, memberTodoInput } from '../utils/template.js';
 import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
-import api from '../utils/api.js';
 import TodoCount from './TodoCount.js';
+import api from '../utils/api.js';
 
 // Each member info
 export default class MemberTodoList {
@@ -31,7 +31,7 @@ export default class MemberTodoList {
     const $todoListMainContainer = document.createElement('section');
     $todoListMainContainer.className = 'main';
     const $todoListUl = document.createElement('ul');
-    $todoListUl.className = 'todo-list';
+    $todoListUl.className = `todo-list member-${this.memberId}`;
     $todoListMainContainer.append($todoListUl);
 
     // 할 일 카운트 container
@@ -84,8 +84,8 @@ export default class MemberTodoList {
   }
 
   setState(newTodoList) {
-    this.todoListComponent.setState(newTodoList);
-    this.todoCountComponent.setState(newTodoList.length);
-    this.todoList = newTodoList;
+    this.todoList = newTodoList || [];
+    this.todoListComponent.setState(this.todoList);
+    this.todoCountComponent.setState(this.todoList.length);
   }
 }

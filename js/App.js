@@ -8,7 +8,6 @@ class App {
   }
 
   async initTeamList() {
-    // await api.deleteTeam('x2wb9oSGL');
     this.teamListData = await api.fetchTeamList();
     this.teamList = new TeamList({
       $element: $TEAM_LIST_CONTAINER,

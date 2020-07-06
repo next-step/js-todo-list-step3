@@ -1,4 +1,9 @@
-function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
+export default function DragAndDropApp({
+  memberId,
+  draggableItemClass,
+  dragItemsWrapperList,
+  onDragEnd
+}) {
   let dragSrcEl = null;
   let dragList = null;
   let dropList = null;
@@ -33,6 +38,14 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
       return;
     }
     dropList = this.closest(dragItemsWrapperList);
+
+    // 다른 멤버의 리스트에서 발생하는 이벤트는 무시하도록
+    const originMemberId = dragList.classList[1].substring('member-'.length);
+    const targetMemberId = dropList.classList[1].substring('member-'.length);
+    if (memberId !== originMemberId && memberId !== targetMemberId) {
+      return;
+    }
+
     dragList === dropList ? dropList.removeChild(dragSrcEl) : dragList.removeChild(dragSrcEl);
     const dropHTML = e.dataTransfer.getData('text/html');
     this.insertAdjacentHTML('beforebegin', dropHTML);
@@ -43,6 +56,11 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
 
   function handleDragEnd(e) {
     this.classList.remove('over');
+
+    const draggedItemId = e.path[0].querySelector('label').htmlFor;
+    const originMemberId = dragList.classList[1].substring('member-'.length);
+    const targetMemberId = dropList.classList[1].substring('member-'.length);
+    onDragEnd && onDragEnd(draggedItemId, originMemberId, targetMemberId);
   }
 
   function addDnDHandlers(elem) {
@@ -58,8 +76,3 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
   const $todoItems = document.querySelectorAll(draggableItemClass);
   $todoItems.forEach(addDnDHandlers);
 }
-
-new DragAndDropApp({
-  draggableItemClass: '.todo-list-item',
-  dragItemsWrapperList: '.todo-list'
-});

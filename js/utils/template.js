@@ -18,7 +18,7 @@ export const memberHeader = name => `<h2><span><strong>${name}</strong>'s Todo L
 export const memberTodoInput = `<input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />`;
 
 const todoItemPriority = priority => `
-<div class="chip-container">
+<div class="chip-container hidden">
 <select class="chip select">
     <option value="0" ${priority === 0 ? 'selected' : ''}>순위</option>
     <option value="1" ${priority === 1 ? 'selected' : ''}>1순위</option>
