@@ -1,5 +1,5 @@
 import { todoCountTemplate } from '../utils/templates.js';
-import * as functions from '../utils/functions.js';
+import * as functions from '../utils/utils.js';
 
 export default class TodoCount {
   constructor({ data, filteredData, $targetTodoCount }) {

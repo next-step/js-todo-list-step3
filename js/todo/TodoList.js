@@ -1,5 +1,5 @@
 import { ERROR_TYPE_MESSAGE, MEANING } from '../utils/constants.js';
-import * as functions from '../utils/functions.js';
+import * as functions from '../utils/utils.js';
 import { todoListTemplate } from '../utils/templates.js';
 
 export default class TodoList {

@@ -1,56 +1,5 @@
 import { BASE_URL } from '../utils/constants.js';
-import { request } from './apiHandler.js';
-
-const options = {
-  POST: (contents) => {
-    return {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents }),
-    };
-  },
-  DELETE: () => {
-    return { method: 'DELETE' };
-  },
-  TOGGLE: () => {
-    return { method: 'PUT' };
-  },
-  PRIORITY: (priority) => {
-    return {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priority }),
-    };
-  },
-  PUT: (contents) => {
-    return {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents }),
-    };
-  },
-  DRAGDROP_ITEM: (originMemberId, targetMemberId, newPosition) => {
-    return {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        originMemberId,
-        targetMemberId,
-        newPosition,
-      }),
-    };
-  },
-  DRAGDROP_LIST: (memberId, newPosition) => {
-    return {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        memberId,
-        newPosition,
-      }),
-    };
-  },
-};
+import { request, options } from './apiHandler.js';
 
 const apiMember = {
   fetchMemberTodoList: (teamId, memberId) => {
@@ -59,7 +8,7 @@ const apiMember = {
   fetchMemberAddTodoItem: (teamId, memberId, text) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
-      options.POST(text),
+      options.POST('contents', text),
     );
   },
   fetchDeleteTodoItem: (teamId, memberId, itemId) => {
@@ -77,13 +26,13 @@ const apiMember = {
   fetchUpdateTodoItem: (teamId, memberId, itemId, text) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-      options.PUT(text),
+      options.PUT('contents', text),
     );
   },
   fetchPriorityTodoItem: (teamId, memberId, itemId, priority) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
-      options.PRIORITY(priority),
+      options.PUT('priority', priority),
     );
   },
   fetchDeleteAllTodoItems: (teamId, memberId) => {
@@ -104,9 +53,9 @@ const apiMember = {
       options.DRAGDROP_ITEM(originMemberId, targetMemberId, newPosition),
     );
   },
-  fetchDragDropMember: (teamId, itemId, memberId, newPosition) => {
+  fetchDragDropMember: (teamId, memberId, newPosition) => {
     return request(
-      `${BASE_URL}/api/teams/${teamId}/items/${itemId}/sort`,
+      `${BASE_URL}/api/teams/${teamId}/sort`,
       options.DRAGDROP_LIST(memberId, newPosition),
     );
   },

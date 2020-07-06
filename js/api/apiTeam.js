@@ -1,18 +1,5 @@
 import { BASE_URL } from '../utils/constants.js';
-import { request } from './apiHandler.js';
-
-const options = {
-  POST: (name) => {
-    return {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
-    };
-  },
-  DELETE: () => {
-    return { method: 'DELETE' };
-  },
-};
+import { request, options } from './apiHandler.js';
 
 const apiTeam = {
   fetchTeam: (teamId) => {
@@ -22,7 +9,7 @@ const apiTeam = {
     return request(`${BASE_URL}/api/teams`);
   },
   fetchAddTeam: (name) => {
-    return request(`${BASE_URL}/api/teams`, options.POST(name));
+    return request(`${BASE_URL}/api/teams`, options.POST('name', name));
   },
   fetchDeleteTeam: (teamId) => {
     return request(`${BASE_URL}/api/teams/${teamId}`, options.DELETE());
@@ -30,7 +17,7 @@ const apiTeam = {
   fetchAddMember: (teamId, name) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/members`,
-      options.POST(name),
+      options.POST('name', name),
     );
   },
 };

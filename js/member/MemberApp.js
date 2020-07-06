@@ -45,30 +45,29 @@ export default class MemberApp {
     try {
       const { members } = await rootApi.fetchTeam(this.teamId);
       this.members = members;
+      const $targetTodoAppAll = document.querySelectorAll('.todoapp');
+      const $targetNewTodoAll = document.querySelectorAll('.new-todo');
+      const $targetTodoListAll = document.querySelectorAll('.todo-list');
+      const $targetCountContainerAll = document.querySelectorAll(
+        '.count-container',
+      );
+      const $targetTodoCountAll = document.querySelectorAll('.todo-count');
+      const $targetFilterAll = document.querySelectorAll('.filters');
+      this.members.map((member, index) => {
+        new TodoApp({
+          data: member.todoList,
+          teamId: this.teamId,
+          memberId: member._id,
+          $targetTodoApp: $targetTodoAppAll[index],
+          $targetNewTodo: $targetNewTodoAll[index],
+          $targetTodoList: $targetTodoListAll[index],
+          $targetCountContainer: $targetCountContainerAll[index],
+          $targetTodoCount: $targetTodoCountAll[index],
+          $targetFilter: $targetFilterAll[index],
+        });
+      });
     } catch (e) {
       console.error(ERROR_TYPE_MESSAGE.CAN_NOT_LOAD);
     }
-    const $targetTodoAppAll = document.querySelectorAll('.todoapp');
-    const $targetNewTodoAll = document.querySelectorAll('.new-todo');
-    const $targetTodoListAll = document.querySelectorAll('.todo-list');
-    const $targetCountContainerAll = document.querySelectorAll(
-      '.count-container',
-    );
-    const $targetTodoCountAll = document.querySelectorAll('.todo-count');
-    const $targetFilterAll = document.querySelectorAll('.filters');
-
-    await this.members.map((member, index) => {
-      new TodoApp({
-        data: member.todoList,
-        teamId: this.teamId,
-        memberId: member._id,
-        $targetTodoApp: $targetTodoAppAll[index],
-        $targetNewTodo: $targetNewTodoAll[index],
-        $targetTodoList: $targetTodoListAll[index],
-        $targetCountContainer: $targetCountContainerAll[index],
-        $targetTodoCount: $targetTodoCountAll[index],
-        $targetFilter: $targetFilterAll[index],
-      });
-    });
   }
 }
