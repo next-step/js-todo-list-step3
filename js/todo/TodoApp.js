@@ -3,7 +3,8 @@ import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoFilter from './TodoFilter.js';
 import rootApi from '../api/apiHandler.js';
-import { ERROR_TYPE } from '../util/constants.js';
+import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
+import DragAndDropApp from '../utils/DragAndDrop.js';
 
 export default class TodoApp {
   constructor({
@@ -26,6 +27,11 @@ export default class TodoApp {
     this.$targetCountContainer = $targetCountContainer;
     this.$targetTodoCount = $targetTodoCount;
     this.$targetFilter = $targetFilter;
+
+    const test = new DragAndDropApp({
+      draggableItemClass: '.todo-list-item',
+      dragItemsWrapperList: '.todo-list',
+    });
 
     this.todoInput = new TodoInput({
       data,
@@ -58,22 +64,22 @@ export default class TodoApp {
           const index = this.data.findIndex(
             (todo) => todo._id === toggledTodoItem._id,
           );
-          let nextData = [...this.data];
+          const nextData = [...this.data];
           nextData[index] = toggledTodoItem;
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_TOGGLE);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_TOGGLE);
         }
       },
       onDeleteTodoItem: async (itemId) => {
         try {
           await rootApi.fetchDeleteTodoItem(this.teamId, this.memberId, itemId);
           const index = this.data.findIndex((todo) => todo._id === itemId);
-          let nextData = [...this.data];
+          const nextData = [...this.data];
           nextData.splice(index, 1);
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_DELETE);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_DELETE);
         }
       },
       onUpdateTodoItem: async (itemId, contents) => {
@@ -87,11 +93,11 @@ export default class TodoApp {
           const index = this.data.findIndex(
             (todo) => todo._id === updatedTodoItem._id,
           );
-          let nextData = [...this.data];
+          const nextData = [...this.data];
           nextData[index] = updatedTodoItem;
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_UPDATE);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_UPDATE);
         }
       },
       onPriorityTodoItem: async (itemId, priority) => {
@@ -109,7 +115,7 @@ export default class TodoApp {
           nextData[index] = setPriorityTodoItem;
           this.setState(nextData);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_SET_PRIORITY);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_SET_PRIORITY);
         }
       },
     });
@@ -122,7 +128,6 @@ export default class TodoApp {
 
     this.todoFilter = new TodoFilter({
       data,
-      filteredData: [],
       $targetCountContainer,
       $targetFilter,
       onDeleteAllTodoItems: async () => {
@@ -130,7 +135,7 @@ export default class TodoApp {
           await rootApi.fetchDeleteAllTodoItems(this.teamId, this.memberId);
           this.setState([]);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_DELETE_ALL);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_DELETE_ALL);
         }
       },
       onSelectFilter: async () => {
@@ -141,7 +146,7 @@ export default class TodoApp {
           );
           this.setState(todoList);
         } catch (e) {
-          console.error(ERROR_TYPE.CAN_NOT_LOAD);
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_LOAD);
         }
       },
     });

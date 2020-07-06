@@ -1,4 +1,4 @@
-import { KEY_NAME } from '../util/constants.js';
+import { KEY_NAME } from '../utils/constants.js';
 
 export default class TodoInput {
   constructor({ data, $targetNewTodo, onAddTodoItem }) {

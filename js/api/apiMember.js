@@ -1,4 +1,4 @@
-import { BASE_URL } from '../util/constants.js';
+import { BASE_URL } from '../utils/constants.js';
 import { request } from './apiHandler.js';
 
 const options = {

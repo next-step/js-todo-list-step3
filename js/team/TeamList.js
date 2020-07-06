@@ -1,5 +1,5 @@
 import rootApi from '../api/apiHandler.js';
-import { TeamListTemplate } from '../util/templates.js';
+import { teamListTemplate } from '../utils/templates.js';
 
 export default class TeamList {
   constructor({ teamNameList, $targetTeamList }) {
@@ -11,6 +11,6 @@ export default class TeamList {
 
   async render() {
     this.teamNameList = await rootApi.fetchTeamList();
-    this.$targetTeamList.innerHTML = TeamListTemplate(this.teamNameList);
+    this.$targetTeamList.innerHTML = teamListTemplate(this.teamNameList);
   }
 }

@@ -3,7 +3,7 @@ import MemberList from './MemberList.js';
 import MemberInput from './MemberInput.js';
 import rootApi from '../api/apiHandler.js';
 import TodoApp from '../todo/TodoApp.js';
-import { ERROR_TYPE } from '../util/constants.js';
+import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
 
 export default class MemberApp {
   constructor({
@@ -46,7 +46,7 @@ export default class MemberApp {
       const { members } = await rootApi.fetchTeam(this.teamId);
       this.members = members;
     } catch (e) {
-      console.error(ERROR_TYPE.CAN_NOT_LOAD);
+      console.error(ERROR_TYPE_MESSAGE.CAN_NOT_LOAD);
     }
     const $targetTodoAppAll = document.querySelectorAll('.todoapp');
     const $targetNewTodoAll = document.querySelectorAll('.new-todo');

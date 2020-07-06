@@ -1,4 +1,4 @@
-function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
+export default function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
   let dragSrcEl = null
   let dragList = null
   let dropList = null
@@ -8,6 +8,8 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
     dragList = e.target.closest(dragItemsWrapperList)
     e.dataTransfer.effectAllowed = 'move'
     e.dataTransfer.setData('text/html', this.outerHTML)
+    // console.log(e.dataTransfer);
+    // console.log(this.outerHTML);
     this.classList.add('dragElem')
   }
 
@@ -33,6 +35,9 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
       return
     }
     dropList = this.closest(dragItemsWrapperList)
+    console.log(dragSrcEl);
+    console.log(dropList);
+    console.log(dragList);
     dragList === dropList ? dropList.removeChild(dragSrcEl) : dragList.removeChild(dragSrcEl)
     const dropHTML = e.dataTransfer.getData('text/html')
     this.insertAdjacentHTML('beforebegin', dropHTML)
@@ -56,10 +61,13 @@ function DragAndDropApp({ draggableItemClass, dragItemsWrapperList }) {
   }
 
   const $todoItems = document.querySelectorAll(draggableItemClass)
+  // console.log($todoItems);
   $todoItems.forEach(addDnDHandlers)
 }
 
-new DragAndDropApp({
-  draggableItemClass: '.todo-list-item',
-  dragItemsWrapperList: '.todo-list'
-})
+// const test = new DragAndDropApp({
+//   draggableItemClass: '.todo-list-item',
+//   dragItemsWrapperList: '.todo-list'
+// })
+
+// console.log(test);

@@ -10,6 +10,6 @@ export const request = async (url, option) => {
   }
 };
 
-const rootApi = Object.assign({}, apiTeam, apiMember);
+const rootApi = { ...apiTeam, ...apiMember };
 
 export default rootApi;

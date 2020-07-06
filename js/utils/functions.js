@@ -1,4 +1,4 @@
-import { FILTER_NAME, ERROR_TYPE } from './constants.js';
+import { FILTER_NAME, ERROR_TYPE_MESSAGE } from './constants.js';
 
 export const backToOriginalToggle = (target) => {
   target.classList.remove('editing');
@@ -21,12 +21,10 @@ export const filteringTodoList = (todoList, hash) => {
       return preSortedArray.concat(noPriorityArray);
     },
     [FILTER_NAME.ALL]: (data) => data,
-    [FILTER_NAME.ACTIVE]: (data) =>
-      data.filter((todo) => todo.isCompleted === false),
-    [FILTER_NAME.COMPLETED]: (data) =>
-      data.filter((todo) => todo.isCompleted === true),
+    [FILTER_NAME.ACTIVE]: (data) => data.filter((todo) => !todo.isCompleted),
+    [FILTER_NAME.COMPLETED]: (data) => data.filter((todo) => todo.isCompleted),
   };
   return selectAction[hash]
     ? selectAction[hash](todoList)
-    : console.error(ERROR_TYPE.NO_MATCH_HASH);
+    : console.error(ERROR_TYPE_MESSAGE.NO_MATCH_HASH);
 };

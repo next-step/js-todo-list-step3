@@ -1,4 +1,4 @@
-import { TeamTitleTemplate } from '../util/templates.js';
+import { teamTitleTemplate } from '../utils/templates.js';
 
 export default class MemberTitle {
   constructor({ teamName, $targetTeamTitle }) {
@@ -9,6 +9,6 @@ export default class MemberTitle {
   }
 
   render() {
-    this.$targetTeamTitle.innerHTML = TeamTitleTemplate(this.teamName);
+    this.$targetTeamTitle.innerHTML = teamTitleTemplate(this.teamName);
   }
 }

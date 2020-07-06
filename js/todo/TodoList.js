@@ -1,6 +1,6 @@
-import { ERROR_TYPE, MEANING } from '../util/constants.js';
-import * as functions from '../util/functions.js';
-import { TodoListTemplate } from '../util/templates.js';
+import { ERROR_TYPE_MESSAGE, MEANING } from '../utils/constants.js';
+import * as functions from '../utils/functions.js';
+import { todoListTemplate } from '../utils/templates.js';
 
 export default class TodoList {
   constructor({
@@ -26,7 +26,7 @@ export default class TodoList {
       };
       selectAction[className]
         ? selectAction[className]()
-        : console.error(ERROR_TYPE.NO_MATCH_CLASS);
+        : console.error(ERROR_TYPE_MESSAGE.NO_MATCH_CLASS);
     });
 
     this.$targetTodoList.addEventListener('dblclick', (e) => {
@@ -62,7 +62,7 @@ export default class TodoList {
       };
       selectAction[e.key]
         ? selectAction[e.key]()
-        : console.error(ERROR_TYPE.NO_MATCH_KEY);
+        : console.error(ERROR_TYPE_MESSAGE.NO_MATCH_KEY);
     });
 
     this.$targetTodoList.addEventListener('change', (e) => {
@@ -98,6 +98,6 @@ export default class TodoList {
   render() {
     const hash = location.hash.substring(1);
     this.filteredData = functions.filteringTodoList(this.data, hash);
-    this.$targetTodoList.innerHTML = TodoListTemplate(this.filteredData);
+    this.$targetTodoList.innerHTML = todoListTemplate(this.filteredData);
   }
 }

@@ -1,6 +1,6 @@
-import { MemberListTemplate } from '../util/templates.js';
+import { memberListTemplate } from '../utils/templates.js';
 import rootApi from '../api/apiHandler.js';
-import { ERROR_TYPE } from '../util/constants.js';
+import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
 
 export default class MemberList {
   constructor({ teamId, $targetTodoAppListContainer }) {
@@ -10,11 +10,11 @@ export default class MemberList {
   async render() {
     try {
       const teamInfo = await rootApi.fetchTeam(this.teamId);
-      this.$targetTodoAppListContainer.innerHTML = MemberListTemplate(
+      this.$targetTodoAppListContainer.innerHTML = memberListTemplate(
         teamInfo.members,
       );
     } catch (e) {
-      console.error(ERROR_TYPE.CAN_NOT_LOAD);
+      console.error(ERROR_TYPE_MESSAGE.CAN_NOT_LOAD);
     }
   }
 }

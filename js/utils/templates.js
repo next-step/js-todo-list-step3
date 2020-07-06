@@ -1,6 +1,6 @@
 import { MEANING } from './constants.js';
 
-export const TeamListTemplate = (teamList) =>
+export const teamListTemplate = (teamList) =>
   teamList
     .map(
       (team) => `
@@ -21,7 +21,7 @@ export const TeamListTemplate = (teamList) =>
       </div>
       `);
 
-export const TeamTitleTemplate = (teamName) => `
+export const teamTitleTemplate = (teamName) => `
       <span><strong>${teamName}</strong>'s Todo List</span>
     `;
 
@@ -48,11 +48,11 @@ const TodoPriorityTemplate = {
   [MEANING.SECONDARY]: subTodoPriorityTemplate(MEANING.SECONDARY),
 };
 
-export const TodoCountTemplate = (todoCount) => `
+export const todoCountTemplate = (todoCount) => `
 총 <strong>${todoCount}</strong> 개
   `;
 
-export const TodoListTemplate = (todoList) =>
+export const todoListTemplate = (todoList) =>
   todoList
     .map(
       (todo) => `
@@ -77,7 +77,7 @@ export const TodoListTemplate = (todoList) =>
     )
     .join('');
 
-export const MemberListTemplate = (memberList) =>
+export const memberListTemplate = (memberList) =>
   memberList
     .map(
       (member) => `
@@ -91,14 +91,14 @@ export const MemberListTemplate = (memberList) =>
         </section>
         <section class="main">
           <ul class="todo-list">
-            ${(member.todoList && TodoListTemplate(member.todoList)) || ''}
+            ${(member.todoList && todoListTemplate(member.todoList)) || ''}
           </ul>
         </section>
         <div class="count-container">
           <span class="todo-count">${
             member.todoList
-              ? TodoCountTemplate(member.todoList.length)
-              : TodoCountTemplate(0)
+              ? todoCountTemplate(member.todoList.length)
+              : todoCountTemplate(0)
           }</span>
           <ul class="filters">
             <li>

@@ -1,5 +1,5 @@
-import { TodoCountTemplate } from '../util/templates.js';
-import * as functions from '../util/functions.js';
+import { todoCountTemplate } from '../utils/templates.js';
+import * as functions from '../utils/functions.js';
 
 export default class TodoCount {
   constructor({ data, filteredData, $targetTodoCount }) {
@@ -17,7 +17,7 @@ export default class TodoCount {
     if (!this.data) return;
     const hash = location.hash.substring(1);
     this.filteredData = functions.filteringTodoList(this.data, hash);
-    this.$targetTodoCount.innerHTML = TodoCountTemplate(
+    this.$targetTodoCount.innerHTML = todoCountTemplate(
       this.filteredData.length,
     );
   }

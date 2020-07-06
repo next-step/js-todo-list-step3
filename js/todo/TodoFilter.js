@@ -1,17 +1,14 @@
-import { MESSAGE, FILTER_NAME } from '../util/constants.js';
-import { TodoListTemplate } from '../util/templates.js';
+import { MESSAGE, FILTER_NAME } from '../utils/constants.js';
 
 export default class TodoFilter {
   constructor({
     data,
-    filteredData,
     $targetCountContainer,
     $targetFilter,
     onDeleteAllTodoItems,
     onSelectFilter,
   }) {
     this.data = data;
-    this.filteredData = filteredData;
     this.$targetCountContainer = $targetCountContainer;
     this.$targetFilter = $targetFilter;
 

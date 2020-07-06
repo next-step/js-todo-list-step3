@@ -19,7 +19,7 @@ export const KEY_NAME = {
   ESC: 'Escape',
 };
 
-export const ERROR_TYPE = {
+export const ERROR_TYPE_MESSAGE = {
   NO_MATCH_CLASS: '버튼을 정확히 눌러주세요',
   NO_MATCH_HASH: '필터를 정확히 눌러주세요',
   EXIST_USER: '존재하는 사용자입니다.',
