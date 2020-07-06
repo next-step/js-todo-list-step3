@@ -111,7 +111,7 @@ export default class TodoApp {
           const index = this.data.findIndex(
             (todo) => todo._id === setPriorityTodoItem._id,
           );
-          let nextData = [...this.data];
+          const nextData = [...this.data];
           nextData[index] = setPriorityTodoItem;
           this.setState(nextData);
         } catch (e) {
