@@ -24,7 +24,7 @@ export default function DragAndDropApp({
     e.dataTransfer.dropEffect = 'move';
   }
 
-  function handleDragEnter(e) {}
+  function handleDragEnter(e) { }
 
   function handleDragLeave(e) {
     this.classList.remove('over');
@@ -40,8 +40,13 @@ export default function DragAndDropApp({
     dropList = this.closest(dragItemsWrapperList);
 
     // 다른 멤버의 리스트에서 발생하는 이벤트는 무시하도록
-    const originMemberId = dragList.classList[1].substring('member-'.length);
-    const targetMemberId = dropList.classList[1].substring('member-'.length);
+    if (!dragList || !dropList) {
+      return;
+    }
+    const dragListClassName = dragList.className;
+    const dropListClassName = dropList.className;
+    const originMemberId = dragListClassName.substring(dragListClassName.indexOf('member-') + 7);
+    const targetMemberId = dropListClassName.substring(dropListClassName.indexOf('member-') + 7);
     if (memberId !== originMemberId && memberId !== targetMemberId) {
       return;
     }
@@ -58,8 +63,14 @@ export default function DragAndDropApp({
     this.classList.remove('over');
 
     const draggedItemId = e.path[0].querySelector('label').htmlFor;
-    const originMemberId = dragList.classList[1].substring('member-'.length);
-    const targetMemberId = dropList.classList[1].substring('member-'.length);
+
+    if (!dragList || !dropList) {
+      return;
+    }
+    const dragListClassName = dragList.className;
+    const dropListClassName = dropList.className;
+    const originMemberId = dragListClassName.substring(dragListClassName.indexOf('member-') + 7);
+    const targetMemberId = dropListClassName.substring(dropListClassName.indexOf('member-') + 7);
     onDragEnd && onDragEnd(draggedItemId, originMemberId, targetMemberId);
   }
 
