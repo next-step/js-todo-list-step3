@@ -1,5 +1,5 @@
 import { memberListTemplate } from '../utils/templates.js';
-import rootApi from '../api/apiHandler.js';
+import rootApi from '../api/rootApi.js';
 import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
 
 export default class MemberList {

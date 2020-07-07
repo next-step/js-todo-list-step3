@@ -1,7 +1,7 @@
 import MemberTitle from './MemberTitle.js';
 import MemberList from './MemberList.js';
 import MemberInput from './MemberInput.js';
-import rootApi from '../api/apiHandler.js';
+import rootApi from '../api/rootApi.js';
 import TodoApp from '../todo/TodoApp.js';
 import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
 

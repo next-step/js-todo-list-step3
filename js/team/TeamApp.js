@@ -1,4 +1,4 @@
-import rootApi from '../api/apiHandler.js';
+import rootApi from '../api/rootApi.js';
 import TeamList from './TeamList.js';
 import TeamInput from './TeamInput.js';
 
@@ -9,9 +9,10 @@ export default class TeamApp {
     this.teamInput = new TeamInput({
       $targetTeamList,
       onInputTeam: async (teamName) => {
-        const existentTeamList = await rootApi.fetchTeamList()
-        const existentTeamNameList = existentTeamList.map(team => team.name)
-        !existentTeamNameList.includes(teamName) && await rootApi.fetchAddTeam(teamName);
+        const existentTeamList = await rootApi.fetchTeamList();
+        const existentTeamNameList = existentTeamList.map((team) => team.name);
+        !existentTeamNameList.includes(teamName) &&
+          (await rootApi.fetchAddTeam(teamName));
         this.render();
       },
     });

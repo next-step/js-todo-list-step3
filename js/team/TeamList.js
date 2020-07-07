@@ -1,4 +1,4 @@
-import rootApi from '../api/apiHandler.js';
+import rootApi from '../api/rootApi.js';
 import { teamListTemplate } from '../utils/templates.js';
 
 export default class TeamList {

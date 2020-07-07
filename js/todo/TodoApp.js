@@ -2,7 +2,7 @@ import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoFilter from './TodoFilter.js';
-import rootApi from '../api/apiHandler.js';
+import rootApi from '../api/rootApi.js';
 import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
 import DragAndDropApp from '../utils/DragAndDrop.js';
 
