@@ -6,12 +6,13 @@ import api from '../utils/api.js';
 
 // Each member info
 export default class MemberTodoList {
-  constructor({ $element, teamId, name, todoList, _id }) {
+  constructor({ $element, teamId, name, todoList, _id, onDragEnd }) {
     this.$element = $element;
     this.teamId = teamId;
     this.memberId = _id;
     this.name = name;
     this.todoList = todoList;
+    this.onDragEnd = onDragEnd;
 
     this.initTodoListTemplate();
   }
@@ -74,6 +75,9 @@ export default class MemberTodoList {
       onEditItem: async () => {
         const { todoList } = await api.fetchMemberTodoList(this.teamId, this.memberId);
         this.setState(todoList);
+      },
+      onDragEnd: isDragEnd => {
+        this.onDragEnd(isDragEnd);
       }
     });
 

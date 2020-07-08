@@ -39,14 +39,17 @@ export default function DragAndDropApp({
     }
     dropList = this.closest(dragItemsWrapperList);
 
-    // 다른 멤버의 리스트에서 발생하는 이벤트는 무시하도록
     if (!dragList || !dropList) {
+      dragList = null;
+      dropList = null;
       return;
     }
+
     const dragListClassName = dragList.className;
     const dropListClassName = dropList.className;
     const originMemberId = dragListClassName.substring(dragListClassName.indexOf('member-') + 7);
     const targetMemberId = dropListClassName.substring(dropListClassName.indexOf('member-') + 7);
+    // 다른 멤버의 리스트에서 발생하는 이벤트는 무시하도록
     if (memberId !== originMemberId && memberId !== targetMemberId) {
       return;
     }
@@ -65,6 +68,8 @@ export default function DragAndDropApp({
     const draggedItemId = e.path[0].querySelector('label').htmlFor;
 
     if (!dragList || !dropList) {
+      dragList = null;
+      dropList = null;
       return;
     }
     const dragListClassName = dragList.className;
@@ -72,6 +77,9 @@ export default function DragAndDropApp({
     const originMemberId = dragListClassName.substring(dragListClassName.indexOf('member-') + 7);
     const targetMemberId = dropListClassName.substring(dropListClassName.indexOf('member-') + 7);
     onDragEnd && onDragEnd(draggedItemId, originMemberId, targetMemberId);
+
+    dragList = null;
+    dropList = null;
   }
 
   function addDnDHandlers(elem) {

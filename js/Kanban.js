@@ -28,7 +28,8 @@ class Kanban {
       return new MemberTodoList({
         $element,
         teamId: this.teamId,
-        ...memberInfo
+        ...memberInfo,
+        onDragEnd: this.handleDragEnd.bind(this)
       });
     });
   }
@@ -52,6 +53,13 @@ class Kanban {
         this.setState(newTeamData);
       }
     });
+  }
+
+  async handleDragEnd(isDragEnd) {
+    if (isDragEnd) {
+      const newTeamData = await api.fetchTeamMember(this.teamId);
+      this.setState(newTeamData);
+    }
   }
 
   async render() {

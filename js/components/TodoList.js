@@ -4,11 +4,12 @@ import { isEnterKey, isEscKey } from '../utils/validator.js';
 import DragAndDropApp from '../utils/DragAndDrop.js';
 
 export default class TodoList {
-  constructor({ $element, list, memberInfo, onToggleItem, onEditItem, onDeleteItem }) {
+  constructor({ $element, list, memberInfo, onToggleItem, onEditItem, onDeleteItem, onDragEnd }) {
     this.$element = $element;
     this.todoItems = list;
     this.teamId = memberInfo.teamId;
     this.memberId = memberInfo.memberId;
+    this.onDragEnd = onDragEnd;
 
     this.editingItemId = -1; // 현재 편집 중인 아이템의 id 저장
     this.editingItemCompleted = ''; // 현재 편집 중인 아이템의 완료 상태 임시 저장
@@ -105,8 +106,9 @@ export default class TodoList {
     });
   }
 
-  handleDragEnd(draggedItemId, originMemberId, targetMemberId) {
+  async handleDragEnd(draggedItemId, originMemberId, targetMemberId) {
     if (originMemberId !== this.memberId && targetMemberId !== this.memberId) {
+      this.onDragEnd(false);
       return;
     }
 
@@ -119,13 +121,14 @@ export default class TodoList {
       return;
     }
 
-    api.moveOrderMemberTodoItem(
+    await api.moveOrderMemberTodoItem(
       this.teamId,
       draggedItemId,
       originMemberId,
       targetMemberId,
       newPosition
     );
+    this.onDragEnd(true);
   }
 
   render() {
