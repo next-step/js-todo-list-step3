@@ -90,7 +90,7 @@ export const memberListTemplate = (memberList) =>
           <input class="new-todo" placeholder="할 일을 입력해주세요." />
         </section>
         <section class="main">
-          <ul class="todo-list">
+          <ul class="todo-list" data-member-id=${member._id}>
             ${(member.todoList && todoListTemplate(member.todoList)) || ''}
           </ul>
         </section>

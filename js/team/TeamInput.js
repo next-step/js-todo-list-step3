@@ -5,7 +5,7 @@ export default class TeamInput {
     $targetTeamList.addEventListener(
       'click',
       ({ target: { className, id } }) => {
-        if (className === 'material-icons' || id === 'add-user-button') {
+        if (className === 'material-icons' || id === 'add-team-button') {
           const newTeamName = prompt(MESSAGE.REGISTER_TEAM);
           newTeamName && onInputTeam(newTeamName);
         }

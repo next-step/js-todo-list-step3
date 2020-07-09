@@ -28,11 +28,6 @@ export default class TodoApp {
     this.$targetTodoCount = $targetTodoCount;
     this.$targetFilter = $targetFilter;
 
-    const test = new DragAndDropApp({
-      draggableItemClass: '.todo-list-item',
-      dragItemsWrapperList: '.todo-list',
-    });
-
     this.todoInput = new TodoInput({
       data,
       $targetNewTodo,
@@ -150,11 +145,40 @@ export default class TodoApp {
         }
       },
     });
+    this.bindDragAndDrop();
   }
 
   setState(nextData) {
     this.data = nextData;
     this.todoList.setState(nextData);
     this.todoCount.setState(nextData);
+    this.bindDragAndDrop();
+  }
+
+  bindDragAndDrop() {
+    new DragAndDropApp({
+      draggableItemClass: '.todo-list-item',
+      dragItemsWrapperList: '.todo-list',
+      onDragTodoItem: async (itemId, targetMemberId, targetItemId) => {
+        try {
+          const { todoList } = await rootApi.fetchMemberTodoList(
+            this.teamId,
+            targetMemberId,
+          );
+          if(!todoList) return
+          const newPosition =
+            todoList.findIndex((todo) => todo._id === targetItemId);
+          await rootApi.fetchDragDropTodoItem(
+            this.teamId,
+            itemId,
+            this.memberId,
+            targetMemberId,
+            newPosition,
+          );
+        } catch (e) {
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_ITEM);
+        }
+      },
+    });
   }
 }
