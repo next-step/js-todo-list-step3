@@ -4,14 +4,12 @@ import { teamItemTemplate, teamAddItemTemplate } from './template.js';
 function Team() {
   this.teamList = [];
 
-  const $teamList = document.querySelector('#team-list');
-
-  $teamList.addEventListener('click', async (event) => {
+  this.inputTeamNameAndSend = async (event) => {
     if (event.target.id !== 'add-team-button') return;
     const teamName = prompt('팀 이름을 입력해주세요');
     await this.addTeam(teamName);
     this.getTeams();
-  });
+  }
 
   this.addTeam = async teamName => {
     const { result, error, errorMessage } = await addTeam(teamName);
@@ -37,6 +35,10 @@ function Team() {
   this.init = async () => {
     this.getTeams();
   }
+
+  const $teamList = document.querySelector('#team-list');
+
+  $teamList.addEventListener('click', this.inputTeamNameAndSend);
 }
 
 const TeamList = new Team();
