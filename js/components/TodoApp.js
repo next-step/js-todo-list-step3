@@ -3,7 +3,7 @@ import TodoInput from './TodoInput.js';
 import TodoFilter from './TodoFilter.js';
 import { FILTER_TYPE } from '../constants.js';
 import {
-  getMeberTodoList,
+  getMemberTodoList,
 } from '../api/index.js';
 
 function TodoApp({ _id, name, todoList }) {
@@ -18,7 +18,7 @@ function TodoApp({ _id, name, todoList }) {
   };
 
   this.getTodoList = async () => {
-    const { result, error, errorMessage } = await getMeberTodoList(this.user);
+    const { result, error, errorMessage } = await getMemberTodoList(this.user);
     if (error) return alert(errorMessage);
     this.todoList = result.todoList;
   };

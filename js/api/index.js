@@ -30,10 +30,18 @@ export async function addMember(teamId, name) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members`, getApiOption(METHOD.POST, { name }));
 }
 
-export async function getMeberTodoList(teamId, memberId) {
+export async function getMemberTodoList(teamId, memberId) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}`, getApiOption(METHOD.GET));
 }
 
-export async function addMeberTodo(teamId, memberId, contents) {
+export async function addMemberTodo(teamId, memberId, contents) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`, getApiOption(METHOD.POST, { contents }));
+}
+
+export async function deleteMemberTodo(teamId, memberId, itemId) {
+  return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, getApiOption(METHOD.DELETE));
+}
+
+export async function toggleMemberTodo(teamId, memberId, itemId) {
+  return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`, getApiOption(METHOD.PUT));
 }

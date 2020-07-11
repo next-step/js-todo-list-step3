@@ -25,7 +25,7 @@ export const addTodoItemTemplate = () => (
 );
 
 export const todoItemTemplate = (todo) => (
-  `<li class="todo-list-item" ${todo.isCompleted ? 'completed' : ''}>
+  `<li class="todo-list-item ${todo.isCompleted ? 'completed' : ''}" data-id="${todo._id}">
     <div class="view">
       <input class="toggle" type="checkbox" ${todo.isCompleted ? 'checked' : ''}/>
       <label class="label">
