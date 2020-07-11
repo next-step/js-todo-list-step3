@@ -1,7 +1,7 @@
 export const isValidContent = (content) => {
   if (typeof content === 'string' && content.trim()) {
     return true;
-  } 
+  }
 
   return false;
 };
@@ -15,6 +15,6 @@ export const requestApi = async (url, option) => {
     }
     return { result: data };
   } catch (error) {
-    return { error: error, errorMessage: '요청 실패' }
+    return { error, errorMessage: '요청 실패' };
   }
-}
+};
