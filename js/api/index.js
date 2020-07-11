@@ -22,6 +22,10 @@ export async function addTeam(name) {
   return await requestApi(`${BASE_URL}/api/teams`, getApiOption(METHOD.POST, { name }));
 }
 
-export async function getTeamByTeamId(teamId) {
+export async function getTeamDetail(teamId) {
   return await requestApi(`${BASE_URL}/api/teams/${teamId}`, getApiOption(METHOD.GET));
+}
+
+export async function addMember(teamId, name) {
+  return await requestApi(`${BASE_URL}/api/teams/${teamId}/members`, getApiOption(METHOD.POST, { name }));
 }
