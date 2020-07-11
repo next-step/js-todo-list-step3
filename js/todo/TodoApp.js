@@ -159,7 +159,7 @@ export default class TodoApp {
     new DragAndDropApp({
       draggableItemClass: '.todo-list-item',
       dragItemsWrapperList: '.todo-list',
-      onDragTodoItem: async (itemId, targetMemberId, targetItemId) => {
+      onDragTodoItem: async (itemId, originMemberId, targetMemberId, targetItemId) => {
         try {
           const { todoList } = await rootApi.fetchMemberTodoList(
             this.teamId,
@@ -168,13 +168,18 @@ export default class TodoApp {
           if(!todoList) return
           const newPosition =
             todoList.findIndex((todo) => todo._id === targetItemId);
-          await rootApi.fetchDragDropTodoItem(
+          const response = await rootApi.fetchDragDropTodoItem(
             this.teamId,
             itemId,
-            this.memberId,
+            originMemberId,
             targetMemberId,
             newPosition,
           );
+          console.log('itemId',itemId);
+          console.log(this.memberId, targetMemberId);
+          console.log(newPosition);
+          console.log(response);
+          // this.todoList.setState(response.member.todoList)
         } catch (e) {
           console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_ITEM);
         }

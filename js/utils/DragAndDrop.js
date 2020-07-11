@@ -46,6 +46,7 @@ export default function DragAndDropApp({
     dragList === dropList
       ? dropList.removeChild(dragSrcEl)
       : dragList.removeChild(dragSrcEl);
+    const originMemberId = dragList.dataset.memberId
     const dropHTML = e.dataTransfer.getData('text/html');
     const { memberId } = dropList.dataset;
     const { itemId } = dragSrcEl.dataset;
@@ -54,7 +55,7 @@ export default function DragAndDropApp({
     const dropElem = this.previousSibling;
     addDnDHandlers(dropElem);
     this.classList.remove('over');
-    onDragTodoItem(itemId, memberId, targetItemId);
+    onDragTodoItem(itemId, originMemberId, memberId, targetItemId);
   }
 
   function handleDragEnd(e) {
@@ -72,5 +73,6 @@ export default function DragAndDropApp({
   }
 
   const $todoItems = document.querySelectorAll(draggableItemClass);
+  console.log($todoItems);
   $todoItems.forEach(addDnDHandlers);
 }
