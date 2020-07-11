@@ -1,18 +1,24 @@
+import { ERROR_TYPE_MESSAGE } from '../utils/constants.js';
+
 export default function DragAndDropApp({
   draggableItemClass,
   dragItemsWrapperList,
   onDragTodoItem,
 }) {
   const $targetSelectedFilter = document.querySelectorAll('a.selected');
-  for (let node of $targetSelectedFilter) {
-    if (node.text !== '전체보기') return;
-  }
 
   let dragSrcEl = null;
   let dragList = null;
   let dropList = null;
 
   function handleDragStart(e) {
+    for (let node of $targetSelectedFilter) {
+      if (node.text !== '전체보기') {
+        alert(ERROR_TYPE_MESSAGE.SELECT_ALL_FILTER)
+        return;
+      }
+    }
+
     dragSrcEl = this;
     dragList = e.target.closest(dragItemsWrapperList);
     e.dataTransfer.effectAllowed = 'move';

@@ -31,7 +31,8 @@ export const ERROR_TYPE_MESSAGE = {
   CAN_NOT_DELETE_ALL: '전체 삭제를 할 수 없습니다.',
   NO_MATCH_KEY: '엔터나 ESC를 눌러주세요',
   CAN_NOT_LOAD_USER_LIST: '사용자를 불러올 수 없습니다',
-  CAN_NOT_MOVE_ITEM: '아이템을 움직일 수 없습니다'
+  CAN_NOT_MOVE_ITEM: '아이템을 움직일 수 없습니다',
+  SELECT_ALL_FILTER: '드래그드롭은 전체보기 필터에서만 가능합니다',
 };
 
 export const MESSAGE = {
