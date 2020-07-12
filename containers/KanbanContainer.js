@@ -36,7 +36,6 @@ export default function KanBanContainer() {
       clearChildNode('.todoapp-list-container') // todoapp-list-container 초기화
 
       const { members } = await teamApis.getTeamOne(this.teamId)
-      console.log(members)
       members.forEach((member) => {
         new TodoContainer({
           ...member,

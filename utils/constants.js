@@ -7,6 +7,7 @@ export const TAG_NAME = {
   SELECT: 'SELECT',
   SPAN: 'SPAN',
   UL: 'UL',
+  LABEL: 'LABEL',
 }
 
 export const CLASS_NAME = {

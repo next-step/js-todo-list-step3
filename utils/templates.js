@@ -92,14 +92,14 @@ export const todoItemHTMLTemplate = (
   index
 ) => {
   return `
-    <li data-id=${_id} data-index=${index} class="todo-list-item ${
+    <li data-id=${_id} data-index=${index} draggable="true" class="todo-list-item ${
     isCompleted ? 'completed' : ''
   }">
           <div class="view">
             <input class="toggle" type="checkbox" ${
               isCompleted ? 'checked' : ''
             }/>
-            <label class="label">
+            <label class="label" data-index=${index} data-id=${_id}>
                 ${getPriorityHTML(priority)}
                 ${contents}
             </label>

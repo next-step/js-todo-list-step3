@@ -39,6 +39,8 @@ TodoContainer.prototype.init = function () {
 
   const $todoAppContainer = document.createElement('li')
   $todoAppContainer.className = 'todoapp-container'
+  $todoAppContainer.dataset.memberId = memberId // for drag and drop api
+  $todoAppContainer.dataset.teamId = teamId // for drag and drop api
 
   // TodoHeader
   const $todoHeaderContainer = document.createElement('h2')
@@ -51,6 +53,7 @@ TodoContainer.prototype.init = function () {
   /* TodoApp Element Start */
   const $todoApp = document.createElement('div')
   $todoApp.className = 'todoapp'
+  $todoApp.draggable = true
 
   // TodoInput
   const $todoInputContainer = document.createElement('section')
@@ -116,7 +119,6 @@ TodoContainer.prototype.init = function () {
   this.getTodos()
 }
 TodoContainer.prototype.setState = function () {
-  console.log('status', this.filterStatus)
   const renderTodos = this.todoHash[this.filterStatus]
   this.$todoList.setState(renderTodos)
   this.$todoCount.setState(
@@ -132,11 +134,13 @@ export default function TodoContainer(props) {
   const { name: memberName, _id: memberId, teamId, todoList, selector } = props
 
   this.memberId = memberId
-  this.memberName = memberName
   this.teamId = teamId
+  this.memberName = memberName
   this.todoList = todoList
   this.selector = selector
   this.filterStatus = FILTER_STATUS.ALL
+  console.log('teamId', this.teamId)
+  console.log('memberId', this.memberId)
 
   TodoContainer.prototype.getTodos = async () => {
     // this 를 TodoContainer에 바인딩하기 위해 TodoCounter 안에서 '=>' 사용

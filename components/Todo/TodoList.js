@@ -100,20 +100,55 @@ TodoList.prototype.bindEvents = function () {
     }
     const li = e.target.closest('li')
     const { id } = li.dataset
-    if (e.target.value !== 0) {
-      // option을 선택하지 않은 경우는 제외
-      try {
-        await memberApis.updateTodoPriority({
-          teamId: this.teamId,
-          memberId: this.memberId,
-          itemId: id,
-          priority: e.target.value,
-        })
-        this.getTodos()
-      } catch (e) {
-        console.error(e)
-      }
+    if (e.target.value === 0) {
+      return
     }
+    try {
+      await memberApis.updateTodoPriority({
+        teamId: this.teamId,
+        memberId: this.memberId,
+        itemId: id,
+        priority: e.target.value,
+      })
+      this.getTodos()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const onDragStartHandler = (e) => {
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', this.memberId)
+  }
+
+  const onDragOver = (e) => {
+    if (e.preventDefault) {
+      e.preventDefault()
+    }
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  const onDrop = async (e) => {
+    if (e.target.tagName !== TAG_NAME.LABEL) {
+      return
+    }
+    const { index: newPosition, id: itemId } = e.target.dataset
+    const originMemberId = e.dataTransfer.getData('text/plain')
+    const { memberId: targetMemberId, teamId } = e.target.closest(
+      '.todoapp-container'
+    ).dataset
+    alert(Number(newPosition))
+    const response = await memberApis.changeTodoItemIndex({
+      teamId,
+      itemId,
+      body: {
+        originMemberId,
+        targetMemberId,
+        newPosition: Number(newPosition) + 1,
+      },
+    })
+    console.log(await response.json())
+    this.getTodos()
   }
 
   this.$target.addEventListener('click', onClickTodoItemHandler)
@@ -121,6 +156,10 @@ TodoList.prototype.bindEvents = function () {
   this.$target.addEventListener('keyup', onEditTodoItemHandler)
   this.$target.addEventListener('focusout', onFocusOutTodoItemHandler)
   this.$target.addEventListener('change', onChangePriorityHandler) // chip select
+
+  this.$target.addEventListener('dragstart', onDragStartHandler)
+  this.$target.addEventListener('dragover', onDragOver)
+  this.$target.addEventListener('drop', onDrop)
 }
 
 export default function TodoList(props) {
@@ -128,7 +167,7 @@ export default function TodoList(props) {
     return new TodoList(props)
   }
   const { $target, todoList, teamId, memberId, getTodos } = props
-
+  console.log('todoList', todoList)
   this.$target = $target
   this.todoList = todoList
   this.teamId = teamId
