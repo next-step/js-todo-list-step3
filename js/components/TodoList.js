@@ -1,65 +1,80 @@
-// import { todoItemTemplate } from '../template.js';
-// import { isValidContent } from '../util.js';
-// import { KEYCODE_ESC, KEYCODE_ENTER } from '../constants.js';
+import { isValidContent } from '../util.js';
+import { KEYCODE_ESC, KEYCODE_ENTER } from '../constants.js';
+import { todoItemTemplate } from '../template.js';
 
 function TodoList({
-  deleteTodo, toggleTodo, editTodo, setRootState,
+  $rootElement, deleteTodo, toggleTodo, editTodo,
 }) {
-  // this.todoItems = [];
-  // const $todoList = document.querySelector('#todo-list');
+  this.todoList = [];
+  const $todoList = $rootElement.querySelector('.todo-list');
 
-  // this.setState = (updatedTodoItems) => {
-  //   this.todoItems = updatedTodoItems;
-  //   this.render(this.todoItems);
-  // };
+  this.setState = (newTodoList) => {
+    console.log(newTodoList);
+    this.todoList = newTodoList;
+  };
 
-  // this.render = (items) => {
-  //   if (!Array.isArray(items)) return;
-  //   const template = items.map(todoItemTemplate);
-  //   $todoList.innerHTML = template.join('');
-  // };
+  // (event) => this.onClickTodoItem(event), this.onClickTodoItem 차이점 질문하기.
+  $todoList.addEventListener('click', (event) => this.onClickTodoItem(event));
+  $todoList.addEventListener('dblclick', (event) => this.onEnterEditMode(event));
+  $todoList.addEventListener('keyup', (event) => this.onKeyUpTodoItem(event));
 
-  // $todoList.addEventListener('click', (event) => {
-  //   const { className } = event.target;
-  //   const { id } = event.target.closest('li');
-  //   if (className === 'destroy') {
-  //     deleteTodo(id);
-  //     setRootState();
-  //   }
-  //   if (className === 'toggle') {
-  //     toggleTodo(id);
-  //     setRootState();
-  //   }
-  // });
+  this.onClickTodoItem = async (event) => {
+    const { target } = event;
+    const { classList } = target;
+    const $clickedItem = target.closest('.todo-list-item');
+    if (!$clickedItem) return;
+    const itemId = $clickedItem.dataset.id;
+    if (classList.contains('destroy')) {
+      await deleteTodo(itemId);
+    }
+    if (classList.contains('toggle')) {
+      await toggleTodo(itemId);
+    }
+    // if (classList.contains('chip')) {
+    //   const $chipSelect = $target.closest('.chip-container').querySelector('select');
+    //   $target.classList.add('hidden');
+    //   $chipSelect.classList.remove('hidden');
+    // }
+  };
 
-  // $todoList.addEventListener('dblclick', (event) => {
-  //   const $li = event.target.closest('li');
-  //   $li.classList.add('editing');
+  this.onEnterEditMode = async (event) => {
+    const { target } = event;
+    const $todoItem = target.closest('.todo-list-item');
+    const itemId = $todoItem.dataset.id;
+    $todoItem.classList.add('editing');
 
-  //   const [$editInput] = Array.from($li.getElementsByClassName('edit'));
-  //   const originValue = (
-  //     this.todoItems.find((item) => item._id === $li.id) || {}
-  //   ).contents;
-  //   $editInput.value = originValue || '';
-  //   $editInput.focus();
-  //   const size = $editInput.value.length;
-  //   $editInput.setSelectionRange(size, size); // set cursor position
-  // });
+    const $editInput = $todoItem.querySelector('.edit');
+    console.log(this.todoList);
+    const originValue = (this.todoList.find((item) => item._id === itemId) || {}).contents;
+    $editInput.value = originValue || '';
+    $editInput.focus();
+    const { length } = $editInput.value;
+    $editInput.setSelectionRange(length, length); // set cursor position
+  };
 
-  // $todoList.addEventListener('keypress', (event) => {
-  //   if (event.key !== KEYCODE_ESC && event.key !== KEYCODE_ENTER) return;
+  this.onKeyUpTodoItem = async (event) => {
+    const $editTodoInput = event.target.closest('.edit');
+    if (!$editTodoInput) return;
+    if ($editTodoInput) {
+      this.editTodo(event);
+    }
+  };
 
-  //   const $li = event.target.closest('li');
-  //   if (event.key === KEYCODE_ESC) {
-  //     $li.classList.remove('editing');
-  //   }
-  //   const newTodoContents = event.target.value;
-  //   if (!isValidContent(newTodoContents)) return;
-  //   if (event.key === KEYCODE_ENTER) {
-  //     editTodo($li.id, newTodoContents);
-  //     setRootState();
-  //   }
-  // });
+  this.editTodo = async (event) => {
+    if (event.key !== KEYCODE_ESC && event.key !== KEYCODE_ENTER) return;
+
+    const { target } = event;
+    const $todoItem = target.closest('.todo-list-item');
+    if (event.key === KEYCODE_ESC) {
+      $todoItem.classList.remove('editing');
+    }
+    const newTodoContents = target.value;
+    if (!isValidContent(newTodoContents)) return;
+    if (event.key === KEYCODE_ENTER) {
+      const itemId = $todoItem.dataset.id;
+      editTodo(itemId, newTodoContents);
+    }
+  };
 }
 
 export default TodoList;

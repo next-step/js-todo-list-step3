@@ -1,46 +1,78 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoFilter from './TodoFilter.js';
-import { FILTER_TYPE } from '../constants.js';
 import {
-  getMemberTodoList,
+  getMemberTodoList, addMemberTodo, deleteMemberTodo, toggleMemberTodo, editMemberTodo,
 } from '../api/index.js';
 
-function TodoApp({ _id, name, todoList }) {
-  this.id = _id;
+import { todoItemTemplate } from '../template.js';
+import { FILTER_TYPE } from '../constants.js';
+
+function TodoApp(teamId, { _id, name, todoList }) {
+  this.teamId = teamId;
+  this.memberId = _id;
   this.username = name;
   this.todoList = todoList;
 
-  this.setState = async () => {
-    // this.render();
-    // await this.getTodoList();
-    // this.TodoList.setState(this.todoList);
+  const $todoApp = document.getElementById(this.memberId);
+  const $todoList = $todoApp.querySelector('.todo-list');
+
+  this.setState = async (newTodoList) => {
+    this.todoList = newTodoList;
+    this.render();
+    this.TodoList.setState(this.todoList);
+  };
+
+  this.render = () => {
+    $todoList.innerHTML = this.todoList.map((item) => todoItemTemplate(item));
   };
 
   this.getTodoList = async () => {
-    const { result, error, errorMessage } = await getMemberTodoList(this.user);
+    const { result, error, errorMessage } = await getMemberTodoList(this.teamId, this.memberId);
     if (error) return alert(errorMessage);
-    this.todoList = result.todoList;
+    this.setState(result.todoList);
   };
 
-  // this.TodoList = new TodoList({
-  //   deleteTodo: async (id) => {
-  //     await deleteTodoItem(this.user, id);
-  //   },
-  //   toggleTodo: async (id) => {
-  //     await toggleTodoItem(this.user, id);
-  //   },
-  //   editTodo: async (id, value) => {
-  //     await editTodoItem(this.user, id, value);
-  //   },
-  //   setRootState: this.setState,
-  // });
-  // this.TodoInput = new TodoInput({
-  //   addTodo: async (value) => {
-  //     await addMeberTodo(this.user, value);
-  //     this.setState();
-  //   },
-  // });
+  this.addTodo = async (newTodoContents) => {
+    await addMemberTodo(this.teamId, this.memberId, newTodoContents);
+  };
+
+  this.deleteTodo = async (itemId) => {
+    await deleteMemberTodo(this.teamId, this.memberId, itemId);
+  };
+
+  this.toggleTodo = async (itemId) => {
+    await toggleMemberTodo(this.teamId, this.memberId, itemId);
+  };
+
+  this.editTodo = async (itemId, newTodoContents) => {
+    editMemberTodo(this.teamId, this.memberId, itemId, newTodoContents);
+  };
+
+  this.TodoInput = new TodoInput({
+    $rootElement: $todoApp,
+    addTodo: async (value) => {
+      await this.addTodo(value);
+      this.getTodoList(this.teamId);
+    },
+  });
+
+  this.TodoList = new TodoList({
+    $rootElement: $todoApp,
+    deleteTodo: async (itemId) => {
+      await this.deleteTodo(itemId);
+      this.getTodoList(this.teamId);
+    },
+    toggleTodo: async (itemId) => {
+      await this.toggleTodo(itemId);
+      this.getTodoList(this.teamId);
+    },
+    editTodo: async (itemId, value) => {
+      await this.editTodo(itemId, value);
+      this.getTodoList(this.teamId);
+    },
+  });
+
   // this.$todoCount = document.querySelector('.todo-count');
   // this.TodoFilter = new TodoFilter({
   //   filterTodo: (mode) => {
@@ -52,12 +84,10 @@ function TodoApp({ _id, name, todoList }) {
   //     this.TodoList.setState(renderList[mode]());
   //   },
   // });
-  // this.UserList = new UserList({
-  //   selectUser: (user) => {
-  //     this.user = user;
-  //     this.setState();
-  //   },
-  // });
+
+  this.init = () => {
+    this.setState(this.todoList);
+  };
 
   this.init();
 }

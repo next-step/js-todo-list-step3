@@ -1,12 +1,12 @@
 import { KEYCODE_ENTER } from '../constants.js';
 import { isValidContent } from '../util.js';
 
-function TodoInput({ addTodo }) {
-  const $todoInput = document.querySelector('#new-todo-input');
+function TodoInput({ $rootElement, addTodo }) {
+  const $todoInput = $rootElement.querySelector('.new-todo');
 
-  $todoInput.addEventListener('keypress', (event) => this.addTodoItem(event));
+  $todoInput.addEventListener('keyup', (event) => this.addTodo(event));
 
-  this.addTodoItem = (event) => {
+  this.addTodo = (event) => {
     if (event.key !== KEYCODE_ENTER) return;
 
     const newTodoContents = event.target.value;

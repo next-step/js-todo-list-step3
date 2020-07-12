@@ -16,7 +16,7 @@ export const teamAddItemTemplate = () => (
   </div>`
 );
 
-export const addTodoItemTemplate = () => (
+export const addMemberTemplate = () => (
   `<li class="add-user-button-container">
     <button id="add-user-button" class="ripple">
       <span class="material-icons">add</span>
@@ -24,77 +24,33 @@ export const addTodoItemTemplate = () => (
   </li>`
 );
 
+export const prioritySelectTemplate = (hidden = false) => (
+  `<select class="chip select ${hidden ? 'hidden' : ''}">
+    <option value="0" selected>순위</option>
+    <option value="1">1순위</option>
+    <option value="2">2순위</option>
+  </select>`
+);
+
+export const priorityTemplate = ([
+  prioritySelectTemplate(),
+  `<span class="chip primary">1순위</span>${prioritySelectTemplate(true)}`,
+  `<span class="chip secondary">2순위</span>${prioritySelectTemplate(true)}`,
+]);
+
 export const todoItemTemplate = (todo) => (
   `<li class="todo-list-item ${todo.isCompleted ? 'completed' : ''}" data-id="${todo._id}">
     <div class="view">
       <input class="toggle" type="checkbox" ${todo.isCompleted ? 'checked' : ''}/>
       <label class="label">
         <div class="chip-container">
-          <select class="chip select">
-            <option value="0" selected>순위</option>
-            <option value="1">1순위</option>
-            <option value="2">2순위</option>
-          </select>
+          ${priorityTemplate[todo.priority]}
         </div>
         ${todo.contents}
       </label>
       <button class="destroy"></button>
     </div>
     <input class="edit" />
-  </li>
-  <li class="todo-list-item">
-    <div class="view">
-      <input class="toggle" type="checkbox" />
-      <label class="label">
-        <div class="chip-container">
-          <span class="chip primary">1순위</span>
-          <select class="chip select hidden">
-            <option value="0" selected>순위</option>
-            <option value="1">1순위</option>
-            <option value="2">2순위</option>
-          </select>
-        </div>
-        <span class="todo-item-text">해야할 아이템</span>
-      </label>
-      <button class="delete"></button>
-    </div>
-    <input class="edit" value="완료된 타이틀" />
-  </li>
-  <li class="todo-list-item">
-    <div class="view">
-      <input class="toggle" type="checkbox" />
-      <label class="label">
-        <div class="chip-container">
-          <span class="chip secondary">1순위</span>
-          <select class="chip select hidden">
-            <option value="0" selected>순위</option>
-            <option value="1">1순위</option>
-            <option value="2">2순위</option>
-          </select>
-        </div>
-        해야할 아이템
-      </label>
-      <button class="destroy"></button>
-    </div>
-    <input class="edit" value="완료된 타이틀" />
-  </li>
-  <li class="todo-list-item editing">
-    <div class="view">
-      <input class="toggle" type="checkbox" checked />
-      <label class="label">
-        <div class="chip-container">
-          <span class="chip primary">1순위</span>
-          <select class="chip select hidden">
-            <option value="0" selected>순위</option>
-            <option value="1">1순위</option>
-            <option value="2">2순위</option>
-          </select>
-        </div>
-        수정중인 아이템
-      </label>
-      <button class="destroy"></button>
-    </div>
-    <input class="edit" value="수정중인 타이틀" />
   </li>`
 );
 

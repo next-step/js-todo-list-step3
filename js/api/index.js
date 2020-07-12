@@ -49,3 +49,7 @@ export async function toggleMemberTodo(teamId, memberId, itemId) {
 export async function editMemberTodo(teamId, memberId, itemId, contents) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, getApiOption(METHOD.PUT, { contents }));
 }
+
+export async function setPriorityMemberTodo(teamId, memberId, itemId, priority) {
+  return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, getApiOption(METHOD.PUT, { priority }));
+}
