@@ -14,6 +14,7 @@ export const CLASS_NAME = {
   EDIT: 'edit',
   EDITING: 'editing',
   TOGGLE: 'toggle',
+  DESTROY: 'destroy',
   REMOVE_ALL: 'clear-completed',
   PRIORITY_FIRST: 'primary',
   PRIORITY_SECOND: 'secondary',
@@ -22,7 +23,13 @@ export const CLASS_NAME = {
   TEAM_LIST_CONTAINER: 'team-list-container',
 
   TODO_APP_LIST_CONTAINER: 'todoapp-list-container',
+  TODO_APP_CONTAINER: 'todo-app-container',
   TODO_INPUT: 'new-todo',
+  TODO_LIST: 'todo-list',
+  TODO_LIST_ITEM: 'todo-list-item',
+  TODO_CONTENTS: 'todo-contents',
+  TODO_PRIORITY: 'chip',
+  TODO_LABEL: 'label',
 }
 
 export const KEY_NAME = {

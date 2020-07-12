@@ -24,21 +24,6 @@ export const createTeamButtonTemplate = () => `
 export const kanbanHeaderTemplate = (teamName) =>
   `<span><strong>${teamName}</strong>\'s Todo List</span>`
 
-export const todoFilterTemplate = `
-          <li>
-            <a href="#all" class="selected">전체보기</a>
-          </li>
-          <li>
-            <a href="#priority" class="priority">우선 순위</a>
-          </li>
-          <li>
-            <a href="#active" class="active">해야할 일</a>
-          </li>
-          <li>
-            <a href="#completed" class="completed">완료한 일</a>
-          </li>
-`
-
 export const addMemberButtonTemplate = `
             <button id="add-user-button" class="ripple">
               <span class="material-icons">add</span>
@@ -62,24 +47,6 @@ export const todoCountComponentTemplate = (totalCount, completedCount) => {
   return `
     <span id="todo-count" class="todo-count">총 <span class="count">${totalCount}</span> 개 중</span>
     <span id="completed-count" class="todo-count"><span class="count">${completedCount}</span> 개 완료</span>`
-}
-
-const getPriorityClassName = (priority) => {
-  return priority === '1'
-    ? CLASS_NAME.PRIORITY_FIRST
-    : CLASS_NAME.PRIORITY_SECOND
-}
-
-const getPriorityHTML = (priority) => {
-  return priority
-    ? `<span class="chip ${getPriorityClassName(
-        priority
-      )}">${priority}순위</span>`
-    : `<select class="chip select">
-         <option value="0" selected>순위</option>
-         <option value="1">1순위</option>
-         <option value="2">2순위</option>
-      </select>`
 }
 
 export const todoListHTMLTemplate = ({ _id, name }) => {
@@ -135,10 +102,28 @@ export const todoItemHTMLTemplate = (
             }/>
             <label class="label" data-index=${index} data-id=${_id}>
                 ${getPriorityHTML(priority)}
-                ${contents}
+                <span class="todo-contents">${contents}</span>
             </label>
             <button class="destroy"></button>
           </div>
           <input class="edit" value=${contents} />
       </li>`
+}
+
+const getPriorityClassName = (priority) => {
+  return priority === '1'
+    ? CLASS_NAME.PRIORITY_FIRST
+    : CLASS_NAME.PRIORITY_SECOND
+}
+
+const getPriorityHTML = (priority) => {
+  return priority
+    ? `<span class="chip ${getPriorityClassName(
+        priority
+      )}">${priority}순위</span>`
+    : `<select class="chip select">
+         <option value="0" selected>순위</option>
+         <option value="1">1순위</option>
+         <option value="2">2순위</option>
+      </select>`
 }

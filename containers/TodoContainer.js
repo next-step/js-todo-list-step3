@@ -22,20 +22,14 @@ TodoContainer.prototype.init = function () {
       getTodos,
     })
 
-  // // TodoList
-  // const $mainSection = document.createElement('section')
-  // $mainSection.className = 'main'
-  // const $ul = document.createElement('ul')
-  // $ul.className = 'todo-list'
-  // this.$todoList = new TodoList({
-  //   $target: $ul,
-  //   todoList,
-  //   teamId,
-  //   memberId,
-  //   getTodos,
-  // })
-  // $mainSection.appendChild($ul)
-  // $todoApp.appendChild($mainSection)
+  // TodoList
+  this.$todoList = new TodoList({
+    $target: this.$target.querySelector(`.${CLASS_NAME.TODO_LIST}`),
+    todoList,
+    teamId,
+    memberId,
+    getTodos,
+  })
 
   // // TodoCount
   // const $countContainer = document.createElement('div')

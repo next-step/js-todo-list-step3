@@ -1,5 +1,5 @@
 import { TAG_NAME } from '../../utils/constants.js'
-import { todoFilterTemplate } from '../../utils/templates.js'
+// import { todoFilterTemplate } from '../../utils/templates.js'
 
 TodoFilter.prototype.init = function () {
   this.$target.innerHTML = todoFilterTemplate
