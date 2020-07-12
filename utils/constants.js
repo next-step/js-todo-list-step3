@@ -34,7 +34,7 @@ export const CLASS_NAME = {
   TODO_COUNT: 'todo-count',
   TODO_FILTERS: 'filters',
   REMOVE_ALL: 'clear-completed',
-  MEMBER_ADD_BUTTON: 'ripple',
+  ADD_BUTTON: 'ripple',
 }
 
 export const KEY_NAME = {

@@ -1,9 +1,9 @@
-import { KEY_NAME } from '../../utils/constants.js'
+import { isEmpty, isEnter } from '../../utils/validation.js'
 import todoApis from '../../api/member.js'
 
 TodoInput.prototype.bindEvent = function () {
   const onAddTodoItemHandler = async (e) => {
-    if (e.key !== KEY_NAME.ENTER || !e.target.value.trim()) {
+    if (!isEnter(e.key) || isEmpty(e.target.value.trim())) {
       return
     }
     try {

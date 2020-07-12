@@ -1,6 +1,7 @@
-import { CLASS_NAME, KEY_NAME } from '../../utils/constants.js'
-import memberApis from '../../api/member.js'
+import { CLASS_NAME } from '../../utils/constants.js'
+import { isEsc, isEnter, isEmpty } from '../../utils/validation.js'
 import { todoItemHTMLTemplate } from '../../utils/templates.js'
+import memberApis from '../../api/member.js'
 
 TodoList.prototype.init = function () {
   this.render()
@@ -59,12 +60,12 @@ TodoList.prototype.bindEvents = function () {
   }
 
   const onEditTodoItemHandler = async (e) => {
-    if (e.key !== KEY_NAME.ESC && e.key !== KEY_NAME.ENTER) {
+    if (!isEsc(e.key) && !isEnter(e.key)) {
       return
     }
     const $todoItem = e.target.closest(`.${CLASS_NAME.TODO_LIST_ITEM}`)
     $todoItem.classList.remove(CLASS_NAME.EDITING) // ESC
-    if (e.key !== KEY_NAME.ENTER || !e.target.value.trim()) {
+    if (!isEnter(e.key) || isEmpty(e.target.value.trim())) {
       return
     }
     const { id } = $todoItem.dataset

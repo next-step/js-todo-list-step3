@@ -12,7 +12,7 @@ export const teamButtonTemplate = ({ _id, name }) => `
           </a>
         </div>
 `
-export const createTeamButtonTemplate = () => `
+export const createTeamButtonTemplate = `
           <button id="add-team-button" class="ripple">
             <span class="material-icons">add</span>
           </button>

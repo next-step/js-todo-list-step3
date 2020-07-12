@@ -49,7 +49,7 @@ export default function KanBanContainer({ selector }) {
       })
 
       new AddMemberButton({
-        selector: `.${CLASS_NAME.MEMBER_ADD_BUTTON}`,
+        selector: `.${CLASS_NAME.ADD_BUTTON}`,
         teamId: this.teamId,
         renderKanbanPage: this.render,
       })
