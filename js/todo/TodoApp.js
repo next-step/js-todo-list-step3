@@ -175,13 +175,30 @@ export default class TodoApp {
             targetMemberId,
             newPosition,
           );
-          console.log('itemId',itemId);
-          console.log(this.memberId, targetMemberId);
-          console.log(newPosition);
-          console.log(response);
           // this.todoList.setState(response.member.todoList)
         } catch (e) {
           console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_ITEM);
+        }
+      },
+    });
+    new DragAndDropApp({
+      draggableItemClass: '.todoapp-container',
+      dragItemsWrapperList: '.todoapp-list-container',
+      onDragTodoItem: async (originMemberId, targetMemberId) => {
+        try {
+          const { members } = await rootApi.fetchTeam(this.teamId);
+          if (!members) return;
+          const newPosition = members.findIndex(
+            (member) => member._id === targetMemberId,
+          );
+          const response = await rootApi.fetchDragDropMember(
+            this.teamId,
+            originMemberId,
+            newPosition,
+          );
+          // this.todoList.setState(response.member.todoList)
+        } catch (e) {
+          console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_LIST);
         }
       },
     });

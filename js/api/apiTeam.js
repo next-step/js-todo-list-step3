@@ -20,6 +20,12 @@ const apiTeam = {
       options.POST({ name }),
     );
   },
+  fetchDragDropMember: (teamId, memberId, newPosition) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/sort`,
+      options.PUT({memberId, newPosition: String(newPosition)}),
+    );
+  },
 };
 
 export default apiTeam;

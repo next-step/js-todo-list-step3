@@ -14,9 +14,13 @@ export default function DragAndDropApp({
   function handleDragStart(e) {
     for (let node of $targetSelectedFilter) {
       if (node.text !== '전체보기') {
-        alert(ERROR_TYPE_MESSAGE.SELECT_ALL_FILTER)
+        alert(ERROR_TYPE_MESSAGE.SELECT_ALL_FILTER);
         return;
       }
+    }
+
+    if (e.stopPropagation) {
+      e.stopPropagation();
     }
 
     dragSrcEl = this;
@@ -29,6 +33,9 @@ export default function DragAndDropApp({
   function handleDragOver(e) {
     if (e.preventDefault) {
       e.preventDefault();
+    }
+    if (e.stopPropagation) {
+      e.stopPropagation();
     }
     this.classList.add('over');
     e.dataTransfer.dropEffect = 'move';
@@ -52,16 +59,25 @@ export default function DragAndDropApp({
     dragList === dropList
       ? dropList.removeChild(dragSrcEl)
       : dragList.removeChild(dragSrcEl);
-    const originMemberId = dragList.dataset.memberId
+
+    if (draggableItemClass === '.todo-list-item') {
+      const originMemberId = dragList.dataset.memberId;
+      const targetMemberId = dropList.dataset.memberId;
+      const { itemId } = dragSrcEl.dataset;
+      const targetItemId = this.dataset.itemId;
+      onDragTodoItem(itemId, originMemberId, targetMemberId, targetItemId);
+    }
+    if (draggableItemClass === '.todoapp-container') {
+      const originMemberId = dragSrcEl.dataset.memberId;
+      const targetMemberId = this.dataset.memberId;
+      onDragTodoItem(originMemberId, targetMemberId);
+    }
+
     const dropHTML = e.dataTransfer.getData('text/html');
-    const { memberId } = dropList.dataset;
-    const { itemId } = dragSrcEl.dataset;
-    const targetItemId = this.dataset.itemId;
     this.insertAdjacentHTML('beforebegin', dropHTML);
     const dropElem = this.previousSibling;
     addDnDHandlers(dropElem);
     this.classList.remove('over');
-    onDragTodoItem(itemId, originMemberId, memberId, targetItemId);
   }
 
   function handleDragEnd(e) {
@@ -79,6 +95,5 @@ export default function DragAndDropApp({
   }
 
   const $todoItems = document.querySelectorAll(draggableItemClass);
-  console.log($todoItems);
   $todoItems.forEach(addDnDHandlers);
 }

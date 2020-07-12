@@ -50,13 +50,7 @@ const apiMember = {
   ) => {
     return request(
       `${BASE_URL}/api/teams/${teamId}/items/${itemId}/sort`,
-      options.DRAGDROP_ITEM(originMemberId, targetMemberId, newPosition),
-    );
-  },
-  fetchDragDropMember: (teamId, memberId, newPosition) => {
-    return request(
-      `${BASE_URL}/api/teams/${teamId}/sort`,
-      options.DRAGDROP_LIST(memberId, newPosition),
+      options.PUT({originMemberId, targetMemberId, newPosition}),
     );
   },
 };
