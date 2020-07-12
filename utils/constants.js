@@ -30,6 +30,8 @@ export const CLASS_NAME = {
   TODO_CONTENTS: 'todo-contents',
   TODO_PRIORITY: 'chip',
   TODO_LABEL: 'label',
+  TODO_COUNT_CONTAINER: 'count-container',
+  TODO_COUNT: 'todo-count',
 }
 
 export const KEY_NAME = {

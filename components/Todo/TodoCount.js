@@ -1,17 +1,17 @@
-import { todoCountComponentTemplate } from '../../utils/templates.js'
+import { todoCountHTMLtTemplate } from '../../utils/templates.js'
+import { CLASS_NAME } from '../../utils/constants.js'
 
-TodoCount.prototype.init = function () {
-  this.$target.innerHTML = todoCountComponentTemplate(
-    this.totalCount,
-    this.completedCount
+TodoCount.prototype.render = function () {
+  const $totalCountSpan = this.$target.querySelector(
+    `.${CLASS_NAME.TODO_COUNT}`
   )
-}
-
-TodoCount.prototype.setState = function (totalCount, completedCount) {
-  const $totalCountSpan = this.$target.querySelector('#todo-count')
-  const $completedCountSpan = this.$target.querySelector('#completed-count')
-  $totalCountSpan.innerHTML = `총 <span class="count">${totalCount}</span> 개 중`
-  $completedCountSpan.innerHTML = `<span class="count">${completedCount}</span> 개 완료`
+  const $completedCountSpan = $totalCountSpan.nextElementSibling
+  $totalCountSpan.innerHTML = `총 ${todoCountHTMLtTemplate(
+    this.totalCount
+  )} 개 중`
+  $completedCountSpan.innerHTML = `${todoCountHTMLtTemplate(
+    this.completedCount
+  )} 개 완료`
 }
 
 export default function TodoCount(props) {
@@ -23,5 +23,5 @@ export default function TodoCount(props) {
   this.totalCount = totalCount
   this.completedCount = completedCount
 
-  this.init()
+  this.render()
 }

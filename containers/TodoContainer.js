@@ -13,14 +13,13 @@ TodoContainer.prototype.init = function () {
   const { memberName, memberId, todoList, teamId, getTodos, onFilter } = this
 
   this.$target = document.querySelector(`#${memberId}`)
-  this.teadId =
-    // TodoInput
-    this.$todoInput = new TodoInput({
-      $target: this.$target.querySelector(`.${CLASS_NAME.TODO_INPUT}`),
-      teamId,
-      memberId,
-      getTodos,
-    })
+  // TodoInput
+  this.$todoInput = new TodoInput({
+    $target: this.$target.querySelector(`.${CLASS_NAME.TODO_INPUT}`),
+    teamId,
+    memberId,
+    getTodos,
+  })
 
   // TodoList
   this.$todoList = new TodoList({
@@ -31,15 +30,12 @@ TodoContainer.prototype.init = function () {
     getTodos,
   })
 
-  // // TodoCount
-  // const $countContainer = document.createElement('div')
-  // $countContainer.className = 'count-container'
-
-  // this.$todoCount = new TodoCount({
-  //   $target: $countContainer,
-  //   totalCount: todoList.length,
-  //   completedCount: todoList.filter(({ isCompleted }) => isCompleted).length,
-  // })
+  // TodoCount
+  this.$todoCount = new TodoCount({
+    $target: this.$target.querySelector(`.${CLASS_NAME.TODO_COUNT_CONTAINER}`),
+    totalCount: todoList.length,
+    completedCount: todoList.filter(({ isCompleted }) => isCompleted).length,
+  })
 
   // // TodoFilter
   // const $filterUl = document.createElement('ul')

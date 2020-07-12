@@ -43,10 +43,9 @@ export const loadingComponentTemplate = `
                     </div>
                 </li>`
 
-export const todoCountComponentTemplate = (totalCount, completedCount) => {
+export const todoCountHTMLtTemplate = (count) => {
   return `
-    <span id="todo-count" class="todo-count">총 <span class="count">${totalCount}</span> 개 중</span>
-    <span id="completed-count" class="todo-count"><span class="count">${completedCount}</span> 개 완료</span>`
+    <span class="count">${count}</span></span>`
 }
 
 export const todoListHTMLTemplate = ({ _id, name }) => {
@@ -67,7 +66,8 @@ export const todoListHTMLTemplate = ({ _id, name }) => {
         <ul class="todo-list"></ul>
       </section>
       <div class="count-container">
-        <span class="todo-count">총 <strong>0</strong> 개</span>
+        <span id="todo-count" class="todo-count"></span>
+        <span id="completed-count" class="todo-count"><</span>
         <ul class="filters">
           <li>
             <a href="#all" class="selected">전체보기</a>
