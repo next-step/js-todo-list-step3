@@ -11,7 +11,6 @@ function TodoList({
     this.todoList = newTodoList;
   };
 
-  // (event) => this.onClickTodoItem(event), this.onClickTodoItem 차이점 질문하기.
   $todoList.addEventListener('click', (event) => this.onClickTodoItem(event));
   $todoList.addEventListener('dblclick', (event) => this.onEnterEditMode(event));
   $todoList.addEventListener('keyup', (event) => this.onKeyUpTodoItem(event));
