@@ -17,6 +17,7 @@ function TodoList({
   $todoList.addEventListener('change', (event) => this.setPriority(event));
 
   this.onClickTodoItem = async (event) => {
+    event.preventDefault();
     const { target } = event;
     const { classList } = target;
     const $clickedItem = target.closest('.todo-list-item');

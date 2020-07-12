@@ -32,18 +32,18 @@ function App() {
   this.getTeamDetail = async (id) => {
     const { result, error, errorMessage } = await getTeamDetail(id);
     if (error) return alert(errorMessage);
-    await this.setState(result);
+    this.setState(result);
     return result;
   };
 
-  this.setState = async (data) => {
+  this.setState = (data) => {
     this.teamId = data._id;
     this.teamName = data.name;
     this.members = data.members;
-    await this.render();
+    this.render();
   };
 
-  this.render = async () => {
+  this.render = () => {
     $teamTitle.querySelector('strong').innerHTML = this.teamName;
     $todoApps.innerHTML = this.members.map((item) => todoListTemplate(item)).join('') + addMemberTemplate();
   };
