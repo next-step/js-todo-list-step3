@@ -175,7 +175,6 @@ export default class TodoApp {
             targetMemberId,
             newPosition,
           );
-          // this.todoList.setState(response.member.todoList)
         } catch (e) {
           console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_ITEM);
         }
@@ -196,7 +195,6 @@ export default class TodoApp {
             originMemberId,
             newPosition,
           );
-          // this.todoList.setState(response.member.todoList)
         } catch (e) {
           console.error(ERROR_TYPE_MESSAGE.CAN_NOT_MOVE_LIST);
         }
