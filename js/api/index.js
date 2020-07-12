@@ -1,18 +1,7 @@
-import { requestApi } from '../util.js';
+import { requestApi, getApiOption } from '../util.js';
 import { METHOD } from '../constants.js';
 
 const BASE_URL = 'https://blackcoffee-todolist.df.r.appspot.com';
-
-const getApiOption = (method, data) => {
-  const option = {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-  };
-  if (data) {
-    option.body = JSON.stringify(data);
-  }
-  return option;
-};
 
 export async function getTeams() {
   return requestApi(`${BASE_URL}/api/teams`, getApiOption(METHOD.GET));
@@ -52,4 +41,8 @@ export async function editMemberTodo(teamId, memberId, itemId, contents) {
 
 export async function setPriorityMemberTodo(teamId, memberId, itemId, priority) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, getApiOption(METHOD.PUT, { priority }));
+}
+
+export async function deleteMemberAllTodo(teamId, memberId) {
+  return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`, getApiOption(METHOD.DELETE));
 }

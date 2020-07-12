@@ -2,7 +2,7 @@ import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoFilter from './TodoFilter.js';
 import {
-  getMemberTodoList, addMemberTodo, deleteMemberTodo, toggleMemberTodo, editMemberTodo, setPriorityMemberTodo,
+  getMemberTodoList, addMemberTodo, deleteMemberTodo, toggleMemberTodo, editMemberTodo, setPriorityMemberTodo, deleteMemberAllTodo,
 } from '../api/index.js';
 
 import { todoItemTemplate } from '../template.js';
@@ -16,6 +16,9 @@ function TodoApp(teamId, { _id, name, todoList }) {
 
   const $todoApp = document.getElementById(this.memberId);
   const $todoList = $todoApp.querySelector('.todo-list');
+  const $allDeleteButton = $todoApp.querySelector('.clear-completed');
+
+  $allDeleteButton.addEventListener('click', (event) => this.deleteAllTodo(event));
 
   this.setState = async (newTodoList) => {
     this.todoList = newTodoList;
@@ -53,6 +56,11 @@ function TodoApp(teamId, { _id, name, todoList }) {
     await setPriorityMemberTodo(this.teamId, this.memberId, itemId, priority);
   };
 
+  this.deleteAllTodo = async () => {
+    await deleteMemberAllTodo(this.teamId, this.memberId);
+    this.getTodoList(this.teamId);
+  };
+
   this.TodoInput = new TodoInput({
     $rootElement: $todoApp,
     addTodo: async (value) => {
@@ -86,11 +94,7 @@ function TodoApp(teamId, { _id, name, todoList }) {
     filterTodo: (mode) => {
       const renderList = {
         [FILTER_TYPE.ALL]: () => this.todoList,
-        [FILTER_TYPE.PRIORITY]: () => {
-          const copyList = this.todoList.map((item) => ({ ...item }));
-          copyList.sort((a, b) => a.priority - b.priority);
-          return copyList;
-        },
+        [FILTER_TYPE.PRIORITY]: () => this.todoList.map((item) => ({ ...item })).sort((a, b) => a.priority - b.priority),
         [FILTER_TYPE.ACTIVE]: () => this.todoList.filter((item) => !item.isCompleted),
         [FILTER_TYPE.COMPLETED]: () => this.todoList.filter((item) => item.isCompleted),
       };

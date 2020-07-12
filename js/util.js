@@ -18,3 +18,14 @@ export const requestApi = async (url, option) => {
     return { error, errorMessage: '요청 실패' };
   }
 };
+
+export const getApiOption = (method, data) => {
+  const option = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+  };
+  if (data) {
+    option.body = JSON.stringify(data);
+  }
+  return option;
+};
