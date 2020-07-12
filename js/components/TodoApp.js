@@ -2,7 +2,7 @@ import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoFilter from './TodoFilter.js';
 import {
-  getMemberTodoList, addMemberTodo, deleteMemberTodo, toggleMemberTodo, editMemberTodo,
+  getMemberTodoList, addMemberTodo, deleteMemberTodo, toggleMemberTodo, editMemberTodo, setPriorityMemberTodo,
 } from '../api/index.js';
 
 import { todoItemTemplate } from '../template.js';
@@ -46,7 +46,11 @@ function TodoApp(teamId, { _id, name, todoList }) {
   };
 
   this.editTodo = async (itemId, newTodoContents) => {
-    editMemberTodo(this.teamId, this.memberId, itemId, newTodoContents);
+    await editMemberTodo(this.teamId, this.memberId, itemId, newTodoContents);
+  };
+
+  this.setPriority = async (itemId, priority) => {
+    await setPriorityMemberTodo(this.teamId, this.memberId, itemId, priority);
   };
 
   this.TodoInput = new TodoInput({
@@ -69,6 +73,10 @@ function TodoApp(teamId, { _id, name, todoList }) {
     },
     editTodo: async (itemId, value) => {
       await this.editTodo(itemId, value);
+      this.getTodoList(this.teamId);
+    },
+    setPriority: async (itemId, priority) => {
+      await this.setPriority(itemId, priority);
       this.getTodoList(this.teamId);
     },
   });

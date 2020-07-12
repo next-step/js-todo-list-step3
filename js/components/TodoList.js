@@ -1,15 +1,13 @@
 import { isValidContent } from '../util.js';
 import { KEYCODE_ESC, KEYCODE_ENTER } from '../constants.js';
-import { todoItemTemplate } from '../template.js';
 
 function TodoList({
-  $rootElement, deleteTodo, toggleTodo, editTodo,
+  $rootElement, deleteTodo, toggleTodo, editTodo, setPriority,
 }) {
   this.todoList = [];
   const $todoList = $rootElement.querySelector('.todo-list');
 
   this.setState = (newTodoList) => {
-    console.log(newTodoList);
     this.todoList = newTodoList;
   };
 
@@ -17,6 +15,7 @@ function TodoList({
   $todoList.addEventListener('click', (event) => this.onClickTodoItem(event));
   $todoList.addEventListener('dblclick', (event) => this.onEnterEditMode(event));
   $todoList.addEventListener('keyup', (event) => this.onKeyUpTodoItem(event));
+  $todoList.addEventListener('change', (event) => this.setPriority(event));
 
   this.onClickTodoItem = async (event) => {
     const { target } = event;
@@ -30,11 +29,11 @@ function TodoList({
     if (classList.contains('toggle')) {
       await toggleTodo(itemId);
     }
-    // if (classList.contains('chip')) {
-    //   const $chipSelect = $target.closest('.chip-container').querySelector('select');
-    //   $target.classList.add('hidden');
-    //   $chipSelect.classList.remove('hidden');
-    // }
+    if (classList.contains('chip')) {
+      const $chipSelect = target.closest('.chip-container').querySelector('select');
+      target.classList.add('hidden');
+      $chipSelect.classList.remove('hidden');
+    }
   };
 
   this.onEnterEditMode = async (event) => {
@@ -44,7 +43,6 @@ function TodoList({
     $todoItem.classList.add('editing');
 
     const $editInput = $todoItem.querySelector('.edit');
-    console.log(this.todoList);
     const originValue = (this.todoList.find((item) => item._id === itemId) || {}).contents;
     $editInput.value = originValue || '';
     $editInput.focus();
@@ -74,6 +72,14 @@ function TodoList({
       const itemId = $todoItem.dataset.id;
       editTodo(itemId, newTodoContents);
     }
+  };
+
+  this.setPriority = async (event) => {
+    const { target } = event;
+    const $todoItem = target.closest('.todo-list-item');
+    const itemId = $todoItem.dataset.id;
+    const priority = target.value;
+    setPriority(itemId, priority);
   };
 }
 
