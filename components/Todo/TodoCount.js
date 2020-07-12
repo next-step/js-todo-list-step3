@@ -14,6 +14,12 @@ TodoCount.prototype.render = function () {
   )} 개 완료`
 }
 
+TodoCount.prototype.setState = function (totalCount, completedCount) {
+  this.totalCount = totalCount
+  this.completedCount = completedCount
+  this.render()
+}
+
 export default function TodoCount(props) {
   if (new.target !== TodoCount) {
     return new TodoCount(props)

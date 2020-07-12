@@ -48,7 +48,7 @@ const api = (() => {
     updateTodoPriority(args) {
       const { teamId, memberId, itemId, priority } = args
       return request(
-        `${API_URL}api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
+        `${API_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
         METHOD.PUT({ priority })
       )
     },

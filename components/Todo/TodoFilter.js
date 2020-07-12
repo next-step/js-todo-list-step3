@@ -1,10 +1,4 @@
 import { TAG_NAME } from '../../utils/constants.js'
-// import { todoFilterTemplate } from '../../utils/templates.js'
-
-TodoFilter.prototype.init = function () {
-  this.$target.innerHTML = todoFilterTemplate
-  this.bindEvent()
-}
 
 TodoFilter.prototype.bindEvent = function () {
   const onFilterTodoListListener = (e) => {
@@ -25,5 +19,5 @@ export default function TodoFilter({ $target, onFilter }) {
   this.$target = $target
   this.onFilter = onFilter
 
-  this.init()
+  this.bindEvent()
 }

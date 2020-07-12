@@ -1,13 +1,5 @@
 import memberApis from '../../api/member.js'
 
-RemoveAllButton.prototype.init = function () {
-  this.$button = document.createElement('button')
-  this.$button.className = 'clear-completed'
-  this.$button.innerHTML = '모두 삭제'
-  this.$target.appendChild(this.$button)
-  this.bindEvent()
-}
-
 RemoveAllButton.prototype.bindEvent = function () {
   const deleteAllTodosListener = async (e) => {
     try {
@@ -17,7 +9,7 @@ RemoveAllButton.prototype.bindEvent = function () {
       console.error(e)
     }
   }
-  this.$button.addEventListener('click', deleteAllTodosListener)
+  this.$target.addEventListener('click', deleteAllTodosListener)
 }
 
 export default function RemoveAllButton(props) {
@@ -30,5 +22,5 @@ export default function RemoveAllButton(props) {
   this.memberId = memberId
   this.getTodos = getTodos
 
-  this.init()
+  this.bindEvent()
 }

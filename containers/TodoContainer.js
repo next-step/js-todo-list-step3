@@ -10,10 +10,10 @@ import { FILTER_STATUS, CLASS_NAME } from '../utils/constants.js'
 import memberApis from '../api/member.js'
 
 TodoContainer.prototype.init = function () {
-  const { memberName, memberId, todoList, teamId, getTodos, onFilter } = this
+  const { memberId, todoList, teamId, getTodos, onFilter } = this
 
   this.$target = document.querySelector(`#${memberId}`)
-  // TodoInput
+
   this.$todoInput = new TodoInput({
     $target: this.$target.querySelector(`.${CLASS_NAME.TODO_INPUT}`),
     teamId,
@@ -21,7 +21,6 @@ TodoContainer.prototype.init = function () {
     getTodos,
   })
 
-  // TodoList
   this.$todoList = new TodoList({
     $target: this.$target.querySelector(`.${CLASS_NAME.TODO_LIST}`),
     todoList,
@@ -30,39 +29,28 @@ TodoContainer.prototype.init = function () {
     getTodos,
   })
 
-  // TodoCount
   this.$todoCount = new TodoCount({
     $target: this.$target.querySelector(`.${CLASS_NAME.TODO_COUNT_CONTAINER}`),
     totalCount: todoList.length,
     completedCount: todoList.filter(({ isCompleted }) => isCompleted).length,
   })
 
-  // // TodoFilter
-  // const $filterUl = document.createElement('ul')
-  // $filterUl.className = 'filters'
-  // new TodoFilter({
-  //   $target: $filterUl,
-  //   onFilter,
-  // })
-  // $countContainer.appendChild($filterUl)
+  new TodoFilter({
+    $target: this.$target.querySelector(`.${CLASS_NAME.TODO_FILTERS}`),
+    onFilter,
+  })
 
-  // // RemoveAllButton
-  // new RemoveAllButton({
-  //   $target: $countContainer,
-  //   teamId,
-  //   memberId,
-  //   getTodos,
-  // })
-  // $todoApp.appendChild($countContainer)
-  // /* TodoApp Element End */
-  // $todoAppContainer.appendChild($todoApp)
-  // $fragment.appendChild($todoAppContainer)
-  // this.$target.appendChild($fragment)
+  new RemoveAllButton({
+    $target: this.$target.querySelector(`.${CLASS_NAME.REMOVE_ALL}`),
+    teamId,
+    memberId,
+    getTodos,
+  })
 
   // this.$loading = new Loading({
   //   selector: '.todo-list',
   // })
-  // this.getTodos()
+  this.getTodos()
 }
 
 TodoContainer.prototype.getTodoHash = (todos) => {
@@ -90,10 +78,9 @@ export default function TodoContainer(props) {
   if (new.target !== TodoContainer) {
     return new TodoContainer(props)
   }
-  const { name: memberName, _id: memberId, todoList, teamId } = props
+  const { _id: memberId, todoList, teamId } = props
 
   this.memberId = memberId
-  this.memberName = memberName
   this.todoList = todoList
   this.teamId = teamId
   this.filterStatus = FILTER_STATUS.ALL

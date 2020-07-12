@@ -28,10 +28,12 @@ export const CLASS_NAME = {
   TODO_LIST: 'todo-list',
   TODO_LIST_ITEM: 'todo-list-item',
   TODO_CONTENTS: 'todo-contents',
-  TODO_PRIORITY: 'chip',
+  TODO_PRIORITY: 'chip select',
   TODO_LABEL: 'label',
   TODO_COUNT_CONTAINER: 'count-container',
   TODO_COUNT: 'todo-count',
+  TODO_FILTERS: 'filters',
+  REMOVE_ALL: 'clear-completed',
 }
 
 export const KEY_NAME = {
