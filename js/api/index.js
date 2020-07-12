@@ -45,3 +45,7 @@ export async function deleteMemberTodo(teamId, memberId, itemId) {
 export async function toggleMemberTodo(teamId, memberId, itemId) {
   return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`, getApiOption(METHOD.PUT));
 }
+
+export async function editMemberTodo(teamId, memberId, itemId, contents) {
+  return requestApi(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, getApiOption(METHOD.PUT, { contents }));
+}
