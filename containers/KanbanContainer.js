@@ -2,19 +2,20 @@ import { Header } from '../components/common/index.js'
 import { AddMemberButton } from '../components/kanban/index.js'
 import { TodoContainer } from '../containers/index.js'
 import teamApis from '../api/team.js'
+import { getURLQueryArray, redirectToMainPage } from '../utils/functions.js'
 import {
-  getURLQueryArray,
-  redirectToMainPage,
-  clearChildNode,
-} from '../utils/functions.js'
-import { kanbanHeaderTemplate } from '../utils/templates.js'
+  kanbanHeaderTemplate,
+  todoListHTMLTemplate,
+} from '../utils/templates.js'
+import { CLASS_NAME } from '../utils/constants.js'
 
-export default function KanBanContainer() {
+export default function KanBanContainer({ selector }) {
   if (new.target !== KanBanContainer) {
-    return new KanBanContainer()
+    return new KanBanContainer({ selector })
   }
   this.init = () => {
     try {
+      this.$target = document.querySelector(selector)
       const queries = getURLQueryArray(window.location.search)
       this.teamId = queries[0]['teamId']
       this.teamName = queries[1]['teamName']
@@ -22,7 +23,7 @@ export default function KanBanContainer() {
         redirectToMainPage()
       }
       new Header({
-        selector: '#user-title',
+        selector: `.${CLASS_NAME.USER_TITLE}`,
         textContent: kanbanHeaderTemplate(this.teamName),
       })
       this.render()
@@ -33,21 +34,21 @@ export default function KanBanContainer() {
 
   this.render = async () => {
     try {
-      clearChildNode('.todoapp-list-container') // todoapp-list-container 초기화
+      const { _id, members } = await teamApis.getTeamOne(this.teamId)
+      this.$target.innerHTML = members.map(todoListHTMLTemplate).join('')
 
-      const { members } = await teamApis.getTeamOne(this.teamId)
       members.forEach((member) => {
         new TodoContainer({
           ...member,
-          selector: '.todoapp-list-container',
-          teamId: this.teamId,
+          teamId: _id,
         })
       })
-      new AddMemberButton({
-        selector: '.todoapp-list-container',
-        teamId: this.teamId,
-        renderKanbanPage: this.render,
-      })
+
+      // new AddMemberButton({
+      //   selector: '.todoapp-list-container',
+      //   teamId: this.teamId,
+      //   renderKanbanPage: this.render,
+      // })
     } catch (e) {
       console.error(e)
     }

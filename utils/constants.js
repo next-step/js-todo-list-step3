@@ -17,6 +17,12 @@ export const CLASS_NAME = {
   REMOVE_ALL: 'clear-completed',
   PRIORITY_FIRST: 'primary',
   PRIORITY_SECOND: 'secondary',
+
+  USER_TITLE: 'user-title',
+  TEAM_LIST_CONTAINER: 'team-list-container',
+
+  TODO_APP_LIST_CONTAINER: 'todoapp-list-container',
+  TODO_INPUT: 'new-todo',
 }
 
 export const KEY_NAME = {

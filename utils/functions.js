@@ -11,7 +11,5 @@ export const getURLQueryArray = (queries) => {
 
 export const redirectToMainPage = () => (window.location.href = '/index.html')
 
-export const clearChildNode = (selector) => {
-  const $target = document.querySelector(selector)
-  $target.innerHTML = ''
-}
+export const delay = (ms) =>
+  new Promise((resolve) => setTimeout(() => resolve(), ms))

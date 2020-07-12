@@ -1,6 +1,7 @@
 import { CreateTeamButton } from '../../components/team/index.js'
 import teamApis from '../../api/team.js'
 import { teamButtonTemplate } from '../../utils/templates.js'
+import { CLASS_NAME } from '../../utils/constants.js'
 
 export default function TeamList({ selector }) {
   if (new.target !== TeamList) {
@@ -15,7 +16,7 @@ export default function TeamList({ selector }) {
     }
     this.$target.innerHTML = this.teams.map(teamButtonTemplate).join('')
     new CreateTeamButton({
-      selector: '.team-list-container',
+      selector: `.${CLASS_NAME.TEAM_LIST_CONTAINER}`,
       renderTeamList: this.render,
     }) // 동기적으로 실행시키기 위해 여기서 인스턴스 생성.
   }
