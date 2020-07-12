@@ -6,6 +6,7 @@ import { getURLQueryArray, redirectToMainPage } from '../utils/functions.js'
 import {
   kanbanHeaderTemplate,
   todoListHTMLTemplate,
+  memberAddHTMLTemplate,
 } from '../utils/templates.js'
 import { CLASS_NAME } from '../utils/constants.js'
 
@@ -35,7 +36,10 @@ export default function KanBanContainer({ selector }) {
   this.render = async () => {
     try {
       const { _id, members } = await teamApis.getTeamOne(this.teamId)
-      this.$target.innerHTML = members.map(todoListHTMLTemplate).join('')
+      this.$target.innerHTML = members
+        .map(todoListHTMLTemplate)
+        .join('')
+        .concat(memberAddHTMLTemplate)
 
       members.forEach((member) => {
         new TodoContainer({
@@ -44,11 +48,11 @@ export default function KanBanContainer({ selector }) {
         })
       })
 
-      // new AddMemberButton({
-      //   selector: '.todoapp-list-container',
-      //   teamId: this.teamId,
-      //   renderKanbanPage: this.render,
-      // })
+      new AddMemberButton({
+        selector: `.${CLASS_NAME.MEMBER_ADD_BUTTON}`,
+        teamId: this.teamId,
+        renderKanbanPage: this.render,
+      })
     } catch (e) {
       console.error(e)
     }

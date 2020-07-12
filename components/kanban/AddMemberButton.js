@@ -1,5 +1,3 @@
-import { addMemberButtonTemplate } from '../../utils/templates.js'
-import { TAG_NAME } from '../../utils/constants.js'
 import memberApis from '../../api/member.js'
 
 export default function AddMemberButton(props) {
@@ -9,20 +7,12 @@ export default function AddMemberButton(props) {
   const { selector, teamId, renderKanbanPage } = props
 
   this.init = () => {
-    const $target = document.querySelector(selector)
-    this.$AddMemberButton = document.createElement('li')
-    this.$AddMemberButton.className = 'add-user-button-container'
-    this.$AddMemberButton.innerHTML = addMemberButtonTemplate
-    $target.appendChild(this.$AddMemberButton)
-
+    this.$target = document.querySelector(selector)
     this.bindEvent()
   }
 
   this.bindEvent = () => {
-    const onAddMemberListener = async ({ target: { tagName } }) => {
-      if (tagName !== TAG_NAME.SPAN && tagName !== TAG_NAME.BUTTON) {
-        return
-      }
+    const onAddMemberListener = async () => {
       const memberName = prompt('새로운 팀원 이름을 입력해주세요')
       if (!memberName) {
         return
@@ -31,7 +21,7 @@ export default function AddMemberButton(props) {
       renderKanbanPage() // re-render
     }
 
-    this.$AddMemberButton.addEventListener('click', onAddMemberListener)
+    this.$target.addEventListener('click', onAddMemberListener)
   }
 
   this.init()
