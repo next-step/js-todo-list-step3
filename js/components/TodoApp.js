@@ -23,8 +23,8 @@ function TodoApp(teamId, { _id, name, todoList }) {
     this.TodoList.setState(this.todoList);
   };
 
-  this.render = () => {
-    $todoList.innerHTML = this.todoList.map((item) => todoItemTemplate(item));
+  this.render = (list) => {
+    $todoList.innerHTML = (list || this.todoList).map((item) => todoItemTemplate(item));
   };
 
   this.getTodoList = async () => {
@@ -81,17 +81,22 @@ function TodoApp(teamId, { _id, name, todoList }) {
     },
   });
 
-  // this.$todoCount = document.querySelector('.todo-count');
-  // this.TodoFilter = new TodoFilter({
-  //   filterTodo: (mode) => {
-  //     const renderList = {
-  //       [FILTER_TYPE.ALL]: () => this.todoList,
-  //       [FILTER_TYPE.ACTIVE]: () => this.todoList.filter((item) => !item.isCompleted),
-  //       [FILTER_TYPE.COMPLETED]: () => this.todoList.filter((item) => item.isCompleted),
-  //     };
-  //     this.TodoList.setState(renderList[mode]());
-  //   },
-  // });
+  this.TodoFilter = new TodoFilter({
+    $rootElement: $todoApp,
+    filterTodo: (mode) => {
+      const renderList = {
+        [FILTER_TYPE.ALL]: () => this.todoList,
+        [FILTER_TYPE.PRIORITY]: () => {
+          const copyList = this.todoList.map((item) => ({ ...item }));
+          copyList.sort((a, b) => a.priority - b.priority);
+          return copyList;
+        },
+        [FILTER_TYPE.ACTIVE]: () => this.todoList.filter((item) => !item.isCompleted),
+        [FILTER_TYPE.COMPLETED]: () => this.todoList.filter((item) => item.isCompleted),
+      };
+      this.render(renderList[mode]());
+    },
+  });
 
   this.init = () => {
     this.setState(this.todoList);
