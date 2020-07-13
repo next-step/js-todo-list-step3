@@ -7,6 +7,7 @@ import {
   RemoveAllButton,
 } from '../components/todo/index.js'
 import { FILTER_STATUS, CLASS_NAME } from '../utils/constants.js'
+import { delay } from '../utils/functions.js'
 import memberApis from '../api/member.js'
 
 TodoContainer.prototype.init = function () {
@@ -47,9 +48,10 @@ TodoContainer.prototype.init = function () {
     getTodos,
   })
 
-  // this.$loading = new Loading({
-  //   selector: '.todo-list',
-  // })
+  this.$loading = new Loading({
+    $target: document.querySelector(`.${CLASS_NAME.LOADING}`),
+  })
+
   this.getTodos()
 }
 
@@ -85,9 +87,10 @@ export default function TodoContainer(props) {
   this.teamId = teamId
   this.filterStatus = FILTER_STATUS.ALL
 
+  // this 를 TodoContainer에 바인딩하기 위해 TodoCounter 안에서 '=>' 사용
   TodoContainer.prototype.getTodos = async () => {
-    // this 를 TodoContainer에 바인딩하기 위해 TodoCounter 안에서 '=>' 사용
-    // this.$loading.render() // loading on
+    this.$loading.render(true) // loading on
+    await delay(250)
     try {
       const { todoList } = await memberApis.getMemberTodos(
         this.teamId,
@@ -98,6 +101,7 @@ export default function TodoContainer(props) {
       this.todoList = []
     }
     this.todoHash = this.getTodoHash(this.todoList)
+    this.$loading.render(false) // loading off
     this.setState()
   }
 

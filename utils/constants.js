@@ -24,6 +24,7 @@ export const CLASS_NAME = {
 
   TODO_APP_LIST_CONTAINER: 'todoapp-list-container',
   TODO_APP_CONTAINER: 'todo-app-container',
+  TODO_APP: 'todoapp',
   TODO_INPUT: 'new-todo',
   TODO_LIST: 'todo-list',
   TODO_LIST_ITEM: 'todo-list-item',
@@ -35,6 +36,8 @@ export const CLASS_NAME = {
   TODO_FILTERS: 'filters',
   REMOVE_ALL: 'clear-completed',
   ADD_BUTTON: 'ripple',
+
+  LOADING: 'gray-bg',
 }
 
 export const KEY_NAME = {

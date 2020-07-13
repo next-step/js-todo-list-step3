@@ -29,9 +29,13 @@ export const METHOD = {
 }
 
 export const request = (url, config) => {
-  console.log('[REQUEST]')
-  console.log(JSON.stringify({ url, ...config }, null, 2))
-  return fetch(url, config)
+  try {
+    console.log('[REQUEST]')
+    console.log(JSON.stringify({ url, ...config }, null, 2))
+    return fetch(url, config)
+  } catch (e) {
+    console.error(e)
+  }
 }
 export const requestWithReturn = (url, config) =>
   request(url, config).then((response) => response.json())
