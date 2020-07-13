@@ -19,8 +19,9 @@ TodoList.prototype.setState = function (todoList) {
 
 TodoList.prototype.bindEvents = function () {
   const onClickTodoItemHandler = async ({ target }) => {
+    // classlist contains로 비교하기
     const { id } = target.closest(`.${CLASS_NAME.TODO_LIST_ITEM}`).dataset
-    if (target.className === CLASS_NAME.TOGGLE) {
+    if (target.classList.contains(CLASS_NAME.TOGGLE)) {
       try {
         await memberApis.toggleTodo({
           teamId: this.teamId,
@@ -31,7 +32,7 @@ TodoList.prototype.bindEvents = function () {
       } catch (e) {
         console.error(e)
       }
-    } else if (target.className === CLASS_NAME.DESTROY) {
+    } else if (target.classList.contains(CLASS_NAME.DESTROY)) {
       try {
         await memberApis.deleteTodo({
           teamId: this.teamId,
@@ -63,11 +64,14 @@ TodoList.prototype.bindEvents = function () {
     if (!isEsc(e.key) && !isEnter(e.key)) {
       return
     }
+
     const $todoItem = e.target.closest(`.${CLASS_NAME.TODO_LIST_ITEM}`)
     $todoItem.classList.remove(CLASS_NAME.EDITING) // ESC
+
     if (!isEnter(e.key) || isEmpty(e.target.value.trim())) {
       return
     }
+
     const { id } = $todoItem.dataset
     try {
       await memberApis.updateTodoContent({
@@ -83,7 +87,7 @@ TodoList.prototype.bindEvents = function () {
   }
 
   const onFocusOutTodoItemHandler = (e) => {
-    if (e.target.className !== CLASS_NAME.EDIT) {
+    if (!e.target.classList.contains(CLASS_NAME.EDIT)) {
       return
     }
     e.target.value = this.editInputValue //초기상태의 value로 reset
@@ -95,7 +99,7 @@ TodoList.prototype.bindEvents = function () {
 
   const onChangePriorityHandler = async (e) => {
     if (
-      e.target.className !== CLASS_NAME.TODO_PRIORITY ||
+      !e.target.classList.contains(CLASS_NAME.TODO_PRIORITY) ||
       e.target.value === 0
     ) {
       return
@@ -128,7 +132,7 @@ TodoList.prototype.bindEvents = function () {
   }
 
   const onDrop = async (e) => {
-    if (e.target.className !== CLASS_NAME.TODO_LABEL) {
+    if (!e.target.classList.contains(CLASS_NAME.TODO_LABEL)) {
       return
     }
     const { index: newPosition, id: itemId } = e.target.dataset

@@ -72,7 +72,7 @@ TodoContainer.prototype.setState = function () {
   this.$todoList.setState(renderTodos)
   this.$todoCount.setState(
     renderTodos.length,
-    renderTodos.filter(({ isCompleted }) => isCompleted === true).length
+    renderTodos.filter(({ isCompleted }) => isCompleted).length
   )
 }
 
