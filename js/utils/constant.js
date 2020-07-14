@@ -4,7 +4,6 @@ export const todoStatus = {
   ALL: 'all',
   ACTIVE: 'active',
   COMPLETED: 'completed',
-  SELECTED: 'selected',
 }
 
 export const todoClassName = {

@@ -1,4 +1,3 @@
-import { addUserButtonContainerTemplate } from '../utils/template.js'
 import { isString } from '../utils/validator.js'
 
 export default function AddUserButton({ $target, onAddUser }) {

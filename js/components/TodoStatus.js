@@ -18,13 +18,11 @@ export default function TodoStatus({ $target, onSetTodoStatus }) {
       return
     }
 
-    if (e.target.classList.contains(todoClassName.ALL)) {
-      this.status = todoStatus.ALL
-    } else if (e.target.classList.contains(todoClassName.ACTIVE)) {
-      this.status = todoStatus.ACTIVE
-    } else if (e.target.classList.contains(todoClassName.COMPLETED)) {
-      this.status = todoStatus.COMPLETED
-    }
+    Object.values(todoStatus).map((status) => {
+      if (e.target.classList.contains(status)) {
+        this.status = status
+      }
+    })
     onSetTodoStatus(this.status)
   }
   this.$target.addEventListener('click', onClickHandler)

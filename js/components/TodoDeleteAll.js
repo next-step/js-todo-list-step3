@@ -8,9 +8,5 @@ export default function TodoDeleteAll({ $target, onDeleteAll }) {
   }
   this.$target = $target
 
-  const onClickHandler = (e) => {
-    onDeleteAll()
-  }
-
-  this.$target.addEventListener('click', onClickHandler)
+  this.$target.addEventListener('click', onDeleteAll)
 }

@@ -19,13 +19,14 @@ export default function TodoList({
   }
 
   const onClickHandler = (e) => {
+    const id = e.target.closest('li').dataset.id
+
     if (e.target.classList.contains(todoClassName.TOGGLE)) {
-      const id = e.target.closest('li').dataset.id
       onToggleTodo(Number(id))
+      return
     }
 
     if (e.target.classList.contains(todoClassName.DESTROY)) {
-      const id = e.target.closest('li').dataset.id
       onDeleteTodo(Number(id))
     }
   }
@@ -42,6 +43,7 @@ export default function TodoList({
 
       li.classList.remove(todoClassName.EDITING)
       onChangeTodo(text, Number(id))
+      return
     }
     if (isEscKey(e)) {
       e.target.value = this.todoInitialInputValue
