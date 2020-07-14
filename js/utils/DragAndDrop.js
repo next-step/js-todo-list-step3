@@ -24,8 +24,6 @@ export default function DragAndDropApp({
     e.dataTransfer.dropEffect = 'move';
   }
 
-  function handleDragEnter(e) { }
-
   function handleDragLeave(e) {
     this.classList.remove('over');
   }
@@ -85,7 +83,6 @@ export default function DragAndDropApp({
   function addDnDHandlers(elem) {
     elem.setAttribute('draggable', true);
     elem.addEventListener('dragstart', handleDragStart);
-    elem.addEventListener('dragenter', handleDragEnter);
     elem.addEventListener('dragover', handleDragOver);
     elem.addEventListener('dragleave', handleDragLeave);
     elem.addEventListener('drop', handleDrop);
