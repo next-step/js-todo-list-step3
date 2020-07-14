@@ -2,16 +2,11 @@ import {
   teamCardTemplate,
   addTeamButtonContainerTemplate,
 } from '../utils/template.js'
-import { isString } from '../utils/validator.js'
+import { isString, validateNewInstance, validateElement } from '../utils/validator.js'
 
 export default function TeamList({ teams, $target, onAddTeam }) {
-  if (!new.target) {
-    throw new Error('TeamList must be called with new')
-  }
-
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+  validateNewInstance(new.target, TeamList)
+  validateElement($target)
 
   const onClickHandler = (e) => {
     const $target = e.target

@@ -1,14 +1,11 @@
 import { todoStatus } from '../utils/constant.js'
 import { todoClassName } from '../utils/constant.js'
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
 export default function TodoStatus({ $target, onSetTodoStatus }) {
-  if (!new.target) {
-    throw new Error('TodoStatus must be called with new')
-  }
+  validateNewInstance(new.target, TodoStatus)
+  validateElement($target)
 
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
   this.$target = $target
   this.status = todoStatus.ALL
 

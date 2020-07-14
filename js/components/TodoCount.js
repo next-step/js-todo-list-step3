@@ -1,11 +1,9 @@
-export default function TodoCount({ data, $target }) {
-  if (!new.target) {
-    throw new Error('TodoCount must be called with new')
-  }
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+export default function TodoCount({ data, $target }) {
+  validateNewInstance(new.target, TodoCount)
+  validateElement($target)
+
   this.todos = data
   this.$target = $target
 

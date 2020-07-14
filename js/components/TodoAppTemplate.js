@@ -2,15 +2,11 @@ import {
   todoAppContainerTemplate,
   addUserButtonContainerTemplate,
 } from '../utils/template.js'
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
 export default function TodoAppTemplate({ members, $target }) {
-  if (!new.target) {
-    throw new Error('TodoAppContainerTemplate must be called with new')
-  }
-
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+  validateNewInstance(new.target, TodoAppTemplate)
+  validateElement($target)
 
   this.render = function () {
     this.$target.innerHTML = `${this.members

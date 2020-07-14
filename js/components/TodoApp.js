@@ -5,6 +5,7 @@ import TodoStatus from './TodoStatus.js'
 import TodoDeleteAll from './TodoDeleteAll.js'
 import { todoStatus } from '../utils/constant.js'
 import { api } from '../api/api.js'
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
 export default function TodoApp({
   teamId,
@@ -17,20 +18,13 @@ export default function TodoApp({
   $todoStatus,
   $todoDeleteAll,
 }) {
-  if (!new.target) {
-    throw new Error('TodoApp must be called with new')
-  }
+  validateNewInstance(new.target, TodoApp)
 
-  // FIXME: implementing validator
-  if (
-    !$todoInput ||
-    !$todoList ||
-    !$todoCount ||
-    !$todoStatus ||
-    !$todoDeleteAll
-  ) {
-    throw new Error('$target must be injected')
-  }
+  validateElement($todoInput)
+  validateElement($todoList)
+  validateElement($todoCount)
+  validateElement($todoStatus)
+  validateElement($todoDeleteAll)
 
   const onAddTodo = async (text) => {
     await api.addTodo(this.teamId, this.memberId, { contents: text })

@@ -1,13 +1,13 @@
-import { isEnterKey, isNotEmptyString } from '../utils/validator.js'
+import {
+  isEnterKey,
+  isNotEmptyString,
+  validateNewInstance,
+  validateElement,
+} from '../utils/validator.js'
 
 export default function TodoInput({ $target, onAddTodo }) {
-  if (!new.target) {
-    throw new Error('TodoInput must be called with new')
-  }
-
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+  validateNewInstance(new.target, TodoInput)
+  validateElement($target)
 
   this.$target = $target
 

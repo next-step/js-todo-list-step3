@@ -1,11 +1,8 @@
-export default function UserTitle({ teamName, $target }) {
-  if (!new.target) {
-    throw new Error('UserTitle must be called with new')
-  }
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+export default function UserTitle({ teamName, $target }) {
+  validateNewInstance(new.target, UserTitle)
+  validateElement($target)
 
   this.render = function () {
     this.$teamName.innerHTML = this.teamName

@@ -1,11 +1,9 @@
-export default function TodoDeleteAll({ $target, onDeleteAll }) {
-  if (!new.target) {
-    throw new Error('TodoDeletAll must be called with new')
-  }
+import { validateNewInstance, validateElement } from '../utils/validator.js'
 
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+export default function TodoDeleteAll({ $target, onDeleteAll }) {
+  validateNewInstance(new.target, TodoDeleteAll)
+  validateElement($target)
+
   this.$target = $target
 
   this.$target.addEventListener('click', onDeleteAll)

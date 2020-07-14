@@ -1,5 +1,11 @@
 import { todoClassName } from '../utils/constant.js'
-import { isEnterKey, isEscKey, isNotEmptyString } from '../utils/validator.js'
+import {
+  isEnterKey,
+  isEscKey,
+  isNotEmptyString,
+  validateNewInstance,
+  validateElement,
+} from '../utils/validator.js'
 import { todoItemTemplate } from '../utils/template.js'
 
 export default function TodoList({
@@ -10,13 +16,8 @@ export default function TodoList({
   onChangeTodo,
   onChangeTodoPriority,
 }) {
-  if (!new.target) {
-    throw new Error('TodoList must be called with new')
-  }
-
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+  validateNewInstance(new.target, TodoList)
+  validateElement($target)
 
   const onClickHandler = (e) => {
     const id = e.target.closest('li').dataset.id

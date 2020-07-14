@@ -1,13 +1,8 @@
-import { isString } from '../utils/validator.js'
+import { isString, validateNewInstance, validateElement } from '../utils/validator.js'
 
 export default function AddUserButton({ $target, onAddUser }) {
-  if (!new.target) {
-    throw new Error('MemberList must be called with new')
-  }
-
-  if (!$target) {
-    throw new Error('$target must be injected')
-  }
+  validateNewInstance(new.target, AddUserButton)
+  validateElement($target)
 
   const onClickHandler = (e) => {
     const $target = e.target
