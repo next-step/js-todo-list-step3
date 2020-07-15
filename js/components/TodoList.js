@@ -23,12 +23,12 @@ export default function TodoList({
     const id = e.target.closest('li').dataset.id
 
     if (e.target.classList.contains(todoClassName.TOGGLE)) {
-      onToggleTodo(Number(id))
+      onToggleTodo(id)
       return
     }
 
     if (e.target.classList.contains(todoClassName.DESTROY)) {
-      onDeleteTodo(Number(id))
+      onDeleteTodo(id)
     }
   }
 
@@ -43,7 +43,7 @@ export default function TodoList({
       const id = li.dataset.id
 
       li.classList.remove(todoClassName.EDITING)
-      onChangeTodo(text, Number(id))
+      onChangeTodo(text, id)
       return
     }
     if (isEscKey(e)) {
@@ -85,7 +85,7 @@ export default function TodoList({
     }
     const li = e.target.closest('li')
     const id = li.dataset.id
-    onChangeTodoPriority(Number(id), Number(e.target.value))
+    onChangeTodoPriority(id, Number(e.target.value))
   }
 
   this.setState = function (nextData) {

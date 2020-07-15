@@ -31,63 +31,37 @@ export default function TodoApp({
     this.setState(this.username)
   }
 
-  const findTodoIdByStatus = (index) => {
-    let id = null
+  const findIndexById = (_id) =>
+    this.todos.findIndex((todos) => todos._id === _id)
 
-    switch (this.todoViewStatus) {
-      case todoStatus.ALL:
-        id = this.todos[index]._id
-        break
+  const onToggleTodo = async (_id) => {
+    const index = findIndexById(_id)
 
-      case todoStatus.ACTIVE:
-      case todoStatus.COMPLETED:
-        const findIdx = this.todos.findIndex(
-          (todo) => todo.contents === this.filteredTodos[index].contents
-        )
-        if (findIdx !== -1) {
-          id = this.todos[findIdx]._id
-        }
-        break
-    }
-    return id
-  }
-
-  const onToggleTodo = async (index) => {
-    const id = findTodoIdByStatus(index)
-    if (id === null) {
-      return
-    }
-    await api.toggleTodo(this.teamId, this.memberId, id)
+    await api.toggleTodo(this.teamId, this.memberId, _id)
     this.todos[index].isCompleted = !this.todos[index].isCompleted
     this.setState(this.username)
   }
 
-  const onDeleteTodo = async (index) => {
-    const id = findTodoIdByStatus(index)
-    if (id === null) {
-      return
-    }
-    await api.removeTodo(this.teamId, this.memberId, id)
+  const onDeleteTodo = async (_id) => {
+    const index = findIndexById(_id)
+
+    await api.removeTodo(this.teamId, this.memberId, _id)
     this.todos.splice(index, 1)
     this.setState(this.username)
   }
 
-  const onChangeTodo = async (text, index) => {
-    const id = findTodoIdByStatus(index)
-    if (id === null) {
-      return
-    }
-    await api.changeTodo(this.teamId, this.memberId, id, { contents: text })
+  const onChangeTodo = async (text, _id) => {
+    const index = findIndexById(_id)
+
+    await api.changeTodo(this.teamId, this.memberId, _id, { contents: text })
     this.todos[index].contents = text
     this.setState(this.username)
   }
 
-  const onChangeTodoPriority = async (index, priority) => {
-    const id = findTodoIdByStatus(index)
-    if (id === null) {
-      return
-    }
-    await api.changeTodoPriority(teamId, memberId, id, { priority })
+  const onChangeTodoPriority = async (_id, priority) => {
+    const index = findIndexById(_id)
+
+    await api.changeTodoPriority(teamId, memberId, _id, { priority })
     this.todos[index].priority = priority
     this.setState(this.username)
   }
