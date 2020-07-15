@@ -82,6 +82,9 @@ export default function TodoApp({
       [todoStatus.ALL]: this.todos,
       [todoStatus.ACTIVE]: this.todos.filter((todo) => !todo.isCompleted),
       [todoStatus.COMPLETED]: this.todos.filter((todo) => todo.isCompleted),
+      [todoStatus.PRIORITY]: this.todos
+        .map((todo) => todo)
+        .sort((a, b) => Number(a.priority) - Number(b.priority)),
     }
 
     return filteredTodos[status]

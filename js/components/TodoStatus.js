@@ -38,6 +38,11 @@ export default function TodoStatus({ $target, onSetTodoStatus }) {
           .classList.add(todoClassName.SELECTED)
         break
 
+      case todoStatus.PRIORITY:
+        this.$target
+          .querySelector(`.${todoClassName.PRIORITY}`)
+          .classList.add(todoClassName.SELECTED)
+
       case todoStatus.ACTIVE:
         this.$target
           .querySelector(`.${todoClassName.ACTIVE}`)
