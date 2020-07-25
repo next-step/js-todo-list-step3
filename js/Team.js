@@ -12,32 +12,32 @@ function Team() {
     const { error, errorMessage } = await this.addTeam(teamName);
     if (error) return alert(errorMessage);
     this.getTeams();
-  }
+  };
 
-  this.addTeam = async teamName => {
+  this.addTeam = async (teamName) => {
     const { result, error, errorMessage } = await addTeam(teamName);
     if (error) return alert(errorMessage);
     return result;
-  }
+  };
 
   this.getTeams = async () => {
     const { result, error, errorMessage } = await getTeams();
     if (error) return alert(errorMessage);
     this.setState(result);
-  }
+  };
 
-  this.setState = list => {
+  this.setState = (list) => {
     this.teamList = list;
     this.render();
-  }
+  };
 
   this.render = () => {
-    $teamList.innerHTML = this.teamList.map(item => teamItemTemplate(item)).join('') + teamAddItemTemplate();
-  }
+    $teamList.innerHTML = this.teamList.map((item) => teamItemTemplate(item)).join('') + teamAddItemTemplate();
+  };
 
-  this.init = async () => {
+  this.init = () => {
     this.getTeams();
-  }
+  };
 
   $teamList.addEventListener('click', (event) => {
     if (event.target.closest('#add-team-button')) {

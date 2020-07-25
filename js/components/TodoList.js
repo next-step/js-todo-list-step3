@@ -20,9 +20,11 @@ function TodoList({
     const itemId = $clickedItem.dataset.id;
     if (classList.contains('destroy')) {
       await deleteTodo(itemId);
+      return;
     }
     if (classList.contains('toggle')) {
       await toggleTodo(itemId);
+      return;
     }
     if (classList.contains('chip')) {
       const $chipSelect = target.closest('.chip-container').querySelector('select');
@@ -48,9 +50,7 @@ function TodoList({
   this.onKeyUpTodoItem = async (event) => {
     const $editTodoInput = event.target.closest('.edit');
     if (!$editTodoInput) return;
-    if ($editTodoInput) {
-      this.editTodo(event);
-    }
+    this.editTodo(event);
   };
 
   this.editTodo = async (event) => {
