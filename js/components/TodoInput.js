@@ -4,9 +4,7 @@ import { isValidContent } from '../util.js';
 function TodoInput({ $rootElement, addTodo }) {
   const $todoInput = $rootElement.querySelector('.new-todo');
 
-  $todoInput.addEventListener('keyup', (event) => this.addTodo(event));
-
-  this.addTodo = (event) => {
+  this.onKeyUpTodoInput = (event) => {
     if (event.key !== KEYCODE_ENTER) return;
 
     const newTodoContents = event.target.value;
@@ -15,6 +13,8 @@ function TodoInput({ $rootElement, addTodo }) {
     addTodo(newTodoContents);
     $todoInput.value = '';
   };
+
+  $todoInput.addEventListener('keyup', this.onKeyUpTodoInput);
 }
 
 export default TodoInput;

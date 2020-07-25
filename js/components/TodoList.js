@@ -11,11 +11,6 @@ function TodoList({
     this.todoList = newTodoList;
   };
 
-  $todoList.addEventListener('click', (event) => this.onClickTodoItem(event));
-  $todoList.addEventListener('dblclick', (event) => this.onEnterEditMode(event));
-  $todoList.addEventListener('keyup', (event) => this.onKeyUpTodoItem(event));
-  $todoList.addEventListener('change', (event) => this.setPriority(event));
-
   this.onClickTodoItem = async (event) => {
     event.preventDefault();
     const { target } = event;
@@ -81,6 +76,11 @@ function TodoList({
     const priority = target.value;
     setPriority(itemId, priority);
   };
+
+  $todoList.addEventListener('click', this.onClickTodoItem);
+  $todoList.addEventListener('dblclick', this.onEnterEditMode);
+  $todoList.addEventListener('keyup', this.onKeyUpTodoItem);
+  $todoList.addEventListener('change', this.setPriority);
 }
 
 export default TodoList;

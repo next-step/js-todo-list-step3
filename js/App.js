@@ -12,15 +12,12 @@ function App() {
   const $teamTitle = document.querySelector('#team-title');
   const $todoApps = document.querySelector('.todoapp-list-container');
 
-  $todoApps.addEventListener('click', this.inputMemberNameAndSend);
-
   this.inputMemberNameAndSend = async (event) => {
     if (!event.target.closest('#add-user-button')) return;
     const memberName = prompt('새로운 팀원 이름을 입력해주세요');
     if (!memberName) return;
-    const { error, errorMessage } = await this.addMember(memberName);
-    if (error) return alert(errorMessage);
-    this.getTeamDetail();
+    const res = await this.addMember(memberName);
+    this.getTeamDetail(res._id);
   };
 
   this.addMember = async (memberName) => {
@@ -35,6 +32,8 @@ function App() {
     this.setState(result);
     return result;
   };
+
+  $todoApps.addEventListener('click', this.inputMemberNameAndSend);
 
   this.setState = (data) => {
     this.teamId = data._id;

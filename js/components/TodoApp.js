@@ -18,8 +18,6 @@ function TodoApp(teamId, { _id, name, todoList }) {
   const $todoList = $todoApp.querySelector('.todo-list');
   const $allDeleteButton = $todoApp.querySelector('.clear-completed');
 
-  $allDeleteButton.addEventListener('click', (event) => this.deleteAllTodo(event));
-
   this.setState = async (newTodoList) => {
     this.todoList = newTodoList;
     this.render();
@@ -33,7 +31,7 @@ function TodoApp(teamId, { _id, name, todoList }) {
   this.getTodoList = async () => {
     const { result, error, errorMessage } = await getMemberTodoList(this.teamId, this.memberId);
     if (error) return alert(errorMessage);
-    this.setState(result.todoList);
+    this.setState(result.todoList || []);
   };
 
   this.addTodo = async (newTodoContents) => {
@@ -101,6 +99,8 @@ function TodoApp(teamId, { _id, name, todoList }) {
       this.render(renderList[mode]());
     },
   });
+
+  $allDeleteButton.addEventListener('click', this.deleteAllTodo);
 
   this.init = () => {
     this.setState(this.todoList);
