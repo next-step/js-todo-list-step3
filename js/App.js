@@ -1,19 +1,28 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
-    }
-  })
+import api from './utils/api.js';
+import { $TEAM_LIST_CONTAINER } from './utils/htmlElements.js';
+import { TeamList } from './components/index.js';
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
+class App {
+  constructor() {
+    this.initTeamList();
+  }
+
+  async initTeamList() {
+    this.teamListData = await api.fetchTeamList();
+    this.teamList = new TeamList({
+      $element: $TEAM_LIST_CONTAINER,
+      teamList: this.teamListData,
+      onAddTeam: async () => {
+        const newTeamList = await api.fetchTeamList();
+        this.setState(newTeamList);
+      }
+    });
+  }
+
+  setState(newTeamList) {
+    this.teamListData = newTeamList;
+    this.teamList.setState(this.teamListData);
+  }
 }
 
-new App()
+new App();
