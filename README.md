@@ -280,13 +280,13 @@ live-server 폴더명
 
 ## 🐞 Bug Report
 
-버그를 발견한다면, [Issues](https://github.com/EastjunDev/frontend/issues) 에 등록 후 @eastjun에게 dm을 보내주세요.
+버그를 발견한다면, [Issues](https://github.com/next-step/js-todo-list-step3/issues) 에 등록 후 @eastjun에게 dm을 보내주세요.
 
 <br>
 
 ## 📝 License
 
-This project is [MIT](https://github.com/next-step/js-todo-list/blob/master/LICENSE) licensed.
+This project is [MIT](https://github.com/next-step/js-todo-list-step3/blob/master/LICENSE) licensed.
 
 
 
