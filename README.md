@@ -23,6 +23,8 @@
 - [ ] 1. todoItem의 우선 순위에 따라 정렬하기
 
 
+<br/><br/>
+
 ## 📝 API
 ### 팀 추가
 
@@ -210,12 +212,12 @@
  requestBody: {
    "priority": 1
  },
- response:    {
+ response: {
    "_id": "string",
    "contents": "string",
    "priority": "number",
    "isCompleted": "boolean",
-   }
+ }
 }
 ```
 
@@ -232,6 +234,7 @@
 }
 ```
 
+<br/><br/>
 
 # ☕️ 코드리뷰 모임 - Black Coffee
 <br>
