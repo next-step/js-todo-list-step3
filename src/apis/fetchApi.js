@@ -22,7 +22,7 @@ const fetchApi = (() => {
     post: async (url, body) => {
       const option = {
         method: "POST",
-        body,
+        body: JSON.stringify(body),
       };
 
       return await run(url, option);
@@ -30,7 +30,7 @@ const fetchApi = (() => {
     put: async (url, body) => {
       const option = {
         method: "PUT",
-        body,
+        body: JSON.stringify(body),
       };
 
       return await run(url, option);

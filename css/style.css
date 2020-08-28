@@ -261,6 +261,7 @@ body {
   color: #cc9a9a;
   margin-bottom: 11px;
   transition: color 0.2s ease-out;
+  cursor: pointer;
 }
 
 .todo-list li .destroy:hover {
@@ -507,7 +508,7 @@ select.chip {
 }
 
 .flex-column-container {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   align-items: start;
   overflow-y: hidden;

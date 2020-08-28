@@ -1,51 +1,32 @@
 import {
   teamCardContainer,
   loadingCircle,
-  title,
+  indexTitle,
 } from "../../utils/templates.js";
 import { getTeamList, addTeam, deleteTeam } from "../../apis/team.js";
 import { ID_SELECTOR, CLASS_SELECTOR } from "../../utils/constants.js";
+import {
+  checkMoreThanOneClassContain,
+  isArray,
+  isBoolean,
+} from "../../utils/validator.js";
 
 export default function Home($app) {
   this.state = {
     teamList: [],
-    loading: false,
+    loading: true,
   };
 
-  this.setState = (state) => {
-    const stateKeys = Object.keys(this.state);
+  this.setState = ({ teamList, loading }) => {
+    if (isArray(teamList)) {
+      this.state.teamList = teamList;
+    }
 
-    stateKeys.forEach((key) => {
-      if (state.hasOwnProperty(key)) {
-        this.state[key] = state[key];
-      }
-    });
+    if (isBoolean(loading)) {
+      this.state.loading = loading;
+    }
 
     this.render();
-  };
-
-  const loadTeamList = async () => {
-    try {
-      this.setState({ loading: true });
-      const teamList = await getTeamList();
-      this.setState({ teamList });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.setState({ loading: false });
-    }
-  };
-
-  this.render = () => {
-    if (this.state.loading) {
-      this.$teamListContainer.innerHTML = loadingCircle();
-      return;
-    }
-
-    this.$teamListContainer.innerHTML = this.state.teamList
-      .map((team) => teamCardContainer(team))
-      .join("");
-    this.$teamListContainer.appendChild(this.$addTeamButtonContainer);
   };
 
   const initElements = () => {
@@ -68,8 +49,29 @@ export default function Home($app) {
     this.$addTeamButton.appendChild(this.$materialIcons);
     this.$addTeamButtonContainer.appendChild(this.$addTeamButton);
     this.$teamListContainer.appendChild(this.$addTeamButtonContainer);
-    $app.innerHTML = title();
+    $app.innerHTML = indexTitle();
     $app.appendChild(this.$teamListContainer);
+  };
+
+  const loadTeamList = async () => {
+    try {
+      this.setState({ loading: true });
+      const teamList = await getTeamList();
+      this.setState({ teamList });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  const addTeamByPrompt = async () => {
+    const teamName = prompt("새로운 팀 이름을 입력해주세요");
+
+    if (teamName) {
+      await addTeam(teamName);
+      loadTeamList();
+    }
   };
 
   const bindEvent = () => {
@@ -77,15 +79,13 @@ export default function Home($app) {
       const $target = e.target;
       if (
         $target.id === ID_SELECTOR.ADD_TEAM_BUTTON ||
-        $target.classList.contains(CLASS_SELECTOR.MATERIAL_ICONS)
+        checkMoreThanOneClassContain($target, CLASS_SELECTOR.MATERIAL_ICONS)
       ) {
-        const teamName = prompt("새로운 팀 이름을 입력해주세요");
-        await addTeam(teamName);
-        loadTeamList();
+        addTeamByPrompt();
         return;
       }
 
-      if ($target.classList.contains(CLASS_SELECTOR.DELETE_TEAM)) {
+      if (checkMoreThanOneClassContain($target, CLASS_SELECTOR.DELETE_TEAM)) {
         e.preventDefault();
         const $teamCardContainer = $target.closest(
           `.${CLASS_SELECTOR.TEAM_CARD_CONTAINER}`
@@ -95,7 +95,20 @@ export default function Home($app) {
         loadTeamList();
       }
     };
+
     this.$teamListContainer.addEventListener("click", onClick);
+  };
+
+  this.render = () => {
+    if (this.state.loading) {
+      this.$teamListContainer.innerHTML = loadingCircle();
+      return;
+    }
+
+    this.$teamListContainer.innerHTML = this.state.teamList
+      .map((team) => teamCardContainer(team))
+      .join("");
+    this.$teamListContainer.appendChild(this.$addTeamButtonContainer);
   };
 
   const init = () => {
