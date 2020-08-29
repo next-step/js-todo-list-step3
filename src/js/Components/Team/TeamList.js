@@ -1,10 +1,12 @@
 import { teamCardHTML, addTeamButtonHTML } from '../../utils/templates/team.js';
+import { CLASS_NAME, MESSAGE, KANBAN_URL } from '../../utils/constants.js';
 
-function TeamList({ $target, teams }) {
+function TeamList({ $target, teams, onAddTeam, onDeleteTeam }) {
   this.init = () => {
     this.$target = $target;
-
     this.teams = teams;
+
+    this.TeamClassList = [CLASS_NAME.TEAM_CARD, CLASS_NAME.ADD_TEAM_BUTTON];
 
     this.bindEvents();
     this.render();
@@ -17,32 +19,34 @@ function TeamList({ $target, teams }) {
   this.onClick = (e) => {
     e.preventDefault();
     const $div = e.target.closest('div');
-    const TeamClassList = ['team-card-container', 'add-team-button-container'];
     if (
-      !TeamClassList.some((className) => $div.classList.contains(className))
+      !this.TeamClassList.some((className) =>
+        $div.classList.contains(className),
+      )
     ) {
       return;
     }
 
-    if (e.target.classList.contains('delete')) {
-      // 팀 삭제하기
-      console.log($div.id);
+    if (e.target.classList.contains(CLASS_NAME.DELETE)) {
+      if (confirm(MESSAGE.CONFIRM_DELETE)) {
+        onDeleteTeam($div.id);
+      }
       return;
     }
 
-    if ($div.classList.contains('add-team-button-container')) {
-      // 팀 추가하기
-      const name = prompt('추가할 팀 이름을 입력하세요 !');
+    if ($div.classList.contains(CLASS_NAME.ADD_TEAM_BUTTON)) {
+      const name = prompt(MESSAGE.INPUT_TEAM_NAME);
+
       if (!name || !name.trim().length) {
-        alert('팀 이름을 다시 입력해주세요 !');
+        alert(MESSAGE.NO_TEAM_NAME);
         return;
       }
-      console.log(name);
 
+      onAddTeam(name);
       return;
     }
 
-    location.href = `./kanban.html?id=${$div.id}`;
+    location.href = `${KANBAN_URL}?id=${$div.id}`;
   };
 
   this.setState = (nextState) => {
