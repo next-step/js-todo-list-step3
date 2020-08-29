@@ -1,12 +1,10 @@
 import { teamCardHTML, addTeamButtonHTML } from '../../utils/templates/team.js';
 
-function TeamList({ $target, teamListState }) {
+function TeamList({ $target, teams }) {
   this.init = () => {
     this.$target = $target;
 
-    const { teams, slectedTeam } = teamListState;
     this.teams = teams;
-    this.selectedTeam = slectedTeam;
 
     this.bindEvents();
     this.render();
@@ -48,10 +46,7 @@ function TeamList({ $target, teamListState }) {
   };
 
   this.setState = (nextState) => {
-    const { teams, selectedTeam } = nextState;
-
-    this.teams = teams;
-    this.selectedTeam = selectedTeam;
+    this.teams = nextState;
 
     this.render();
   };

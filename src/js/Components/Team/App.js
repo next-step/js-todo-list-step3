@@ -8,12 +8,11 @@ function App({ $target }) {
     this.$target = $target;
     this.state = {
       teams: [],
-      selectedTeam: '',
     };
 
     this.teamList = new TeamList({
       $target: document.querySelector(SELECTOR.TEAM_LIST),
-      teamListState: this.state,
+      teams: this.state.teams,
     });
 
     try {
@@ -35,7 +34,7 @@ function App({ $target }) {
   this.setState = (nextState) => {
     this.state = nextState;
 
-    this.teamList.setState(this.state);
+    this.teamList.setState(this.state.teams);
   };
 
   this.init();
