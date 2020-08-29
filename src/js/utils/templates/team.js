@@ -1,9 +1,9 @@
 export const teamCardHTML = (team) => `
   <div id=${team._id} class="team-card-container">
-    <a href="./kanban.html" class="card">
+    <a href="./kanban.html?${team._id}" class="card">
       <span class="card-title">${team.name} TEAM</span>
-      <button class="delete">
-        <span class="material-icons">delete</span>
+      <button>
+        <span class="material-icons delete">delete</span>
       </button>
     </a>
   </div>`;
