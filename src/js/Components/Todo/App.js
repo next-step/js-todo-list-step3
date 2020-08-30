@@ -27,11 +27,27 @@ function App({ $target, teamId }) {
         members: this.state.members,
       },
       onAddUser: this.onAddUser,
+      onToggleTodo: this.onToggleTodo,
+      onDeleteTodo: this.onDeleteTodo,
     });
   };
 
   this.onAddUser = async (name) => {
     await api.user.addUser(this.state._id, name);
+    const state = await api.team.fetchTeam(this.state._id);
+
+    this.setState(state);
+  };
+
+  this.onToggleTodo = async (userId, todoId) => {
+    await api.user.toggleTodo(this.state._id, userId, todoId);
+    const state = await api.team.fetchTeam(this.state._id);
+
+    this.setState(state);
+  };
+
+  this.onDeleteTodo = async (userId, todoId) => {
+    await api.user.deleteTodo(this.state._id, userId, todoId);
     const state = await api.team.fetchTeam(this.state._id);
 
     this.setState(state);

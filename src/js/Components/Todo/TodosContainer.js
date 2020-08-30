@@ -1,7 +1,13 @@
 import { todoListHTML, addUserButtonHTML } from '../../utils/templates/user.js';
-import { MESSAGE, CLASS_NAME, SELECTOR } from '../../utils/constants.js';
+import { MESSAGE, SELECTOR, CLASS_NAME } from '../../utils/constants.js';
 
-function TodosContainer({ $target, state, onAddUser }) {
+function TodosContainer({
+  $target,
+  state,
+  onAddUser,
+  onToggleTodo,
+  onDeleteTodo,
+}) {
   this.init = () => {
     this.$target = $target;
     const { teamId, members } = state;
@@ -17,8 +23,9 @@ function TodosContainer({ $target, state, onAddUser }) {
   };
 
   this.onClick = (e) => {
-    const $todoListContainer = e.target.closest(SELECTOR.TODO_LIST_CONTAINER);
-    const $addUserButton = e.target.closest(SELECTOR.ADD_USER_BUTTON);
+    const $target = e.target;
+    const $todoListContainer = $target.closest(SELECTOR.TODO_LIST_CONTAINER);
+    const $addUserButton = $target.closest(SELECTOR.ADD_USER_BUTTON);
 
     if (!($todoListContainer || $addUserButton)) {
       return;
@@ -38,6 +45,25 @@ function TodosContainer({ $target, state, onAddUser }) {
     }
 
     // 투두 리스트 조작
+    if (!$todoListContainer) {
+      return;
+    }
+
+    const userId = $todoListContainer.id;
+
+    // todo item 토글
+    if ($target.classList.contains(CLASS_NAME.TOGGLE)) {
+      const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
+      onToggleTodo(userId, todoId);
+      return;
+    }
+
+    // todo item 삭제
+    if ($target.classList.contains(CLASS_NAME.DESTROY)) {
+      const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
+      onDeleteTodo(userId, todoId);
+      return;
+    }
   };
 
   this.setState = (nextState) => {

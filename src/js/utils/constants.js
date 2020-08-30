@@ -5,6 +5,7 @@ export const SELECTOR = {
   TODOS_CONTAINER: '.todo-app-list-container',
   TODO_LIST_CONTAINER: '.todo-list-container',
   ADD_USER_BUTTON: '.add-user-button-container',
+  TODO_ITEM: '.todo-list-item',
 };
 
 export const CLASS_NAME = {
@@ -16,6 +17,8 @@ export const CLASS_NAME = {
   PRIORITY: 'priority',
   ACTIVE: 'active',
   COMPLETED: 'completed',
+  TOGGLE: 'toggle',
+  DESTROY: 'destroy',
 };
 
 export const NODE = {};
