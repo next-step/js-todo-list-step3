@@ -1,5 +1,11 @@
 import { todoListHTML, addUserButtonHTML } from '../../utils/templates/user.js';
-import { MESSAGE, SELECTOR, CLASS_NAME, KEY } from '../../utils/constants.js';
+import {
+  MESSAGE,
+  SELECTOR,
+  CLASS_NAME,
+  KEY,
+  PRIORITY,
+} from '../../utils/constants.js';
 
 function TodosContainer({
   $target,
@@ -8,6 +14,7 @@ function TodosContainer({
   onToggleTodo,
   onDeleteTodo,
   onAddTodo,
+  onEditPriority,
 }) {
   this.init = () => {
     this.$target = $target;
@@ -22,6 +29,7 @@ function TodosContainer({
   this.bindEvents = () => {
     this.$target.addEventListener('click', this.onClick);
     this.$target.addEventListener('keydown', this.onKeyDown);
+    this.$target.addEventListener('change', this.onChange);
   };
 
   this.onClick = (e) => {
@@ -52,25 +60,33 @@ function TodosContainer({
     }
 
     const userId = $todoListContainer.id;
+    const $todoItem = $target.closest(SELECTOR.TODO_ITEM);
 
     // todo item 토글
     if ($target.classList.contains(CLASS_NAME.TOGGLE)) {
-      const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
-      onToggleTodo(userId, todoId);
+      onToggleTodo(userId, $todoItem.id);
       return;
     }
 
     // todo item 삭제
     if ($target.classList.contains(CLASS_NAME.DESTROY)) {
-      const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
-      onDeleteTodo(userId, todoId);
+      onDeleteTodo(userId, $todoItem.id);
+      return;
+    }
+
+    // 우선 순위 재선택
+    if (
+      $target.classList.contains(CLASS_NAME.CHIP) &&
+      !$target.classList.contains(CLASS_NAME.SELECT)
+    ) {
+      onEditPriority(userId, $todoItem.id, PRIORITY.NONE);
       return;
     }
   };
 
   this.onKeyDown = (e) => {
     const $target = e.target;
-    const $todoInput = $target.closest('.input-container');
+    const $todoInput = $target.closest(SELECTOR.TODO_INPUT);
     const key = e.key;
 
     if (!$todoInput) {
@@ -101,6 +117,24 @@ function TodosContainer({
         console.error(`${key} : ${MESSAGE.UNDEFINED_KEY}`);
         return;
     }
+  };
+
+  this.onChange = (e) => {
+    const $target = e.target;
+    const $todoInput = $target.closest(SELECTOR.TODO_INPUT);
+    const $select = $target.closest(SELECTOR.CHIP_SELECT);
+
+    if ($todoInput || !$select) {
+      return;
+    }
+
+    if ($target.value === PRIORITY.NONE) {
+      return;
+    }
+
+    const userId = $target.closest(SELECTOR.TODO_LIST_CONTAINER).id;
+    const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
+    onEditPriority(userId, todoId, $target.value);
   };
 
   this.setState = (nextState) => {
