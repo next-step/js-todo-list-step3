@@ -2,6 +2,7 @@ export const SELECTOR = {
   APP: '#app',
   TEAM_LIST: '.team-list-container',
   TEAM_TITLE: '#team-title',
+  TODOS_CONTAINER: '.todo-app-list-container',
 };
 
 export const CLASS_NAME = {
