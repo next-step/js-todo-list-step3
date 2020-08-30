@@ -29,7 +29,10 @@ export const PRIORITY = {
   SECONDARY: 2,
 };
 
-export const KEY = {};
+export const KEY = {
+  ENTER: 'Enter',
+  ESC: 'Escape',
+};
 
 export const MESSAGE = {
   INPUT_TEAM_NAME: '추가할 팀 이름을 입력하세요 !',
@@ -37,6 +40,8 @@ export const MESSAGE = {
   CONFIRM_DELETE: '정말로 삭제하시겠습니까 ?',
   NO_TEAM_NAME: '팀 이름을 입력해주세요 🔥',
   NO_USER_NAME: '멤버 이름을 입력해주세요 🔥',
+  UNDEFINED_KEY: '등록된 키가 아닙니다.',
+  NO_INPUT_KEYWORD: '할일을 입력해주세요 🔥',
 };
 
 export const KANBAN_URL = './kanban.html';

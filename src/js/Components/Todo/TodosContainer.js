@@ -1,5 +1,5 @@
 import { todoListHTML, addUserButtonHTML } from '../../utils/templates/user.js';
-import { MESSAGE, SELECTOR, CLASS_NAME } from '../../utils/constants.js';
+import { MESSAGE, SELECTOR, CLASS_NAME, KEY } from '../../utils/constants.js';
 
 function TodosContainer({
   $target,
@@ -7,6 +7,7 @@ function TodosContainer({
   onAddUser,
   onToggleTodo,
   onDeleteTodo,
+  onAddTodo,
 }) {
   this.init = () => {
     this.$target = $target;
@@ -20,6 +21,7 @@ function TodosContainer({
 
   this.bindEvents = () => {
     this.$target.addEventListener('click', this.onClick);
+    this.$target.addEventListener('keydown', this.onKeyDown);
   };
 
   this.onClick = (e) => {
@@ -63,6 +65,41 @@ function TodosContainer({
       const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
       onDeleteTodo(userId, todoId);
       return;
+    }
+  };
+
+  this.onKeyDown = (e) => {
+    const $target = e.target;
+    const $todoInput = $target.closest('.input-container');
+    const key = e.key;
+
+    if (!$todoInput) {
+      return;
+    }
+
+    if (key !== KEY.ENTER && key !== KEY.ESC) {
+      return;
+    }
+
+    const contents = $target.value.trim();
+    const userId = $target.closest(SELECTOR.TODO_LIST_CONTAINER).id;
+
+    switch (key) {
+      case KEY.ENTER:
+        if (!contents.length) {
+          alert(MESSAGE.NO_INPUT_KEYWORD);
+          return;
+        }
+
+        onAddTodo(userId, contents);
+        return;
+
+      case KEY.ESC:
+        return;
+
+      default:
+        console.error(`${key} : ${MESSAGE.UNDEFINED_KEY}`);
+        return;
     }
   };
 

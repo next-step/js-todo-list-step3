@@ -29,6 +29,7 @@ function App({ $target, teamId }) {
       onAddUser: this.onAddUser,
       onToggleTodo: this.onToggleTodo,
       onDeleteTodo: this.onDeleteTodo,
+      onAddTodo: this.onAddTodo,
     });
   };
 
@@ -48,6 +49,13 @@ function App({ $target, teamId }) {
 
   this.onDeleteTodo = async (userId, todoId) => {
     await api.user.deleteTodo(this.state._id, userId, todoId);
+    const state = await api.team.fetchTeam(this.state._id);
+
+    this.setState(state);
+  };
+
+  this.onAddTodo = async (userId, contents) => {
+    await api.user.addTodo(this.state._id, userId, contents);
     const state = await api.team.fetchTeam(this.state._id);
 
     this.setState(state);
