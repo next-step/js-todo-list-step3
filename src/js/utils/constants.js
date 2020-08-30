@@ -8,6 +8,7 @@ export const SELECTOR = {
   TODO_ITEM: '.todo-list-item',
   TODO_INPUT: '.input-container',
   CHIP_SELECT: '.select',
+  EDIT: '.edit',
 };
 
 export const CLASS_NAME = {
@@ -23,6 +24,8 @@ export const CLASS_NAME = {
   DESTROY: 'destroy',
   CHIP: 'chip',
   SELECT: 'select',
+  LABEL: 'label',
+  EDITING: 'editing',
 };
 
 export const NODE = {};

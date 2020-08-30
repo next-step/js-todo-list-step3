@@ -15,12 +15,15 @@ function TodosContainer({
   onDeleteTodo,
   onAddTodo,
   onEditPriority,
+  onEditTodo,
 }) {
   this.init = () => {
     this.$target = $target;
     const { teamId, members } = state;
     this.teamId = teamId;
     this.members = members;
+
+    this.isEditing = false;
 
     this.render();
     this.bindEvents();
@@ -30,6 +33,8 @@ function TodosContainer({
     this.$target.addEventListener('click', this.onClick);
     this.$target.addEventListener('keydown', this.onKeyDown);
     this.$target.addEventListener('change', this.onChange);
+    this.$target.addEventListener('dblclick', this.onDblclick);
+    this.$target.addEventListener('focusout', this.onFocusout);
   };
 
   this.onClick = (e) => {
@@ -87,9 +92,10 @@ function TodosContainer({
   this.onKeyDown = (e) => {
     const $target = e.target;
     const $todoInput = $target.closest(SELECTOR.TODO_INPUT);
+    const $todoItem = $target.closest(SELECTOR.TODO_ITEM);
     const key = e.key;
 
-    if (!$todoInput) {
+    if (!$todoInput && !$todoItem) {
       return;
     }
 
@@ -107,10 +113,23 @@ function TodosContainer({
           return;
         }
 
+        if (this.isEditing) {
+          const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
+          onEditTodo(userId, todoId, contents);
+          this.isEditing = false;
+          return;
+        }
+
         onAddTodo(userId, contents);
         return;
 
       case KEY.ESC:
+        if (!this.isEditing) {
+          return;
+        }
+
+        $todoItem.classList.remove(CLASS_NAME.EDITING);
+        this.isEditing = false;
         return;
 
       default:
@@ -135,6 +154,32 @@ function TodosContainer({
     const userId = $target.closest(SELECTOR.TODO_LIST_CONTAINER).id;
     const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
     onEditPriority(userId, todoId, $target.value);
+  };
+
+  this.onDblclick = (e) => {
+    if (this.isEditing) {
+      return;
+    }
+
+    const $target = e.target;
+    if (!$target.classList.contains(CLASS_NAME.LABEL)) {
+      return;
+    }
+
+    this.isEditing = true;
+    const $todoItem = $target.closest(SELECTOR.TODO_ITEM);
+    $todoItem.classList.add(CLASS_NAME.EDITING);
+    $todoItem.querySelector(SELECTOR.EDIT).select();
+  };
+
+  this.onFocusout = (e) => {
+    if (!this.isEditing) {
+      return;
+    }
+
+    const $todoItem = e.target.closest(SELECTOR.TODO_ITEM);
+    $todoItem.classList.remove(CLASS_NAME.EDITING);
+    this.isEditing = false;
   };
 
   this.setState = (nextState) => {

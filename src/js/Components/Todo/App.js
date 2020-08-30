@@ -31,6 +31,7 @@ function App({ $target, teamId }) {
       onDeleteTodo: this.onDeleteTodo,
       onAddTodo: this.onAddTodo,
       onEditPriority: this.onEditPriority,
+      onEditTodo: this.onEditTodo,
     });
   };
 
@@ -64,6 +65,13 @@ function App({ $target, teamId }) {
 
   this.onEditPriority = async (userId, todoId, priority) => {
     await api.user.editPriority(this.state._id, userId, todoId, priority);
+    const state = await api.team.fetchTeam(this.state._id);
+
+    this.setState(state);
+  };
+
+  this.onEditTodo = async (userId, todoId, contents) => {
+    await api.user.editTodo(this.state._id, userId, todoId, contents);
     const state = await api.team.fetchTeam(this.state._id);
 
     this.setState(state);
