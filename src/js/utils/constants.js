@@ -1,12 +1,18 @@
 export const SELECTOR = {
   APP: '#app',
   TEAM_LIST: '.team-list-container',
+  TEAM_TITLE: '#team-title',
 };
 
 export const CLASS_NAME = {
   TEAM_CARD: 'team-card-container',
   ADD_TEAM_BUTTON: 'add-team-button-container',
   DELETE: 'delete',
+  SELECTED: 'selected',
+  ALL: 'all',
+  PRIORITY: 'priority',
+  ACTIVE: 'active',
+  COMPLETED: 'completed',
 };
 
 export const NODE = {};
@@ -26,3 +32,7 @@ export const MESSAGE = {
 };
 
 export const KANBAN_URL = './kanban.html';
+
+export const QUERY = {
+  ID: 'id',
+};

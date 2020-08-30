@@ -325,7 +325,7 @@ body {
   display: inline;
 }
 
-.todo-tab li a {
+.todo-tab li span {
   color: inherit;
   margin: 3px;
   padding: 3px 7px;
@@ -334,11 +334,12 @@ body {
   border-radius: 3px;
 }
 
-.todo-tab li a:hover {
+.todo-tab li span:hover {
   border-color: rgba(175, 47, 47, 0.1);
+  cursor: pointer;
 }
 
-.todo-tab li a.selected {
+.todo-tab li span.selected {
   border-color: rgba(175, 47, 47, 0.2);
 }
 
