@@ -22,6 +22,5 @@ export const addTeam = async (name) => {
 
 export const deleteTeam = async (teamId) => {
   const team = await http.delete(`${config.baseUrl}/teams/${teamId}`);
-  console.log('deleteTeam -> teams', team);
   return team;
 };

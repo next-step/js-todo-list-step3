@@ -1,11 +1,10 @@
-import { getTeam, getTeamList, addTeam } from '../api/team.js';
+import { getTeamList, addTeam, deleteTeam } from '../api/team.js';
 import { addTeamButtonTemplate } from '../utils/template.js';
 
 export default class TeamBoard {
   constructor() {
-    this.$teamList = document.querySelector('.team-list-container');
-
     this.teams = [];
+    this.$teamList = document.querySelector('.team-list-container');
 
     this.init();
   }
@@ -16,21 +15,46 @@ export default class TeamBoard {
     this.render();
   }
 
-  addTeam(team) {
-    this.teams.push(team);
+  setTeamInfo(teams) {
+    this.teams = teams;
     this.render();
   }
 
-  addTeamEvent() {
-    this.$teamList.addEventListener('click', async ({ target }) => {
-      const $addTeamButton = target.closest('#add-team-button');
+  async addTeamRequest(name) {
+    try {
+      const team = await addTeam(name);
+      const addedTeams = [...this.teams, team];
+      this.setTeamInfo(addedTeams);
+    } catch (e) {
+      alert(`addTeamRequest => ${e.message}`);
+    }
+  }
 
+  async deleteTeamRequest(teamId) {
+    try {
+      await deleteTeam(teamId);
+      const filteredTeams = this.teams.filter((team) => team._id !== teamId);
+      this.setTeamInfo(filteredTeams);
+      alert('삭제되었습니다.');
+    } catch (e) {
+      alert(`deleteTeamRequest => ${e.message}`);
+    }
+  }
+
+  addTeamEvent() {
+    this.$teamList.addEventListener('click', ({ target }) => {
+      if (target.className === 'destroy') {
+        const $teamCard = target.closest('.team-card-container');
+        this.deleteTeamRequest($teamCard.id);
+        return;
+      }
+
+      const $addTeamButton = target.closest('#add-team-button');
       if ($addTeamButton) {
         const result = prompt('팀 이름을 입력해주세요');
         const name = result.trim();
         if (name) {
-          const team = await addTeam(name);
-          this.addTeam(team);
+          this.addTeamRequest(name);
         }
       }
     });
@@ -43,6 +67,7 @@ export default class TeamBoard {
           <a href="/kanban.html" class="card">
             <div class="card-title">${team.name}</div>
           </a>
+          <button class="destroy"></button>
         </div>
       `;
     });

@@ -246,29 +246,39 @@ body {
   text-decoration: line-through;
 }
 
-.todo-list li .destroy {
+.destroy {
   display: none;
   position: absolute;
+  margin: auto 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+}
+
+.destroy:hover {
+  color: #af5b5e;
+}
+
+.destroy:after {
+  content: '×';
+}
+
+.team-card-container .destroy {
+  top: 0;
+  right: 12px;
+}
+
+.todo-list li .destroy {
   top: 0;
   right: 10px;
   bottom: 0;
   width: 40px;
   height: 40px;
-  margin: auto 0;
   font-size: 30px;
-  color: #cc9a9a;
   margin-bottom: 11px;
-  transition: color 0.2s ease-out;
 }
 
-.todo-list li .destroy:hover {
-  color: #af5b5e;
-}
-
-.todo-list li .destroy:after {
-  content: '×';
-}
-
+.team-card-container:hover .destroy,
 .todo-list li:hover .destroy {
   display: block;
 }
@@ -567,6 +577,7 @@ select.chip {
 }
 
 .team-list-container .team-card-container {
+  position: relative;
   padding: 0 5px;
 }
 
