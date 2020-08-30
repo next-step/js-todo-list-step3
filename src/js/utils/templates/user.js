@@ -5,15 +5,25 @@ export const teamTitleHTML = (name) => `
 `;
 
 export const todoListHTML = (name, todos, selected) => `
-  ${userTitleHTML(name)}
-  ${todoInputHTML()}
-  ${todos.map((todo) => todoItem(todo)).join('')}
-  ${todoCountHTML(todos.length)}
-  ${todoTabHTML(selected)}
-  ${todoClearAllButtonHTML()}
+  <li class="todo-list-container">  
+    ${userTitleHTML(name)}
+    <div class="todo-list">
+      ${todoInputHTML()}
+      <section class="todo-list-main">
+        <ul class="todo-list-body">
+          ${todos.map((todo) => todoItem(todo)).join('')}
+        </ul>
+      </section>
+      <div class="count-container">
+        ${todoCountHTML(todos.length)}
+        ${todoTabHTML(selected)}
+        ${todoClearAllButtonHTML()}
+      </div>
+    </div>
+  </li>
 `;
 
-export const addUserButton = () => `
+export const addUserButtonHTML = () => `
   <li class="add-user-button-container">
     <button id="add-user-button" class="ripple">
       <span class="material-icons">add</span>
@@ -24,7 +34,7 @@ export const addUserButton = () => `
 const userTitleHTML = (name) => `
   <h2>
     <span><strong>${name}</strong>'s Todo List</span>
-  <h2>`;
+  </h2>`;
 
 const todoInputHTML = () => `
   <section class="input-container">
@@ -55,11 +65,13 @@ const todoItem = (todo) => `
     <div class="view">
       <input class="toggle" type="checkbox" ${todo.isCompleted && 'checked'}/>
       <label class="label">
-        ${
-          todo.priority === PRIORITY.NONE
-            ? prioritySelectHTML()
-            : priorityLabelHTML(Number(todo.priority))
-        }
+        <div class="chip-container">
+          ${
+            todo.priority === PRIORITY.NONE
+              ? prioritySelectHTML()
+              : priorityLabelHTML(Number(todo.priority))
+          }
+        </div>
         ${todo.contents}
       </label>
       <button class="destroy"></button>
@@ -69,7 +81,7 @@ const todoItem = (todo) => `
 `;
 
 const todoCountHTML = (count) => `
-  총 <strong>${count}</strong> 개
+  <span class="todo-count">총 <strong>${count}</strong> 개</span>
 `;
 
 const todoTabHTML = (selected) => `
