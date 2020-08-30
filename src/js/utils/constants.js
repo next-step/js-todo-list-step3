@@ -9,6 +9,7 @@ export const SELECTOR = {
   TODO_INPUT: '.input-container',
   CHIP_SELECT: '.select',
   EDIT: '.edit',
+  TODO_TAB: '.todo-tab',
 };
 
 export const CLASS_NAME = {

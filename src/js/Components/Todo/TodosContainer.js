@@ -24,6 +24,12 @@ function TodosContainer({
     this.members = members;
 
     this.isEditing = false;
+    this.tabClassNames = [
+      CLASS_NAME.ALL,
+      CLASS_NAME.PRIORITY,
+      CLASS_NAME.ACTIVE,
+      CLASS_NAME.COMPLETED,
+    ];
 
     this.render();
     this.bindEvents();
@@ -41,8 +47,9 @@ function TodosContainer({
     const $target = e.target;
     const $todoListContainer = $target.closest(SELECTOR.TODO_LIST_CONTAINER);
     const $addUserButton = $target.closest(SELECTOR.ADD_USER_BUTTON);
+    const $todoTab = $target.closest(SELECTOR.TODO_TAB);
 
-    if (!($todoListContainer || $addUserButton)) {
+    if (!$todoListContainer && !$addUserButton && !$todoTab) {
       return;
     }
 
@@ -86,6 +93,28 @@ function TodosContainer({
     ) {
       onEditPriority(userId, $todoItem.id, PRIORITY.NONE);
       return;
+    }
+
+    // todoTab
+    if ($target.classList.contains(CLASS_NAME.SELECTED)) {
+      return;
+    }
+
+    if (this.tabClassNames.some((name) => $target.classList.contains(name))) {
+      const members = this.members.map((member) => {
+        return {
+          ...member,
+          selectedTab:
+            member._id === userId
+              ? $target.className.trim()
+              : member.selectedTab,
+        };
+      });
+
+      this.setState({
+        teamId: this.teamId,
+        members,
+      });
     }
   };
 
@@ -191,7 +220,7 @@ function TodosContainer({
     this.render();
   };
 
-  this.createTodoListHTML = (member) => todoListHTML(member, 'all');
+  this.createTodoListHTML = (member) => todoListHTML(member);
 
   this.createContainerHTML = (members) => {
     return (

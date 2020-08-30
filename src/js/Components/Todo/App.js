@@ -2,7 +2,7 @@ import TeamTitle from './TeamTitle.js';
 import TodosContainer from './TodosContainer.js';
 
 import { api } from '../../utils/api/index.js';
-import { SELECTOR } from '../../utils/constants.js';
+import { SELECTOR, CLASS_NAME } from '../../utils/constants.js';
 
 function App({ $target, teamId }) {
   this.init = async () => {
@@ -24,7 +24,12 @@ function App({ $target, teamId }) {
       $target: document.querySelector(SELECTOR.TODOS_CONTAINER),
       state: {
         teamId: this.state._id,
-        members: this.state.members,
+        members: this.state.members.map((member) => {
+          return {
+            ...member,
+            selectedTab: CLASS_NAME.ALL,
+          };
+        }),
       },
       onAddUser: this.onAddUser,
       onToggleTodo: this.onToggleTodo,
@@ -82,7 +87,14 @@ function App({ $target, teamId }) {
 
     this.todosContainer.setState({
       teamId: this.state.name,
-      members: this.state.members,
+      members: this.state.members.map((member, idx) => {
+        return {
+          ...member,
+          selectedTab: this.todosContainer.members[idx]
+            ? this.todosContainer.members[idx].selectedTab
+            : CLASS_NAME.ALL,
+        };
+      }),
     });
   };
 

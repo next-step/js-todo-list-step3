@@ -4,7 +4,7 @@ export const teamTitleHTML = (name) => `
   <span><strong>${name}</strong>'s Todo List</span>
 `;
 
-export const todoListHTML = (member, selected) => `
+export const todoListHTML = (member) => `
   <li id=${member._id} class="todo-list-container">  
     ${userTitleHTML(member.name)}
     <div class="todo-list">
@@ -16,7 +16,7 @@ export const todoListHTML = (member, selected) => `
       </section>
       <div class="count-container">
         ${todoCountHTML(member.todoList.length)}
-        ${todoTabHTML(selected)}
+        ${todoTabHTML(member.selectedTab)}
         ${todoClearAllButtonHTML()}
       </div>
     </div>
@@ -87,22 +87,22 @@ const todoCountHTML = (count) => `
 const todoTabHTML = (selected) => `
   <ul class="todo-tab">
     <li>
-      <span class="${
+      <span class="all ${
         selected === CLASS_NAME.ALL ? CLASS_NAME.SELECTED : ''
       }">전체보기</span>
     </li>
     <li>
-      <span class="${
+      <span class="priority ${
         selected === CLASS_NAME.PRIORITY ? CLASS_NAME.SELECTED : ''
       }">우선 순위</span>
     </li>
     <li>
-      <span class="${
+      <span class="active ${
         selected === CLASS_NAME.ACTIVE ? CLASS_NAME.SELECTED : ''
       }">해야할 일</span>
     </li>
     <li>
-      <span class="${
+      <span class="completed ${
         selected === CLASS_NAME.COMPLETED ? CLASS_NAME.SELECTED : ''
       }">완료한 일</span>
     </li>
