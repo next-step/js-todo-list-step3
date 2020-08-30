@@ -1,5 +1,5 @@
 import { todoListHTML, addUserButtonHTML } from '../../utils/templates/user.js';
-import { MESSAGE } from '../../utils/constants.js';
+import { MESSAGE, CLASS_NAME, SELECTOR } from '../../utils/constants.js';
 
 function TodosContainer({ $target, state, onAddUser }) {
   this.init = () => {
@@ -17,11 +17,15 @@ function TodosContainer({ $target, state, onAddUser }) {
   };
 
   this.onClick = (e) => {
-    const $li = e.target.closest('li');
-    console.log(e.target);
+    const $todoListContainer = e.target.closest(SELECTOR.TODO_LIST_CONTAINER);
+    const $addUserButton = e.target.closest(SELECTOR.ADD_USER_BUTTON);
+
+    if (!($todoListContainer || $addUserButton)) {
+      return;
+    }
 
     // 유저 추가
-    if ($li.classList.contains('add-user-button-container')) {
+    if ($addUserButton) {
       const name = prompt(MESSAGE.INPUT_USER_NAME);
 
       if (!name || !name.trim().length) {
@@ -45,6 +49,8 @@ function TodosContainer({ $target, state, onAddUser }) {
     this.render();
   };
 
+  this.createTodoListHTML = (member) => todoListHTML(member, 'all');
+
   this.createContainerHTML = (members) => {
     return (
       members.reduce((html, member) => {
@@ -53,9 +59,6 @@ function TodosContainer({ $target, state, onAddUser }) {
       }, '') + addUserButtonHTML()
     );
   };
-
-  this.createTodoListHTML = (member) =>
-    todoListHTML(member.name, member.todoList, 'all');
 
   this.render = () => {
     this.$target.innerHTML = this.createContainerHTML(this.members);

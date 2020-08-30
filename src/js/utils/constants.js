@@ -3,6 +3,8 @@ export const SELECTOR = {
   TEAM_LIST: '.team-list-container',
   TEAM_TITLE: '#team-title',
   TODOS_CONTAINER: '.todo-app-list-container',
+  TODO_LIST_CONTAINER: '.todo-list-container',
+  ADD_USER_BUTTON: '.add-user-button-container',
 };
 
 export const CLASS_NAME = {
