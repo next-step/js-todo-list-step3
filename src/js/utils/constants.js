@@ -6,6 +6,8 @@ export const SELECTOR = {
   TODO_LIST_CONTAINER: '.todo-list-container',
   ADD_USER_BUTTON: '.add-user-button-container',
   TODO_ITEM: '.todo-list-item',
+  TODO_INPUT: '.input-container',
+  CHIP_SELECT: '.select',
 };
 
 export const CLASS_NAME = {
@@ -19,6 +21,8 @@ export const CLASS_NAME = {
   COMPLETED: 'completed',
   TOGGLE: 'toggle',
   DESTROY: 'destroy',
+  CHIP: 'chip',
+  SELECT: 'select',
 };
 
 export const NODE = {};
