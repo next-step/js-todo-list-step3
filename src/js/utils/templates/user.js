@@ -4,18 +4,18 @@ export const teamTitleHTML = (name) => `
   <span><strong>${name}</strong>'s Todo List</span>
 `;
 
-export const todoListHTML = (name, todos, selected) => `
-  <li class="todo-list-container">  
-    ${userTitleHTML(name)}
+export const todoListHTML = (member, selected) => `
+  <li id=${member._id} class="todo-list-container">  
+    ${userTitleHTML(member.name)}
     <div class="todo-list">
       ${todoInputHTML()}
       <section class="todo-list-main">
         <ul class="todo-list-body">
-          ${todos.map((todo) => todoItem(todo)).join('')}
+          ${member.todoList.map((todo) => todoItem(todo)).join('')}
         </ul>
       </section>
       <div class="count-container">
-        ${todoCountHTML(todos.length)}
+        ${todoCountHTML(member.todoList.length)}
         ${todoTabHTML(selected)}
         ${todoClearAllButtonHTML()}
       </div>
