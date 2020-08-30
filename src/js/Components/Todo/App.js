@@ -15,18 +15,26 @@ function App({ $target, teamId }) {
 
     this.state = await api.team.fetchTeam(teamId);
 
-    const teamTitle = new TeamTitle({
+    this.teamTitle = new TeamTitle({
       $target: document.querySelector(SELECTOR.TEAM_TITLE),
       name: this.state.name,
     });
 
-    const todosContainer = new TodosContainer({
+    this.todosContainer = new TodosContainer({
       $target: document.querySelector(SELECTOR.TODOS_CONTAINER),
       state: {
         teamId: this.state._id,
         members: this.state.members,
       },
+      onAddUser: this.onAddUser,
     });
+  };
+
+  this.onAddUser = async (name) => {
+    await api.user.addUser(this.state._id, name);
+    const state = await api.team.fetchTeam(this.state._id);
+
+    this.setState(state);
   };
 
   this.setState = (nextState) => {

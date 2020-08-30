@@ -28,8 +28,10 @@ export const KEY = {};
 
 export const MESSAGE = {
   INPUT_TEAM_NAME: '추가할 팀 이름을 입력하세요 !',
+  INPUT_USER_NAME: '추가할 멤버 이름을 입력하세요 !',
   CONFIRM_DELETE: '정말로 삭제하시겠습니까 ?',
   NO_TEAM_NAME: '팀 이름을 입력해주세요 🔥',
+  NO_USER_NAME: '멤버 이름을 입력해주세요 🔥',
 };
 
 export const KANBAN_URL = './kanban.html';
