@@ -32,7 +32,6 @@ function App({ $target, teamId }) {
           selectedTab: CLASS_NAME.ALL,
         };
       }),
-
       onAddUser: this.onAddUser,
       onToggleTodo: this.onToggleTodo,
       onDeleteTodo: this.onDeleteTodo,

@@ -30,8 +30,6 @@ export const CLASS_NAME = {
   EDITING: 'editing',
 };
 
-export const NODE = {};
-
 export const PRIORITY = {
   NONE: 0,
   PRIMARY: 1,
@@ -49,7 +47,8 @@ export const MESSAGE = {
   CONFIRM_DELETE: '정말로 삭제하시겠습니까 ?',
   NO_TEAM_NAME: '팀 이름을 입력해주세요 🔥',
   NO_USER_NAME: '멤버 이름을 입력해주세요 🔥',
-  UNDEFINED_KEY: '등록된 키가 아닙니다.',
+  UNDEFINED_TAB: '올바르지 않은 TAB이름입니다.',
+  UNDEFINED_KEY: '등록되지 않은 KEY 입력입니다.',
   NO_INPUT_KEYWORD: '할일을 입력해주세요 🔥',
 };
 

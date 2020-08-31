@@ -1,4 +1,4 @@
-import { CLASS_NAME, PRIORITY } from './constants.js';
+import { CLASS_NAME, PRIORITY, MESSAGE } from './constants.js';
 
 export const getSelectedTabTodos = (todos, selectedTab) => {
   switch (selectedTab) {
@@ -15,6 +15,7 @@ export const getSelectedTabTodos = (todos, selectedTab) => {
       return todos.filter((todo) => todo.isCompleted);
 
     default:
+      console.error(`${selectedTab} : ${MESSAGE.UNDEFINED_TAB}`);
       return todos;
   }
 };

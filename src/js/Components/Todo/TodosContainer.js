@@ -76,7 +76,6 @@ function TodosContainer({
       return;
     }
 
-    // 투두 리스트 조작
     if (!$todoListContainer) {
       return;
     }
@@ -84,7 +83,7 @@ function TodosContainer({
     const userId = $todoListContainer.id;
     const $todoItem = $target.closest(SELECTOR.TODO_ITEM);
 
-    // todo item 토글
+    // 할일 토글
     if ($target.classList.contains(CLASS_NAME.TOGGLE)) {
       try {
         onToggleTodo(userId, $todoItem.id);
@@ -94,7 +93,7 @@ function TodosContainer({
       return;
     }
 
-    // todo item 삭제
+    // 할일 삭제
     if ($target.classList.contains(CLASS_NAME.DESTROY)) {
       try {
         onDeleteTodo(userId, $todoItem.id);
@@ -104,7 +103,7 @@ function TodosContainer({
       return;
     }
 
-    // 우선 순위 재선택
+    // 우선 순위 재설정
     if (
       $target.classList.contains(CLASS_NAME.CHIP) &&
       !$target.classList.contains(CLASS_NAME.SELECT)
@@ -117,7 +116,7 @@ function TodosContainer({
       return;
     }
 
-    // todoTab
+    // todoTab 클릭
     if ($target.classList.contains(CLASS_NAME.SELECTED)) {
       return;
     }
@@ -136,7 +135,7 @@ function TodosContainer({
       this.setState(members);
     }
 
-    // deleteAll
+    // 할일 모두 삭제
     if ($todoClearAllButton) {
       try {
         onDeleteAllTodo(userId);
@@ -147,6 +146,7 @@ function TodosContainer({
     }
   };
 
+  // 할일 입력, 할일 추가, 할일 수정(취소)
   this.onKeyDown = (e) => {
     const $target = e.target;
     const $todoInput = $target.closest(SELECTOR.TODO_INPUT);
@@ -206,6 +206,7 @@ function TodosContainer({
     }
   };
 
+  // 할일 입력, 할일 수정, 우선순위 변경
   this.onChange = (e) => {
     const $target = e.target;
     const $todoInput = $target.closest(SELECTOR.TODO_INPUT);
@@ -229,6 +230,7 @@ function TodosContainer({
     }
   };
 
+  // 할일 수정 취소
   this.onDblclick = (e) => {
     if (this.isEditing) {
       return;
@@ -245,6 +247,7 @@ function TodosContainer({
     $todoItem.querySelector(SELECTOR.EDIT).select();
   };
 
+  // 할일 수정
   this.onFocusout = (e) => {
     if (!this.isEditing) {
       return;
@@ -273,13 +276,11 @@ function TodosContainer({
           todoList: getSelectedTabTodos(member.todoList, member.selectedTab),
         };
 
-        html += this.createTodoListHTML(filteredMember);
+        html += todoListHTML(filteredMember);
         return html;
       }, '') + addUserButtonHTML()
     );
   };
-
-  this.createTodoListHTML = (member) => todoListHTML(member);
 
   this.init();
 }
