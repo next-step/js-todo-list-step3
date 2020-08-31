@@ -22,15 +22,13 @@ function App({ $target, teamId }) {
 
     this.todosContainer = new TodosContainer({
       $target: document.querySelector(SELECTOR.TODOS_CONTAINER),
-      state: {
-        teamId: this.state._id,
-        members: this.state.members.map((member) => {
-          return {
-            ...member,
-            selectedTab: CLASS_NAME.ALL,
-          };
-        }),
-      },
+      members: this.state.members.map((member) => {
+        return {
+          ...member,
+          selectedTab: CLASS_NAME.ALL,
+        };
+      }),
+
       onAddUser: this.onAddUser,
       onToggleTodo: this.onToggleTodo,
       onDeleteTodo: this.onDeleteTodo,
@@ -93,17 +91,15 @@ function App({ $target, teamId }) {
   this.setState = (nextState) => {
     this.state = nextState;
 
-    this.todosContainer.setState({
-      teamId: this.state.name,
-      members: this.state.members.map((member, idx) => {
-        return {
-          ...member,
-          selectedTab: this.todosContainer.members[idx]
-            ? this.todosContainer.members[idx].selectedTab
-            : CLASS_NAME.ALL,
-        };
-      }),
+    const todosContainerMembers = this.state.members.map((member, idx) => {
+      return {
+        ...member,
+        selectedTab: this.todosContainer.members[idx]
+          ? this.todosContainer.members[idx].selectedTab
+          : CLASS_NAME.ALL,
+      };
     });
+    this.todosContainer.setState(todosContainerMembers);
   };
 
   this.init();

@@ -10,7 +10,7 @@ import { getSelectedTabTodos } from '../../utils/util.js';
 
 function TodosContainer({
   $target,
-  state,
+  members,
   onAddUser,
   onToggleTodo,
   onDeleteTodo,
@@ -21,8 +21,6 @@ function TodosContainer({
 }) {
   this.init = () => {
     this.$target = $target;
-    const { teamId, members } = state;
-    this.teamId = teamId;
     this.members = members;
 
     this.isEditing = false;
@@ -119,10 +117,7 @@ function TodosContainer({
         };
       });
 
-      this.setState({
-        teamId: this.teamId,
-        members,
-      });
+      this.setState(members);
     }
 
     // deleteAll
@@ -226,10 +221,7 @@ function TodosContainer({
   };
 
   this.setState = (nextState) => {
-    const { teamId, members } = nextState;
-
-    this.teamId = teamId;
-    this.members = members;
+    this.members = nextState;
 
     this.render();
   };
