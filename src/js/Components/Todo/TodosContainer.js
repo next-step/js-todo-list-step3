@@ -6,6 +6,7 @@ import {
   KEY,
   PRIORITY,
 } from '../../utils/constants.js';
+import { getSelectedTabTodos } from '../../utils/util.js';
 
 function TodosContainer({
   $target,
@@ -220,20 +221,25 @@ function TodosContainer({
     this.render();
   };
 
-  this.createTodoListHTML = (member) => todoListHTML(member);
+  this.render = () => {
+    this.$target.innerHTML = this.createContainerHTML(this.members);
+  };
 
   this.createContainerHTML = (members) => {
     return (
       members.reduce((html, member) => {
-        html += this.createTodoListHTML(member);
+        const filteredMember = {
+          ...member,
+          todoList: getSelectedTabTodos(member.todoList, member.selectedTab),
+        };
+
+        html += this.createTodoListHTML(filteredMember);
         return html;
       }, '') + addUserButtonHTML()
     );
   };
 
-  this.render = () => {
-    this.$target.innerHTML = this.createContainerHTML(this.members);
-  };
+  this.createTodoListHTML = (member) => todoListHTML(member);
 
   this.init();
 }
