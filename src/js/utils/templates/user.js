@@ -1,9 +1,5 @@
 import { PRIORITY, CLASS_NAME } from '../constants.js';
 
-export const teamTitleHTML = (name) => `
-  <span><strong>${name}</strong>'s Todo List</span>
-`;
-
 export const todoListHTML = (member) => `
   <li id=${member._id} class="todo-list-container">  
     ${userTitleHTML(member.name)}
@@ -11,7 +7,7 @@ export const todoListHTML = (member) => `
       ${todoInputHTML()}
       <section class="todo-list-main">
         <ul class="todo-list-body">
-          ${member.todoList.map((todo) => todoItem(todo)).join('')}
+          ${member.todoList.map((todo) => todoItemHTML(todo)).join('')}
         </ul>
       </section>
       <div class="count-container">
@@ -58,7 +54,7 @@ const priorityLabelHTML = (priority) => {
     : `<span class="chip secondary">2순위</span>`;
 };
 
-const todoItem = (todo) => `
+const todoItemHTML = (todo) => `
   <li id=${todo._id} class="todo-list-item ${
   todo.isCompleted ? CLASS_NAME.COMPLETED : ''
 }">

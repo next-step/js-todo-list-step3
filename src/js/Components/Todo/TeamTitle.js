@@ -1,4 +1,4 @@
-import { teamTitleHTML } from '../../utils/templates/user.js';
+import { teamTitleHTML } from '../../utils/templates/team.js';
 
 function TeamTitle({ $target, name }) {
   this.init = () => {

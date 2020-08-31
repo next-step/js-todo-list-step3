@@ -1,3 +1,7 @@
+export const teamTitleHTML = (name) => `
+  <span><strong>${name}</strong>'s Todo List</span>
+`;
+
 export const teamCardHTML = (team) => `
   <div id=${team._id} class="team-card-container">
     <a href="./kanban.html?${team._id}" class="card">
