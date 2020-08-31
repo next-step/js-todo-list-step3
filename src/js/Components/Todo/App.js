@@ -13,7 +13,11 @@ function App({ $target, teamId }) {
       name: '',
     };
 
-    this.state = await api.team.fetchTeam(teamId);
+    try {
+      this.state = await api.team.fetchTeam(teamId);
+    } catch (err) {
+      console.error(err);
+    }
 
     this.teamTitle = new TeamTitle({
       $target: document.querySelector(SELECTOR.TEAM_TITLE),

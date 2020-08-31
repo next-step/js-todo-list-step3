@@ -29,7 +29,11 @@ function TeamList({ $target, teams, onAddTeam, onDeleteTeam }) {
 
     if (e.target.classList.contains(CLASS_NAME.DELETE)) {
       if (confirm(MESSAGE.CONFIRM_DELETE)) {
-        onDeleteTeam($div.id);
+        try {
+          onDeleteTeam($div.id);
+        } catch (err) {
+          console.error(err);
+        }
       }
       return;
     }
@@ -42,7 +46,11 @@ function TeamList({ $target, teams, onAddTeam, onDeleteTeam }) {
         return;
       }
 
-      onAddTeam(name);
+      try {
+        onAddTeam(name);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 

@@ -68,7 +68,11 @@ function TodosContainer({
         return;
       }
 
-      onAddUser(name);
+      try {
+        onAddUser(name);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 
@@ -82,13 +86,21 @@ function TodosContainer({
 
     // todo item 토글
     if ($target.classList.contains(CLASS_NAME.TOGGLE)) {
-      onToggleTodo(userId, $todoItem.id);
+      try {
+        onToggleTodo(userId, $todoItem.id);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 
     // todo item 삭제
     if ($target.classList.contains(CLASS_NAME.DESTROY)) {
-      onDeleteTodo(userId, $todoItem.id);
+      try {
+        onDeleteTodo(userId, $todoItem.id);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 
@@ -97,7 +109,11 @@ function TodosContainer({
       $target.classList.contains(CLASS_NAME.CHIP) &&
       !$target.classList.contains(CLASS_NAME.SELECT)
     ) {
-      onEditPriority(userId, $todoItem.id, PRIORITY.NONE);
+      try {
+        onEditPriority(userId, $todoItem.id, PRIORITY.NONE);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
 
@@ -122,7 +138,11 @@ function TodosContainer({
 
     // deleteAll
     if ($todoClearAllButton) {
-      onDeleteAllTodo(userId);
+      try {
+        onDeleteAllTodo(userId);
+      } catch (err) {
+        console.error(err);
+      }
       return;
     }
   };
@@ -153,12 +173,22 @@ function TodosContainer({
 
         if (this.isEditing) {
           const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
-          onEditTodo(userId, todoId, contents);
+
+          try {
+            onEditTodo(userId, todoId, contents);
+          } catch (err) {
+            console.error(err);
+          }
+
           this.isEditing = false;
           return;
         }
 
-        onAddTodo(userId, contents);
+        try {
+          onAddTodo(userId, contents);
+        } catch (err) {
+          console.error(err);
+        }
         return;
 
       case KEY.ESC:
@@ -191,7 +221,12 @@ function TodosContainer({
 
     const userId = $target.closest(SELECTOR.TODO_LIST_CONTAINER).id;
     const todoId = $target.closest(SELECTOR.TODO_ITEM).id;
-    onEditPriority(userId, todoId, $target.value);
+
+    try {
+      onEditPriority(userId, todoId, $target.value);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   this.onDblclick = (e) => {
