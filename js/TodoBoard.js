@@ -4,18 +4,20 @@ import TodoList from './components/TodoList.js';
 import TodoFilter from './components/TodoFilter.js';
 
 import {
+  getTodoItemsOfMember,
   toggleTodo,
   addTodoItem,
   updateTodoItem,
   updateTodoPriority,
   deleteTodoItem,
+  allDeleteTodoItem,
 } from '../api/todo.js';
 
 export default class TodoBoard {
   constructor($todoContainer, member) {
+    this.currentTeamId = location.search.split('=')[1];
     this.$todoContainer = $todoContainer;
     this.memberInfo = member;
-    this.todos = member.todoList;
     this.filterdTodos = [];
 
     this.$todoAppListContainer = document.querySelector(
@@ -47,15 +49,33 @@ export default class TodoBoard {
   }
 
   getFiteredTodoList() {
-    return this.memberInfo.todoList.filter((todo) => {
-      if (location.hash === '#/active') {
-        return !todo.isCompleted;
+    if (location.hash === `#priority_${this.memberInfo._id}`) {
+      return this.memberInfo.todoList.sort((a, b) => {
+        return a.priority > 0
+          ? a.priority - b.priority
+          : b.priority - a.priority;
+      });
+    } else {
+      return this.memberInfo.todoList.filter((todo) => {
+        if (location.hash === `#active_${this.memberInfo._id}`) {
+          return !todo.isCompleted;
+        }
+        if (location.hash === `#completed_${this.memberInfo._id}`) {
+          return todo.isCompleted;
+        }
+        return true;
+      });
+    }
+  }
+
+  makeNewTodoList(property, targetId, newValue) {
+    const newTodos = this.memberInfo.todoList.map((todo) => {
+      if (todo._id === targetId) {
+        todo[property] = newValue;
       }
-      if (location.hash === '#/completed') {
-        return todo.isCompleted;
-      }
-      return true;
+      return todo;
     });
+    return newTodos;
   }
 
   updateFilteredTodoList() {
@@ -66,8 +86,8 @@ export default class TodoBoard {
 
   setTodoState(todoList = []) {
     try {
-      this.todos = {
-        ...this.todos,
+      this.memberInfo = {
+        ...this.memberInfo,
         todoList,
       };
       this.updateFilteredTodoList();
@@ -78,7 +98,11 @@ export default class TodoBoard {
 
   async addTodo(contents) {
     try {
-      const newTodoItem = await addTodoItem(this.selectedUserName, contents);
+      const newTodoItem = await addTodoItem(
+        this.currentTeamId,
+        this.memberInfo._id,
+        contents
+      );
       const todoList = this.memberInfo.todoList || [];
       this.setTodoState(todoList.concat(newTodoItem));
     } catch (error) {
@@ -88,7 +112,11 @@ export default class TodoBoard {
 
   async toggleTodo(targetId) {
     try {
-      const updatedTodo = await toggleTodo(this.selectedUserName, targetId);
+      const updatedTodo = await toggleTodo(
+        this.currentTeamId,
+        this.memberInfo._id,
+        targetId
+      );
       const targetTodo = this.memberInfo.todoList.find(
         (todo) => todo._id === updatedTodo._id
       );
@@ -103,7 +131,8 @@ export default class TodoBoard {
   async editTodo(itemId, contents) {
     try {
       const updatedTodo = await updateTodoItem(
-        this.selectedUserName,
+        this.currentTeamId,
+        this.memberInfo._id,
         itemId,
         contents
       );
@@ -118,7 +147,8 @@ export default class TodoBoard {
   async changePriority(itemId, priority) {
     try {
       const updatedTodo = await updateTodoPriority(
-        this.selectedUserName,
+        this.currentTeamId,
+        this.memberInfo._id,
         itemId,
         priority
       );
@@ -130,10 +160,16 @@ export default class TodoBoard {
     }
   }
 
-  removeTodo(targetId) {
+  async removeTodo(targetId) {
     try {
-      deleteTodoItem(this.selectedUserName, targetId);
-      this.setTodoState([]);
+      deleteTodoItem(this.currentTeamId, this.memberInfo._id, targetId);
+      const memberInfo = await getTodoItemsOfMember(
+        this.currentTeamId,
+        this.memberInfo._id
+      );
+      this.setTodoState(
+        memberInfo.todoList.filter((todo) => todo._id !== targetId)
+      );
     } catch (error) {
       alert(`removeTodo error: ${error.message}`);
     }
@@ -141,14 +177,11 @@ export default class TodoBoard {
 
   allRemoveTodo() {
     try {
-      console.log(this.todos);
       if (this.memberInfo.todoList.length === 0) {
         throw new Error('삭제할 todo가 없습니다.');
       }
       if (confirm('정말로 전부 삭제하시겠습니까?')) {
-        this.memberInfo.todoList.forEach((todo) => {
-          deleteTodoItem(this.selectedUserName, todo._id);
-        });
+        allDeleteTodoItem(this.currentTeamId, this.memberInfo._id);
         this.setTodoState([]);
       }
     } catch (error) {
@@ -170,16 +203,16 @@ export default class TodoBoard {
         <div class="count-container">
           <ul class="filters">
             <li>
-              <a href="#all" class="selected">전체보기</a>
+              <a href="#all_${this.memberInfo._id}" class="selected">전체보기</a>
             </li>
             <li>
-              <a href="#priority">우선 순위</a>
+              <a href="#priority_${this.memberInfo._id}">우선 순위</a>
             </li>
             <li>
-              <a href="#active">해야할 일</a>
+              <a href="#active_${this.memberInfo._id}">해야할 일</a>
             </li>
             <li>
-              <a href="#completed">완료한 일</a>
+              <a href="#completed_${this.memberInfo._id}">완료한 일</a>
             </li>
           </ul>
           <button class="clear-completed">모두 삭제</button>

@@ -1,9 +1,6 @@
 export default class TodoFilter {
-  filterTypes = {
-    '#/': 'all',
-  };
-
   constructor(memberId, allRemoveTodo, updateTodoList) {
+    this.memberId = memberId;
     this.todoFilterElement = document.querySelector(
       `#${memberId} .count-container`
     );
@@ -29,11 +26,22 @@ export default class TodoFilter {
     this.filtersElement.querySelectorAll('a').forEach((anchorElement) => {
       const type = anchorElement.hash;
 
-      if (type === locationHash || (type === '#/' && locationHash === '')) {
+      if (
+        type === locationHash ||
+        (type === `#all_${this.memberId}` && locationHash === '')
+      ) {
         anchorElement.classList.add('selected');
-      } else if (type === locationHash && type === '#/active') {
+      } else if (
+        type === locationHash &&
+        type === `#priority_${this.memberId}`
+      ) {
         anchorElement.classList.add('selected');
-      } else if (type === locationHash && type === '#/completed') {
+      } else if (type === locationHash && type === `#active_${this.memberId}`) {
+        anchorElement.classList.add('selected');
+      } else if (
+        type === locationHash &&
+        type === `#completed_${this.memberId}`
+      ) {
         anchorElement.classList.add('selected');
       } else {
         anchorElement.classList.remove('selected');

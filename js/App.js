@@ -2,7 +2,7 @@ import HeaderTitle from './Header.js';
 import TeamBoard from './TeamBoard.js';
 import TodoBoard from './TodoBoard.js';
 
-import { getTeam } from '../api/team.js';
+import { getTeam, addTeamMember } from '../api/team.js';
 import { addUserButtonTemplate } from '../utils/template.js';
 
 export default class App {
@@ -13,19 +13,23 @@ export default class App {
 
     switch (currentPath) {
       case '/index.html':
-        this.teamBoard = new TeamBoard();
+        this.teamBoardInit();
         break;
       case '/kanban.html':
         if (this.currentTeamId) {
-          this.kanbanInit();
+          this.todoBoardInit();
         }
         break;
       default:
-        this.teamBoard = new TeamBoard();
+        this.teamBoardInit();
     }
   }
 
-  async kanbanInit() {
+  teamBoardInit() {
+    this.teamBoard = new TeamBoard();
+  }
+
+  async todoBoardInit() {
     this.$todoAppListContainer = document.querySelector(
       '.todoapp-list-container'
     );
@@ -38,12 +42,12 @@ export default class App {
       $todoContainer.className = 'todoapp-container';
       new TodoBoard($todoContainer, member);
     });
-    this.$todoAppListContainer.appendChild(this.teamBoardElement());
+    this.$todoAppListContainer.appendChild(this.addMemberButtonElement());
     this.$addUserButton = document.querySelector('#add-user-button');
     this.addNewMember();
   }
 
-  teamBoardElement() {
+  addMemberButtonElement() {
     const $addUserButtonContainer = document.createElement('li');
     $addUserButtonContainer.className = 'add-user-button-container';
     $addUserButtonContainer.innerHTML = addUserButtonTemplate;
@@ -51,8 +55,13 @@ export default class App {
   }
 
   addNewMember() {
-    this.$addUserButton.addEventListener('click', () => {
+    this.$addUserButton.addEventListener('click', async () => {
       const result = prompt('새로운 팀원 이름을 입력해주세요');
+      const newMemberName = result.trim();
+      if (newMemberName) {
+        await addTeamMember(this.currentTeamId, newMemberName);
+        this.todoBoardInit();
+      }
     });
   }
 }

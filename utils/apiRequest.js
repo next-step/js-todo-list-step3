@@ -1,3 +1,5 @@
+import interceptor from './interceptor.js';
+
 export default {
   get: async (url) => {
     const response = await fetch(url);

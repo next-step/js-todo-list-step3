@@ -8,9 +8,9 @@ export const getTodoItemsOfMember = async (teamId, memberId) => {
   return todos;
 };
 
-export const addTodoItem = async (userName, contents) => {
+export const addTodoItem = async (teamId, memberId, contents) => {
   const todo = await http.post(
-    `${config.baseUrl}/u/${userName}/item`,
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items`,
     JSON.stringify({
       contents,
     })
@@ -18,9 +18,9 @@ export const addTodoItem = async (userName, contents) => {
   return todo;
 };
 
-export const updateTodoItem = async (userName, itemId, contents) => {
+export const updateTodoItem = async (teamId, memberId, itemId, contents) => {
   const todo = await http.put(
-    `${config.baseUrl}/u/${userName}/item/${itemId}`,
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items/${itemId}`,
     JSON.stringify({
       contents,
     })
@@ -28,9 +28,14 @@ export const updateTodoItem = async (userName, itemId, contents) => {
   return todo;
 };
 
-export const updateTodoPriority = async (userName, itemId, priority) => {
+export const updateTodoPriority = async (
+  teamId,
+  memberId,
+  itemId,
+  priority
+) => {
   const todo = await http.put(
-    `${config.baseUrl}/u/${userName}/item/${itemId}/priority`,
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
     JSON.stringify({
       priority,
     })
@@ -38,21 +43,23 @@ export const updateTodoPriority = async (userName, itemId, priority) => {
   return todo;
 };
 
-export const deleteTodoItem = async (userName, itemId) => {
+export const deleteTodoItem = async (teamId, memberId, itemId) => {
   const todo = await http.delete(
-    `${config.baseUrl}/u/${userName}/item/${itemId}`
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items/${itemId}`
   );
   return todo;
 };
 
-export const allDeleteTodoItem = async (userName) => {
-  const todo = await http.delete(`${config.baseUrl}/u/${userName}/items`);
+export const allDeleteTodoItem = async (teamId, memberId) => {
+  const todo = await http.delete(
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items`
+  );
   return todo;
 };
 
-export const toggleTodo = async (userName, itemId) => {
+export const toggleTodo = async (teamId, memberId, itemId) => {
   const todo = await http.put(
-    `${config.baseUrl}/u/${userName}/item/${itemId}/toggle`
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`
   );
   return todo;
 };

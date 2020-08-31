@@ -1,18 +1,19 @@
 const loadingTemplate = () => {
-  return `
-    <li>
-      <div class="animated-background">
-        <div class="skel-mask-container">
-          <div class="skel-mask"></div>
-        </div>
-      </div>
-    </li>
-  `;
+  const $loadingContainer = document.querySelector('.loading-bar-container');
+  $loadingContainer.innerHTML = '<div class="circle"></div>';
+};
+loadingTemplate();
+
+const enableLoadingBar = () => {
+  const $loadingContainer = document.querySelector('.loading-bar-container');
+  $loadingContainer.classList.add('show');
+  $loadingContainer.classList.remove('not-show');
 };
 
-const showLoadingBar = () => {
-  const todoListElement = document.querySelector('.todo-list');
-  todoListElement.innerHTML = loadingTemplate();
+const disableLoadingBar = () => {
+  const $loadingContainer = document.querySelector('.loading-bar-container');
+  $loadingContainer.classList.add('not-show');
+  $loadingContainer.classList.remove('show');
 };
 
 const constantMock = window.fetch;
@@ -24,16 +25,20 @@ window.fetch = function () {
       })
       .includes(true)
   ) {
-    showLoadingBar();
+    enableLoadingBar();
   }
   return new Promise((resolve, reject) => {
     constantMock
       .apply(this, arguments)
       .then((response) => {
+        disableLoadingBar();
         resolve(response);
       })
       .catch((error) => {
+        disableLoadingBar();
         reject(response);
       });
   });
 };
+
+export default {};
