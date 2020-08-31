@@ -17,6 +17,7 @@ function TodosContainer({
   onAddTodo,
   onEditPriority,
   onEditTodo,
+  onDeleteAllTodo,
 }) {
   this.init = () => {
     this.$target = $target;
@@ -49,8 +50,14 @@ function TodosContainer({
     const $todoListContainer = $target.closest(SELECTOR.TODO_LIST_CONTAINER);
     const $addUserButton = $target.closest(SELECTOR.ADD_USER_BUTTON);
     const $todoTab = $target.closest(SELECTOR.TODO_TAB);
+    const $todoClearAllButton = $target.closest(SELECTOR.TODO_CLEAR_ALL_BUTON);
 
-    if (!$todoListContainer && !$addUserButton && !$todoTab) {
+    if (
+      !$todoListContainer &&
+      !$addUserButton &&
+      !$todoTab &&
+      !$todoClearAllButton
+    ) {
       return;
     }
 
@@ -116,6 +123,12 @@ function TodosContainer({
         teamId: this.teamId,
         members,
       });
+    }
+
+    // deleteAll
+    if ($todoClearAllButton) {
+      onDeleteAllTodo(userId);
+      return;
     }
   };
 

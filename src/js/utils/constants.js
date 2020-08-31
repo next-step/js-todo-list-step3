@@ -10,6 +10,7 @@ export const SELECTOR = {
   CHIP_SELECT: '.select',
   EDIT: '.edit',
   TODO_TAB: '.todo-tab',
+  TODO_CLEAR_ALL_BUTON: '.clear-completed',
 };
 
 export const CLASS_NAME = {
