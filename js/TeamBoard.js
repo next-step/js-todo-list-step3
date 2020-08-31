@@ -64,7 +64,7 @@ export default class TeamBoard {
     const teamList = this.teams.map((team) => {
       return `
         <div id="${team._id}" class="team-card-container">
-          <a href="/kanban.html" class="card">
+          <a href="/kanban.html?teamId=${team._id}" class="card">
             <div class="card-title">${team.name}</div>
           </a>
           <button class="destroy"></button>

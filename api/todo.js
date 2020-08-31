@@ -1,8 +1,10 @@
 import config from '../config/index.js';
 import http from '../utils/apiRequest.js';
 
-export const getTodoItems = async (userName) => {
-  const todos = await http.get(`${config.baseUrl}/u/${userName}/item`);
+export const getTodoItemsOfMember = async (teamId, memberId) => {
+  const todos = await http.get(
+    `${config.baseUrl}/teams/${teamId}/members/${memberId}`
+  );
   return todos;
 };
 
@@ -43,7 +45,7 @@ export const deleteTodoItem = async (userName, itemId) => {
   return todo;
 };
 
-export const allDeleteTodoItem = async (userName, itemId) => {
+export const allDeleteTodoItem = async (userName) => {
   const todo = await http.delete(`${config.baseUrl}/u/${userName}/items`);
   return todo;
 };

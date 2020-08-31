@@ -7,9 +7,7 @@ export const addTeamButtonTemplate = `
 `;
 
 export const addUserButtonTemplate = `
-  <li class="add-user-button-container">
-    <button id="add-user-button" class="ripple">
-      <span class="material-icons">add</span>
-    </button>
-  </li>
+  <button id="add-user-button" class="ripple">
+    <span class="material-icons">add</span>
+  </button>
 `;

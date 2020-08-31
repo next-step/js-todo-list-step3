@@ -3,7 +3,6 @@ import http from '../utils/apiRequest.js';
 
 export const getTeam = async (teamId) => {
   const team = await http.get(`${config.baseUrl}/teams/${teamId}`);
-  console.log('getTeam -> team', team);
   return team;
 };
 
@@ -22,5 +21,13 @@ export const addTeam = async (name) => {
 
 export const deleteTeam = async (teamId) => {
   const team = await http.delete(`${config.baseUrl}/teams/${teamId}`);
+  return team;
+};
+
+export const addTeamMember = async (teamId, memberName) => {
+  const team = await http.post(
+    `${config.baseUrl}/teams/${teamId}/members`,
+    JSON.stringify({ name: memberName })
+  );
   return team;
 };
