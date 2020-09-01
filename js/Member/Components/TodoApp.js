@@ -49,6 +49,7 @@ function TodoApp($target, { teamId, member }) {
       console.log(error);
     } finally {
       this.setState({ isLoading: false });
+      this.todoInput?.focusInputElem();
     }
   };
 
@@ -125,6 +126,18 @@ function TodoApp($target, { teamId, member }) {
     }
   };
 
+  this.deleteAllTodo = async () => {
+    try {
+      this.setState({ isLoading: true });
+      await api.deleteAllTodoItem();
+      this.state.todoItems = [];
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
   this.initComponents = () => {
     this.userTitle = new Title(
       this.$target.querySelector(".user-title"),
@@ -148,7 +161,16 @@ function TodoApp($target, { teamId, member }) {
     );
   };
 
-  this.initEventListeners = () => {};
+  this.initEventListeners = () => {
+    const onClickHandler = (event) => {
+      if (!event.target.classList.contains("clear-completed")) {
+        return;
+      }
+      this.deleteAllTodo();
+    };
+
+    $target.addEventListener("click", onClickHandler);
+  };
 
   this.render = () => {
     this.$target.innerHTML = this.state.isLoading

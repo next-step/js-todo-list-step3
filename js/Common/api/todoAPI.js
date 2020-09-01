@@ -33,7 +33,10 @@ const setTodoItemPriority = async (teamId, memberId, itemId, priority) =>
   );
 
 const deleteAllTodoItem = async (teamId, memberId) =>
-  request(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`);
+  request(
+    `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
+    options(METHOD.DELETE)
+  );
 
 function todoAPI(teamId, memberId) {
   validateInstance(todoAPI, this);
