@@ -51,11 +51,11 @@ function App($target) {
 
   this.initComponents = () => {
     this.teamTitle = new Title(
-      document.querySelector("#team-title"),
+      this.$target.querySelector("#team-title"),
       this.state.team.name
     );
     this.todoAppList = new TodoAppList(
-      document.querySelector("#todoapp-list"),
+      this.$target.querySelector("#todoapp-list"),
       this.state.team
     );
   };

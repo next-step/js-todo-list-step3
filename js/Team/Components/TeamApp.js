@@ -6,7 +6,7 @@ function TeamApp($target) {
   this.$target = $target;
 
   this.initComponents = () => {
-    this.teamList = new TeamList(document.querySelector("#team-list"));
+    this.teamList = new TeamList(this.$target.querySelector("#team-list"));
   };
 
   this.initEventListeners = () => {};

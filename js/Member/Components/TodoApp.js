@@ -17,7 +17,7 @@ function TodoApp($target, { teamId, member }) {
   this.$target = $target;
   this.state = {
     memberName: member.name,
-    todoItems: member.todoList,
+    todoItems: member.todoList || [],
     isLoading: false,
     filterType: FilterType.ALL,
   };
@@ -215,19 +215,21 @@ function TodoApp($target, { teamId, member }) {
       ? Loader
       : `
       <h2 class="user-title"></h2>
+      <div class="todoapp">
+        <section class="input-container todo-input">
+        </section>
 
-      <section class="input-container todo-input">
-      </section>
+        <section class="main">
+          <div class="todo-list"></div>
+        </section>
 
-      <section class="main">
-        <div class="todo-list"></div>
-      </section>
-
-      <div class="count-container">
-        <div class="todo-count"></div>
-        <div class="todo-filter"></div>
-        <button class="clear-completed">모두 삭제</button>
+        <div class="count-container">
+          <div class="todo-count"></div>
+          <div class="todo-filter"></div>
+          <button class="clear-completed">모두 삭제</button>
+        </div>
       </div>
+
     `;
   };
 

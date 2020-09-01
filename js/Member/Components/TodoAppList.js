@@ -35,7 +35,7 @@ function TodoAppList($target, team) {
 
   this.initComponents = () => {
     this.todoApps = this.state.members.map((member) => {
-      return new TodoApp(document.getElementById(member._id), {
+      return new TodoApp(this.$target.querySelector(`#todoapp-${member._id}`), {
         teamId: this.state.teamId,
         member,
       });
@@ -67,7 +67,9 @@ function TodoAppList($target, team) {
 
   this.render = () => {
     const membersHTML = this.state.members
-      .map(({ _id }) => `<li class="todoapp-container" id="${_id}"></li>`)
+      .map(
+        ({ _id }) => `<li class="todoapp-container" id="todoapp-${_id}"></li>`
+      )
       .join("");
 
     this.$target.innerHTML = this.state.isLoading
