@@ -10,6 +10,7 @@ import TodoFilter from "./TodoFilter.js";
 import todoAPI from "../../Common/api/todoAPI.js";
 import Loader from "../../Common/Components/Loader.js";
 import { FilterType } from "../../Common/constants.js";
+import TodoCount from "./TodoCount.js";
 
 function TodoApp($target, { teamId, member }) {
   validateInstance(TodoApp, this);
@@ -168,9 +169,11 @@ function TodoApp($target, { teamId, member }) {
       addTodoItem: (contents) => this.addTodoItem(contents),
     });
 
+    const filteredTodoItems = this.getFilteredTodoItems();
+
     this.todoList = new TodoList(
       this.$target.querySelector(".todo-list"),
-      this.getFilteredTodoItems(),
+      filteredTodoItems,
       {
         toggleTodoById: (todoId) => this.toggleTodoById(todoId),
         deleteTodoById: (todoId) => this.deleteTodoById(todoId),
@@ -179,6 +182,10 @@ function TodoApp($target, { teamId, member }) {
         setTodoItemPriorityById: (todoId, priority) =>
           this.setTodoItemPriorityById(todoId, priority),
       }
+    );
+    this.todoCount = new TodoCount(
+      this.$target.querySelector(".todo-count"),
+      filteredTodoItems.length
     );
     this.todoFilter = new TodoFilter(
       this.$target.querySelector(".todo-filter"),
