@@ -1,5 +1,5 @@
 import { request, options } from "./request.js";
-import { BASE_URL, METHOD } from "../constans.js";
+import { BASE_URL, METHOD } from "../constants.js";
 
 const fetchTeams = async () => request(`${BASE_URL}/api/teams`);
 

@@ -2,6 +2,13 @@ export function isFunction(func) {
   return typeof func === "function";
 }
 
+export function validateFunction(func) {
+  if (isFunction(func)) {
+    return;
+  }
+  throw new Error(`${func} is not a function`);
+}
+
 export function isBoolean(boolean) {
   return typeof boolean === "boolean";
 }

@@ -1,5 +1,5 @@
 import { request, options } from "./request.js";
-import { BASE_URL, METHOD } from "../constans.js";
+import { BASE_URL, METHOD } from "../constants.js";
 import { validateInstance } from "../utils.js";
 
 const addTodoItem = async (teamId, memberId, contents) =>

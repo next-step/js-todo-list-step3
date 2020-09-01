@@ -1,4 +1,4 @@
-import { METHOD } from "../constans.js";
+import { METHOD } from "../constants.js";
 
 export const request = async (url, option) => {
   try {

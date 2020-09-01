@@ -5,6 +5,7 @@ import {
 } from "../../Common/utils.js";
 import Title from "./Title.js";
 import TodoInput from "./TodoInput.js";
+import TodoList from "./TodoList.js";
 import todoAPI from "../../Common/api/todoAPI.js";
 import Loader from "../../Common/Components/Loader.js";
 
@@ -42,8 +43,81 @@ function TodoApp($target, { teamId, member }) {
   this.addTodoItem = async (contents) => {
     try {
       this.setState({ isLoading: true });
-      const res = await api.addTodoItem(contents);
-      console.log(res);
+      const newTodoItem = await api.addTodoItem(contents);
+      this.state.todoItems.push(newTodoItem);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  this.toggleTodoById = async (id) => {
+    try {
+      const todoItem = this.state.todoItems.find(({ _id }) => _id === id);
+      if (!todoItem) {
+        console.log(`Can't find todoItem with id : ${id}`);
+        return;
+      }
+      this.setState({ isLoading: true });
+      const newTodoItem = await api.toggleTodoItemById(id);
+      todoItem.isCompleted = newTodoItem.isCompleted;
+      // todoItem.isCompleted = !todoItem.isCompleted;
+      // const filteredTodoItems = this.getFilteredTodoItems();
+      // this.todoList.setState(filteredTodoItems);
+      // this.todoCount.setState(filteredTodoItems.length);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  this.deleteTodoById = async (id) => {
+    const todoItemIdx = this.state.todoItems.findIndex(({ _id }) => _id === id);
+    if (todoItemIdx === -1) {
+      console.log(`Can't find todoItem with id : ${id}`);
+      return;
+    }
+    try {
+      this.setState({ isLoading: true });
+      this.state.todoItems.splice(todoItemIdx, 1);
+      //const filteredTodoItems = this.getFilteredTodoItems();
+      await api.deleteTodoItemById(id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  this.editTodoItemContentsById = async (id, contents) => {
+    const todoItem = this.state.todoItems.find(({ _id }) => _id === id);
+    if (!todoItem) {
+      console.log(`Can't find todoItem with id : ${id}`);
+      return;
+    }
+    try {
+      this.setState({ isLoading: true });
+      const newTodoItem = await api.editTodoItemContentsById(id, contents);
+      todoItem.contents = newTodoItem.contents;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  this.setTodoItemPriorityById = async (id, priority) => {
+    const todoItem = this.state.todoItems.find(({ _id }) => _id === id);
+    if (!todoItem) {
+      console.log(`Can't find todoItem with id : ${id}`);
+      return;
+    }
+    try {
+      this.setState({ isLoading: true });
+      const newTodoItem = await api.setTodoItemPriorityById(id, priority);
+      todoItem.priority = newTodoItem.priority;
     } catch (error) {
       console.log(error);
     } finally {
@@ -59,6 +133,19 @@ function TodoApp($target, { teamId, member }) {
     this.todoInput = new TodoInput(this.$target.querySelector(".todo-input"), {
       addTodoItem: (contents) => this.addTodoItem(contents),
     });
+
+    this.todoList = new TodoList(
+      this.$target.querySelector(".todo-list"),
+      this.state.todoItems,
+      {
+        toggleTodoById: (todoId) => this.toggleTodoById(todoId),
+        deleteTodoById: (todoId) => this.deleteTodoById(todoId),
+        editTodoItemContentsById: (todoId, contents) =>
+          this.editTodoItemContentsById(todoId, contents),
+        setTodoItemPriorityById: (todoId, priority) =>
+          this.setTodoItemPriorityById(todoId, priority),
+      }
+    );
   };
 
   this.initEventListeners = () => {};
@@ -73,7 +160,7 @@ function TodoApp($target, { teamId, member }) {
       </section>
 
       <section class="main">
-        <div id="todo-list"></div>
+        <div class="todo-list"></div>
       </section>
 
       <div class="count-container">

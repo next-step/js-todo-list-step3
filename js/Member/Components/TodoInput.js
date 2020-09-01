@@ -34,15 +34,13 @@ function TodoInput($target, { addTodoItem }) {
 
   this.render = () => {
     $target.innerHTML = `
-      <label for="todo-input-from">
-          <form id="todo-input-form">
+          <form>
             <input
                 class="new-todo"
                 placeholder="할일을 추가해주세요"
                 autofocus
             />
           </form>
-      </label>
     `;
     this.$inputElem = document.querySelector(".new-todo");
   };
