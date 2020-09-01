@@ -65,6 +65,13 @@ body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+#app .todoapp-list-container {
+  display: flex;
+  margin: 20px auto;
+  height: 80vh;
+  overflow: auto;
+}
+
 .todoapp {
   background: #fff;
   position: relative;

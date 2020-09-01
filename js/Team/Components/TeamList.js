@@ -1,6 +1,10 @@
-import { validateInstance, isBoolean, validateTeams } from "../utils.js";
-import Loader from "./Loader.js";
-import api from "../api.js";
+import {
+  validateInstance,
+  isBoolean,
+  validateTeams,
+} from "../../Common/utils.js";
+import Loader from "../../Common/Components/Loader.js";
+import api from "../../Common/api.js";
 
 function TeamList($target) {
   validateInstance(TeamList, this);
@@ -88,7 +92,7 @@ function TeamList($target) {
       .map(
         ({ _id, name }) => `
         <div class="team-card-container" data-id=${_id}>
-          <a href="/kanban.html?$id=${_id}" class="card">
+          <a href="/kanban.html?id=${_id}" class="card">
             <div class="card-title">${name}</div>
           </a>
           <button class="destroy"></button>

@@ -1,8 +1,8 @@
-import { validateInstance } from "../utils.js";
+import { validateInstance } from "../../Common/utils.js";
 import TeamList from "./TeamList.js";
 
-function App($target) {
-  validateInstance(App, this);
+function TeamApp($target) {
+  validateInstance(TeamApp, this);
   this.$target = $target;
 
   this.initComponents = () => {
@@ -25,4 +25,4 @@ function App($target) {
   this.initComponents();
 }
 
-export default App;
+export default TeamApp;

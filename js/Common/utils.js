@@ -56,11 +56,23 @@ export function validateTodoItem(todoItem) {
   throw new Error("Wrong todoItem");
 }
 
-export function validateUserName(userName) {
-  if (typeof userName !== "string") {
-    throw new Error("Wrong UserName type");
+export function validateName(name) {
+  if (typeof name !== "string") {
+    throw new Error("Wrong name type");
   }
-  if (isEmptyString(userName)) {
-    throw new Error("userName is an empty string");
+  if (isEmptyString(name)) {
+    throw new Error("name is an empty string");
   }
+}
+
+export function getUrlParams() {
+  const params = {};
+  window.location.search
+    .substr(window.location.search.indexOf("?") + 1)
+    .split("&")
+    .forEach((param) => {
+      const [key, value] = param.split("=");
+      params[key] = value;
+    });
+  return params;
 }

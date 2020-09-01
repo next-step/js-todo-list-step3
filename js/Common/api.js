@@ -56,10 +56,13 @@ const addTeam = async (name) =>
 const deleteTeamById = async (id) =>
   request(`${BASE_URL}/api/teams/${id}`, options.DELETE());
 
+const fetchTeamById = async (id) => request(`${BASE_URL}/api/teams/${id}`);
+
 const api = {
   fetchTeams,
   addTeam,
   deleteTeamById,
+  fetchTeamById,
 };
 
 export default api;
