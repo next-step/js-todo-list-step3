@@ -1,3 +1,5 @@
+import config from '../config/index.js';
+
 const loadingTemplate = () => {
   const $loadingContainer = document.querySelector('.loading-bar-container');
   $loadingContainer.innerHTML = '<div class="circle"></div>';
@@ -19,12 +21,13 @@ const disableLoadingBar = () => {
 const constantMock = window.fetch;
 window.fetch = function () {
   if (
-    !Array.from(arguments)
+    Array.from(arguments)
       .map((arg) => {
-        return !!arg.method;
+        return arg.method || arg.includes(config.baseUrl);
       })
       .includes(true)
   ) {
+    console.log('fewqfewfs');
     enableLoadingBar();
   }
   return new Promise((resolve, reject) => {

@@ -1,7 +1,9 @@
 export default class TodoHeader {
   constructor(memberId) {
     if (memberId) {
-      this.titleElement = document.querySelector(`#${memberId} .user-title`);
+      this.titleElement = document.querySelector(
+        `[id="${memberId}"] .user-title`
+      );
     } else {
       this.titleElement = document.querySelector('#header-title');
     }

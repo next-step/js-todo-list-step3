@@ -6,7 +6,9 @@ export default class TodoList {
   };
 
   constructor(memberId, toggleTodo, editTodo, changePriority, removeTodo) {
-    this.todoListElement = document.querySelector(`#${memberId} .todo-list`);
+    this.todoListElement = document.querySelector(
+      `[id="${memberId}"] .todo-list`
+    );
     this.todoList = [];
     this.toggleTodo = toggleTodo;
     this.editTodo = editTodo;
@@ -108,13 +110,16 @@ export default class TodoList {
   }
 
   priorityTemplate(priority) {
+    const priorityStr = priority.toString();
     const classNames = ['chip', 'select'];
-    const state = this.priorityState[priority];
+    const state = this.priorityState[priorityStr];
     if (state) {
       classNames.push(state);
     }
 
-    const priorityValue = this.priorityList.includes(priority) ? priority : '0';
+    const priorityValue = this.priorityList.includes(priorityStr)
+      ? priorityStr
+      : '0';
     const optionElements = this.priorityList.map((value) => {
       return `
         <option value="${value}" ${value === priorityValue ? 'selected' : ''}>

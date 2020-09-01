@@ -2,11 +2,11 @@ export default class TodoFilter {
   constructor(memberId, allRemoveTodo, updateTodoList) {
     this.memberId = memberId;
     this.todoFilterElement = document.querySelector(
-      `#${memberId} .count-container`
+      `[id="${memberId}"] .count-container`
     );
-    this.filtersElement = document.querySelector(`#${memberId} .filters`);
+    this.filtersElement = document.querySelector(`[id="${memberId}"] .filters`);
     this.allClearElement = document.querySelector(
-      `#${memberId} .clear-completed`
+      `[id="${memberId}"] .clear-completed`
     );
     this.todoCount = 0;
     this.allRemoveTodo = allRemoveTodo;

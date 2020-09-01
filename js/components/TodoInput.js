@@ -1,7 +1,7 @@
 export default class TodoInput {
   constructor(memberId, addTodo) {
     this.todoInputElement = document.querySelector(
-      `#${memberId} .input-container`
+      `[id="${memberId}"] .input-container`
     );
     this.addTodo = addTodo;
 
