@@ -3,9 +3,11 @@ import TodosContainer from './TodosContainer.js';
 
 import { api } from '../../utils/api/index.js';
 import { SELECTOR, CLASS_NAME } from '../../utils/constants.js';
+import { checkTeamState, checkTarget } from '../../utils/validation.js';
 
 function App({ $target, teamId }) {
   this.init = async () => {
+    checkTarget($target);
     this.$target = $target;
     this.state = {
       _id: teamId,
@@ -15,6 +17,7 @@ function App({ $target, teamId }) {
 
     try {
       this.state = await api.team.fetchTeam(teamId);
+      checkTeamState(this.state);
     } catch (err) {
       console.error(err);
     }
@@ -92,6 +95,7 @@ function App({ $target, teamId }) {
   };
 
   this.setState = (nextState) => {
+    checkTeamState(nextState);
     this.state = nextState;
 
     const todosContainerMembers = this.state.members.map((member, idx) => {

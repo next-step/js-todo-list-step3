@@ -1,8 +1,10 @@
 import { teamCardHTML, addTeamButtonHTML } from '../../utils/templates/team.js';
 import { CLASS_NAME, MESSAGE, KANBAN_URL } from '../../utils/constants.js';
+import { checkTarget } from '../../utils/validation.js';
 
 function TeamList({ $target, teams, onAddTeam, onDeleteTeam }) {
   this.init = () => {
+    checkTarget($target);
     this.$target = $target;
     this.teams = teams;
 

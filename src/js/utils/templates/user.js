@@ -7,7 +7,10 @@ export const todoListHTML = (member) => `
       ${todoInputHTML()}
       <section class="todo-list-main">
         <ul class="todo-list-body">
-          ${member.todoList.map((todo) => todoItemHTML(todo)).join('')}
+          ${member.todoList
+            .filter((todo) => !!todo)
+            .map((todo) => todoItemHTML(todo))
+            .join('')}
         </ul>
       </section>
       <div class="count-container">

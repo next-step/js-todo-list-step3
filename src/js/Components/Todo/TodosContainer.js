@@ -7,6 +7,7 @@ import {
   PRIORITY,
 } from '../../utils/constants.js';
 import { getSelectedTabTodos } from '../../utils/util.js';
+import { checkTarget, checkMemberState } from '../../utils/validation.js';
 
 function TodosContainer({
   $target,
@@ -20,6 +21,7 @@ function TodosContainer({
   onDeleteAllTodo,
 }) {
   this.init = () => {
+    checkTarget($target);
     this.$target = $target;
     this.members = members;
 
@@ -271,6 +273,7 @@ function TodosContainer({
   this.createContainerHTML = (members) => {
     return (
       members.reduce((html, member) => {
+        checkMemberState(member);
         const filteredMember = {
           ...member,
           todoList: getSelectedTabTodos(member.todoList, member.selectedTab),

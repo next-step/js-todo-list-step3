@@ -2,9 +2,11 @@ import TeamList from './TeamList.js';
 
 import { api } from '../../utils/api/index.js';
 import { SELECTOR } from '../../utils/constants.js';
+import { checkTeamAppState, checkTarget } from '../../utils/validation.js';
 
 function App({ $target }) {
   this.init = async () => {
+    checkTarget($target);
     this.$target = $target;
     this.state = {
       teams: [],
@@ -46,6 +48,7 @@ function App({ $target }) {
   };
 
   this.setState = (nextState) => {
+    checkTeamAppState(nextState);
     this.state = nextState;
 
     this.teamList.setState(this.state.teams);
