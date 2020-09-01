@@ -13,8 +13,6 @@ function TodoAppList($target, team) {
     isLoading: false,
   };
 
-  console.log(this.state.members);
-
   const api = new memberAPI(this.state.teamId);
 
   this.setState = (state) => {
@@ -36,14 +34,12 @@ function TodoAppList($target, team) {
   };
 
   this.initComponents = () => {
-    console.log("members : ", this.state.members);
     this.todoApps = this.state.members.map((member) => {
       return new TodoApp(document.getElementById(member._id), {
         teamId: this.state.teamId,
         member,
       });
     });
-    console.log(this.todoApps);
   };
 
   this.initEventListeners = () => {

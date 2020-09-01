@@ -16,7 +16,6 @@ export const options = (method = METHOD.GET, body) => {
   if (body) {
     body = JSON.stringify(body);
   }
-  console.log(body);
   return {
     method,
     headers: { "Content-Type": "application/json" },

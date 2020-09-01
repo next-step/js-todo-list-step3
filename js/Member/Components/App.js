@@ -47,7 +47,6 @@ function App($target) {
     } finally {
       this.setState({ isLoading: false });
     }
-    console.log(this.state.team);
   };
 
   this.initComponents = () => {

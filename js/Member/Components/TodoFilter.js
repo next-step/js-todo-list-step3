@@ -20,6 +20,8 @@ function TodoFilter($target, type, { onChangeType }) {
         onChangeType(FilterType.ACTIVE);
       } else if (event.target.classList.contains(FilterType.COMPLETED)) {
         onChangeType(FilterType.COMPLETED);
+      } else if (event.target.classList.contains(FilterType.PRIORITY)) {
+        onChangeType(FilterType.PRIORITY);
       }
     };
 
@@ -33,6 +35,12 @@ function TodoFilter($target, type, { onChangeType }) {
             <li>
                 <a class="${FilterType.ALL} 
                 ${this.type === FilterType.ALL ? "selected" : ""}">전체보기</a>
+            </li>
+            <li>
+                <a class="${FilterType.PRIORITY}
+                ${
+                  this.type === FilterType.PRIORITY ? "selected" : ""
+                }">우선 순위</a>
             </li>
             <li>
                 <a class="${FilterType.ACTIVE} 

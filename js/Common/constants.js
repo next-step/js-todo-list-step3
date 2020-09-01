@@ -11,6 +11,7 @@ export const FilterType = Object.freeze({
   ALL: "all",
   ACTIVE: "active",
   COMPLETED: "completed",
+  PRIORITY: "priority",
 });
 
 export const ESC_KEY = "Escape";

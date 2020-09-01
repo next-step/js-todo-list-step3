@@ -24,8 +24,6 @@ function TodoApp($target, { teamId, member }) {
 
   const api = new todoAPI(teamId, member._id);
 
-  console.log(this.state);
-
   this.setState = (state) => {
     if (state?.todoItems) {
       validateTodoItems(state.todoItems);
@@ -155,6 +153,13 @@ function TodoApp($target, { teamId, member }) {
         return this.state.todoItems.filter(({ isCompleted }) => !isCompleted);
       case FilterType.COMPLETED:
         return this.state.todoItems.filter(({ isCompleted }) => isCompleted);
+      case FilterType.PRIORITY:
+        const compareTodoItem = (itemA, itemB) => {
+          if (itemA.priority == 0) return 1;
+          if (itemB.priority == 0) return -1;
+          return itemA.priority - itemB.priority;
+        };
+        return this.state.todoItems.sort(compareTodoItem);
       default:
         return this.state.todoItems;
     }
