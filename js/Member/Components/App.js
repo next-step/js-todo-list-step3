@@ -5,8 +5,9 @@ import {
   isBoolean,
 } from "../../Common/utils.js";
 import Title from "./Title.js";
-import api from "../../Common/api.js";
 import TodoAppList from "./TodoAppList.js";
+import teamAPI from "../../Common/api/teamAPI.js";
+import Loader from "../../Common/Components/Loader.js";
 
 function App($target) {
   validateInstance(App, this);
@@ -27,16 +28,24 @@ function App($target) {
     }
 
     this.render();
+
+    if (this.state.isLoading) {
+      return;
+    }
+
     this.initComponents();
   };
 
   this.loadTeam = async () => {
     try {
+      this.setState({ isLoading: true });
       const params = getUrlParams();
-      const team = await api.fetchTeamById(params?.id);
+      const team = await teamAPI.fetchTeamById(params?.id);
       this.setState({ team });
     } catch (error) {
       console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
     console.log(this.state.team);
   };
@@ -47,17 +56,19 @@ function App($target) {
       this.state.team.name
     );
     this.todoAppList = new TodoAppList(
-      document.querySelector(".todoapp-list-container"),
-      this.state.team.members
+      document.querySelector("#todoapp-list"),
+      this.state.team
     );
   };
 
   this.initEventListeners = () => {};
 
   this.render = () => {
-    this.$target.innerHTML = `
+    this.$target.innerHTML = this.state.isLoading
+      ? Loader
+      : `
       <h1 id="team-title"></h1>
-      <ul class="todoapp-list-container flex-column-container"></ul>
+      <section id="todoapp-list"></section>
     `;
   };
 

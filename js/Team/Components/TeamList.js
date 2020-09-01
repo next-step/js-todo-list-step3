@@ -4,7 +4,7 @@ import {
   validateTeams,
 } from "../../Common/utils.js";
 import Loader from "../../Common/Components/Loader.js";
-import api from "../../Common/api.js";
+import teamAPI from "../../Common/api/teamAPI.js";
 
 function TeamList($target) {
   validateInstance(TeamList, this);
@@ -31,7 +31,7 @@ function TeamList($target) {
   this.loadTeams = async () => {
     try {
       this.setState({ isLoading: true });
-      const teams = await api.fetchTeams();
+      const teams = await teamAPI.fetchTeams();
       validateTeams(teams);
       this.state.teams = teams;
     } catch (error) {
@@ -51,7 +51,7 @@ function TeamList($target) {
         }
         try {
           this.setState({ isLoading: true });
-          const newTeam = await api.addTeam(newTeamName);
+          const newTeam = await teamAPI.addTeam(newTeamName);
           this.state.teams.push(newTeam);
         } catch (error) {
           console.log(error);
@@ -74,7 +74,7 @@ function TeamList($target) {
 
         try {
           this.setState({ isLoading: true });
-          await api.deleteTeamById(id);
+          await teamAPI.deleteTeamById(id);
           this.state.teams.splice(teamIdx, 1);
         } catch (error) {
           console.log(error);

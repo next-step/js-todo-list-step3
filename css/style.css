@@ -46,6 +46,7 @@ body {
 }
 
 #app {
+  height: 100%;
   margin-top: 100px;
 }
 
@@ -63,13 +64,6 @@ body {
   color: #333;
   font-weight: 100;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-#app .todoapp-list-container {
-  display: flex;
-  margin: 20px auto;
-  height: 80vh;
-  overflow: auto;
 }
 
 .todoapp {
@@ -531,7 +525,7 @@ select.chip {
   align-items: start;
   overflow-y: hidden;
   overflow-x: auto;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 230px);
 }
 
 .add-user-button-container {
