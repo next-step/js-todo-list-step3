@@ -42,7 +42,7 @@ function TodoInput($target, { addTodoItem }) {
             />
           </form>
     `;
-    this.$inputElem = document.querySelector(".new-todo");
+    this.$inputElem = $target.querySelector(".new-todo");
   };
 
   this.render();
