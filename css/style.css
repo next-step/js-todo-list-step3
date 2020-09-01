@@ -327,6 +327,10 @@ body {
   font-weight: 300;
 }
 
+.todo-filter {
+  position: relative;
+}
+
 .filters {
   margin: 0;
   padding: 0;

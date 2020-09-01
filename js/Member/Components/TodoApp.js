@@ -6,8 +6,10 @@ import {
 import Title from "./Title.js";
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
+import TodoFilter from "./TodoFilter.js";
 import todoAPI from "../../Common/api/todoAPI.js";
 import Loader from "../../Common/Components/Loader.js";
+import { FilterType } from "../../Common/constants.js";
 
 function TodoApp($target, { teamId, member }) {
   validateInstance(TodoApp, this);
@@ -16,6 +18,7 @@ function TodoApp($target, { teamId, member }) {
     memberName: member.name,
     todoItems: member.todoList,
     isLoading: false,
+    filterType: FilterType.ALL,
   };
 
   const api = new todoAPI(teamId, member._id);
@@ -30,6 +33,10 @@ function TodoApp($target, { teamId, member }) {
 
     if (isBoolean(state?.isLoading)) {
       this.state.isLoading = state.isLoading;
+    }
+
+    if (state?.filterType) {
+      this.state.filterType = state.filterType;
     }
 
     this.render();
@@ -63,10 +70,6 @@ function TodoApp($target, { teamId, member }) {
       this.setState({ isLoading: true });
       const newTodoItem = await api.toggleTodoItemById(id);
       todoItem.isCompleted = newTodoItem.isCompleted;
-      // todoItem.isCompleted = !todoItem.isCompleted;
-      // const filteredTodoItems = this.getFilteredTodoItems();
-      // this.todoList.setState(filteredTodoItems);
-      // this.todoCount.setState(filteredTodoItems.length);
     } catch (error) {
       console.log(error);
     } finally {
@@ -138,6 +141,24 @@ function TodoApp($target, { teamId, member }) {
     }
   };
 
+  this.setFilterType = (filterType) => {
+    if (this.state.filterType === filterType) {
+      return;
+    }
+    this.setState({ filterType });
+  };
+
+  this.getFilteredTodoItems = () => {
+    switch (this.state.filterType) {
+      case FilterType.ACTIVE:
+        return this.state.todoItems.filter(({ isCompleted }) => !isCompleted);
+      case FilterType.COMPLETED:
+        return this.state.todoItems.filter(({ isCompleted }) => isCompleted);
+      default:
+        return this.state.todoItems;
+    }
+  };
+
   this.initComponents = () => {
     this.userTitle = new Title(
       this.$target.querySelector(".user-title"),
@@ -149,7 +170,7 @@ function TodoApp($target, { teamId, member }) {
 
     this.todoList = new TodoList(
       this.$target.querySelector(".todo-list"),
-      this.state.todoItems,
+      this.getFilteredTodoItems(),
       {
         toggleTodoById: (todoId) => this.toggleTodoById(todoId),
         deleteTodoById: (todoId) => this.deleteTodoById(todoId),
@@ -158,6 +179,11 @@ function TodoApp($target, { teamId, member }) {
         setTodoItemPriorityById: (todoId, priority) =>
           this.setTodoItemPriorityById(todoId, priority),
       }
+    );
+    this.todoFilter = new TodoFilter(
+      this.$target.querySelector(".todo-filter"),
+      this.state.filterType,
+      { onChangeType: (filterType) => this.setFilterType(filterType) }
     );
   };
 
@@ -186,8 +212,8 @@ function TodoApp($target, { teamId, member }) {
       </section>
 
       <div class="count-container">
-        <div id="todo-count"></div>
-        <div id="todo-filter"></div>
+        <div class="todo-count"></div>
+        <div class="todo-filter"></div>
         <button class="clear-completed">모두 삭제</button>
       </div>
     `;
