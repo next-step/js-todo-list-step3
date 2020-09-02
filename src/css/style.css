@@ -581,6 +581,7 @@ select.chip {
   display: none;
   margin-left: 2px;
   color: #cc9a9a;
+  cursor: pointer;
 }
 
 .team-list-container .card:hover .delete {
