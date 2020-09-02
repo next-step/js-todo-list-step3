@@ -1,14 +1,14 @@
 import { ENTER, KEYDOWN, INPUT_CONTAINER } from "../../utils/data.js";
 import { errorCallTemplate, todoInputTemplate } from "../../utils/template.js";
 
-export default function TodoInput({ $target, addTodos }) {
+export default function TodoInput({ $target, addTodo }) {
   this.init = () => {
     if (!(this instanceof TodoInput)) {
       throw new Error(errorCallTemplate);
     }
     this.$todoInput = document.createElement("section");
     this.$todoInput.classList.add(INPUT_CONTAINER);
-    this.addTodos = addTodos;
+    this.addTodo = addTodo;
 
     this.render();
     $target.appendChild(this.$todoInput);
@@ -18,7 +18,7 @@ export default function TodoInput({ $target, addTodos }) {
   };
   this.enterHandler = (evt) => {
     if (evt.key === ENTER) {
-      this.addTodos({
+      this.addTodo({
         contents: evt.target.value,
       });
       evt.target.value = "";

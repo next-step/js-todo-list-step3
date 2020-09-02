@@ -4,11 +4,11 @@ import {
   FLEX_COLUMN_CONTAINER,
   ADD_USER_BTN_CONTAINER,
 } from "../../utils/data.js";
+import TeamTitle from "./TeamTitle.js";
 import TodoTitle from "./TodoTitle.js";
 import TodoApp from "./TodoApp.js";
 import API from "../../utils/api.js";
 import { errorCallTemplate } from "../../utils/template.js";
-import TeamTitle from "./TeamTitle.js";
 import { urlHrefClear } from "../../utils/util.js";
 
 export default function TodoAppList({ elementId }) {
@@ -19,8 +19,8 @@ export default function TodoAppList({ elementId }) {
   const currentID = location.href.split("id=")[1];
 
   this.init = async () => {
-    const currentTeam = await API.getOneTeam(currentID);
     this.$kanbanApp = document.getElementById(elementId);
+    const currentTeam = await API.getOneTeam(currentID);
 
     this.state = {
       _id: currentTeam._id,
@@ -54,12 +54,14 @@ export default function TodoAppList({ elementId }) {
     this.$addBtnContainer.addEventListener("click", this.clickHandler);
   };
 
-  this.clickHandler = async (evt) => {
+  this.clickHandler = async () => {
     const result = prompt("새로운 팀원 이름을 입력해주세요");
-    (await result) &&
-      api.addTeamMember(this.state._id, {
+    result &&
+      (await API.addTeamMember(this.state._id, {
         name: result,
-      });
+      }));
+    const newTeam = await API.getOneTeam(currentID);
+    this.setState(newTeam);
   };
 
   this.render = () => {
@@ -73,10 +75,18 @@ export default function TodoAppList({ elementId }) {
       });
       new TodoApp({
         $target: $todoAppContainer,
+        teamId: this.state._id,
+        memberId: _id,
         todoList,
       });
       this.$todoAppList.insertBefore($todoAppContainer, this.$addBtnContainer);
     });
   };
+
+  this.setState = ({ _id, name, members }) => {
+    this.state = { _id, name, members };
+    this.render();
+  };
+
   this.init();
 }

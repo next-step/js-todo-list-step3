@@ -37,10 +37,10 @@ export default function TodoList({
       evt.target.tagName === "INPUT" &&
       evt.target.classList.contains(TOGGLE)
     ) {
-      this.toggleTodo({ id: evt.target.closest("li").dataset.id });
+      this.toggleTodo({ _id: evt.target.closest("li").dataset.id });
     }
-    if (evt.target.tagName === "BUTTON") {
-      this.deleteTodo({ id: evt.target.closest("li").dataset.id });
+    if (evt.target.tagName === "BUTTON" && evt.target.className === "destroy") {
+      this.deleteTodo({ _id: evt.target.closest("li").dataset.id });
     }
   };
   this.dblClickHandler = (evt) => {
@@ -67,7 +67,7 @@ export default function TodoList({
   };
   this.changeHandler = (evt) => {
     if (evt.target.tagName === "SELECT") {
-      const priority = evt.target.value;
+      const priority = parseInt(evt.target.value);
       this.setPriority({ _id: evt.target.closest("li").dataset.id, priority });
     }
   };

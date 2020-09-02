@@ -65,34 +65,43 @@ const api = {
   addTeamMember: (_id, data) => {
     return request(`${BASE_URL}/api/teams/${_id}/members`, options.POST(data));
   },
-  getTodoList: (username) => {
-    return request(`${BASE_URL}/api/u/${username}/item`);
+  getMemberTodoList: (teamId, memberId) => {
+    return request(`${BASE_URL}/api/teams/${teamId}/members/${memberId}`);
   },
-  addTodoList: (username, data) => {
-    return request(`${BASE_URL}/api/u/${username}/item`, options.POST(data));
-  },
-  deleteTodo: (username, _id) => {
+  addMemberTodoList: (teamId, memberId, data) => {
     return request(
-      `${BASE_URL}/api/u/${username}/item/${_id}`,
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
+      options.POST(data)
+    );
+  },
+  deleteMemberTodo: (teamId, memberId, itemId) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
       options.DELETE()
     );
   },
-  toggleTodo: (username, _id) => {
+  toggleMemberTodo: (teamId, memberId, itemId) => {
     return request(
-      `${BASE_URL}/api/u/${username}/item/${_id}/toggle`,
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
       options.TOGGLE()
     );
   },
-  editTodo: (username, _id, contents) => {
+  editMemberTodo: (teamId, memberId, itemId, contents) => {
     return request(
-      `${BASE_URL}/api/u/${username}/item/${_id}`,
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
       options.EDIT(contents)
     );
   },
-  setPriority: (username, _id, priority) => {
+  setMemberTodoPriority: (teamId, memberId, itemId, priority) => {
     return request(
-      `${BASE_URL}/api/u/${username}/item/${_id}/priority`,
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
       options.PRIORITY(priority)
+    );
+  },
+  deleteMemberAllTodos: (teamId, memberId) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/`,
+      options.DELETE()
     );
   },
 };
