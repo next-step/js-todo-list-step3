@@ -60,9 +60,15 @@ export const todoItem = (todo) => `
         <select class="${CLASS_SELECTOR.CHIP} ${CLASS_SELECTOR.SELECT} ${
   [1, 2].includes(todo.priority) ? "hidden" : ""
 }">
-          <option value="0" selected>순위</option>
-          <option value="1">1순위</option>
-          <option value="2">2순위</option>
+          <option value="0" ${
+            `${todo.priority}` === "0" ? "selected" : ""
+          }>순위</option>
+          <option value="1" ${
+            `${todo.priority}` === "1" ? "selected" : ""
+          }>1순위</option>
+          <option value="2" ${
+            `${todo.priority}` === "2" ? "selected" : ""
+          }>2순위</option>
         </select>
       </div>
       <span class="${CLASS_SELECTOR.CONTENTS}">${todo.contents}</span>
