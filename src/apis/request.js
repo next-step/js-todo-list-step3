@@ -1,4 +1,4 @@
-const fetchApi = (() => {
+const request = (() => {
   const run = async (url, option) => {
     option = option || {};
     option.headers = {
@@ -45,4 +45,4 @@ const fetchApi = (() => {
   };
 })();
 
-export default fetchApi;
+export default request;

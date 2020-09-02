@@ -1,9 +1,9 @@
-import fetchApi from "./fetchApi.js";
+import request from "./request.js";
 const BASE_URL = "https://blackcoffee-todolist.df.r.appspot.com/api/teams";
 
 export const getTeamList = async () => {
   try {
-    const teamList = await fetchApi.get(BASE_URL);
+    const teamList = await request.get(BASE_URL);
 
     return teamList;
   } catch (error) {
@@ -13,7 +13,7 @@ export const getTeamList = async () => {
 
 export const getTeam = async (teamId) => {
   try {
-    const team = await fetchApi.get(`${BASE_URL}/${teamId}`);
+    const team = await request.get(`${BASE_URL}/${teamId}`);
 
     return team;
   } catch (error) {
@@ -26,7 +26,7 @@ export const addTeam = async (name) => {
     name,
   };
   try {
-    const response = await fetchApi.post(BASE_URL, newTeam);
+    const response = await request.post(BASE_URL, newTeam);
 
     return response;
   } catch (error) {
@@ -36,7 +36,7 @@ export const addTeam = async (name) => {
 
 export const deleteTeam = async (teamId) => {
   try {
-    const response = await fetchApi.delete(`${BASE_URL}/${teamId}`);
+    const response = await request.delete(`${BASE_URL}/${teamId}`);
 
     return response;
   } catch (error) {
@@ -49,7 +49,7 @@ export const addMember = async (teamId, name) => {
     name,
   };
   try {
-    const response = await fetchApi.post(
+    const response = await request.post(
       `${BASE_URL}/${teamId}/members`,
       newMember
     );
@@ -62,7 +62,7 @@ export const addMember = async (teamId, name) => {
 
 export const getMember = async (teamId, memberId) => {
   try {
-    const member = await fetchApi.get(
+    const member = await request.get(
       `${BASE_URL}/${teamId}/members/${memberId}`
     );
 
@@ -77,7 +77,7 @@ export const addTodo = async (teamId, memberId, contents) => {
     const newTodo = {
       contents,
     };
-    const addedTodo = await fetchApi.post(
+    const addedTodo = await request.post(
       `${BASE_URL}/${teamId}/members/${memberId}/items`,
       newTodo
     );
@@ -90,7 +90,7 @@ export const addTodo = async (teamId, memberId, contents) => {
 
 export const deleteTodo = async (teamId, memberId, itemId) => {
   try {
-    const response = await fetchApi.delete(
+    const response = await request.delete(
       `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`
     );
 
@@ -102,7 +102,7 @@ export const deleteTodo = async (teamId, memberId, itemId) => {
 
 export const toggleTodo = async (teamId, memberId, itemId) => {
   try {
-    const toggledTodo = await fetchApi.put(
+    const toggledTodo = await request.put(
       `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/toggle`
     );
 
@@ -117,7 +117,7 @@ export const editTodo = async (teamId, memberId, itemId, contents) => {
     const newTodo = {
       contents,
     };
-    const changedTodo = await fetchApi.put(
+    const changedTodo = await request.put(
       `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`,
       newTodo
     );
@@ -139,7 +139,7 @@ export const changePriorityTodo = async (
     const newPriority = {
       priority,
     };
-    const changedTodo = await fetchApi.put(
+    const changedTodo = await request.put(
       `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/priority`,
       newPriority
     );
@@ -152,7 +152,7 @@ export const changePriorityTodo = async (
 
 export const deleteAllTodo = async (teamId, memberId) => {
   try {
-    const response = await fetchApi.delete(
+    const response = await request.delete(
       `${BASE_URL}/${teamId}/members/${memberId}/items`
     );
 
