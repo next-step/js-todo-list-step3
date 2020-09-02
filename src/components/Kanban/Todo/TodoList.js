@@ -63,11 +63,11 @@ export default function TodoList($todoapp, todoDataService) {
       const $li = $target.closest(`.${CLASS_SELECTOR.TODO_LIST_ITEM}`);
 
       const liEditFocus = ($edit) => {
-        const textLenth = $edit.value.length;
+        const textLength = $edit.value.length;
 
         if (!checkMoreThanOneClassContain($target, CLASS_SELECTOR.EDIT)) {
           $edit.focus();
-          $edit.setSelectionRange(textLenth, textLenth);
+          $edit.setSelectionRange(textLength, textLength);
         }
       };
 
