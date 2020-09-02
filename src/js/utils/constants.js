@@ -60,6 +60,9 @@ export const MEMBER_STATE = {
 
 export const KANBAN_URL = './kanban.html';
 
+export const BASE_URL =
+  'https://blackcoffee-todolist.df.r.appspot.com/api/teams';
+
 export const QUERY = {
   ID: 'id',
 };

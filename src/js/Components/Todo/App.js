@@ -47,51 +47,55 @@ function App({ $target, teamId }) {
 
   this.onAddUser = async (name) => {
     await api.user.addUser(this.state._id, name);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onToggleTodo = async (userId, todoId) => {
     await api.user.toggleTodo(this.state._id, userId, todoId);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onDeleteTodo = async (userId, todoId) => {
     await api.user.deleteTodo(this.state._id, userId, todoId);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onAddTodo = async (userId, contents) => {
     await api.user.addTodo(this.state._id, userId, contents);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onEditPriority = async (userId, todoId, priority) => {
     await api.user.editPriority(this.state._id, userId, todoId, priority);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onEditTodo = async (userId, todoId, contents) => {
     await api.user.editTodo(this.state._id, userId, todoId, contents);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
   };
 
   this.onDeleteAllTodo = async (userId) => {
     await api.user.deleteAllTodo(this.state._id, userId);
-    const state = await api.team.fetchTeam(this.state._id);
+    const state = await this.fetchTeamState(this.state._id);
 
     this.setState(state);
+  };
+
+  this.fetchTeamState = async (teamId) => {
+    return await api.team.fetchTeam(teamId);
   };
 
   this.setState = (nextState) => {

@@ -1,4 +1,5 @@
-import { BASE_URL, request } from '../api/index.js';
+import { request } from '../api/index.js';
+import { BASE_URL } from '../constants.js';
 
 const option = {
   add: (name) => ({
