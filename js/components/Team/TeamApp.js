@@ -1,6 +1,6 @@
-import TeamTitle from "./Team/TeamTitle.js";
-import TeamList from "./Team/TeamList.js";
-import API from "../utils/api.js";
+import TeamAppTitle from "./TeamAppTitle.js";
+import TeamList from "./TeamList.js";
+import API from "../../utils/api.js";
 
 export default function TeamApp({ elementId }) {
   this.init = async () => {
@@ -9,19 +9,14 @@ export default function TeamApp({ elementId }) {
     };
     this.$app = document.getElementById(elementId);
 
-    this.teamTitle = new TeamTitle({
+    this.teamTitle = new TeamAppTitle({
       $target: this.$app,
     });
     this.teamList = new TeamList({
       $target: this.$app,
       teamList: this.state.teamList,
       addTeam: this.addTeam.bind(this),
-      getOneTeam: this.getOneTeam.bind(this),
     });
-  };
-
-  this.getOneTeam = async (_id) => {
-    console.log(await API.getOneTeam(_id));
   };
 
   this.addTeam = async (name) => {

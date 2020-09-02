@@ -1,4 +1,4 @@
-import { errorCallTemplate, todoErrorTemplate } from "../utils/template.js";
+import { errorCallTemplate, todoErrorTemplate } from "../../utils/template.js";
 
 export default function TodoError({ elementId, error }) {
   this.state = {

@@ -25,40 +25,54 @@ export const todoErrorTemplate = (error) => `
   <p>${error}</p>
 `;
 
+export const todoInputTemplate = `
+  <input
+    class="new-todo"
+    placeholder="할 일을 입력해주세요."
+    autofocus
+  />
+`;
+
 export const todoListTemplate = (todoList) => `
-${todoList
-  .map(
-    ({ contents, isCompleted, _id, priority }) => `
-      <li data-id=${_id} class=${isCompleted ? COMPLETED : ""}>
-          <div class="view">
-            <input class=${TOGGLE} type="checkbox" ${
-      isCompleted ? "checked" : ""
-    } />
-            <label class="label">
-              ${
-                isCompleted
-                  ? ""
-                  : priority === "1"
-                  ? `<span class="chip primary">1순위</span>`
-                  : priority === "2"
-                  ? `<span class="chip secondary">2순위</span>`
-                  : `<select class="chip select">
-                    <option value="0" selected>
-                      순위
-                    </option>
-                    <option value="1">1순위</option>
-                    <option value="2">2순위</option>
-                  </select>`
-              }
-              ${contents}
-            </label>
-            <button class="destroy"></button>
-          </div>
-          <input class=${EDIT} value="${contents}" />
-      </li>
-    `
-  )
-  .join("")}
+  <ul class="todo-list">
+    ${todoList
+      .map(
+        ({ contents, isCompleted, _id, priority }) => `
+          <li data-id=${_id} class="todo-list-item ${
+          isCompleted ? COMPLETED : ""
+        }">
+              <div class="view">
+                <input class=${TOGGLE} type="checkbox" ${
+          isCompleted ? "checked" : ""
+        } />
+                <label class="label">
+                  <div class="chip-container">
+                    ${
+                      priority === 1
+                        ? `<span class="chip primary">1순위</span>`
+                        : priority === 2
+                        ? `<span class="chip secondary">2순위</span>`
+                        : `<select class="chip select ${
+                            priority > 0 ? "hidden" : ""
+                          }">
+                            <option value="0" selected>
+                              순위
+                            </option>
+                            <option value="1">1순위</option>
+                            <option value="2">2순위</option>
+                          </select>`
+                    }
+                  </div>
+                  ${contents}
+                </label>
+                <button class="destroy"></button>
+              </div>
+              <input class=${EDIT} value="${contents}" />
+          </li>
+        `
+      )
+      .join("")}
+  </ul>
 `;
 
 export const todoUsersTemplate = (users, currentUserId) => `
@@ -74,7 +88,7 @@ ${users
 
 export const teamListTemplate = (_id, name) => `
   <div class="team-card-container" data-id=${_id}>
-    <a href="/kanban.html" class="card">
+    <a href="/kanban.html?id=${_id}" class="card">
       <div class="card-title">${name}</div>
     </a>
   </div>

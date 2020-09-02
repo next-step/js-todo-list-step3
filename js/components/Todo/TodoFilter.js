@@ -1,17 +1,27 @@
-import { ALL, COMPLETED, ACTIVE, SELECTED, NOTLI } from "../utils/data.js";
-import { errorCallTemplate } from "../utils/template.js";
+import {
+  ALL,
+  COMPLETED,
+  ACTIVE,
+  SELECTED,
+  NOTLI,
+  FILTERS,
+} from "../../utils/data.js";
+import { errorCallTemplate } from "../../utils/template.js";
 
-export default function TodoFilter({ elementId, filterType, filterTodo }) {
-  this.state = {
-    filterType: filterType,
-  };
+export default function TodoFilter({ $target, filterType, filterTodo }) {
   this.init = () => {
     if (!(this instanceof TodoFilter)) {
       throw new Error(errorCallTemplate);
     }
-    this.$todoFilter = document.querySelector(`.${elementId}`);
+    this.state = {
+      filterType: filterType,
+    };
+    this.$todoFilter = document.createElement("ul");
+    this.$todoFilter.classList.add(FILTERS);
     this.filterTodo = filterTodo;
+    this.render();
     this.bindEventListener();
+    $target.appendChild(this.$todoFilter);
   };
   this.switchFilter = (type) => {
     if (type === ACTIVE) {
@@ -40,19 +50,33 @@ export default function TodoFilter({ elementId, filterType, filterTodo }) {
     this.$todoFilter.addEventListener("click", this.clickHandler);
   };
   this.render = () => {
-    [...this.$todoFilter.childNodes].forEach((el) => {
-      const currentHash =
-        el.tagName === "LI" ? el.childNodes[1].hash.split("/")[1] : NOTLI;
-      if (currentHash !== NOTLI && currentHash !== this.state.filterType) {
-        el.childNodes[1].classList.remove(SELECTED);
-      } else if (
-        currentHash !== NOTLI &&
-        currentHash === ("" || this.state.filterType) &&
-        !el.childNodes[1].classList.contains(SELECTED)
-      ) {
-        el.childNodes[1].classList.add(SELECTED);
-      }
-    });
+    this.$todoFilter.innerHTML = `
+      <li>
+        <a href="#all" class="selected">전체보기</a>
+      </li>
+      <li>
+        <a href="#priority">우선 순위</a>
+      </li>
+      <li>
+        <a href="#active">해야할 일</a>
+      </li>
+      <li>
+        <a href="#completed">완료한 일</a>
+      </li>
+    `;
+    // [...this.$todoFilter.childNodes].forEach((el) => {
+    //   const currentHash =
+    //     el.tagName === "LI" ? el.childNodes[1].hash.split("/")[1] : NOTLI;
+    //   if (currentHash !== NOTLI && currentHash !== this.state.filterType) {
+    //     el.childNodes[1].classList.remove(SELECTED);
+    //   } else if (
+    //     currentHash !== NOTLI &&
+    //     currentHash === ("" || this.state.filterType) &&
+    //     !el.childNodes[1].classList.contains(SELECTED)
+    //   ) {
+    //     el.childNodes[1].classList.add(SELECTED);
+    //   }
+    // });
   };
   this.setState = (type) => {
     this.state.filterType = type;

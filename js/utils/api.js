@@ -62,8 +62,8 @@ const api = {
   addTeamList: (data) => {
     return request(`${BASE_URL}/api/teams`, options.POST(data));
   },
-  getUserList: () => {
-    return request(`${BASE_URL}/api/u/`);
+  addTeamMember: (_id, data) => {
+    return request(`${BASE_URL}/api/teams/${_id}/members`, options.POST(data));
   },
   getTodoList: (username) => {
     return request(`${BASE_URL}/api/u/${username}/item`);

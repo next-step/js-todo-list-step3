@@ -1,6 +1,6 @@
 import { TEAM_TITLE_ID } from "../../utils/data.js";
 
-export default function TeamTitle({ $target }) {
+export default function TeamAppTitle({ $target }) {
   this.render = () => {
     this.$teamTitle = document.createElement("h1");
     this.$teamTitle.id = TEAM_TITLE_ID;

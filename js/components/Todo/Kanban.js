@@ -7,76 +7,44 @@ import {
   ALL,
   COMPLETED,
   USERS_ID,
+  APP_ID,
 } from "../../utils/data.js";
+import TodoAppList from "./TodoAppList.js";
 import TodoList from "./TodoList.js";
+import TeamTitle from "./TeamTitle.js";
 import TodoInput from "./TodoInput.js";
 import TodoCount from "./TodoCount.js";
 import TodoFilter from "./TodoFilter.js";
-import Users from "./Users.js";
 import TodoError from "./TodoError.js";
-import API from "../utils/api.js";
-import {
-  validateUserData,
-  validateTodoList,
-  urlHrefClear,
-} from "../../utils/util.js";
+import API from "../../utils/api.js";
+import { validateTodoList, urlHrefClear } from "../../utils/util.js";
 import Skeleton from "../Skeleton.js";
 import { errorCallTemplate } from "../../utils/template.js";
 
-export default function App() {
+export default function KanBan() {
   if (!new.target) {
     throw new Error(errorCallTemplate);
   }
   urlHrefClear();
+  const currentID = location.href.split("id=")[1];
   this.init = async () => {
+    const currentTeam = await API.getOneTeam(currentID);
+    this.$app = document.getElementById(APP_ID);
     this.state = {
-      users: [],
-      currentUser: {
-        name: "",
-        _id: "",
-      },
+      currentTeam: currentTeam,
       todoList: [],
       todoCount: 0,
       todoFilter: ALL,
     };
-    await this.loadUsers();
-    this.users = new Users({
-      usersId: USERS_ID,
-      userTitleId: CURRENT_USER_ID,
-      currentUser: this.state.currentUser.name,
-      currentUserId: this.state.currentUser._id,
-      users: this.state.users,
-      setUser: this.setUser.bind(this),
+
+    this.teamTitle = new TeamTitle({
+      $target: this.$app,
+      teamName: this.state.currentTeam.name,
     });
-    this.todoInput = new TodoInput({
-      elementId: TODO_INPUT_ID,
-      addTodos: this.addTodo,
+    this.todoAppList = new TodoAppList({
+      $target: this.$app,
+      currentTeam: this.state.currentTeam,
     });
-    this.todoList = new TodoList({
-      todoList: this.state.todoList,
-      elementId: TODO_LIST_ID,
-      deleteTodo: this.deleteTodo,
-      toggleTodo: this.toggleTodo,
-      editTodo: this.editTodo,
-      setPriority: this.setPriority,
-    });
-    this.todoCount = new TodoCount({
-      elementId: TODO_COUNT_ID,
-      todoCount: this.state.todoCount,
-    });
-    this.todoFilter = new TodoFilter({
-      elementId: TODO_FILTER_ID,
-      filterType: this.state.todoFilter,
-      filterTodo: this.filterTodo,
-    });
-    this.todoError = new TodoError({
-      elementId: TODO_LIST_ID,
-      error: null,
-    });
-    this.skeleton = new Skeleton({
-      elementId: TODO_LIST_ID,
-    });
-    this.loadTodos();
   };
   this.filterTodo = ({ type }) => {
     if (type === ALL) {
@@ -161,18 +129,6 @@ export default function App() {
         return todo;
       });
       validateTodoList(todos) && this.setTodos(todos);
-    } catch (err) {
-      console.log(`Cannot read UserList..${err}`);
-      this.todoError.setState(`Cannot read UserList..${err}`);
-    }
-  };
-  this.loadUsers = async () => {
-    try {
-      this.state.users = await API.getUserList();
-      const currentUser = validateUserData(this.state.currentUser)
-        ? this.state.currentUser
-        : this.state.users[0];
-      this.setUser(currentUser);
     } catch (err) {
       console.log(`Cannot read UserList..${err}`);
       this.todoError.setState(`Cannot read UserList..${err}`);

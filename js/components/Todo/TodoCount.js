@@ -1,4 +1,4 @@
-import { todoCountTemplate, errorCallTemplate } from "../utils/template.js";
+import { todoCountTemplate, errorCallTemplate } from "../../utils/template.js";
 
 export default function TodoCount({ elementId, todoCount }) {
   this.todoCount = todoCount;

@@ -43,7 +43,6 @@ export function validateTodoList(todoList) {
 }
 
 export function urlHrefClear() {
-  window.location.href.split("#")[1] !== "/"
-    ? (window.location.href = `${window.location.href.split("#")[0]}#/`)
-    : null;
+  window.location.href.split("#")[1] !== "/" &&
+    (window.location.href = `${window.location.href.split("#")[0]}#/`);
 }

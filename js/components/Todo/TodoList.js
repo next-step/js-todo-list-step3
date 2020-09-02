@@ -1,9 +1,9 @@
-import { TOGGLE, EDIT, EDITING, ESC, ENTER } from "../utils/data.js";
-import { errorCallTemplate, todoListTemplate } from "../utils/template.js";
+import { TOGGLE, EDIT, EDITING, ESC, ENTER, MAIN } from "../../utils/data.js";
+import { errorCallTemplate, todoListTemplate } from "../../utils/template.js";
 
 export default function TodoList({
+  $target,
   todoList,
-  elementId,
   deleteTodo,
   toggleTodo,
   editTodo,
@@ -16,11 +16,14 @@ export default function TodoList({
     this.state = {
       todoList: todoList,
     };
-    this.$todoList = document.querySelector(`.${elementId}`);
+    this.$todoList = document.createElement("section");
+    this.$todoList.classList.add(MAIN);
     this.deleteTodo = deleteTodo;
     this.toggleTodo = toggleTodo;
     this.editTodo = editTodo;
     this.setPriority = setPriority;
+
+    $target.appendChild(this.$todoList);
   };
   this.render = () => {
     this.$todoList.innerHTML = todoListTemplate(this.state.todoList);
