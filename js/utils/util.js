@@ -28,17 +28,20 @@ export function validateUserData(user) {
 }
 
 export function validateTodoList(todoList) {
-  return todoList.every(
-    (todo) =>
-      todo.hasOwnProperty("_id") &&
-      todo.hasOwnProperty("contents") &&
-      todo.hasOwnProperty("isCompleted") &&
-      todo.hasOwnProperty("priority") &&
-      todo._id.length > 0 &&
-      todo.contents.length > 0 &&
-      typeof todo.contents === "string" &&
-      typeof todo._id === "string" &&
-      typeof todo.isCompleted === "boolean"
+  return (
+    todoList &&
+    todoList.every(
+      (todo) =>
+        todo.hasOwnProperty("_id") &&
+        todo.hasOwnProperty("contents") &&
+        todo.hasOwnProperty("isCompleted") &&
+        todo.hasOwnProperty("priority") &&
+        todo._id.length > 0 &&
+        todo.contents.length > 0 &&
+        typeof todo.contents === "string" &&
+        typeof todo._id === "string" &&
+        typeof todo.isCompleted === "boolean"
+    )
   );
 }
 

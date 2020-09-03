@@ -1,10 +1,11 @@
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
 import TodoBottom from "./TodoBottom.js";
+import API from "../../utils/api.js";
 import { ALL, COMPLETED, TODO_APP, ACTIVE } from "../../utils/data.js";
 import { validateTodoList } from "../../utils/util.js";
 import { errorCallTemplate } from "../../utils/template.js";
-import API from "../../utils/api.js";
+import TodoError from "./TodoError.js";
 
 export default function TodoApp({ $target, teamId, memberId, todoList }) {
   this.init = () => {
@@ -36,6 +37,10 @@ export default function TodoApp({ $target, teamId, memberId, todoList }) {
       todoCount: todoList.length,
       filterTodo: this.filterTodo.bind(this),
       deleteAllTodos: this.deleteAllTodos.bind(this),
+    });
+    this.todoError = new TodoError({
+      $target: this.$todoApp,
+      error: null,
     });
 
     $target.appendChild(this.$todoApp);

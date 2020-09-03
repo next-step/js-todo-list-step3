@@ -1,4 +1,4 @@
-import { COMPLETED, TOGGLE, EDIT, ACTIVE } from "./data.js";
+import { ALL, COMPLETED, TOGGLE, EDIT, ACTIVE, PRIORITY } from "./data.js";
 
 export const skeletonTemplate = `
   <li>
@@ -100,6 +100,43 @@ export const addTeamBtnTemplate = `
       <span class="material-icons">add</span>
     </button>
   </div>
+`;
+
+export const teamAppTitleTemplate = `<strong>Team</strong>'s Todo Lists`;
+
+export const teamTitleTemplate = (name) => `
+  <span><strong>${name}</strong>'s Todo List</span>
+`;
+
+export const todoBottomTemplate = (todoCount, type) => `
+  <span class="todo-count">총 <strong>${todoCount}</strong> 개</span>
+  <ul class="filters">
+    <li>
+      <a href="#all" class="${
+        type === ALL || type === "/" ? "selected" : ""
+      }">전체보기</a>
+    </li>
+    <li>
+      <a href="#priority" class="${
+        type === PRIORITY ? "selected" : ""
+      }">우선 순위</a>
+    </li>
+    <li>
+      <a href="#active" class="${
+        type === ACTIVE ? "selected" : ""
+      }">해야할 일</a>
+    </li>
+    <li>
+      <a href="#completed" class="${
+        type === COMPLETED ? "selected" : ""
+      }">완료한 일</a>
+    </li>
+  </ul>
+  <button class="clear-completed">모두 삭제</button>
+`;
+
+export const todoTitleTemplate = (name) => `
+  <span><strong>${name}</strong>'s Todo List</span>
 `;
 
 export const errorCallTemplate = `Invalid function call..this is undefined`;

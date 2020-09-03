@@ -1,4 +1,5 @@
 import { TEAM_TITLE_ID } from "../../utils/data.js";
+import { teamTitleTemplate } from "../../utils/template.js";
 
 export default function TeamTitle({ $target, teamName }) {
   this.init = () => {
@@ -14,9 +15,7 @@ export default function TeamTitle({ $target, teamName }) {
   };
 
   this.render = () => {
-    this.$todoTitle.innerHTML = `
-      <span><strong>${this.state.name}</strong>'s Todo List</span>
-    `;
+    this.$todoTitle.innerHTML = teamTitleTemplate(this.state.name);
   };
 
   this.init();
