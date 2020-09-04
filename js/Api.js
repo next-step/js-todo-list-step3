@@ -9,3 +9,16 @@ export async function getTeams() {
 
   return await response.json();
 }
+
+export async function addTeam(name) {
+  const response = await fetch(`${ADDRESS.BASE_URL}/api/teams`,
+    {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: name,
+      }),
+    });
+
+  return await response.json();
+}
