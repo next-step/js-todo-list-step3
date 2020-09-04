@@ -9,8 +9,6 @@ function TeamApp($target) {
     this.teamList = new TeamList(this.$target.querySelector("#team-list"));
   };
 
-  this.initEventListeners = () => {};
-
   this.render = () => {
     this.$target.innerHTML = `
       <h1>
@@ -20,7 +18,6 @@ function TeamApp($target) {
     `;
   };
 
-  this.initEventListeners();
   this.render();
   this.initComponents();
 }
