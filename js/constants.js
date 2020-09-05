@@ -9,4 +9,5 @@ export const KEY = {
 
 export const ADDRESS = {
   BASE_URL: 'https://blackcoffee-todolist.df.r.appspot.com',
+  TEAM_URL: 'https://blackcoffee-todolist.df.r.appspot.com/api/teams',
 };

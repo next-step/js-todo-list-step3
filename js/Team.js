@@ -1,44 +1,42 @@
 import {getTeams, addTeam} from './Api.js';
+import {addTeamButtonContainer, teamCardContainer} from './template.js';
 
-function Team() {
-  const $teamListContainer = document.querySelector('.team-list-container');
+export default function Team() {
+  this.$teamListContainer = document.querySelector('.team-list-container');
   this.teams = [];
 
   this.init = async () => {
     this.teams = await getTeams();
     this.render();
+    this.bind();
+  };
 
-    const $addTeamButton = document.querySelector('#add-team-button');
-    $addTeamButton.addEventListener('click', async (e) => {
+  this.render = () => {
+    let teamCardContainers = '';
+    this.teams.map(({_id, name, members}) => {
+      teamCardContainers += teamCardContainer(_id, name)
+    }).join('');
+
+    this.$teamListContainer.innerHTML = teamCardContainers + addTeamButtonContainer;
+  };
+
+  this.clickHandler = async ({target}) => {
+    if (target.id === 'add-team-button') {
       const result = prompt('팀 이름을 입력해주세요');
+      if (!result) {
+        return;
+      }
+
       await addTeam(result);
 
       this.teams = await getTeams();
       this.render();
-    });
+    }
   };
 
-  this.render = () => {
-    let result = '';
-    this.teams.map(({_id, name, members}) => {
-      result +=
-      `<div class="team-card-container">
-        <a href="/kanban.html" class="card">
-          <div class="card-title">${name}</div>
-        </a>
-      </div>`;
-    }).join('');
-
-    $teamListContainer.innerHTML = result +
-    `<div class="add-team-button-container">
-        <button id="add-team-button" class="ripple">
-          <span class="material-icons">add</span>
-        </button>
-      </div>
-    `;
+  this.bind = () => {
+    this.$teamListContainer.addEventListener('click', this.clickHandler);
   };
 
   this.init();
 }
-
-new Team();
