@@ -1,5 +1,5 @@
 import { COUNT_CONTAINER, DELETE_ALL } from "../../utils/data.js";
-import { todoBottomTemplate } from "../../utils/template.js";
+import { todoBottomTemplate, errorCallTemplate } from "../../utils/template.js";
 
 export default function TodoBottom({
   $target,
@@ -8,6 +8,9 @@ export default function TodoBottom({
   deleteAllTodos,
 }) {
   this.init = () => {
+    if (!(this instanceof TodoBottom)) {
+      throw new Error(errorCallTemplate);
+    }
     this.state = {
       todoCount,
       type: location.hash.split("#")[1],
@@ -33,14 +36,11 @@ export default function TodoBottom({
     this.$todoBottom.addEventListener("click", this.clickHandler);
   };
 
-  this.clickHandler = (evt) => {
-    if (
-      evt.target.tagName === "BUTTON" &&
-      evt.target.className === DELETE_ALL
-    ) {
+  this.clickHandler = ({ target }) => {
+    if (target.tagName === "BUTTON" && target.className === DELETE_ALL) {
       this.deleteAllTodos();
-    } else if (evt.target.tagName === "A") {
-      this.state.type = evt.target.hash.split("#")[1];
+    } else if (target.tagName === "A") {
+      this.state.type = target.hash.split("#")[1];
       this.filterTodo(this.state.type);
     }
   };

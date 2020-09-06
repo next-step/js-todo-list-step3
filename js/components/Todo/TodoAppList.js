@@ -12,12 +12,12 @@ import { errorCallTemplate } from "../../utils/template.js";
 import { urlHrefClear } from "../../utils/util.js";
 
 export default function TodoAppList({ elementId }) {
-  if (!(this instanceof TodoAppList)) {
-    throw new Error(errorCallTemplate);
-  }
   urlHrefClear();
 
   this.init = async () => {
+    if (!(this instanceof TodoAppList)) {
+      throw new Error(errorCallTemplate);
+    }
     this.currentTeamID = location.href.split("id=")[1];
     this.$kanbanApp = document.getElementById(elementId);
     const currentTeam = await API.getOneTeam(this.currentTeamID);

@@ -1,11 +1,11 @@
 import { todoCountTemplate, errorCallTemplate } from "../../utils/template.js";
 
 export default function TodoCount({ elementId, todoCount }) {
-  this.todoCount = todoCount;
   this.init = () => {
     if (!(this instanceof TodoCount)) {
       throw new Error(errorCallTemplate);
     }
+    this.todoCount = todoCount;
     this.$todoCount = document.querySelector(`.${elementId}`);
   };
   this.render = () => {

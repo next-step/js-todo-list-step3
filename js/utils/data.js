@@ -33,6 +33,7 @@ export const TODO_APP_CONTAINER = "todoapp-container";
 export const FLEX_COLUMN_CONTAINER = "flex-column-container";
 export const INPUT_CONTAINER = "input-container";
 export const COUNT_CONTAINER = "count-container";
+export const EDIT_INPUT = ".edit";
 export const DELETE_ALL = "clear-completed";
 export const FILTERS = "filters";
 export const MAIN = "main";

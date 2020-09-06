@@ -1,4 +1,4 @@
-import { TODOS } from "./data.js";
+import { TODOS, EDITING } from "./data.js";
 
 export function createUniqueID() {
   return Date.now();
@@ -49,3 +49,12 @@ export function urlHrefClear() {
   window.location.href.split("#")[1] !== "/" &&
     (window.location.href = `${window.location.href.split("#")[0]}#/`);
 }
+
+export const clearRemainingDblClickEvt = (target) => {
+  const liTags = target.closest("ul").children;
+  [...liTags].forEach((el) => {
+    if (el.classList.contains(EDITING)) {
+      el.classList.toggle(EDITING);
+    }
+  });
+};

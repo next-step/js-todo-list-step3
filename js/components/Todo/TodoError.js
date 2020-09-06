@@ -2,13 +2,13 @@ import { errorCallTemplate, todoErrorTemplate } from "../../utils/template.js";
 import { MAIN } from "../../utils/data.js";
 
 export default function TodoError({ $target, error }) {
-  this.state = {
-    error,
-  };
   this.init = () => {
     if (!(this instanceof TodoError)) {
       throw new Error(errorCallTemplate);
     }
+    this.state = {
+      error,
+    };
     this.$todoError = document.createElement("section");
     this.$todoError.classList.add(MAIN);
   };

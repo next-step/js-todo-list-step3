@@ -1,5 +1,14 @@
-import { TOGGLE, EDIT, EDITING, ESC, ENTER, MAIN } from "../../utils/data.js";
+import {
+  TOGGLE,
+  EDIT,
+  EDITING,
+  ESC,
+  ENTER,
+  MAIN,
+  EDIT_INPUT,
+} from "../../utils/data.js";
 import { errorCallTemplate, todoListTemplate } from "../../utils/template.js";
+import { clearRemainingDblClickEvt } from "../../utils/util.js";
 
 export default function TodoList({
   $target,
@@ -32,23 +41,21 @@ export default function TodoList({
     this.state.todoList = todoList;
     this.render();
   };
-  this.clickHandler = (evt) => {
-    if (
-      evt.target.tagName === "INPUT" &&
-      evt.target.classList.contains(TOGGLE)
-    ) {
-      this.toggleTodo({ _id: evt.target.closest("li").dataset.id });
+  this.clickHandler = ({ target }) => {
+    if (target.tagName === "INPUT" && target.classList.contains(TOGGLE)) {
+      this.toggleTodo({ _id: target.closest("li").dataset.id });
     }
-    if (evt.target.tagName === "BUTTON" && evt.target.className === "destroy") {
-      this.deleteTodo({ _id: evt.target.closest("li").dataset.id });
+    if (target.tagName === "BUTTON" && target.className === "destroy") {
+      this.deleteTodo({ _id: target.closest("li").dataset.id });
     }
   };
-  this.dblClickHandler = (evt) => {
-    if (evt.target.tagName === "LABEL") {
-      evt.target.closest("li").classList.toggle(EDITING);
-      evt.target.closest("li").querySelector("input").focus();
-      const input = evt.target.closest("li").querySelector("input.edit");
+  this.dblClickHandler = ({ target }) => {
+    clearRemainingDblClickEvt(target);
+    if (target.tagName === "LABEL") {
+      target.closest("li").classList.toggle(EDITING);
+      const input = target.closest("li").querySelector(EDIT_INPUT);
       input.setSelectionRange(input.value.length, input.value.length);
+      target.closest("li").querySelector(EDIT_INPUT).focus();
     }
   };
   this.keydownHandler = (evt) => {
@@ -65,10 +72,10 @@ export default function TodoList({
       });
     }
   };
-  this.changeHandler = (evt) => {
-    if (evt.target.tagName === "SELECT") {
-      const priority = parseInt(evt.target.value);
-      this.setPriority({ _id: evt.target.closest("li").dataset.id, priority });
+  this.changeHandler = ({ target }) => {
+    if (target.tagName === "SELECT") {
+      const priority = parseInt(target.value);
+      this.setPriority({ _id: target.closest("li").dataset.id, priority });
     }
   };
   this.bindEventListener = () => {

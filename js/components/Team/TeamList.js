@@ -1,8 +1,15 @@
 import { TEAM_LIST, ADD_TEAM_BTN_CONTAINER } from "../../utils/data.js";
-import { teamListTemplate, addTeamBtnTemplate } from "../../utils/template.js";
+import {
+  teamListTemplate,
+  addTeamBtnTemplate,
+  errorCallTemplate,
+} from "../../utils/template.js";
 
 export default function TeamList({ $target, teamList, addTeam, getOneTeam }) {
   this.init = () => {
+    if (!(this instanceof TeamList)) {
+      throw new Error(errorCallTemplate);
+    }
     this.state = {
       teamList,
     };
@@ -28,8 +35,8 @@ export default function TeamList({ $target, teamList, addTeam, getOneTeam }) {
         .join("") + addTeamBtnTemplate;
   };
 
-  this.clickHandler = (evt) => {
-    if (evt.target.closest(`div`).className === ADD_TEAM_BTN_CONTAINER) {
+  this.clickHandler = ({ target }) => {
+    if (target.closest(`div`).className === ADD_TEAM_BTN_CONTAINER) {
       const teamName = prompt("팀 이름을 입력해주세요");
       teamName && this.addTeam(teamName);
     }

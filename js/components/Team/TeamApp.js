@@ -1,9 +1,13 @@
 import TeamAppTitle from "./TeamAppTitle.js";
 import TeamList from "./TeamList.js";
 import API from "../../utils/api.js";
+import { errorCallTemplate } from "../../utils/template.js";
 
 export default function TeamApp({ elementId }) {
   this.init = async () => {
+    if (!(this instanceof TeamApp)) {
+      throw new Error(errorCallTemplate);
+    }
     this.state = {
       teamList: await API.getTeamList(),
     };
