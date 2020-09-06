@@ -10,7 +10,9 @@ export function getTodosFromLocalStorage() {
       ? JSON.parse(localStorage.getItem(TODOS))
       : [];
     return todos;
-  } catch {}
+  } catch (err) {
+    console.err(`Cannot parse Todos from LocalStorage..`);
+  }
 }
 
 export function setTodosLocalStorage(todoList) {
