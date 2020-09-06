@@ -48,12 +48,12 @@ export default class TodoBoard {
     this.updateFilteredTodoList();
   }
 
-  getFiteredTodoList() {
+  getFilteredTodoList() {
     if (location.hash === `#priority_${this.memberInfo._id}`) {
-      return this.memberInfo.todoList.sort((a, b) => {
-        return a.priority > 0
-          ? a.priority - b.priority
-          : b.priority - a.priority;
+      return this.memberInfo.todoList.slice().sort((a, b) => {
+        const aPriority = parseInt(a.priority);
+        const bPriority = parseInt(b.priority);
+        return (aPriority || 3) - (bPriority || 3);
       });
     } else {
       return this.memberInfo.todoList.filter((todo) => {
@@ -79,7 +79,7 @@ export default class TodoBoard {
   }
 
   updateFilteredTodoList() {
-    this.filterdTodos = this.getFiteredTodoList();
+    this.filterdTodos = this.getFilteredTodoList();
     this.todoList.setTodoList(this.filterdTodos);
     this.todoFilter.setState(this.filterdTodos.length);
   }

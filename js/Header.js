@@ -1,4 +1,4 @@
-export default class TodoHeader {
+export default class Header {
   constructor(memberId) {
     if (memberId) {
       this.titleElement = document.querySelector(

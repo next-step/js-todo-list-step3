@@ -35,7 +35,7 @@ export default class App {
     );
     this.$todoAppListContainer.innerHTML = '';
 
-    this.teamInfo = await getTeam(this.currentTeamId);
+    this.teamInfo = await this.getTeamInfo(this.currentTeamId);
     this.teamInfo.members.forEach((member) => {
       const $todoContainer = document.createElement('li');
       $todoContainer.id = member._id;
@@ -54,13 +54,25 @@ export default class App {
     return $addUserButtonContainer;
   }
 
+  async getTeamInfo(teamId) {
+    try {
+      return await getTeam(teamId);
+    } catch (e) {
+      alert(`getTeamInfo Error: ${e.message}`);
+    }
+  }
+
   addNewMember() {
     this.$addUserButton.addEventListener('click', async () => {
       const result = prompt('새로운 팀원 이름을 입력해주세요');
       const newMemberName = result.trim();
       if (newMemberName) {
-        await addTeamMember(this.currentTeamId, newMemberName);
-        this.todoBoardInit();
+        try {
+          await addTeamMember(this.currentTeamId, newMemberName);
+          this.todoBoardInit();
+        } catch (e) {
+          alert(`addNewMember Error: ${e.message}`);
+        }
       }
     });
   }
