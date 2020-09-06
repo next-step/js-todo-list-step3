@@ -27,7 +27,6 @@ window.fetch = function () {
       })
       .includes(true)
   ) {
-    console.log('fewqfewfs');
     enableLoadingBar();
   }
   return new Promise((resolve, reject) => {
