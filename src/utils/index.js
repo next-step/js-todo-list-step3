@@ -10,17 +10,8 @@ export const debounceOneFrame = callback => {
 
 export const lazyFrame = () => new Promise(resolve => setTimeout(resolve, ONE_FRAME * 10))
 
-export const request = url => {
-  return fetch(url).then(response => response.json());
-}
-
-export const requestWithJSONBody = (url, option) => {
-  const headers = { 'Content-Type': 'application/json' };
-  return fetch(url, { ...option, headers }).then(response => response.json());
-}
-
-export const addEventBubblingListener = (parent, children, eventType, callback) => {
-  const isTarget = target => [ ...parent.querySelectorAll(children) ].includes(target);
+export const addEventBubblingListener = (parent, ref, eventType, callback) => {
+  const isTarget = target => [ ...parent.querySelectorAll(`[data-ref="${ref}"]`) ].includes(target);
   parent.addEventListener(eventType, event => {
     if (!isTarget(event.target)) return;
     callback(event);

@@ -10,7 +10,7 @@ export const TeamList = class extends Component {
     return `
       ${teams.map(({ _id, name }) => `
         <div class="team-card-container">
-          <a href="#" class="card" data-id="${_id}">
+          <a href="#!" class="card" data-id="${_id}" data-ref="view">
             <div class="card-title">
               ${name}
             </div>
@@ -19,7 +19,7 @@ export const TeamList = class extends Component {
       `).join('')}
       
       <div class="add-team-button-container">
-        <button id="add-team-button" class="ripple">
+        <button id="add-team-button" class="ripple" data-ref="add">
           <span class="material-icons">add</span>
         </button>
       </div>
@@ -27,10 +27,10 @@ export const TeamList = class extends Component {
   }
 
   setEvent ($target) {
-    addEventBubblingListener($target, '.team-card-container a', 'click', event => {
+    addEventBubblingListener($target, 'view', 'click', event => {
       event.preventDefault();
     })
-    addEventBubblingListener($target, '#add-team-button', 'click', event => {
+    addEventBubblingListener($target, 'add', 'click', event => {
       teamStore.commit(SET_OPENED_APPEND_FORM, true);
     });
   }
