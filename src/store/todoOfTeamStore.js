@@ -1,5 +1,6 @@
 import {Store} from "../core/Store.js";
 import TeamService from "../services/TeamService.js";
+import FilterTypes from "../constants/FilterTypes";
 
 export const INIT = 'INIT';
 export const FETCH_TEAM = 'FETCH_TEAM';
@@ -9,15 +10,31 @@ export const todoOfTeamStore = new Store({
   state: {
     _id: null,
     name: null,
-    members: [],
+    members: {},
+    filterType: {},
   },
 
   mutations: {
     [INIT] (state, { _id, name, members }) {
       state._id = _id;
       state.name = name;
-      state.members = members;
+      for (const member of members) {
+        state.members[member._id] = member;
+        state.filterType[member._id] = FilterTypes.ALL;
+      }
     }
+  },
+
+  getters: {
+    membersByFilteredTodoList: ({ members, filterType }) =>
+      Object.entries(members)
+            .reduce((temp, [ id, { todoList } ]) => ({
+              ...temp,
+              [id]: todoList.filter(({ completed }) => (filterType[id] === FilterTypes.ALL) ||
+                                                       (filterType[id] === FilterTypes.PRIORITY) ||
+                                                       (filterType[id] === FilterTypes.COMPLETED && completed) ||
+                                                       (filterType[id] === FilterTypes.ACTIVE && !completed))
+            }), {}),
   },
 
   actions: {
