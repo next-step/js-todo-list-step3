@@ -1,4 +1,3 @@
-
 export const Store = class {
 
   $state;

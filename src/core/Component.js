@@ -8,6 +8,7 @@ export const Component = class {
     this.$props = props;
     this.$render = debounceOneFrame(() => {
       target.innerHTML = this.render();
+      this.mounted();
     });
     this.setEvent(target);
     this.setState(state);
@@ -15,6 +16,7 @@ export const Component = class {
 
   setEvent (target) {}
   render () { return '' }
+  mounted () {}
 
   setState (payload) {
     this.$state = { ...this.$state, ...payload };
