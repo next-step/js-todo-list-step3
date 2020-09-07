@@ -11,6 +11,7 @@ export const Component = class {
     let isMounted = false;
     this.$render = debounceOneFrame(() => {
       target.innerHTML = this.render(this.$state, this.$props);
+      this.componentDidUpdate(target);
       if (!isMounted) this.componentDidMount();
     });
 
@@ -24,6 +25,7 @@ export const Component = class {
   setEvent (target, props) {}
   render (state) { return '' }
   componentDidMount () {}
+  componentDidUpdate (target) {}
 
   setState (payload) {
     this.$state = { ...this.$state, ...payload };
