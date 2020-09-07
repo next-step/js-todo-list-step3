@@ -1,7 +1,6 @@
 import {Component} from "../../core/Component.js";
 import {SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
-import {addEventBubblingListener} from "../../utils/index.js";
-import {todoRouter} from "../../router/todoRouter";
+import {todoRouter} from "../../router/todoRouter.js";
 
 export const TeamList = class extends Component {
 
@@ -32,7 +31,7 @@ export const TeamList = class extends Component {
       event.preventDefault();
       const { target } = event;
       const id = target.closest('[data-id]').dataset.id;
-      todoRouter.push(`/kanban.html?id=${id}`);
+      todoRouter.push(`./kanban.html?id=${id}`);
     })
     this.addEvent( 'add', 'click', () => {
       teamStore.commit(SET_OPENED_APPEND_FORM, true);

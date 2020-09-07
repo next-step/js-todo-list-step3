@@ -6,17 +6,21 @@ export const Router = class {
 
   constructor (callback) {
     this.#callback = callback;
+    window.onpopstate = () => {
+      this.load();
+    }
   }
 
   load () {
-    this.#callback(location.pathname.split('/').pop());
+    const uri = location.pathname.split('/').pop();
+    const params = parseQuery(uri);
+    this.#callback({ params, uri });
   }
 
   push (uri) {
     const params = parseQuery(uri);
+    this.#callback({ params, uri });
     history.pushState(params, '', uri);
-    this.#callback({ params, uri});
   }
-
 
 }
