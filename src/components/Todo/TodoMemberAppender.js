@@ -1,6 +1,6 @@
 import {Component} from "../../core/Component.js";
 
-export const TodoAppender = class extends Component {
+export const TodoMemberAppender = class extends Component {
   render () {
     return `
       <button id="add-user-button" class="ripple">

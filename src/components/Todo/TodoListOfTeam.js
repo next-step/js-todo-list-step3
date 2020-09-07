@@ -1,5 +1,5 @@
 import {Component} from "../../core/Component.js";
-import {TodoAppender} from "./TodoAppender.js";
+import {TodoMemberAppender} from "./TodoMemberAppender.js";
 import {TodoList} from "./TodoList.js";
 import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
 
@@ -11,13 +11,13 @@ export const TodoListOfTeam = class extends Component {
       ${members.map(({ _id }) => `
         <li class="todoapp-container" data-id="${_id}"></li>
       `).join('')}
-      <li id="todo-appender" class="add-user-button-container"></li>
+      <li id="todo-member-appender" class="add-user-button-container"></li>
     `
   }
 
   componentDidMount () {
-    const $todoAppender = this.$target.querySelector('#todo-appender');
-    new TodoAppender($todoAppender);
+    const $todoMemberAppender = this.$target.querySelector('#todo-member-appender');
+    new TodoMemberAppender($todoMemberAppender);
     this.$target.querySelectorAll('.todoapp-container').forEach($todoList => {
       new TodoList($todoList, {
         id: $todoList.dataset.id
