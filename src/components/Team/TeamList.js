@@ -26,11 +26,11 @@ export const TeamList = class extends Component {
     `;
   }
 
-  setEvent ($target) {
-    addEventBubblingListener($target, 'view', 'click', event => {
+  setEvent () {
+    this.addEvent('view', 'click', event => {
       event.preventDefault();
     })
-    addEventBubblingListener($target, 'add', 'click', event => {
+    this.addEvent( 'add', 'click', () => {
       teamStore.commit(SET_OPENED_APPEND_FORM, true);
     });
   }

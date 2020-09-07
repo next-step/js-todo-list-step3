@@ -1,22 +1,23 @@
-import { debounceOneFrame } from "../utils/index.js";
+import {addEventBubblingListener, debounceOneFrame} from "../utils/index.js";
 
 export const Component = class {
 
-  $state; $props; $render;
+  $target; $state; $props; $render;
 
   constructor(target, state = {}, props = {}) {
+    this.$target = target;
     this.$props = props;
     this.$state = state;
 
     let isMounted = false;
     this.$render = debounceOneFrame(() => {
       target.innerHTML = this.render(this.$state, this.$props);
-      this.componentDidUpdate(target);
+      this.componentDidUpdate();
       if (!isMounted) this.componentDidMount();
     });
 
     this.componentWillMount();
-    this.setEvent(target, props);
+    this.setEvent(target = this.$target, props);
     this.setState(state);
 
   }
@@ -25,11 +26,15 @@ export const Component = class {
   setEvent (target, props) {}
   render (state) { return '' }
   componentDidMount () {}
-  componentDidUpdate (target) {}
+  componentDidUpdate () {}
 
   setState (payload) {
     this.$state = { ...this.$state, ...payload };
     this.$render();
+  }
+
+  addEvent (ref, eventType, callback) {
+    addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
   }
 
 }
