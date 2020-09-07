@@ -1,14 +1,13 @@
 import {Component} from "../core/Component.js";
+import {TodoHeader} from "../components/Todo/TodoHeader.js";
+import {FETCH_TEAM, teamStore} from "../store/teamStore.js";
 import {todoRouter} from "../router/todoRouter.js";
 
 export const Kanban = class extends Component {
 
   render () {
-    console.log(todoRouter.$query);
     return `
-      <h1 id="user-title" data-username="eastjun">
-        <span><strong>Team</strong>'s Todo List</span>
-      </h1>
+      <h1 id="user-title"></h1>
       <ul class="todoapp-list-container flex-column-container">
         <li class="todoapp-container">
           <h2>
@@ -293,6 +292,15 @@ export const Kanban = class extends Component {
         </li>
       </ul>
     `;
+  }
+
+  componentDidMount () {
+    const $todoHeader = this.$target.querySelector('#user-title');
+    const todoHeader = new TodoHeader($todoHeader);
+
+    teamStore.addObserve(todoHeader);
+
+    teamStore.dispatch(FETCH_TEAM, todoRouter.$query.id);
   }
 
 }
