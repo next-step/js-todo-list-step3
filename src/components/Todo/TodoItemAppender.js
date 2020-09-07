@@ -1,5 +1,5 @@
 import {Component} from "../../core/Component.js";
-import {todoOfTeamStore} from "../../store/todoOfTeamStore";
+import {ADD_ITEM, todoOfTeamStore} from "../../store/todoOfTeamStore.js";
 
 export const TodoItemAppender = class extends Component {
   render () {
@@ -11,7 +11,11 @@ export const TodoItemAppender = class extends Component {
   setEvent () {
     this.addEvent('appender', 'keyup', ({ key, target }) => {
       if (key === 'Enter') {
-        todoOfTeamStore.dispatch()
+        todoOfTeamStore.dispatch(ADD_ITEM, {
+          memberId: this.$props.id,
+          contents: target.value
+        })
+        target.value = '';
       }
     });
   }
