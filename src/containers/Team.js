@@ -1,7 +1,7 @@
 import {Component} from "../core/Component.js";
-import {TeamList} from "../components/TeamList";
+import {TeamList} from "../components/TeamList.js";
 
-export const TodoKanban = class extends Component {
+export const Team = class extends Component {
 
   render () {
     return `

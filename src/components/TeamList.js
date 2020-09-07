@@ -1,4 +1,4 @@
-import {Component} from "../core/Component";
+import {Component} from "../core/Component.js";
 
 export const TeamList = class extends Component {
 

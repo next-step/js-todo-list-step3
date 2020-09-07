@@ -8,7 +8,7 @@ export const Component = class {
     this.$props = props;
     this.$render = debounceOneFrame(() => {
       target.innerHTML = this.render();
-      this.mounted();
+      this.componentDidMount();
     });
     this.setEvent(target);
     this.setState(state);
