@@ -16,7 +16,7 @@ export const Component = class {
 
   setEvent (target) {}
   render () { return '' }
-  mounted () {}
+  componentDidMount () {}
 
   setState (payload) {
     this.$state = { ...this.$state, ...payload };
