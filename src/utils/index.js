@@ -18,3 +18,11 @@ export const requestWithJSONBody = (url, option) => {
   const headers = { 'Content-Type': 'application/json' };
   return fetch(url, { ...option, headers }).then(response => response.json());
 }
+
+export const addEventBubblingListener = (parent, children, eventType, callback) => {
+  const isTarget = target => [ ...parent.querySelectorAll(children) ].includes(target);
+  parent.addEventListener(eventType, event => {
+    if (!isTarget(event.target)) return;
+    callback(event);
+  })
+}
