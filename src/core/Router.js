@@ -1,3 +1,5 @@
+import {parseQuery} from "../utils";
+
 export const Router = class {
 
   #callback;
@@ -7,15 +9,13 @@ export const Router = class {
   }
 
   load () {
-    this.#callback({
-      data: {},
-      uri: location.pathname.split('/').pop()
-    });
+    this.#callback(location.pathname.split('/').pop());
   }
 
-  push (data, uri) {
-    history.pushState(data, '', uri);
-    this.#callback({ data, uri });
+  push (uri) {
+    const params = parseQuery(uri);
+    history.pushState(params, '', uri);
+    this.#callback({ params, uri});
   }
 
 
