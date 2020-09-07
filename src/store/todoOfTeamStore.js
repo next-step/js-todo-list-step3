@@ -91,7 +91,7 @@ export const todoOfTeamStore = new Store({
       await TodoService.deleteItem({ teamId, memberId, itemId });
       dispatch(FETCH_TODO_LIST, memberId);
     },
-    async [DELETE_ALL_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId }) {
+    async [DELETE_ALL_ITEM] ({ dispatch, state: { _id: teamId } }, memberId) {
       await TodoService.deleteAllItem({ teamId, memberId });
       dispatch(FETCH_TODO_LIST, memberId);
     },

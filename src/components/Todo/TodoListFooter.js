@@ -1,6 +1,6 @@
 import {Component} from "../../core/Component.js";
 import FilterTypes from "../../constants/FilterTypes.js";
-import {todoOfTeamStore, SET_FILTER_TYPE} from "../../store/todoOfTeamStore.js";
+import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "../../store/todoOfTeamStore.js";
 
 const filterButtons = {
   [FilterTypes.ALL]: '전체보기',
@@ -29,7 +29,7 @@ export const TodoListFooter = class extends Component {
           </li>
         `).join('') }
       </ul>
-      <button class="clear-completed">모두 삭제</button>
+      <button class="clear-completed" data-ref="delete-all">모두 삭제</button>
     `;
   }
   
@@ -40,6 +40,10 @@ export const TodoListFooter = class extends Component {
         memberId: this.$props.id,
         filterType: event.target.dataset.filterType
       })
+    });
+    this.addEvent('delete-all', 'click', event => {
+      event.preventDefault();
+      todoOfTeamStore.dispatch(DELETE_ALL_ITEM, this.$props.id);
     });
   }
 }
