@@ -37,6 +37,6 @@ export const Store = class {
 
   #setState (newState) {
     this.$state = { ...newState };
-    this.#observes.forEach(observer => observer.$render());
+    this.#observes.forEach(observer => observer.validate() && observer.$render());
   }
 }

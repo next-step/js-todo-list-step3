@@ -28,12 +28,21 @@ export const Component = class {
   componentDidUpdate () {}
 
   setState (payload) {
+    if (!this.validate()) return;
     this.$state = { ...this.$state, ...payload };
     this.$render();
   }
 
   addEvent (ref, eventType, callback) {
     addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
+  }
+
+  validate () {
+    if (this.$target.parentNode === null) {
+      delete this;
+      return false;
+    }
+    return true;
   }
 
 }
