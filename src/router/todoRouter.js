@@ -4,6 +4,7 @@ import {Kanban} from "../containers/Kanban.js";
 
 const $app = document.querySelector('#app');
 export const todoRouter = new Router(uri => {
+  console.log(uri);
   if (uri.includes('index') || uri.length === 0) {
     return new Team($app);
   }

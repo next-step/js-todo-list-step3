@@ -5,6 +5,7 @@ import TodoService from "../services/TodoService.js";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
+export const SET_EDITING = 'SET_EDITING';
 
 export const FETCH_TEAM = 'FETCH_TEAM';
 export const FETCH_TODO_LIST = 'FETCH_TODO_LIST';
@@ -40,7 +41,10 @@ export const todoOfTeamStore = new Store({
     },
     [SET_TODO_LIST] (state, { memberId, todoList }) {
       state.members[memberId].todoList = todoList;
-    }
+    },
+    [SET_EDITING] (state, editing) {
+      state.editing = editing;
+    },
   },
 
   getters: {
@@ -61,7 +65,7 @@ export const todoOfTeamStore = new Store({
     },
     async [FETCH_TODO_LIST] ({ commit, state: { _id: teamId } }, memberId) {
       const { todoList } = await TodoService.fetchTodoList({ teamId, memberId });
-      commit(SET_TODO_LIST, { memberId, todoList: todoList.filter(v => v !== null) });
+      commit(SET_TODO_LIST, { memberId, todoList: (todoList || []).filter(v => v !== null) });
     },
     async [ADD_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId, contents }) {
       await TodoService.addItem({ teamId, memberId, contents });
