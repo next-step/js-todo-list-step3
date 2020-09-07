@@ -6,6 +6,7 @@ import TodoService from "../services/TodoService.js";
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
 export const SET_EDITING = 'SET_EDITING';
+export const SET_FILTER_TYPE = 'SET_FILTER_TYPE';
 
 export const FETCH_TEAM = 'FETCH_TEAM';
 export const FETCH_TODO_LIST = 'FETCH_TODO_LIST';
@@ -44,6 +45,9 @@ export const todoOfTeamStore = new Store({
     },
     [SET_EDITING] (state, editing) {
       state.editing = editing;
+    },
+    [SET_FILTER_TYPE] (state, { memberId, filterType }) {
+      state.filterType[memberId] = filterType;
     },
   },
 
