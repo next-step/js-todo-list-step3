@@ -1,15 +1,9 @@
 import {Component} from "../../core/Component.js";
-import {
-  DELETE_ITEM,
-  SET_EDITING,
-  todoOfTeamStore,
-  TOGGLE_ITEM,
-  UPDATE_ITEM,
-  UPDATE_ITEM_PRIORITY
-} from "../../store/todoOfTeamStore.js";
+import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "../../store/todoOfTeamStore.js";
 import {TodoListFooter} from "./TodoListFooter.js";
 import {TodoItemAppender} from "./TodoItemAppender.js";
 import PriorityTypes from "../../constants/PriorityTypes.js";
+import FilterTypes from "../../constants/FilterTypes.js";
 
 const priorityChip = {
   [PriorityTypes.PRIMARY]: 'primary',
@@ -21,11 +15,18 @@ export const TodoList = class extends Component {
   get #member () {
     return todoOfTeamStore.$state.members[this.$props.id];
   }
-
-  get #filteredItems () {
-    return todoOfTeamStore.$getters.membersByFilteredTodoList[this.$props.id];
+  
+  get #filterType () {
+    return todoOfTeamStore.$state.filterType[this.$props.id];
   }
 
+  get #filteredItems () {
+    const items = todoOfTeamStore.$getters.membersByFilteredTodoList[this.$props.id];
+    if (this.#filterType === FilterTypes.PRIORITY) {
+      items.sort((a, b) => (a.priority || 100) - (b.priority || 100));
+    }
+    return items;
+  }
   isEditingOf (id) {
     return todoOfTeamStore.$state.editing === id;
   }
