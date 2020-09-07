@@ -1,5 +1,5 @@
 import {Component} from "../core/Component.js";
-import {TeamList} from "../components/TeamList.js";
+import {TeamList} from "../components/Team/TeamList.js";
 
 export const Team = class extends Component {
 

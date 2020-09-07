@@ -6,12 +6,16 @@ export const Component = class {
 
   constructor(target, state, props) {
     this.$props = props;
+
+    let isMounted = false;
     this.$render = debounceOneFrame(() => {
       target.innerHTML = this.render();
-      this.componentDidMount();
+      if (!isMounted) this.componentDidMount();
     });
+
     this.setEvent(target);
     this.setState(state);
+
   }
 
   setEvent (target) {}
