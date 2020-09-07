@@ -7,6 +7,7 @@ export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
 export const SET_EDITING = 'SET_EDITING';
 export const SET_FILTER_TYPE = 'SET_FILTER_TYPE';
+export const SET_OPENED_APPEND_FORM = 'SET_OPENED_APPEND_FORM';
 
 export const FETCH_TEAM = 'FETCH_TEAM';
 export const FETCH_TODO_LIST = 'FETCH_TODO_LIST';
@@ -26,6 +27,7 @@ export const todoOfTeamStore = new Store({
     members: {},
     filterType: {},
     editing: null,
+    openedAppendForm: false,
   },
 
   mutations: {
@@ -35,7 +37,7 @@ export const todoOfTeamStore = new Store({
       for (const member of members) {
         state.members[member._id] = {
           ...member,
-          todoList: member.todoList.filter(v => v !== null)
+          todoList: (member.todoList || []).filter(v => v !== null)
         };
         state.filterType[member._id] = FilterTypes.ALL;
       }
@@ -48,6 +50,9 @@ export const todoOfTeamStore = new Store({
     },
     [SET_FILTER_TYPE] (state, { memberId, filterType }) {
       state.filterType[memberId] = filterType;
+    },
+    [SET_OPENED_APPEND_FORM] (state, openedAppendForm) {
+      state.openedAppendForm = openedAppendForm;
     },
   },
 
@@ -95,7 +100,7 @@ export const todoOfTeamStore = new Store({
       await TodoService.deleteAllItem({ teamId, memberId });
       dispatch(FETCH_TODO_LIST, memberId);
     },
-    async [ADD_TEAM_MEMBER] ({ commit }, { teamId, name }) {
+    async [ADD_TEAM_MEMBER] ({ commit, state: { _id: teamId } }, name) {
       return commit(INIT, await TeamService.addTeamMember({ teamId, name }));
     },
   },
