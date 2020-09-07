@@ -2,6 +2,10 @@ import { todoAdapterClient } from "../adapter/todoAdapter.js";
 
 export default Object.freeze({
 
+  fetchTodoList ({ teamId, memberId }) {
+    return todoAdapterClient.get(`teams/${teamId}/members/${memberId}`);
+  },
+
   addItem ({ teamId, memberId, contents }) {
     return todoAdapterClient.post(`teams/${teamId}/members/${memberId}/items`, { contents });
   },
@@ -22,7 +26,7 @@ export default Object.freeze({
     return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}/items/${itemId}`);
   },
 
-  deleteAllItem ({ teamId, memberId, itemId }) {
+  deleteAllItem ({ teamId, memberId }) {
     return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}/items`);
   },
 

@@ -1,9 +1,20 @@
 import {Store} from "../core/Store.js";
 import TeamService from "../services/TeamService.js";
 import FilterTypes from "../constants/FilterTypes.js";
+import TodoService from "../services/TodoService";
 
 export const INIT = 'INIT';
+export const SET_TODO_LIST = 'SET_TODO_LIST';
+
 export const FETCH_TEAM = 'FETCH_TEAM';
+export const FETCH_TODO_LIST = 'FETCH_TODO_LIST';
+export const ADD_ITEM = 'ADD_ITEM';
+export const ADD_TEAM_MEMBER = 'ADD_TEAM_MEMBER';
+export const TOGGLE_ITEM = 'TOGGLE_ITEM';
+export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const UPDATE_ITEM_PRIORITY = 'UPDATE_ITEM_PRIORITY';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const DELETE_ALL_ITEM = 'DELETE_ALL_ITEM';
 
 export const todoOfTeamStore = new Store({
 
@@ -26,6 +37,9 @@ export const todoOfTeamStore = new Store({
         };
         state.filterType[member._id] = FilterTypes.ALL;
       }
+    },
+    [SET_TODO_LIST] (state, { memberId, todoList }) {
+      state.members[memberId].todoList = todoList;
     }
   },
 
@@ -44,7 +58,39 @@ export const todoOfTeamStore = new Store({
   actions: {
     async [FETCH_TEAM] ({ commit }, id) {
       commit(INIT, await TeamService.fetchTeam(id));
-    }
+    },
+    async [FETCH_TODO_LIST] ({ commit, state: { _id: teamId } }, memberId) {
+      const { todoList } = await TodoService.fetchTodoList({ teamId, memberId });
+      commit(SET_TODO_LIST, { memberId, todoList });
+    },
+    async [ADD_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId, contents }) {
+      await TodoService.addItem({ teamId, memberId, contents });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+    async [TOGGLE_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId, itemId }) {
+      await TodoService.toggleItem({ teamId, memberId, itemId });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+    async [UPDATE_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId, itemId, contents }) {
+      await TodoService.updateItem({ teamId, memberId, itemId, contents });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+    async [UPDATE_ITEM_PRIORITY] ({ dispatch, state: { _id: teamId } }, { memberId, itemId, priority }) {
+      await TodoService.updateItemPriority({ teamId, memberId, itemId, priority });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+    async [DELETE_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId, itemId }) {
+      await TodoService.deleteItem({ teamId, memberId, itemId });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+    async [DELETE_ALL_ITEM] ({ dispatch, state: { _id: teamId } }, { memberId }) {
+      await TodoService.deleteAllItem({ teamId, memberId });
+      dispatch(FETCH_TODO_LIST, memberId);
+    },
+
+    async [ADD_TEAM_MEMBER] ({ commit }, { teamId, name }) {
+      return commit(INIT, await TeamService.addTeamMember({ teamId, name }));
+    },
   },
 
 });
