@@ -1,4 +1,4 @@
-import {parseQuery} from "../utils";
+import {parseQuery} from "../utils/index.js";
 
 export const Router = class {
 
