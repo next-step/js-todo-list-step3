@@ -1,8 +1,8 @@
 import {Component} from "../core/Component.js";
 import {TodoHeader} from "../components/Todo/TodoHeader.js";
-import {FETCH_TEAM, teamStore} from "../store/teamStore.js";
 import {todoRouter} from "../router/todoRouter.js";
 import {TodoListOfTeam} from "../components/Todo/TodoListOfTeam.js";
+import {FETCH_TEAM, todoOfTeamStore} from "../store/todoOfTeamStore.js";
 
 export const Kanban = class extends Component {
 
@@ -19,9 +19,8 @@ export const Kanban = class extends Component {
     const todoHeader = new TodoHeader($todoHeader);
     const todoListOfTeam = new TodoListOfTeam($todoListOfTeam);
 
-    teamStore.addObserve(todoHeader, todoListOfTeam);
-
-    teamStore.dispatch(FETCH_TEAM, todoRouter.$query.id);
+    todoOfTeamStore.addObserve(todoHeader, todoListOfTeam);
+    todoOfTeamStore.dispatch(FETCH_TEAM, todoRouter.$query.id);
   }
 
 }

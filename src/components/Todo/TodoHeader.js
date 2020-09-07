@@ -1,9 +1,9 @@
 import {Component} from "../../core/Component.js";
-import {teamStore} from "../../store/teamStore.js";
+import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
 
 export const TodoHeader = class extends Component {
   render () {
-    const { name } = teamStore.$state.team;
+    const { name } = todoOfTeamStore.$state;
     return name ? `
         <span><strong>${name}</strong>'s Todo List</span>
     ` : '';
