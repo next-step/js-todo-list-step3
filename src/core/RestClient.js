@@ -1,4 +1,4 @@
-import HttpMethod from "../constants/HttpMethod";
+import HttpMethod from "../constants/HttpMethod.js";
 
 export const RestClient = class {
 
@@ -12,7 +12,7 @@ export const RestClient = class {
     return fetch(`${this.#baseURL}/${uri}`, option).then(response => response.json());
   }
 
-  #requestWithBody (uri, { ...option, headers = {}, body = {} }) {
+  #requestWithBody (uri, { headers = {}, body = {}, ...option }) {
     return fetch(`${this.#baseURL}/${uri}`, {
       ...option,
       body: JSON.stringify(body),

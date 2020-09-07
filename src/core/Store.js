@@ -6,7 +6,7 @@ export const Store = class {
   #actions;
   #observes = new Set();
 
-  constructor({ state, mutations, getters, actions }) {
+  constructor({ state, getters = {}, mutations = {}, actions = {} }) {
     this.$state = state;
     this.$getters = Object.entries(getters)
                           .reduce((getters, [key, getter]) => (
