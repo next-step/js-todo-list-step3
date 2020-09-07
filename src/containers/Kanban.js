@@ -1,8 +1,10 @@
 import {Component} from "../core/Component.js";
+import {todoRouter} from "../router/todoRouter.js";
 
 export const Kanban = class extends Component {
 
   render () {
+    console.log(todoRouter.$query);
     return `
       <h1 id="user-title" data-username="eastjun">
         <span><strong>Team</strong>'s Todo List</span>

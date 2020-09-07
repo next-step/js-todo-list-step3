@@ -2,12 +2,11 @@ import {addEventBubblingListener, debounceOneFrame} from "../utils/index.js";
 
 export const Component = class {
 
-  $target; $state; $props; $render;
+  $target; $state = {}; $props; $render;
 
-  constructor(target, state = {}, props = {}) {
+  constructor(target, props = {}) {
     this.$target = target;
     this.$props = props;
-    this.$state = state;
 
     let isMounted = false;
     this.$render = debounceOneFrame(() => {
@@ -18,13 +17,13 @@ export const Component = class {
 
     this.componentWillMount();
     this.setEvent(target = this.$target, props);
-    this.setState(state);
+    this.setState(this.$state);
 
   }
 
   componentWillMount () {}
   setEvent (target, props) {}
-  render (state) { return '' }
+  render () { return '' }
   componentDidMount () {}
   componentDidUpdate () {}
 

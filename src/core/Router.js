@@ -2,25 +2,24 @@ import {parseQuery} from "../utils";
 
 export const Router = class {
 
-  #callback;
+  #callback; $query = {};
 
   constructor (callback) {
     this.#callback = callback;
-    window.onpopstate = () => {
-      this.load();
-    }
+    window.onpopstate = () => this.load();
   }
 
   load () {
     const uri = location.pathname.split('/').pop();
-    const params = parseQuery(uri);
-    this.#callback({ params, uri });
+    this.$query = parseQuery(location.search);
+    this.#callback(uri);
   }
 
   push (uri) {
-    const params = parseQuery(uri);
-    this.#callback({ params, uri });
-    history.pushState(params, '', uri);
+    const query = parseQuery(uri);
+    this.$query = query;
+    this.#callback(uri);
+    history.pushState(query, '', uri);
   }
 
 }
