@@ -1,10 +1,11 @@
-import { Component } from "../../core/Component.js";
+import {Component} from "../../core/Component.js";
 import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
+import {TodoListFooter} from "./TodoListFooter.js";
 
 export const TodoList = class extends Component {
 
   get #member () {
-    return todoOfTeamStore.$state.members.find(v => v._id === this.$props.id);
+    return todoOfTeamStore.$state.members[this.$props.id];
   }
 
   render () {
@@ -129,5 +130,10 @@ export const TodoList = class extends Component {
         <div id="todo-list-footer" class="count-container"></div>
       </div>
     `;
+  }
+
+  componentDidMount () {
+    const $todoListFooter = this.$target.querySelector('#todo-list-footer');
+    new TodoListFooter($todoListFooter, { id: this.$props.id });
   }
 }

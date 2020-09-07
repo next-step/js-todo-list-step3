@@ -1,6 +1,6 @@
 import {Component} from "../../core/Component.js";
 import FilterTypes from "../../constants/FilterTypes.js";
-import {todoOfTeamStore} from "../../store/todoOfTeamStore";
+import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
 
 const filterButtons = {
   [FilterTypes.ALL]: '전체보기',
@@ -22,11 +22,13 @@ export const TodoListFooter = class extends Component {
   render () {
     return `
       <span class="todo-count">총 <strong>${this.#filteredCount}</strong> 개</span>
-      ${ Object.entries(filterButtons).map(([ type, text ]) => `
-        <li>
-          <a href="#" ${ this.#filterType === type ? ' class="selected"': '' } data-type="${type}">${text}</a>
-        </li>
-      `).join('') }
+      <ul class="filters">
+        ${ Object.entries(filterButtons).map(([ type, text ]) => `
+          <li>
+            <a href="#" ${ this.#filterType === type ? ' class="selected"': '' } data-type="${type}">${text}</a>
+          </li>
+        `).join('') }
+      </ul>
       <button class="clear-completed">모두 삭제</button>
     `;
   }

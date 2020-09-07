@@ -1,6 +1,6 @@
 import {Store} from "../core/Store.js";
 import TeamService from "../services/TeamService.js";
-import FilterTypes from "../constants/FilterTypes";
+import FilterTypes from "../constants/FilterTypes.js";
 
 export const INIT = 'INIT';
 export const FETCH_TEAM = 'FETCH_TEAM';
@@ -19,7 +19,10 @@ export const todoOfTeamStore = new Store({
       state._id = _id;
       state.name = name;
       for (const member of members) {
-        state.members[member._id] = member;
+        state.members[member._id] = {
+          ...member,
+          todoList: member.todoList.filter(v => v !== null)
+        };
         state.filterType[member._id] = FilterTypes.ALL;
       }
     }

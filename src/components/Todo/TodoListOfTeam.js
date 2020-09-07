@@ -8,8 +8,8 @@ export const TodoListOfTeam = class extends Component {
   render () {
     const { members } = todoOfTeamStore.$state;
     return `
-      ${members.map(({ _id }) => `
-        <li class="todoapp-container" data-id="${_id}"></li>
+      ${Object.keys(members).map(id => `
+        <li class="todoapp-container" data-id="${id}"></li>
       `).join('')}
       <li id="todo-member-appender" class="add-user-button-container"></li>
     `
