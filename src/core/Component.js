@@ -10,19 +10,19 @@ export const Component = class {
 
     let isMounted = false;
     this.$render = debounceOneFrame(() => {
-      target.innerHTML = this.render();
+      target.innerHTML = this.render(this.$state, this.$props);
       if (!isMounted) this.componentDidMount();
     });
 
     this.componentWillMount();
-    this.setEvent(target);
+    this.setEvent(target, props);
     this.setState(state);
 
   }
 
   componentWillMount () {}
-  setEvent (target) {}
-  render () { return '' }
+  setEvent (target, props) {}
+  render (state) { return '' }
   componentDidMount () {}
 
   setState (payload) {

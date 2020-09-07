@@ -1,5 +1,6 @@
 import {Component} from "../../core/Component.js";
-import {teamStore} from "../../store/teamStore.js";
+import {SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
+import {addEventBubblingListener} from "../../utils/index.js";
 
 export const TeamList = class extends Component {
 
@@ -9,7 +10,7 @@ export const TeamList = class extends Component {
     return `
       ${teams.map(({ _id, name }) => `
         <div class="team-card-container">
-          <a href="/kanban.html" class="card" data-id="${_id}">
+          <a href="#" class="card" data-id="${_id}">
             <div class="card-title">
               ${name}
             </div>
@@ -23,6 +24,15 @@ export const TeamList = class extends Component {
         </button>
       </div>
     `;
+  }
+
+  setEvent ($target) {
+    addEventBubblingListener($target, '.team-card-container a', 'click', event => {
+      event.preventDefault();
+    })
+    addEventBubblingListener($target, '#add-team-button', 'click', event => {
+      teamStore.commit(SET_OPENED_APPEND_FORM, true);
+    });
   }
 
 }
