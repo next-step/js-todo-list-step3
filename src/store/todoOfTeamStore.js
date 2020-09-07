@@ -12,6 +12,7 @@ export const todoOfTeamStore = new Store({
     name: null,
     members: {},
     filterType: {},
+    editing: null,
   },
 
   mutations: {
@@ -33,10 +34,10 @@ export const todoOfTeamStore = new Store({
       Object.entries(members)
             .reduce((temp, [ id, { todoList } ]) => ({
               ...temp,
-              [id]: todoList.filter(({ completed }) => (filterType[id] === FilterTypes.ALL) ||
-                                                       (filterType[id] === FilterTypes.PRIORITY) ||
-                                                       (filterType[id] === FilterTypes.COMPLETED && completed) ||
-                                                       (filterType[id] === FilterTypes.ACTIVE && !completed))
+              [id]: todoList.filter(({ isCompleted }) => (filterType[id] === FilterTypes.ALL) ||
+                                                         (filterType[id] === FilterTypes.PRIORITY) ||
+                                                         (filterType[id] === FilterTypes.COMPLETED && isCompleted) ||
+                                                         (filterType[id] === FilterTypes.ACTIVE && !isCompleted))
             }), {}),
   },
 
