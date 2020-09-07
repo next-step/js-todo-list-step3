@@ -1,5 +1,5 @@
 import {Component} from "../../core/Component.js";
-import {SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
+import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
 
 export const TeamAppendForm = class extends Component {
 
@@ -29,12 +29,22 @@ export const TeamAppendForm = class extends Component {
 
   setEvent () {
     this.addEvent('close', 'click', () => this.#close());
-    this.addEvent('team-name', 'keyup', ({ key }) => {
+    this.addEvent('team-name', 'keyup', ({ key, target }) => {
       if (key === 'Escape') this.#close();
+      if (key === 'Enter') this.#appendTeam(target.value);
     })
   }
 
   #close () {
     teamStore.commit(SET_OPENED_APPEND_FORM, false);
+  }
+
+  async #appendTeam (name) {
+    try {
+      await teamStore.dispatch(ADD_TEAM, name);
+      this.#close();
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
