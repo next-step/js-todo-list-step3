@@ -1,23 +1,21 @@
-import {RestClient} from "../core/Request";
-
-const restClient = new RestClient('https://blackcoffee-todolist.df.r.appspot.com/api');
+import { todoAdapterClient } from "../adapter/todoAdapter.js";
 
 export default Object.freeze({
 
   fetchTeams () {
-    return restClient.get('/teams');
+    return todoAdapterClient.get('/teams');
   },
 
   fetchTeam (teamId) {
-    return restClient.get(`/teams/${teamId}`);
+    return todoAdapterClient.get(`/teams/${teamId}`);
   },
 
   addTeam (name) {
-    return restClient.post(`/teams`, { name });
+    return todoAdapterClient.post(`/teams`, { name });
   },
 
   deleteTeam (teamId) {
-    return restClient.delete(`/teams/${teamId}`);
+    return todoAdapterClient.delete(`/teams/${teamId}`);
   },
 
 })
