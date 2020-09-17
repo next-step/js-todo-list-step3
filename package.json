@@ -1,15 +1,20 @@
 {
   "name": "js-todo-list-step3",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "repository": "https://github.com/JunilHwang/js-todo-list-step3",
   "author": "junilHwang <tjsdlf4261@naver.com>",
   "license": "MIT",
   "scripts": {
-    "watch": "tsc --watch",
-    "build": "tsc"
+    "watch": "webpack --watch",
+    "build": "webpack"
   },
   "dependencies": {
     "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "ts-loader": "^8.0.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
