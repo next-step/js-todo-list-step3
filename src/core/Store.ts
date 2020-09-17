@@ -23,7 +23,7 @@ export class Store<T> {
   public readonly $getters: Getters;
   private readonly mutations: Mutations<T>;
   private readonly actions: Actions<T>;
-  private readonly observes: Set<Component<any>> = new Set();
+  private readonly observers: Set<Component<any>> = new Set();
 
   constructor({ state, getters = {}, mutations = {}, actions = {} }: StoreProps<T>) {
     this.$state = state;
@@ -50,12 +50,12 @@ export class Store<T> {
     }, payload);
   }
 
-  public addObserve (...components: Component<any>[]) {
-    components.forEach(component => this.observes.add(component));
+  public addObserver (...components: Component<any>[]) {
+    components.forEach(component => this.observers.add(component));
   }
 
   private setState (newState: T) {
     this.$state = { ...newState };
-    this.observes.forEach(observer => observer.validate() && observer.render())
+    this.observers.forEach(observer => observer.validate() && observer.render())
   }
 }

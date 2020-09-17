@@ -1,8 +1,19 @@
 import {addEventBubblingListener, debounceOneFrame} from "../utils";
+import {Store} from "./Store";
+import {Constructable} from "../domains";
+
+export interface ChildrenProps {
+  [k: string]: {
+    constructor: Constructable<Component<any>>,
+    props: any
+  }
+}
 
 export class Component<T> {
 
   protected $state?: T;
+  protected $stores: Store<any>[] = [];
+  protected $children: ChildrenProps = {};
 
   constructor(
     protected readonly $target: HTMLElement|Element,
@@ -13,9 +24,23 @@ export class Component<T> {
 
   private async setup () {
     await this.componentInit();
+    this.subscribeStore();
     this.setEvent();
     this.setState(this.$state);
     this.componentDidMount();
+    this.buildChildren();
+  }
+
+  private subscribeStore () {
+    this.$stores.forEach(store => store.addObserver(this));
+  }
+
+  private buildChildren () {
+    this.$target.querySelectorAll('[data-component]').forEach((target: Element) => {
+      const componentName: string = (target as HTMLElement).dataset.component!;
+      const { constructor, props } = this.$children[componentName];
+      new constructor(props);
+    })
   }
 
   protected componentInit () {}
@@ -37,7 +62,9 @@ export class Component<T> {
     this.$target.innerHTML = this.template();
     this.componentDidUpdate();
   });
+
   public template () { return '' }
+
   public validate (): boolean {
     return !this.$target.parentNode === null;
   }
