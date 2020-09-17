@@ -5,7 +5,7 @@ import {Constructable} from "../domains";
 export interface ChildrenProps {
   [k: string]: {
     constructor: Constructable<Component<any>>,
-    props: any
+    props?: any
   }
 }
 

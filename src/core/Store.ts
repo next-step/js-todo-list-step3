@@ -42,8 +42,8 @@ export class Store<T> {
     this.setState(newState);
   }
 
-  public dispatch (key: string, payload: any) {
-    this.actions[key]({
+  public dispatch (key: string, payload: any): Promise<any> | void {
+    return this.actions[key]({
       commit: (key: string, payload: any) => this.commit(key, payload),
       dispatch: (key: string, payload: any) => this.dispatch(key, payload),
       state: { ...this.$state },
