@@ -1,19 +1,18 @@
-import HttpMethod from "../constants/HttpMethod";
+import { HttpMethod } from "../constants";
 
 export const RestClient = class {
 
   constructor (private readonly baseURL: string) {}
 
-  private request (uri: string, method = HttpMethod.GET): Promise<any> {
+  private request (uri: string, method: HttpMethod = HttpMethod.GET): Promise<any> {
     return fetch(`${this.baseURL}/${uri}`, { method })
             .then(response => response.json());
   }
 
-  private requestWithBody (uri: string, method: string, body?: BodyInit): Promise<any> {
-    return fetch(`${this.baseURL}/${uri}`, {
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' }
-    }).then(response => response.json());
+  private requestWithBody (uri: string, method: HttpMethod, body?: BodyInit): Promise<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    const requestInit: RequestInit = { method, headers, body: JSON.stringify(body) };
+    return fetch(`${this.baseURL}/${uri}`, requestInit).then(response => response.json());
   }
 
   public get (uri: string): Promise<any> {

@@ -7,7 +7,7 @@ import {TodoMemberAppendForm} from "../components/Todo/TodoMemberAppendForm";
 
 export const Kanban = class extends Component {
 
-  render () {ㄴ
+  render () {
     return `
       <h1 id="user-title"></h1>
       <ul id="todo-list-of-team" class="todoapp-list-container flex-column-container"></ul>
