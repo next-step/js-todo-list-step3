@@ -5,6 +5,10 @@
   "repository": "https://github.com/JunilHwang/js-todo-list-step3",
   "author": "junilHwang <tjsdlf4261@naver.com>",
   "license": "MIT",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc"
+  },
   "dependencies": {
     "typescript": "^4.0.2"
   }
