@@ -1,9 +1,9 @@
-import {Component} from "../../core/Component.js";
-import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "../../store/todoOfTeamStore.js";
-import {TodoListFooter} from "./TodoListFooter.js";
-import {TodoItemAppender} from "./TodoItemAppender.js";
-import PriorityTypes from "../../constants/PriorityTypes.js";
-import FilterTypes from "../../constants/FilterTypes.js";
+import {Component} from "../../core/Component";
+import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "../../store/todoOfTeamStore";
+import {TodoListFooter} from "./TodoListFooter";
+import {TodoItemAppender} from "./TodoItemAppender";
+import PriorityTypes from "../../constants/PriorityTypes";
+import FilterTypes from "../../constants/FilterTypes";
 
 const priorityChip = {
   [PriorityTypes.PRIMARY]: 'primary',

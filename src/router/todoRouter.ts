@@ -1,6 +1,6 @@
-import { Router } from "../core/Router.js";
-import {Team} from "../containers/Team.js";
-import {Kanban} from "../containers/Kanban.js";
+import { Router } from "../core/Router";
+import { Team } from "../containers/Team";
+import { Kanban } from "../containers/Kanban";
 
 const $app = document.querySelector('#app');
 export const todoRouter = new Router((uri: string) => {

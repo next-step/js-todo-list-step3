@@ -1,6 +1,6 @@
-import {Component} from "../../core/Component.js";
-import FilterTypes from "../../constants/FilterTypes.js";
-import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "../../store/todoOfTeamStore.js";
+import {Component} from "../../core/Component";
+import FilterTypes from "../../constants/FilterTypes";
+import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "../../store/todoOfTeamStore";
 
 const filterButtons = {
   [FilterTypes.ALL]: '전체보기',

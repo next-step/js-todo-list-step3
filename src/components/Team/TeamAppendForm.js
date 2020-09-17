@@ -1,5 +1,5 @@
-import {Component} from "../../core/Component.js";
-import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
+import {Component} from "../../core/Component";
+import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore";
 
 export const TeamAppendForm = class extends Component {
 

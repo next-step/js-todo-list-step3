@@ -1,7 +1,7 @@
-import {Component} from "../../core/Component.js";
-import {TodoMemberAppender} from "./TodoMemberAppender.js";
-import {TodoList} from "./TodoList.js";
-import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
+import {Component} from "../../core/Component";
+import {TodoMemberAppender} from "./TodoMemberAppender";
+import {TodoList} from "./TodoList";
+import {todoOfTeamStore} from "../../store/todoOfTeamStore";
 
 export const TodoListOfTeam = class extends Component {
 

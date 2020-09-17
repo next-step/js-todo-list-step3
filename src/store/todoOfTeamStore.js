@@ -1,7 +1,7 @@
-import {Store} from "../core/Store.js";
-import TeamService from "../services/TeamService.js";
-import FilterTypes from "../constants/FilterTypes.js";
-import TodoService from "../services/TodoService.js";
+import {Store} from "../core/Store";
+import TeamService from "../services/TeamService";
+import FilterTypes from "../constants/FilterTypes";
+import TodoService from "../services/TodoService";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';

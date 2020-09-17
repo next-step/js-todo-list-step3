@@ -1,6 +1,6 @@
-import {Component} from "../../core/Component.js";
-import {ADD_TEAM_MEMBER, todoOfTeamStore} from "../../store/todoOfTeamStore.js";
-import {SET_OPENED_APPEND_FORM} from "../../store/todoOfTeamStore.js";
+import {Component} from "../../core/Component";
+import {ADD_TEAM_MEMBER, todoOfTeamStore} from "../../store/todoOfTeamStore";
+import {SET_OPENED_APPEND_FORM} from "../../store/todoOfTeamStore";
 
 export const TodoMemberAppendForm = class extends Component {
 

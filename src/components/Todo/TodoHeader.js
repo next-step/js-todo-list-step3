@@ -1,5 +1,5 @@
-import {Component} from "../../core/Component.js";
-import {todoOfTeamStore} from "../../store/todoOfTeamStore.js";
+import {Component} from "../../core/Component";
+import {todoOfTeamStore} from "../../store/todoOfTeamStore";
 
 export const TodoHeader = class extends Component {
   render () {

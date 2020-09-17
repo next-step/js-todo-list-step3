@@ -1,13 +1,13 @@
-import {Component} from "../core/Component.js";
-import {TodoHeader} from "../components/Todo/TodoHeader.js";
-import {todoRouter} from "../router/todoRouter.js";
-import {TodoListOfTeam} from "../components/Todo/TodoListOfTeam.js";
-import {FETCH_TEAM, todoOfTeamStore} from "../store/todoOfTeamStore.js";
-import {TodoMemberAppendForm} from "../components/Todo/TodoMemberAppendForm.js";
+import {Component} from "../core/Component";
+import {TodoHeader} from "../components/Todo/TodoHeader";
+import {todoRouter} from "../router/todoRouter";
+import {TodoListOfTeam} from "../components/Todo/TodoListOfTeam";
+import {FETCH_TEAM, todoOfTeamStore} from "../store/todoOfTeamStore";
+import {TodoMemberAppendForm} from "../components/Todo/TodoMemberAppendForm";
 
 export const Kanban = class extends Component {
 
-  render () {
+  render () {ㄴ
     return `
       <h1 id="user-title"></h1>
       <ul id="todo-list-of-team" class="todoapp-list-container flex-column-container"></ul>

@@ -6,8 +6,9 @@
   "author": "junilHwang <tjsdlf4261@naver.com>",
   "license": "MIT",
   "scripts": {
-    "watch": "webpack --watch",
-    "build": "webpack"
+    "watch": "webpack --watch --mode=development",
+    "build:dev": "webpack --mode=development",
+    "build": "webpack --mode=production"
   },
   "dependencies": {
     "typescript": "^4.0.2"

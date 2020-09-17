@@ -1,4 +1,4 @@
-import HttpMethod from "../constants/HttpMethod.js";
+import HttpMethod from "../constants/HttpMethod";
 
 export const RestClient = class {
 

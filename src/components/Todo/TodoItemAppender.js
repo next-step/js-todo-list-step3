@@ -1,5 +1,5 @@
-import {Component} from "../../core/Component.js";
-import {ADD_ITEM, todoOfTeamStore} from "../../store/todoOfTeamStore.js";
+import {Component} from "../../core/Component";
+import {ADD_ITEM, todoOfTeamStore} from "../../store/todoOfTeamStore";
 
 export const TodoItemAppender = class extends Component {
   render () {

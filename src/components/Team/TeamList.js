@@ -1,6 +1,6 @@
-import {Component} from "../../core/Component.js";
-import {SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore.js";
-import {todoRouter} from "../../router/todoRouter.js";
+import {Component} from "../../core/Component";
+import {SET_OPENED_APPEND_FORM, teamStore} from "../../store/teamStore";
+import {todoRouter} from "../../router/todoRouter";
 
 export const TeamList = class extends Component {
 
