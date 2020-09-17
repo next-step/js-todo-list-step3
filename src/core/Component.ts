@@ -5,7 +5,7 @@ export class Component<T> {
   protected $state?: T;
 
   constructor(
-    protected readonly $target: HTMLElement,
+    protected readonly $target: HTMLElement|Element,
     protected readonly $props: Object = {}
   ) {
     this.setup();

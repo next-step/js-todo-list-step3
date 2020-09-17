@@ -5,9 +5,9 @@ import {TodoListOfTeam} from "../components/Todo/TodoListOfTeam";
 import {FETCH_TEAM, todoOfTeamStore} from "../store/todoOfTeamStore";
 import {TodoMemberAppendForm} from "../components/Todo/TodoMemberAppendForm";
 
-export const Kanban = class extends Component {
+export const Kanban = class extends Component<{}> {
 
-  render () {
+  template () {
     return `
       <h1 id="user-title"></h1>
       <ul id="todo-list-of-team" class="todoapp-list-container flex-column-container"></ul>
