@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/JunilHwang/js-todo-list-step3",
   "author": "junilHwang <tjsdlf4261@naver.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.0.2"
+  }
 }
