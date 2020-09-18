@@ -18,3 +18,5 @@ export const enum FilterTypes {
   ACTIVE = 'active',
   COMPLETED = 'completed',
 }
+
+export const ONE_FRAME = 1000 / 60;
