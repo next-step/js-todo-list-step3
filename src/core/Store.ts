@@ -6,16 +6,16 @@ export interface Mutations<T> { [k: string]: (state: T, payload: any) => void }
 export interface ActionContext<T> {
   state: T,
   commit: (key: string, payload: any) => void,
-  dispatch: (key: string, payload: any) => Promise<any> | void,
+  dispatch: (key: string, payload?: any) => Promise<any> | void,
 }
 export interface Actions<T> {
   [k: string]: (context: ActionContext<T>, payload: any) => Promise<any> | void
 }
 export interface StoreProps<T> {
   state: T
-  getters: Getters<T>
-  mutations: Mutations<T>
-  actions: Actions<T>
+  getters?: Getters<T>
+  mutations?: Mutations<T>
+  actions?: Actions<T>
 }
 
 export class Store<T> {
