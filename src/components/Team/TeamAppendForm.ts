@@ -4,7 +4,7 @@ import {Events} from "@/domains";
 
 export const TeamAppendForm = class extends Component<{}> {
 
-  render () {
+  template () {
     const { openedAppendForm } = teamStore.$state;
     return openedAppendForm ? `
       <div class="modal" data-ref="close">
@@ -21,7 +21,7 @@ export const TeamAppendForm = class extends Component<{}> {
   }
 
   componentDidUpdate () {
-    const $target = this.$target;
+    const { $target } = this;
     $target.querySelector('.modal-box')?.addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
     });
@@ -29,22 +29,22 @@ export const TeamAppendForm = class extends Component<{}> {
   }
 
   setEvent () {
-    this.addEvent('close', 'click', () => this.#close());
+    this.addEvent('close', 'click', () => this.close());
     this.addEvent('team-name', 'keyup', (event: Events) => {
       const { key, target } = event as KeyboardEvent;
-      if (key === 'Escape') this.#close();
-      if (key === 'Enter') this.#appendTeam((target as HTMLInputElement).value);
+      if (key === 'Escape') this.close();
+      if (key === 'Enter') this.appendTeam((target as HTMLInputElement).value);
     })
   }
 
-  #close () {
+  private close () {
     teamStore.commit(SET_OPENED_APPEND_FORM, false);
   }
 
-  async #appendTeam (name) {
+  private async appendTeam (name: string) {
     try {
       await teamStore.dispatch(ADD_TEAM, name);
-      this.#close();
+      this.close();
     } catch (e) {
       console.error(e);
     }

@@ -4,7 +4,7 @@ export type RequestQuery = Record<string, string>;
 
 export type RequestBodyValue = string | boolean | number | null | undefined;
 
-export type Events = Event | MouseEvent | KeyboardEvent | void;
+export type Events = Event | KeyboardEvent | MouseEvent | undefined;
 
 export type RequestBody = Record<string, RequestBodyValue | RequestBodyValue[] | Record<string, RequestBodyValue>>;
 
