@@ -1,6 +1,7 @@
 import { Component } from "./Component";
 
-export interface Getters { [k: string]: any }
+export type Getter<T> = (state: T) => any;
+export interface Getters<T> { [k: string]: Getter<T> }
 export interface Mutations<T> { [k: string]: (state: T, payload: any) => void }
 export interface ActionContext<T> {
   state: T,
@@ -12,7 +13,7 @@ export interface Actions<T> {
 }
 export interface StoreProps<T> {
   state: T
-  getters: Getters
+  getters: Getters<T>
   mutations: Mutations<T>
   actions: Actions<T>
 }
@@ -20,7 +21,7 @@ export interface StoreProps<T> {
 export class Store<T> {
 
   public $state: T;
-  public readonly $getters: Getters;
+  public readonly $getters: Getters<T>;
   private readonly mutations: Mutations<T>;
   private readonly actions: Actions<T>;
   private readonly observers: Set<Component<any>> = new Set();

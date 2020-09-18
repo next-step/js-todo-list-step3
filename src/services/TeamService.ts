@@ -15,7 +15,7 @@ export default Object.freeze({
     return todoAdapterClient.post(`teams`, { name });
   },
 
-  addTeamMember (teamId: string, { name }: TodoMemberVO) {
+  addTeamMember (teamId: string, name: string) {
     return todoAdapterClient.post(`teams/${teamId}/members`, { name });
   },
 

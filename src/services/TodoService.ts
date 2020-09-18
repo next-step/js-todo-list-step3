@@ -1,6 +1,12 @@
 import { todoAdapterClient } from "@/adapter/todoAdapter";
 
-type TodoServiceVO = { [k: string]: string };
+export interface TodoServiceVO {
+  itemId?: string;
+  memberId?: string;
+  teamId?: string;
+  contents?: string;
+  priority?: number;
+};
 
 export default Object.freeze({
 
