@@ -1,6 +1,6 @@
 import {addEventBubblingListener, debounceOneFrame} from "@/utils";
 import {Store} from "./Store";
-import {ComponentConstructable, Events} from "@/domains";
+import {ComponentConstructable} from "@/domains";
 
 export interface ChildrenProp {
   constructor: ComponentConstructable,
@@ -9,15 +9,15 @@ export interface ChildrenProp {
 
 export type ChildrenProps = Record<string, ChildrenProp>;
 
-export class Component<T> {
+export class Component<Props = {}, State = {}> {
 
-  protected $state?: T;
+  protected $state?: State;
   protected $stores: Store<any>[] = [];
   protected $children: ChildrenProps = {};
 
   constructor(
     protected readonly $target: HTMLElement,
-    protected readonly $props: Object = {}
+    protected readonly $props: Props
   ) {
     this.setup();
   }

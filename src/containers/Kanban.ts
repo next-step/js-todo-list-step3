@@ -5,7 +5,7 @@ import {TodoListOfTeam} from "@/components/Todo/TodoListOfTeam";
 import {FETCH_TEAM, todoOfTeamStore} from "@/store/todoOfTeamStore";
 import {TodoMemberAppendForm} from "@/components/Todo/TodoMemberAppendForm";
 
-export const Kanban = class extends Component<{}> {
+export const Kanban = class extends Component {
 
   protected async componentInit() {
     await todoOfTeamStore.dispatch(FETCH_TEAM, todoRouter.$query.id);

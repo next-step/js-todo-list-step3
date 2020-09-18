@@ -1,7 +1,7 @@
 import {Component} from "@/core";
 import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "@/store";
 
-export const TeamAppendForm = class extends Component<{}> {
+export const TeamAppendForm = class extends Component {
 
   template () {
     const { openedAppendForm } = teamStore.$state;

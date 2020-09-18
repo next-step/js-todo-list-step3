@@ -2,7 +2,7 @@ import {Component} from "@/core";
 import {SET_OPENED_APPEND_FORM, teamStore} from "@/store";
 import {todoRouter} from "@/router";
 
-export const TeamList = class extends Component<{}> {
+export const TeamList = class extends Component {
 
   template () {
     const { teams } = teamStore.$state;
