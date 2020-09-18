@@ -23,15 +23,15 @@ export class RestClient {
     return this.request(uri, HttpMethod.DELETE);
   }
 
-  public post (uri: string, body: any) {
+  public post (uri: string, body?: any) {
     return this.requestWithBody(uri, HttpMethod.POST, body);
   }
 
-  public put (uri: string, body: any) {
+  public put (uri: string, body?: any) {
     return this.requestWithBody(uri, HttpMethod.PUT, body);
   }
 
-  public patch (uri: string, body: any) {
+  public patch (uri: string, body?: any) {
     return this.requestWithBody(uri, HttpMethod.PATCH, body);
   }
 
