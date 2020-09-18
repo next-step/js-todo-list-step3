@@ -4,8 +4,6 @@ export type RequestQuery = Record<string, string>;
 
 export type RequestBodyValue = string | boolean | number | null | undefined;
 
-export type Events = Event | KeyboardEvent | MouseEvent | undefined;
-
 export type RequestBody = Record<string, RequestBodyValue | RequestBodyValue[] | Record<string, RequestBodyValue>>;
 
 export interface Constructable<T> {

@@ -16,7 +16,7 @@ export const addEventBubblingListener = (
   parent: HTMLElement,
   childSelector: string,
   eventType: string,
-  callback: (event: Events) => void
+  callback: EventListener
 ) => {
   const isTarget = (target: HTMLElement) => [ ...parent.querySelectorAll(childSelector) ].includes(target) ||
                                             target.closest(childSelector);

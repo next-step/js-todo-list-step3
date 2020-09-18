@@ -54,7 +54,7 @@ export class Component<T> {
     this.render();
   }
 
-  protected addEvent (ref: string, eventType: string, callback: (event: Events) => void) {
+  protected addEvent (ref: string, eventType: string, callback: EventListener) {
     addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
   }
 

@@ -1,10 +1,10 @@
 import {Component} from "@/core";
-import {SET_OPENED_APPEND_FORM, teamStore} from "@/store/teamStore";
-import {todoRouter} from "@/router/todoRouter";
+import {SET_OPENED_APPEND_FORM, teamStore} from "@/store";
+import {todoRouter} from "@/router";
 
-export const TeamList = class extends Component {
+export const TeamList = class extends Component<{}> {
 
-  render () {
+  template () {
     const { teams } = teamStore.$state;
 
     return `
@@ -29,8 +29,8 @@ export const TeamList = class extends Component {
   setEvent () {
     this.addEvent('view', 'click', event => {
       event.preventDefault();
-      const { target } = event;
-      const id = target.closest('[data-id]').dataset.id;
+      const target = event.target as Element;
+      const id = (target.closest('[data-id]') as HTMLElement).dataset.id;
       todoRouter.push(`./kanban.html?id=${id}`);
     })
     this.addEvent( 'add', 'click', () => {
