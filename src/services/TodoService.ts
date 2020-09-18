@@ -1,32 +1,34 @@
 import { todoAdapterClient } from "@/adapter/todoAdapter";
 
+type TodoServiceVO = { [k: string]: string };
+
 export default Object.freeze({
 
-  fetchTodoList ({ teamId, memberId }) {
+  fetchTodoList ({ teamId, memberId }: TodoServiceVO) {
     return todoAdapterClient.get(`teams/${teamId}/members/${memberId}`);
   },
 
-  addItem ({ teamId, memberId, contents }) {
+  addItem ({ teamId, memberId, contents }: TodoServiceVO) {
     return todoAdapterClient.post(`teams/${teamId}/members/${memberId}/items`, { contents });
   },
 
-  toggleItem ({ teamId, memberId, itemId }) {
+  toggleItem ({ teamId, memberId, itemId }: TodoServiceVO) {
     return todoAdapterClient.put(`teams/${teamId}/members/${memberId}/items/${itemId}/toggle`);
   },
 
-  updateItem ({ teamId, memberId, itemId, contents }) {
+  updateItem ({ teamId, memberId, itemId, contents }: TodoServiceVO) {
     return todoAdapterClient.put(`teams/${teamId}/members/${memberId}/items/${itemId}`, { contents });
   },
 
-  updateItemPriority ({ teamId, memberId, itemId, priority }) {
+  updateItemPriority ({ teamId, memberId, itemId, priority }: TodoServiceVO) {
     return todoAdapterClient.put(`teams/${teamId}/members/${memberId}/items/${itemId}/priority`, { priority });
   },
 
-  deleteItem ({ teamId, memberId, itemId }) {
+  deleteItem ({ teamId, memberId, itemId }: TodoServiceVO) {
     return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}/items/${itemId}`);
   },
 
-  deleteAllItem ({ teamId, memberId }) {
+  deleteAllItem ({ teamId, memberId }: TodoServiceVO) {
     return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}/items`);
   },
 
