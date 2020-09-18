@@ -1,5 +1,5 @@
-import { todoAdapterClient } from "../adapter/todoAdapter";
-import {TodoMemberVO} from "../domains";
+import { todoAdapterClient } from "@/adapter/todoAdapter";
+import {TodoMemberVO} from "@/domains";
 
 export default Object.freeze({
 
@@ -19,7 +19,7 @@ export default Object.freeze({
     return todoAdapterClient.post(`teams/${teamId}/members`, { name });
   },
 
-  deleteTeam (teamId) {
+  deleteTeam (teamId: string) {
     return todoAdapterClient.delete(`teams/${teamId}`);
   },
 

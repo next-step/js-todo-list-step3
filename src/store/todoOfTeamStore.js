@@ -1,7 +1,6 @@
 import {Store} from "@/core";
-import TeamService from "@/services/TeamService";
+import {TeamService, TodoService} from "@/services";
 import { FilterTypes } from "@/constants";
-import TodoService from "@/services/TodoService";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';

@@ -1,4 +1,4 @@
-import { HttpMethod } from "../constants";
+import { HttpMethod } from "@/constants";
 
 export class RestClient {
 

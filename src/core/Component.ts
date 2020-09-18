@@ -1,6 +1,6 @@
-import {addEventBubblingListener, debounceOneFrame} from "../utils";
+import {addEventBubblingListener, debounceOneFrame} from "@/utils";
 import {Store} from "./Store";
-import {ComponentConstructable} from "../domains";
+import {ComponentConstructable} from "@/domains";
 
 export interface ChildrenProps {
   [k: string]: {

@@ -1,4 +1,4 @@
-import { todoAdapterClient } from "../adapter/todoAdapter";
+import { todoAdapterClient } from "@/adapter/todoAdapter";
 
 export default Object.freeze({
 

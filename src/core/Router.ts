@@ -1,5 +1,5 @@
-import {parseQuery} from "../utils";
-import {RequestQuery} from "../domains";
+import {parseQuery} from "@/utils";
+import {RequestQuery} from "@/domains";
 
 export const Router = class {
 
