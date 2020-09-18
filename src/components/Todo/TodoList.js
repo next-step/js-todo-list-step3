@@ -1,8 +1,8 @@
-import {Component} from "../../core";
+import {Component} from "@/core";
 import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "../../store/todoOfTeamStore";
 import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
-import { PriorityTypes, FilterTypes } from "../../constants";
+import { PriorityTypes, FilterTypes } from "@/constants";
 
 const priorityChip = {
   [PriorityTypes.PRIMARY]: 'primary',

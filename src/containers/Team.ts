@@ -1,7 +1,7 @@
-import {Component} from "../core";
-import {TeamList} from "../components/Team/TeamList";
-import {FETCH_TEAMS, teamStore} from "../store/teamStore";
-import {TeamAppendForm} from "../components/Team/TeamAppendForm";
+import {Component} from "@/core";
+import {TeamList} from "@/components/Team/TeamList";
+import {FETCH_TEAMS, teamStore} from "@/store/teamStore";
+import {TeamAppendForm} from "@/components/Team/TeamAppendForm";
 
 export const Team = class extends Component<{}> {
 

@@ -1,4 +1,4 @@
-import {Component} from "../core";
+import {Component} from "@/core";
 
 export interface RequestQuery { [k: string]: string }
 export type RequestBodyValue = string | boolean | number | null | undefined
