@@ -1,8 +1,8 @@
 import {Store} from "@/core";
 import {TeamService} from "@/services";
+import {SET_OPENED_APPEND_FORM} from "./index";
 
 export const SET_TEAMS = 'SET_TEAMS';
-export const SET_OPENED_APPEND_FORM = 'SET_OPENED_APPEND_FORM';
 export const FETCH_TEAMS = 'FETCH_TEAMS';
 export const ADD_TEAM = 'ADD_TEAM';
 

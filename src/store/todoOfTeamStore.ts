@@ -1,12 +1,13 @@
 import {Store} from "@/core";
 import {TeamService, TodoService} from "@/services";
-import { FilterTypes } from "@/constants";
+import {FilterTypes} from "@/constants";
+import {SET_OPENED_APPEND_FORM} from "./index";
+import {TodoItem} from "@/domains";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
 export const SET_EDITING = 'SET_EDITING';
 export const SET_FILTER_TYPE = 'SET_FILTER_TYPE';
-export const SET_OPENED_APPEND_FORM = 'SET_OPENED_APPEND_FORM';
 
 export const FETCH_TEAM = 'FETCH_TEAM';
 export const FETCH_TODO_LIST = 'FETCH_TODO_LIST';
@@ -18,7 +19,16 @@ export const UPDATE_ITEM_PRIORITY = 'UPDATE_ITEM_PRIORITY';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const DELETE_ALL_ITEM = 'DELETE_ALL_ITEM';
 
-export const todoOfTeamStore = new Store({
+interface TodoOfTeamState {
+  _id: null | string;
+  name: null | string;
+  members: { [k: string]: TodoItem[] };
+  filterType: { [k: string]: FilterTypes };
+  editing: null | string;
+  openedAppendForm: boolean;
+}
+
+export const todoOfTeamStore = new Store<TodoOfTeamState>({
 
   state: {
     _id: null,
