@@ -12,6 +12,18 @@ export const enum PriorityTypes {
   SECONDARY
 }
 
+export const priorityValueOf = (priority: 0 | 1 | 2) =>
+  priority === 1 ? PriorityTypes.PRIMARY :
+  priority === 2 ? PriorityTypes.SECONDARY :
+  PriorityTypes.NONE
+
+export const getPriorityChip = (priority: PriorityTypes) => {
+  return priority === PriorityTypes.PRIMARY   ? 'primary' :
+         priority === PriorityTypes.SECONDARY ? 'secondary' :
+         priority === PriorityTypes.NONE      ? 'none' :
+         '';
+}
+
 export const enum FilterTypes {
   ALL = 'all',
   PRIORITY = 'priority',

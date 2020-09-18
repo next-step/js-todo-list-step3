@@ -1,4 +1,5 @@
 import {Component} from "@/core";
+import {PriorityTypes} from "@/constants";
 
 export type RequestQuery = Record<string, string>;
 
