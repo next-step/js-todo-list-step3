@@ -19,7 +19,7 @@ export const TodoListFooter = class extends Component {
     return todoOfTeamStore.$getters.membersByFilteredTodoList[this.$props.id].length;
   }
 
-  render () {
+  template () {
     return `
       <span class="todo-count">총 <strong>${this.#filteredCount}</strong> 개</span>
       <ul class="filters">

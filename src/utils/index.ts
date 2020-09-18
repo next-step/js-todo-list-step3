@@ -1,4 +1,4 @@
-import {Events, RequestQuery} from "@/domains";
+import {RequestQuery} from "@/domains";
 import {ONE_FRAME} from "@/constants";
 
 export const debounceOneFrame = (callback: Function) => {

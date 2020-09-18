@@ -3,7 +3,7 @@ import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_APPEND_FORM} from "@/store/
 
 export const TodoMemberAppendForm = class extends Component {
 
-  render () {
+  template () {
     const { openedAppendForm } = todoOfTeamStore.$state;
     return openedAppendForm ? `
       <div class="modal" data-ref="close">

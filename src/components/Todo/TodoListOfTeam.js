@@ -5,7 +5,7 @@ import {todoOfTeamStore} from "@/store/todoOfTeamStore";
 
 export const TodoListOfTeam = class extends Component {
 
-  render () {
+  template () {
     const { members } = todoOfTeamStore.$state;
     return `
       ${Object.keys(members).map(id => `

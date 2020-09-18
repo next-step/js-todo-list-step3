@@ -30,7 +30,7 @@ export const TodoList = class extends Component {
     return todoOfTeamStore.$state.editing === id;
   }
 
-  render () {
+  template () {
     return `
       <h2>
         <span><strong>${this.#member.name}</strong>'s Todo List</span>
