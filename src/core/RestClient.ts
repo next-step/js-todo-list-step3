@@ -1,6 +1,6 @@
 import { HttpMethod } from "../constants";
 
-export const RestClient = class {
+export class RestClient {
 
   constructor (private readonly baseURL: string) {}
 
@@ -9,7 +9,7 @@ export const RestClient = class {
             .then(response => response.json());
   }
 
-  private requestWithBody (uri: string, method: HttpMethod, body?: BodyInit): Promise<any> {
+  private requestWithBody (uri: string, method: HttpMethod, body: any): Promise<any> {
     const headers = { 'Content-Type': 'application/json' };
     const requestInit: RequestInit = { method, headers, body: JSON.stringify(body) };
     return fetch(`${this.baseURL}/${uri}`, requestInit).then(response => response.json());
@@ -23,15 +23,15 @@ export const RestClient = class {
     return this.request(uri, HttpMethod.DELETE);
   }
 
-  public post (uri: string, body?: BodyInit) {
+  public post (uri: string, body: any) {
     return this.requestWithBody(uri, HttpMethod.POST, body);
   }
 
-  public put (uri: string, body?: BodyInit) {
+  public put (uri: string, body: any) {
     return this.requestWithBody(uri, HttpMethod.PUT, body);
   }
 
-  public patch (uri: string, body?: BodyInit) {
+  public patch (uri: string, body: any) {
     return this.requestWithBody(uri, HttpMethod.PATCH, body);
   }
 

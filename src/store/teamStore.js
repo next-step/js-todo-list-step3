@@ -1,4 +1,4 @@
-import {Store} from "../core/Store";
+import {Store} from "../core";
 import TeamService from "../services/TeamService";
 
 export const SET_TEAMS = 'SET_TEAMS';

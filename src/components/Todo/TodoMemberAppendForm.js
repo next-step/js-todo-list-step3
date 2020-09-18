@@ -1,4 +1,4 @@
-import {Component} from "../../core/Component";
+import {Component} from "../../core";
 import {ADD_TEAM_MEMBER, todoOfTeamStore} from "../../store/todoOfTeamStore";
 import {SET_OPENED_APPEND_FORM} from "../../store/todoOfTeamStore";
 

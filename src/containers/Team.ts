@@ -1,4 +1,4 @@
-import {Component} from "../core/Component";
+import {Component} from "../core";
 import {TeamList} from "../components/Team/TeamList";
 import {FETCH_TEAMS, teamStore} from "../store/teamStore";
 import {TeamAppendForm} from "../components/Team/TeamAppendForm";

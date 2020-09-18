@@ -1,4 +1,4 @@
-import {Component} from "../core/Component";
+import {Component} from "../core";
 import {TodoHeader} from "../components/Todo/TodoHeader";
 import {todoRouter} from "../router/todoRouter";
 import {TodoListOfTeam} from "../components/Todo/TodoListOfTeam";

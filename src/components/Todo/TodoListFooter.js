@@ -1,5 +1,5 @@
-import {Component} from "../../core/Component";
-import FilterTypes from "../../constants/FilterTypes";
+import {Component} from "../../core";
+import {FilterTypes} from "../../constants";
 import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "../../store/todoOfTeamStore";
 
 const filterButtons = {

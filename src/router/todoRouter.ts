@@ -1,4 +1,4 @@
-import { Router } from "../core/Router";
+import { Router } from "../core";
 import { Team, Kanban } from "../containers";
 
 const $app = document.querySelector('#app');

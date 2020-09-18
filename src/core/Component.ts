@@ -1,10 +1,10 @@
 import {addEventBubblingListener, debounceOneFrame} from "../utils";
 import {Store} from "./Store";
-import {Constructable} from "../domains";
+import {ComponentConstructable} from "../domains";
 
 export interface ChildrenProps {
   [k: string]: {
-    constructor: Constructable<Component<any>>,
+    constructor: ComponentConstructable,
     props?: any
   }
 }

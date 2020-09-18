@@ -6,13 +6,13 @@ export const enum HttpMethod {
   DELETE = 'DELETE',
 }
 
-export const enum PriorityType {
+export const enum PriorityTypes {
   NONE,
   PRIMARY,
   SECONDARY
 }
 
-export const enum FilterType {
+export const enum FilterTypes {
   ALL = 'all',
   PRIORITY = 'priority',
   ACTIVE = 'active',

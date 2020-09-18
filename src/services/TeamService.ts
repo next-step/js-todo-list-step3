@@ -1,4 +1,5 @@
 import { todoAdapterClient } from "../adapter/todoAdapter";
+import {TodoMemberVO} from "../domains";
 
 export default Object.freeze({
 
@@ -6,15 +7,15 @@ export default Object.freeze({
     return todoAdapterClient.get('teams');
   },
 
-  fetchTeam (teamId) {
+  fetchTeam (teamId: string) {
     return todoAdapterClient.get(`teams/${teamId}`);
   },
 
-  addTeam (name) {
+  addTeam (name: string) {
     return todoAdapterClient.post(`teams`, { name });
   },
 
-  addTeamMember ({ teamId, name }) {
+  addTeamMember (teamId: string, { name }: TodoMemberVO) {
     return todoAdapterClient.post(`teams/${teamId}/members`, { name });
   },
 
