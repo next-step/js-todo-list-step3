@@ -3,7 +3,7 @@ import {ONE_FRAME} from "@/constants";
 
 export const debounceOneFrame = (callback: Function) => {
   let timer: number = -1;
-  return (props: any) => {
+  return (props?: any) => {
     clearTimeout(timer);
     timer = setTimeout(() => callback(props), ONE_FRAME);
   }
@@ -16,7 +16,7 @@ export const addEventBubblingListener = (
   parent: HTMLElement,
   childSelector: string,
   eventType: string,
-  callback: (event: Event) => {}
+  callback: (event: Event) => void
 ) => {
   const isTarget = (target: HTMLElement) => [ ...parent.querySelectorAll(childSelector) ].includes(target) ||
                                             target.closest(childSelector);

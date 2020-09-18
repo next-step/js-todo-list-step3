@@ -16,7 +16,7 @@ export class Component<T> {
   protected $children: ChildrenProps = {};
 
   constructor(
-    protected readonly $target: HTMLElement|Element,
+    protected readonly $target: HTMLElement,
     protected readonly $props: Object = {}
   ) {
     this.setup();
@@ -43,10 +43,10 @@ export class Component<T> {
     })
   }
 
-  protected componentInit () {}
-  protected setEvent () {}
-  protected componentDidMount () {}
-  protected componentDidUpdate () {}
+  protected componentInit (): void {}
+  protected setEvent (): void {}
+  protected componentDidMount (): void {}
+  protected componentDidUpdate (): void {}
 
   protected setState (payload: any) {
     if (!this.validate()) return;
@@ -54,7 +54,7 @@ export class Component<T> {
     this.render();
   }
 
-  protected addEvent (ref: HTMLElement, eventType: Event, callback: Function) {
+  protected addEvent (ref: HTMLElement, eventType: string, callback: (event: Event) => void) {
     addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
   }
 
@@ -63,7 +63,9 @@ export class Component<T> {
     this.componentDidUpdate();
   });
 
-  public template () { return '' }
+  public template (): string {
+    return ''
+  }
 
   public validate (): boolean {
     return !this.$target.parentNode === null;
