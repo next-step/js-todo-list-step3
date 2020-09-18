@@ -1,16 +1,14 @@
 import { Component } from "./Component";
 
 export type Getter<T> = (state: T) => any;
-export interface Getters<T> { [k: string]: Getter<T> }
-export interface Mutations<T> { [k: string]: (state: T, payload: any) => void }
+export type Getters<T> = Record<string, Getter<T>>;
+export type Mutations<T> = Record<string, (state: T, payload: any) => void>;
 export interface ActionContext<T> {
   state: T,
   commit: (key: string, payload: any) => void,
   dispatch: (key: string, payload?: any) => Promise<any> | void,
 }
-export interface Actions<T> {
-  [k: string]: (context: ActionContext<T>, payload: any) => Promise<any> | void
-}
+export type Actions<T> = Record<string, (context: ActionContext<T>, payload?: any) => Promise<any> | void>;
 export interface StoreProps<T> {
   state: T
   getters?: Getters<T>

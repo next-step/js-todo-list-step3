@@ -1,4 +1,4 @@
-import {RequestQuery} from "@/domains";
+import {Events, RequestQuery} from "@/domains";
 import {ONE_FRAME} from "@/constants";
 
 export const debounceOneFrame = (callback: Function) => {
@@ -16,7 +16,7 @@ export const addEventBubblingListener = (
   parent: HTMLElement,
   childSelector: string,
   eventType: string,
-  callback: (event: Event) => void
+  callback: (event: Events) => void
 ) => {
   const isTarget = (target: HTMLElement) => [ ...parent.querySelectorAll(childSelector) ].includes(target) ||
                                             target.closest(childSelector);

@@ -23,8 +23,8 @@ export const DELETE_ALL_ITEM = 'DELETE_ALL_ITEM';
 interface TodoOfTeamState {
   _id: string;
   name: string;
-  members: { [k: string]: TodoMember };
-  filterType: { [k: string]: FilterTypes };
+  members: Record<string, TodoMember>;
+  filterType: Record<string, FilterTypes>;
   editing: string;
   openedAppendForm: boolean;
 }
