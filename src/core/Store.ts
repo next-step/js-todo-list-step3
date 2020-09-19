@@ -2,13 +2,13 @@ import { Component } from "./Component";
 
 export type Getter<T> = (state: T) => unknown;
 export type Getters<T> = Record<string, Getter<T>>;
-export type Mutations<T> = Record<string, (state: T, payload: unknown) => void>;
+export type Mutations<T> = Record<string, (state: T, payload: any) => void>;
 export interface ActionContext<T> {
   state: T,
-  commit: (key: string, payload: unknown) => void,
-  dispatch: (key: string, payload?: unknown) => Promise<unknown> | void,
+  commit: (key: string, payload: any) => void,
+  dispatch: (key: string, payload?: any) => Promise<unknown> | void,
 }
-export type Actions<T> = Record<string, (context: ActionContext<T>, payload?: unknown) => Promise<unknown> | void>;
+export type Actions<T> = Record<string, (context: ActionContext<T>, payload?: any) => Promise<unknown> | void>;
 export interface StoreProps<T> {
   state: T
   getters?: Getters<T>
@@ -35,16 +35,16 @@ export class Store<T> {
     this.actions = actions;
   }
 
-  public commit (key: string, payload: unknown): void {
+  public commit (key: string, payload: any): void {
     const newState: T = { ...this.$state };
     this.mutations[key](newState, payload);
     this.setState(newState);
   }
 
-  public dispatch (key: string, payload?: unknown): Promise<unknown> | void {
+  public dispatch (key: string, payload?: any): Promise<unknown> | void {
     return this.actions[key]({
-      commit: (key: string, payload: unknown) => this.commit(key, payload),
-      dispatch: (key: string, payload: unknown) => this.dispatch(key, payload),
+      commit: (key: string, payload: any) => this.commit(key, payload),
+      dispatch: (key: string, payload: any) => this.dispatch(key, payload),
       state: { ...this.$state },
     }, payload);
   }

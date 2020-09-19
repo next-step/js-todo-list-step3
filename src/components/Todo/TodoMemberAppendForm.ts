@@ -21,10 +21,12 @@ export const TodoMemberAppendForm = class extends Component {
 
   componentDidUpdate () {
     const $target = this.$target;
-    $target.querySelector('.modal-box')?.addEventListener('click', event => {
+    const modalBox = $target.querySelector('.modal-box') as HTMLElement;
+    const input = $target.querySelector('input') as HTMLInputElement;
+    modalBox.addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
     });
-    $target.querySelector('input')?.focus();
+    input.focus();
   }
 
   setEvent () {

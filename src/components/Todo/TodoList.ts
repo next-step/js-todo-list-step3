@@ -81,7 +81,7 @@ export const TodoList = class extends Component<{ id: string }> {
   setEvent () {
     const getId = (target: any): string => {
       const parent = target.closest('[data-id]') as HTMLElement;
-      return parent?.dataset.id!;
+      return parent.dataset.id as string;
     }
 
     this.addEvent('toggle', 'change', ({ target }) => {

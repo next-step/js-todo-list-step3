@@ -6,18 +6,18 @@ export const Router = class {
   public $query: RequestQuery = {};
 
   constructor (
-    private readonly callback: (uri?: string) => void
+    private readonly callback: (uri: string) => void
   ) {
     window.onpopstate = () => this.load();
   }
 
   public load (): void {
-    const uri: string|undefined = location.pathname.split('/').pop();
+    const uri: string = location.pathname.split('/').pop() || '';
     this.$query = parseQuery(location.search);
     this.callback(uri);
   }
 
-  public push (uri: string|undefined): void {
+  public push (uri: string): void {
     const query: RequestQuery = parseQuery(uri);
     this.$query = query;
     this.callback(uri);
