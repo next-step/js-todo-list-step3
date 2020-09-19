@@ -1,4 +1,4 @@
-import {RequestQuery} from "@/domains";
+import {CommonEvent, PickEvent, RequestQuery} from "@/domains";
 import {ONE_FRAME} from "@/constants";
 
 export const selectElement = <T = HTMLElement>(
@@ -27,17 +27,18 @@ export const debounceOneFrame = (callback: Function) => {
 export const lazyFrame = (): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, ONE_FRAME * 10))
 
-export const addEventBubblingListener = (
+export const addEventBubblingListener = <T = CommonEvent>(
   parent: HTMLElement,
   childSelector: string,
   eventType: string,
-  callback: EventListener
+  callback: (event: PickEvent<T>) => void
 ) => {
   const isTarget = (target: HTMLElement) => selectAllElement(childSelector).includes(target) ||
                                             selectParent(childSelector, target);
-  parent.addEventListener(eventType, event => {
-    if (!isTarget(event.target as HTMLElement)) return;
-    callback(event);
+  parent.addEventListener(eventType, (event: unknown) => {
+    const e = event as PickEvent<T>;
+    if (!isTarget(e.target)) return;
+    callback(e);
   })
 }
 
