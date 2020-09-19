@@ -1,11 +1,11 @@
 import {Store} from "@/core";
 import {TeamService} from "@/services";
-import {SET_OPENED_APPEND_FORM} from "./index";
 import {TodoTeam} from "@/domains";
 
 export const SET_TEAMS = 'SET_TEAMS';
 export const FETCH_TEAMS = 'FETCH_TEAMS';
 export const ADD_TEAM = 'ADD_TEAM';
+export const SET_OPENED_TEAM_APPEND_FORM = 'SET_OPENED_TEAM_APPEND_FORM';
 
 export interface TeamState {
   teams: TodoTeam[];
@@ -25,7 +25,7 @@ export const teamStore = new Store<TeamState>({
       state.teams = teams;
     },
 
-    [SET_OPENED_APPEND_FORM] (state, openedAppendForm: boolean) {
+    [SET_OPENED_TEAM_APPEND_FORM] (state, openedAppendForm: boolean) {
       state.openedAppendForm = openedAppendForm;
     },
 

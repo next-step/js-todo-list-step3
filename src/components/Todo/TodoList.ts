@@ -4,7 +4,7 @@ import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
 import {PriorityTypes, FilterTypes, getPriorityChip} from "@/constants";
 import {CommonEvent, KeyEvent, TodoItem} from "@/domains";
-import {selectElement, selectParent} from "@/utils";
+import {selectParent} from "@/utils";
 
 export const TodoList = class extends Component<{ id: string }> {
 

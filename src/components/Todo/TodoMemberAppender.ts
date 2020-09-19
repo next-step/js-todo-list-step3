@@ -1,5 +1,5 @@
 import {Component} from "@/core";
-import {SET_OPENED_APPEND_FORM, todoOfTeamStore} from "@/store";
+import {SET_OPENED_MEMBER_APPEND_FORM, todoOfTeamStore} from "@/store";
 
 export const TodoMemberAppender = class extends Component {
 
@@ -12,7 +12,8 @@ export const TodoMemberAppender = class extends Component {
   }
 
   protected setEvent () {
-    this.addEvent('append', 'click', () => todoOfTeamStore.commit(SET_OPENED_APPEND_FORM, true));
+    this.addEvent('append', 'click', () =>
+      todoOfTeamStore.commit(SET_OPENED_MEMBER_APPEND_FORM, true));
   }
 
 }

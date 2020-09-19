@@ -1,12 +1,12 @@
 import {Component} from "@/core";
-import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "@/store";
+import {ADD_TEAM, SET_OPENED_TEAM_APPEND_FORM, teamStore} from "@/store";
 import {selectElement} from "@/utils";
 import {KeyEvent} from "@/domains";
 
 export const TeamAppendForm = class extends Component {
 
   private close () {
-    teamStore.commit(SET_OPENED_APPEND_FORM, false);
+    teamStore.commit(SET_OPENED_TEAM_APPEND_FORM, false);
   }
 
   private async appendTeam (name: string) {

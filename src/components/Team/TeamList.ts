@@ -1,5 +1,5 @@
 import {Component} from "@/core";
-import {SET_OPENED_APPEND_FORM, teamStore} from "@/store";
+import {SET_OPENED_TEAM_APPEND_FORM, teamStore} from "@/store";
 import {todoRouter} from "@/router";
 import {selectElement} from "@/utils";
 
@@ -32,14 +32,17 @@ export const TeamList = class extends Component {
   }
 
   protected setEvent () {
+
     this.addEvent('view', 'click', event => {
       event.preventDefault();
       const id = selectElement('[data-id]', event.target).dataset.id as string;
       todoRouter.push(`./kanban.html?id=${id}`);
     })
+
     this.addEvent( 'add', 'click', () => {
-      teamStore.commit(SET_OPENED_APPEND_FORM, true);
+      teamStore.commit(SET_OPENED_TEAM_APPEND_FORM, true);
     });
+
   }
 
 }
