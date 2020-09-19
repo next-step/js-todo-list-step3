@@ -1,5 +1,4 @@
 import {Component} from "@/core";
-import {PriorityTypes} from "@/constants";
 
 export type RequestQuery = Record<string, string>;
 
@@ -12,6 +11,21 @@ export interface Constructable<T> {
 }
 
 export type ComponentConstructable = Constructable<Component<any>>;
+
+export interface CommonEvent<T extends HTMLElement = HTMLElement> extends Omit<Event, 'target'> {
+  target: T
+}
+
+export interface MouseEvent<T extends HTMLElement = HTMLElement> extends Omit<Event, 'target'> {
+  target: T
+}
+
+export interface KeyboardEvent<T extends HTMLInputElement = HTMLInputElement> extends Omit<Event, 'target'|'key'> {
+  target: T;
+  key: string;
+}
+
+export type Events = CommonEvent | MouseEvent | KeyboardEvent;
 
 export * from "./TodoTeam";
 export * from "./TodoMember";
