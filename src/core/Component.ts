@@ -27,7 +27,6 @@ export class Component<Props = {}, State = {}> {
     this.subscribeStore();
     this.setEvent();
     this.setState(this.$state);
-    this.componentDidMount();
   }
 
   private subscribeStore () {
@@ -35,19 +34,16 @@ export class Component<Props = {}, State = {}> {
   }
 
   private buildChildren () {
-    console.log(this.$target.innerHTML);
     selectAllElement('[data-component]', this.$target).forEach(target => {
-      console.log(target);
       const componentName = target.dataset.component as string;
       const { constructor, props } = this.$children[componentName];
-      new constructor(props);
+      new constructor(target, props);
     })
   }
 
   protected componentInit (): Promise<any> | void {}
   protected setEvent (): void {}
   protected componentDidMount (): void {}
-  protected componentDidUpdate (): void {}
 
   protected template (): string {
     return ''
@@ -68,7 +64,7 @@ export class Component<Props = {}, State = {}> {
 
   public render = debounceOneFrame(() => {
     this.$target.innerHTML = this.template();
-    this.componentDidUpdate();
+    this.componentDidMount();
     this.buildChildren();
   });
 

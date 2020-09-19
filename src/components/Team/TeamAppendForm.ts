@@ -18,6 +18,10 @@ export const TeamAppendForm = class extends Component {
     }
   }
 
+  protected componentInit() {
+    this.$stores = [ teamStore ];
+  }
+
   protected template () {
     const { openedAppendForm } = teamStore.$state;
     return openedAppendForm ? `
@@ -34,7 +38,8 @@ export const TeamAppendForm = class extends Component {
     ` : '';
   }
 
-  protected componentDidUpdate () {
+  protected componentDidMount () {
+    if (!teamStore.$state.openedAppendForm) return;
     const { $target } = this;
     selectElement('.modal-box', $target).addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
