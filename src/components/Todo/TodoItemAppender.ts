@@ -14,7 +14,7 @@ export const TodoItemAppender = class extends Component<{ id: string }> {
       const { key, target } = event as KeyboardEvent
       if (key === 'Enter') {
         todoOfTeamStore.dispatch(ADD_ITEM, {
-          memberId: this.$props.id,
+          memberId: this.$props!.id,
           contents: (target as HTMLInputElement).value
         });
         (target as HTMLInputElement).value = '';

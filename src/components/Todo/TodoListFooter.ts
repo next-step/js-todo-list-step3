@@ -1,7 +1,6 @@
 import {Component} from "@/core";
 import {FilterTypes} from "@/constants";
-import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "@/store/todoOfTeamStore";
-import {TodoItem} from "@/domains";
+import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "@/store";
 
 const filterButtons = {
   [FilterTypes.ALL]: '전체보기',
@@ -12,13 +11,17 @@ const filterButtons = {
 
 export const TodoListFooter = class extends Component<{ id: string }> {
 
+  private get id () {
+    return this.$props!.id;
+  }
+
   private get filterType () {
-    return todoOfTeamStore.$state.filterType[this.$props.id];
+    return todoOfTeamStore.$state.filterType[this.id];
   }
 
   private get filteredCount () {
     const memberOfItem: Record<string, any> = todoOfTeamStore.$getters.membersByFilteredTodoList;
-    return memberOfItem[this.$props.id].length;
+    return memberOfItem[this.id].length;
   }
 
   template () {
@@ -39,13 +42,13 @@ export const TodoListFooter = class extends Component<{ id: string }> {
     this.addEvent('filter', 'click', event => {
       event.preventDefault();
       todoOfTeamStore.commit(SET_FILTER_TYPE, {
-        memberId: this.$props.id,
+        memberId: this.id,
         filterType: (event.target as HTMLElement).dataset.filterType
       })
     });
     this.addEvent('delete-all', 'click', event => {
       event.preventDefault();
-      todoOfTeamStore.dispatch(DELETE_ALL_ITEM, this.$props.id);
+      todoOfTeamStore.dispatch(DELETE_ALL_ITEM, this.id);
     });
   }
 }
