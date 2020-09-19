@@ -17,7 +17,7 @@ export const TodoItemAppender = class extends Component<{ id: string }> {
           memberId: this.$props!.id,
           contents: target.value
         });
-        (target as HTMLInputElement).value = '';
+        target.value = '';
       }
     });
   }

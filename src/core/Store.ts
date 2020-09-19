@@ -27,10 +27,12 @@ export class Store<T> {
   constructor({ state, getters = {}, mutations = {}, actions = {} }: StoreProps<T>) {
     this.$state = state;
     this.$getters = Object.entries(getters)
-                          .reduce((getters, [key, getter]) => (
+                          .reduce((getters, [key, getter]) => {
                             Object.defineProperty(getters, key, {
                               get: () => getter(this.$state)
-                            }), getters), {});
+                            });
+                            return getters;
+                          }, {});
     this.mutations = mutations;
     this.actions = actions;
   }

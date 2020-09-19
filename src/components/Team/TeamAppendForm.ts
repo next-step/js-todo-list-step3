@@ -5,6 +5,19 @@ import {KeyEvent} from "@/domains";
 
 export const TeamAppendForm = class extends Component {
 
+  private close () {
+    teamStore.commit(SET_OPENED_APPEND_FORM, false);
+  }
+
+  private async appendTeam (name: string) {
+    try {
+      await teamStore.dispatch(ADD_TEAM, name);
+      this.close();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   template () {
     const { openedAppendForm } = teamStore.$state;
     return openedAppendForm ? `
@@ -35,18 +48,5 @@ export const TeamAppendForm = class extends Component {
       if (key === 'Escape') this.close();
       if (key === 'Enter') this.appendTeam(target.value);
     })
-  }
-
-  private close () {
-    teamStore.commit(SET_OPENED_APPEND_FORM, false);
-  }
-
-  private async appendTeam (name: string) {
-    try {
-      await teamStore.dispatch(ADD_TEAM, name);
-      this.close();
-    } catch (e) {
-      console.error(e);
-    }
   }
 }

@@ -1,8 +1,22 @@
 import {Component} from "@/core";
 import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_APPEND_FORM} from "@/store";
 import {selectElement} from "@/utils";
+import {KeyEvent} from "@/domains";
 
 export const TodoMemberAppendForm = class extends Component {
+
+  private close () {
+    todoOfTeamStore.commit(SET_OPENED_APPEND_FORM, false);
+  }
+
+  private async appendTeam (name: string) {
+    try {
+      await todoOfTeamStore.dispatch(ADD_TEAM_MEMBER, name);
+      this.close();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   template () {
     const { openedAppendForm } = todoOfTeamStore.$state;
@@ -30,23 +44,9 @@ export const TodoMemberAppendForm = class extends Component {
 
   setEvent () {
     this.addEvent('close', 'click', () => this.close());
-    this.addEvent('team-name', 'keyup', event => {
-      const { key, target } = event as KeyboardEvent;
+    this.addEvent<KeyEvent>('team-name', 'keyup', ({ key, target }) => {
       if (key === 'Escape') this.close();
-      if (key === 'Enter') this.appendTeam((target as HTMLInputElement).value);
+      if (key === 'Enter') this.appendTeam(target.value);
     })
-  }
-
-  private close () {
-    todoOfTeamStore.commit(SET_OPENED_APPEND_FORM, false);
-  }
-
-  private async appendTeam (name: string) {
-    try {
-      await todoOfTeamStore.dispatch(ADD_TEAM_MEMBER, name);
-      this.close();
-    } catch (e) {
-      console.error(e);
-    }
   }
 }
