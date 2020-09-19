@@ -1,7 +1,7 @@
 import {Component} from "@/core";
 import {SET_OPENED_TEAM_APPEND_FORM, teamStore} from "@/store";
 import {todoRouter} from "@/router";
-import {selectElement} from "@/utils";
+import {selectElement, selectParent} from "@/utils";
 
 export const TeamList = class extends Component {
 
@@ -35,7 +35,7 @@ export const TeamList = class extends Component {
 
     this.addEvent('view', 'click', event => {
       event.preventDefault();
-      const id = selectElement('[data-id]', event.target).dataset.id as string;
+      const id = selectParent('[data-id]', event.target).dataset.id as string;
       todoRouter.push(`./kanban.html?id=${id}`);
     })
 
