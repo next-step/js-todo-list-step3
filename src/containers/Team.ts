@@ -7,7 +7,6 @@ export const Team = class extends Component {
 
   protected async componentInit() {
     await teamStore.dispatch(FETCH_TEAMS);
-
     this.$children = {
       TeamList: { constructor: TeamList },
       TeamAppendForm: { constructor: TeamAppendForm },

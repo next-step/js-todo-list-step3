@@ -57,7 +57,7 @@ export class Store<T> {
 
   private setState (newState: T) {
     this.$state = { ...newState };
-    this.observers.forEach(observer => observer.validate() && observer.render())
+    this.observers.forEach(component => component.render())
   }
 
 }

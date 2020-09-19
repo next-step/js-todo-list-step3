@@ -28,7 +28,6 @@ export class Component<Props = {}, State = {}> {
     this.setEvent();
     this.setState(this.$state);
     this.componentDidMount();
-    this.buildChildren();
   }
 
   private subscribeStore () {
@@ -36,14 +35,16 @@ export class Component<Props = {}, State = {}> {
   }
 
   private buildChildren () {
+    console.log(this.$target.innerHTML);
     selectAllElement('[data-component]', this.$target).forEach(target => {
+      console.log(target);
       const componentName = target.dataset.component as string;
       const { constructor, props } = this.$children[componentName];
       new constructor(props);
     })
   }
 
-  protected componentInit (): void {}
+  protected componentInit (): Promise<any> | void {}
   protected setEvent (): void {}
   protected componentDidMount (): void {}
   protected componentDidUpdate (): void {}
@@ -53,7 +54,6 @@ export class Component<Props = {}, State = {}> {
   }
 
   protected setState (payload: any) {
-    if (!this.validate()) return;
     this.$state = { ...this.$state, ...payload };
     this.render();
   }
@@ -69,10 +69,7 @@ export class Component<Props = {}, State = {}> {
   public render = debounceOneFrame(() => {
     this.$target.innerHTML = this.template();
     this.componentDidUpdate();
+    this.buildChildren();
   });
-
-  public validate (): boolean {
-    return !this.$target.parentNode === null;
-  }
 
 }
