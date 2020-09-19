@@ -17,7 +17,7 @@ export const Kanban = class extends Component {
     }
   }
 
-  template () {
+  protected template () {
     return `
       <h1 data-component="TodoHeader" id="user-title"></h1>
       <ul data-component="TodoListOfTeam" id="todo-list-of-team" class="todoapp-list-container flex-column-container"></ul>

@@ -6,7 +6,7 @@ export interface TodoServiceVO {
   teamId?: string;
   contents?: string;
   priority?: number;
-};
+}
 
 export default Object.freeze({
 
@@ -38,4 +38,4 @@ export default Object.freeze({
     return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}/items`);
   },
 
-})
+});

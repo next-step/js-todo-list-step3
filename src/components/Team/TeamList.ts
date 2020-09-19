@@ -5,7 +5,11 @@ import {selectElement} from "@/utils";
 
 export const TeamList = class extends Component {
 
-  template () {
+  protected componentInit() {
+    this.$stores = [ teamStore ];
+  }
+
+  protected template () {
     const { teams } = teamStore.$state;
 
     return `
@@ -27,7 +31,7 @@ export const TeamList = class extends Component {
     `;
   }
 
-  setEvent () {
+  protected setEvent () {
     this.addEvent('view', 'click', event => {
       event.preventDefault();
       const id = selectElement('[data-id]', event.target).dataset.id as string;

@@ -14,7 +14,7 @@ export const Team = class extends Component {
     }
   }
 
-  template () {
+  protected template () {
     return `
       <h1 id="user-title" data-username="eastjun">
         <span><strong>Team</strong>'s Todo Lists</span>
@@ -23,4 +23,5 @@ export const Team = class extends Component {
       <div data-component="TeamAppendForm" id="team-append-form"></div>
     `;
   }
+
 }

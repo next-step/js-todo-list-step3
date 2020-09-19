@@ -48,6 +48,10 @@ export class Component<Props = {}, State = {}> {
   protected componentDidMount (): void {}
   protected componentDidUpdate (): void {}
 
+  protected template (): string {
+    return ''
+  }
+
   protected setState (payload: any) {
     if (!this.validate()) return;
     this.$state = { ...this.$state, ...payload };
@@ -66,10 +70,6 @@ export class Component<Props = {}, State = {}> {
     this.$target.innerHTML = this.template();
     this.componentDidUpdate();
   });
-
-  public template (): string {
-    return ''
-  }
 
   public validate (): boolean {
     return !this.$target.parentNode === null;

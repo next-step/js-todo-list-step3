@@ -1,8 +1,8 @@
 import {Component} from "@/core";
-import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "@/store/todoOfTeamStore";
+import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "@/store";
 import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
-import {PriorityTypes, FilterTypes, priorityValueOf, getPriorityChip} from "@/constants";
+import {PriorityTypes, FilterTypes, getPriorityChip} from "@/constants";
 import {CommonEvent, KeyEvent, TodoItem} from "@/domains";
 import {selectElement, selectParent} from "@/utils";
 
@@ -58,13 +58,17 @@ export const TodoList = class extends Component<{ id: string }> {
     todoOfTeamStore.dispatch(UPDATE_ITEM_PRIORITY, { memberId: this.id, itemId, priority });
   }
 
-  template () {
+  protected componentInit() {
+    this.$stores = [ todoOfTeamStore ];
+  }
+
+  protected template () {
     return `
       <h2>
         <span><strong>${this.member.name}</strong>'s Todo List</span>
       </h2>
       <div class="todoapp">
-        <section id="todo-item-appender" class="input-container"></section>
+        <section data-component="TodoItemAppender" id="todo-item-appender" class="input-container"></section>
         <section class="main">
           <ul class="todo-list">
             ${ this.filteredItems.map(({ _id, isCompleted, priority, contents }) => `
@@ -91,12 +95,12 @@ export const TodoList = class extends Component<{ id: string }> {
             `).join('') }
           </ul>
         </section>
-        <div id="todo-list-footer" class="count-container"></div>
+        <div data-component="TodoListFooter" id="todo-list-footer" class="count-container"></div>
       </div>
     `;
   }
 
-  componentDidMount () {
+  protected componentDidMount () {
     const { $target } = this;
     const $todoListFooter = selectElement('#todo-list-footer', $target);
     const $todoItemAppender = selectElement('#todo-item-appender', $target);
@@ -104,7 +108,7 @@ export const TodoList = class extends Component<{ id: string }> {
     new TodoItemAppender($todoItemAppender, { id: this.id });
   }
 
-  setEvent () {
+  protected setEvent () {
     const getId = (target: HTMLElement) =>
       selectParent('[data-id]', target).dataset.id as string;
 

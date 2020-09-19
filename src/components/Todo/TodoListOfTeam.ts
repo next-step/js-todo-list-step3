@@ -6,7 +6,7 @@ import {selectAllElement, selectElement} from "@/utils";
 
 export const TodoListOfTeam = class extends Component {
 
-  template () {
+  protected template () {
     const { members } = todoOfTeamStore.$state;
     return `
       ${Object.keys(members).map(id => `
@@ -16,7 +16,7 @@ export const TodoListOfTeam = class extends Component {
     `
   }
 
-  componentDidMount () {
+  protected componentDidMount () {
     const $todoMemberAppender = selectElement('#todo-member-appender', this.$target);
     new TodoMemberAppender($todoMemberAppender);
     selectAllElement('.todoapp-container', this.$target).forEach($todoList => {
@@ -25,4 +25,5 @@ export const TodoListOfTeam = class extends Component {
       });
     })
   }
+
 }

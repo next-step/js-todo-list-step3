@@ -1,5 +1,4 @@
 import { todoAdapterClient } from "@/adapter/todoAdapter";
-import {TodoMemberVO} from "@/domains";
 
 export default Object.freeze({
 

@@ -35,5 +35,4 @@ export class RestClient {
     return this.requestWithBody(uri, HttpMethod.PATCH, body);
   }
 
-
 }

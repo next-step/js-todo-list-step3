@@ -1,6 +1,6 @@
 import {Component} from "@/core";
 import {FilterTypes} from "@/constants";
-import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM} from "@/store";
+import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM, teamStore} from "@/store";
 
 const filterButtons = {
   [FilterTypes.ALL]: '전체보기',
@@ -24,7 +24,11 @@ export const TodoListFooter = class extends Component<{ id: string }> {
     return memberOfItem[this.id].length;
   }
 
-  template () {
+  protected componentInit() {
+    this.$stores = [ teamStore ];
+  }
+
+  protected template () {
     return `
       <span class="todo-count">총 <strong>${this.filteredCount}</strong> 개</span>
       <ul class="filters">
@@ -37,8 +41,8 @@ export const TodoListFooter = class extends Component<{ id: string }> {
       <button class="clear-completed" data-ref="delete-all">모두 삭제</button>
     `;
   }
-  
-  setEvent () {
+
+  protected setEvent () {
     this.addEvent('filter', 'click', event => {
       event.preventDefault();
       todoOfTeamStore.commit(SET_FILTER_TYPE, {

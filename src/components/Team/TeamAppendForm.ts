@@ -18,7 +18,7 @@ export const TeamAppendForm = class extends Component {
     }
   }
 
-  template () {
+  protected template () {
     const { openedAppendForm } = teamStore.$state;
     return openedAppendForm ? `
       <div class="modal" data-ref="close">
@@ -34,7 +34,7 @@ export const TeamAppendForm = class extends Component {
     ` : '';
   }
 
-  componentDidUpdate () {
+  protected componentDidUpdate () {
     const { $target } = this;
     selectElement('.modal-box', $target).addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
@@ -42,7 +42,7 @@ export const TeamAppendForm = class extends Component {
     selectElement('input', $target).focus();
   }
 
-  setEvent () {
+  protected setEvent () {
     this.addEvent('close', 'click', () => this.close());
     this.addEvent<KeyEvent>('team-name', 'keyup', ({ key, target }) => {
       if (key === 'Escape') this.close();

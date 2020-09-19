@@ -50,3 +50,4 @@ export const parseQuery = (uri: string) => {
     return query;
   }, {});
 }
+

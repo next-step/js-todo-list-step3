@@ -59,4 +59,5 @@ export class Store<T> {
     this.$state = { ...newState };
     this.observers.forEach(observer => observer.validate() && observer.render())
   }
+
 }
