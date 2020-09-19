@@ -4,6 +4,7 @@ import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
 import {PriorityTypes, FilterTypes, priorityValueOf, getPriorityChip} from "@/constants";
 import {TodoItem} from "@/domains";
+import {selectElement} from "@/utils";
 
 export const TodoList = class extends Component<{ id: string }> {
 
@@ -70,10 +71,10 @@ export const TodoList = class extends Component<{ id: string }> {
     `;
   }
 
-
   componentDidMount () {
-    const $todoListFooter = this.$target.querySelector('#todo-list-footer') as HTMLElement;
-    const $todoItemAppender = this.$target.querySelector('#todo-item-appender') as HTMLElement;
+    const { $target } = this;
+    const $todoListFooter = selectElement('#todo-list-footer', $target);
+    const $todoItemAppender = selectElement('#todo-item-appender', $target);
     new TodoListFooter($todoListFooter, { id: this.id });
     new TodoItemAppender($todoItemAppender, { id: this.id });
   }

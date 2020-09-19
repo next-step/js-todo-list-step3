@@ -1,5 +1,6 @@
 import {Component} from "@/core";
 import {ADD_TEAM, SET_OPENED_APPEND_FORM, teamStore} from "@/store";
+import {selectElement} from "@/utils";
 
 export const TeamAppendForm = class extends Component {
 
@@ -21,12 +22,10 @@ export const TeamAppendForm = class extends Component {
 
   componentDidUpdate () {
     const { $target } = this;
-    const modalBox = $target.querySelector('.modal-box') as HTMLElement;
-    const input = $target.querySelector('input') as HTMLInputElement;
-    modalBox.addEventListener('click', event => {
+    selectElement('.modal-box', $target).addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
     });
-    input.focus();
+    selectElement('input', $target).focus();
   }
 
   setEvent () {

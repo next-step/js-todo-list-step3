@@ -1,5 +1,6 @@
 import {Component} from "@/core";
 import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_APPEND_FORM} from "@/store";
+import {selectElement} from "@/utils";
 
 export const TodoMemberAppendForm = class extends Component {
 
@@ -21,12 +22,10 @@ export const TodoMemberAppendForm = class extends Component {
 
   componentDidUpdate () {
     const $target = this.$target;
-    const modalBox = $target.querySelector('.modal-box') as HTMLElement;
-    const input = $target.querySelector('input') as HTMLInputElement;
-    modalBox.addEventListener('click', event => {
+    selectElement('.modal-box', $target).addEventListener('click', event => {
       if ($target === event.currentTarget) event.stopPropagation();
     });
-    input.focus();
+    selectElement('input', $target).focus();
   }
 
   setEvent () {

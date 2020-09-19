@@ -2,6 +2,7 @@ import {Component} from "@/core";
 import {TodoMemberAppender} from "./TodoMemberAppender";
 import {TodoList} from "./TodoList";
 import {todoOfTeamStore} from "@/store";
+import {selectAllElement, selectElement} from "@/utils";
 
 export const TodoListOfTeam = class extends Component {
 
@@ -16,11 +17,11 @@ export const TodoListOfTeam = class extends Component {
   }
 
   componentDidMount () {
-    const $todoMemberAppender = this.$target.querySelector('#todo-member-appender') as HTMLElement;
+    const $todoMemberAppender = selectElement('#todo-member-appender', this.$target);
     new TodoMemberAppender($todoMemberAppender);
-    this.$target.querySelectorAll('.todoapp-container').forEach($todoList => {
-      new TodoList($todoList as HTMLElement, {
-        id: ($todoList as HTMLElement).dataset.id as string
+    selectAllElement('.todoapp-container', this.$target).forEach($todoList => {
+      new TodoList($todoList, {
+        id: $todoList.dataset.id as string
       });
     })
   }

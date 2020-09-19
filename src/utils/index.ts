@@ -11,6 +11,11 @@ export const selectAllElement = <T = HTMLElement>(
   parent: HTMLElement|Document|Element = document
 ) => [ ...parent.querySelectorAll(selector) ] as unknown as T[];
 
+export const selectParent = <T = HTMLElement>(
+  selector: string,
+  target: HTMLElement
+) => target.closest(selector) as unknown as T;
+
 export const debounceOneFrame = (callback: Function) => {
   let timer: number = -1;
   return (props?: any) => {
@@ -28,8 +33,8 @@ export const addEventBubblingListener = (
   eventType: string,
   callback: EventListener
 ) => {
-  const isTarget = (target: HTMLElement) => [ ...parent.querySelectorAll(childSelector) ].includes(target) ||
-                                            target.closest(childSelector);
+  const isTarget = (target: HTMLElement) => selectAllElement(childSelector).includes(target) ||
+                                            selectParent(childSelector, target);
   parent.addEventListener(eventType, event => {
     if (!isTarget(event.target as HTMLElement)) return;
     callback(event);

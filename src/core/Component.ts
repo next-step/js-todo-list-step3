@@ -1,4 +1,4 @@
-import {addEventBubblingListener, debounceOneFrame} from "@/utils";
+import {addEventBubblingListener, debounceOneFrame, selectAllElement} from "@/utils";
 import {Store} from "./Store";
 import {ComponentConstructable} from "@/domains";
 
@@ -36,8 +36,8 @@ export class Component<Props = {}, State = {}> {
   }
 
   private buildChildren () {
-    this.$target.querySelectorAll('[data-component]').forEach((target: Element) => {
-      const componentName: string = (target as HTMLElement).dataset.component!;
+    selectAllElement('[data-component]', this.$target).forEach(target => {
+      const componentName = target.dataset.component as string;
       const { constructor, props } = this.$children[componentName];
       new constructor(props);
     })
