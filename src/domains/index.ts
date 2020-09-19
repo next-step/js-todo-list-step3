@@ -25,7 +25,7 @@ export interface KeyboardEvent<T extends HTMLInputElement = HTMLInputElement> ex
   key: string;
 }
 
-export type Events = CommonEvent | MouseEvent | KeyboardEvent;
+export type PickEvent<T> = Extract<CommonEvent | MouseEvent | KeyboardEvent, T>
 
 export * from "./TodoTeam";
 export * from "./TodoMember";
