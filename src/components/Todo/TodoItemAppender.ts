@@ -1,5 +1,6 @@
 import {Component} from "@/core";
 import {ADD_ITEM, todoOfTeamStore} from "@/store/todoOfTeamStore";
+import {KeyEvent} from "@/domains";
 
 export const TodoItemAppender = class extends Component<{ id: string }> {
 
@@ -10,12 +11,11 @@ export const TodoItemAppender = class extends Component<{ id: string }> {
   }
 
   setEvent () {
-    this.addEvent('appender', 'keyup', event => {
-      const { key, target } = event as KeyboardEvent
+    this.addEvent<KeyEvent>('appender', 'keyup', ({ key, target }) => {
       if (key === 'Enter') {
         todoOfTeamStore.dispatch(ADD_ITEM, {
           memberId: this.$props!.id,
-          contents: (target as HTMLInputElement).value
+          contents: target.value
         });
         (target as HTMLInputElement).value = '';
       }
