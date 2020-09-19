@@ -16,11 +16,11 @@ export const TodoListOfTeam = class extends Component {
   }
 
   componentDidMount () {
-    const $todoMemberAppender = this.$target.querySelector('#todo-member-appender');
+    const $todoMemberAppender = this.$target.querySelector('#todo-member-appender') as HTMLElement;
     new TodoMemberAppender($todoMemberAppender);
     this.$target.querySelectorAll('.todoapp-container').forEach($todoList => {
-      new TodoList($todoList, {
-        id: $todoList.dataset.id
+      new TodoList($todoList as HTMLElement, {
+        id: ($todoList as HTMLElement).dataset.id as string
       });
     })
   }

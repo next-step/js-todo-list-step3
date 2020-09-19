@@ -17,7 +17,7 @@ export class Component<Props = {}, State = {}> {
 
   constructor(
     protected readonly $target: HTMLElement,
-    protected readonly $props: Props
+    protected readonly $props?: Props
   ) {
     this.setup();
   }
