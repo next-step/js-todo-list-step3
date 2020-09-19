@@ -1,6 +1,16 @@
 import {RequestQuery} from "@/domains";
 import {ONE_FRAME} from "@/constants";
 
+export const selectElement = <T = HTMLElement>(
+  selector: string,
+  parent: HTMLElement|Document|Element = document
+) => parent.querySelector(selector) as unknown as T;
+
+export const selectAllElement = <T = HTMLElement>(
+  selector: string,
+  parent: HTMLElement|Document|Element = document
+) => [ ...parent.querySelectorAll(selector) ] as unknown as T[];
+
 export const debounceOneFrame = (callback: Function) => {
   let timer: number = -1;
   return (props?: any) => {
