@@ -6,10 +6,14 @@ import {selectAllElement, selectElement} from "@/utils";
 
 export const TodoListOfTeam = class extends Component {
 
+  private get ids (): string[] {
+    return Object.keys(todoOfTeamStore.$state.members);
+  }
+
   protected componentInit() {
     this.$children = {
       TodoMemberAppender: { constructor: TodoMemberAppender },
-      ...Object.keys(todoOfTeamStore.$state).reduce((obj: ChildrenProps, id) => {
+      ...this.ids.reduce((obj: ChildrenProps, id) => {
         obj[`TodoList-${id}`] = {
           constructor: TodoList,
           props: { id },
@@ -17,12 +21,12 @@ export const TodoListOfTeam = class extends Component {
         return obj;
       }, {})
     }
+    console.log(this.$children);
   }
 
   protected template () {
-    const { members } = todoOfTeamStore.$state;
     return `
-      ${Object.keys(members).map(id => `
+      ${this.ids.map(id => `
         <li data-component="TodoList-${id}" class="todoapp-container"></li>
       `).join('')}
       <li id="todo-member-appender" data-component="TodoMemberAppender" class="add-user-button-container"></li>
