@@ -1,6 +1,6 @@
 import {addEventBubblingListener, debounceOneFrame, selectAllElement} from "@/utils";
 import {Store} from "./Store";
-import {ComponentConstructable} from "@/domains";
+import {CommonEvent, ComponentConstructable, PickEvent} from "@/domains";
 
 export interface ChildrenProp {
   constructor: ComponentConstructable,
@@ -54,7 +54,11 @@ export class Component<Props = {}, State = {}> {
     this.render();
   }
 
-  protected addEvent (ref: string, eventType: string, callback: EventListener) {
+  protected addEvent <T = CommonEvent>(
+    ref: string,
+    eventType: string,
+    callback: (event: PickEvent<T>) => void
+  ) {
     addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
   }
 
