@@ -21,7 +21,6 @@ export const TodoListOfTeam = class extends Component {
         return obj;
       }, {})
     }
-    console.log(this.$children);
   }
 
   protected template () {
