@@ -60,6 +60,10 @@ export const TodoList = class extends Component<{ id: string }> {
 
   protected componentInit() {
     this.$stores = [ todoOfTeamStore ];
+    this.$children = {
+      TodoItemAppender: { constructor: TodoItemAppender },
+      TodoListFooter: { constructor: TodoListFooter },
+    }
   }
 
   protected template () {
@@ -98,14 +102,6 @@ export const TodoList = class extends Component<{ id: string }> {
         <div data-component="TodoListFooter" id="todo-list-footer" class="count-container"></div>
       </div>
     `;
-  }
-
-  protected componentDidMount () {
-    const { $target } = this;
-    const $todoListFooter = selectElement('#todo-list-footer', $target);
-    const $todoItemAppender = selectElement('#todo-item-appender', $target);
-    new TodoListFooter($todoListFooter, { id: this.id });
-    new TodoItemAppender($todoItemAppender, { id: this.id });
   }
 
   protected setEvent () {
