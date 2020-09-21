@@ -27,7 +27,7 @@ export const TodoMemberAppendForm = class extends Component {
           <h3 class="modal-title">멤버 추가하기</h3>
           <div class="appendForm">
             <input type="text" data-ref="team-name" />
-            <button type="button">추가하기</button>
+            <button type="button" data-ref="append">추가하기</button>
           </div>
         </div>     
       </div>
@@ -43,6 +43,9 @@ export const TodoMemberAppendForm = class extends Component {
 
   protected setEvent () {
     this.addEvent('close', 'click', () => this.close());
+    this.addEvent('append', 'click', () => {
+      this.appendTeam((selectElement('input') as HTMLInputElement).value);
+    });
     this.addEvent<KeyEvent>('team-name', 'keyup', ({ key, target }) => {
       if (key === 'Escape') this.close();
       if (key === 'Enter') this.appendTeam(target.value);
