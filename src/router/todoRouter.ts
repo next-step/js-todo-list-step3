@@ -1,5 +1,5 @@
 import {Router} from "@/core";
-import {Team, Kanban} from "@/containers";
+import {Team, Kanban} from "@/views";
 import {selectElement} from "@/utils";
 
 const $app = selectElement('#app');
