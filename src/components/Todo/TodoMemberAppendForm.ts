@@ -1,5 +1,5 @@
 import {Component} from "@/core";
-import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_MEMBER_APPEND_FORM} from "@/store";
+import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_MEMBER_APPEND_FORM, teamStore} from "@/store";
 import {selectElement} from "@/utils";
 import {KeyEvent} from "@/domains";
 
@@ -34,11 +34,10 @@ export const TodoMemberAppendForm = class extends Component {
     ` : '';
   }
 
-  protected componentDidUpdate () {
-    const $target = this.$target;
-    selectElement('.modal-box', $target).addEventListener('click', event => {
-      if ($target === event.currentTarget) event.stopPropagation();
-    });
+  protected componentDidMount () {
+    if (!todoOfTeamStore.$state.openedAppendForm) return;
+    const { $target } = this;
+    selectElement('.modal-box', $target).addEventListener('click', event => event.stopPropagation());
     selectElement('input', $target).focus();
   }
 

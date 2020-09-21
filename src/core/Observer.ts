@@ -12,12 +12,14 @@ export const observe = (observer: Function) => {
 }
 
 export const observableOfKey = (obj: any, key: string, defaultValue: any) => {
+  if (!obj) return;
   const observers: Set<Function> = new Set();
   let _value = defaultValue && typeof defaultValue === 'object'
                 ? observable(defaultValue)
                 : defaultValue;
   Object.defineProperty(obj, key, {
     enumerable: true,
+    configurable: true,
     get() {
       if (currentObserver) observers.add(currentObserver);
       return _value;

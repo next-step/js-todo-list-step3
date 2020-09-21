@@ -61,8 +61,8 @@ export class Component<Props = {}, State extends Record<string, any> = {} > {
 
   public render = () => {
     this.$target.innerHTML = this.template();
-    this.componentDidMount();
     this.buildChildren();
+    this.componentDidMount();
   };
 
 }
