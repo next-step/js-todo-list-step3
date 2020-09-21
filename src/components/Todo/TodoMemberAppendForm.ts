@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {ADD_TEAM_MEMBER, todoOfTeamStore, SET_OPENED_MEMBER_APPEND_FORM, teamStore} from "@/store";
 import {selectElement} from "@/utils";
 import {KeyEvent} from "@/domains";

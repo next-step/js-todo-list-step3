@@ -1,4 +1,4 @@
-import {Router} from "@/core";
+import {Router} from "@/_core";
 import {Team, Kanban} from "@/views";
 import {selectElement} from "@/utils";
 

@@ -1,6 +1,6 @@
 import {addEventBubblingListener, selectAllElement} from "@/utils";
 import {CommonEvent, ComponentConstructable, PickEvent} from "@/domains";
-import {observe, observable} from "@/core/Observer";
+import {observe, observable} from "@/_core";
 
 export interface ChildrenProp {
   constructor: ComponentConstructable,

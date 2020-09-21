@@ -1,4 +1,4 @@
-import {Store} from "@/core";
+import {Store} from "@/_core";
 import {TeamService} from "@/services";
 import {TodoTeam} from "@/domains";
 import {todoRouter} from "@/router";

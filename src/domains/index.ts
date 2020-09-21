@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 
 export type RequestQuery = Record<string, string>;
 

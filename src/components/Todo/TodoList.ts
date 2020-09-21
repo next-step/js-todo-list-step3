@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {
   DELETE_ITEM,
   DELETE_TEAM_MEMBER,

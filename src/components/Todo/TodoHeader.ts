@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {todoOfTeamStore} from "@/store/todoOfTeamStore";
 import {REMOVE_TEAM, teamStore} from "@/store";
 

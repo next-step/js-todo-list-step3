@@ -1,8 +1,8 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {TodoHeader} from "@/components/Todo/TodoHeader";
 import {todoRouter} from "@/router/todoRouter";
 import {TodoListOfTeam} from "@/components/Todo/TodoListOfTeam";
-import {FETCH_TEAM, todoOfTeamStore} from "@/store/todoOfTeamStore";
+import {FETCH_TEAM, todoOfTeamStore} from "@/store";
 import {TodoMemberAppendForm} from "@/components/Todo/TodoMemberAppendForm";
 
 export const Kanban = class extends Component {

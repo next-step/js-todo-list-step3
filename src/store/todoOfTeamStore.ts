@@ -1,9 +1,8 @@
-import {Store} from "@/core";
+import {Store, observable} from "@/_core";
 import {TeamService, TodoService} from "@/services";
 import {FilterTypes} from "@/constants";
 import {TodoItem, TodoMember, TodoTeam} from "@/domains";
 import {TodoServiceVO} from "@/services/TodoService";
-import {observable} from "@/core/Observer";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';

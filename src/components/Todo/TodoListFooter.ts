@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {FilterTypes} from "@/constants";
 import {todoOfTeamStore, SET_FILTER_TYPE, DELETE_ALL_ITEM, teamStore} from "@/store";
 

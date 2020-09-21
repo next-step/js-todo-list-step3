@@ -1,8 +1,7 @@
-import {ChildrenProps, Component} from "@/core";
+import {ChildrenProps, Component} from "@/_core";
 import {TodoMemberAppender} from "./TodoMemberAppender";
 import {TodoList} from "./TodoList";
 import {todoOfTeamStore} from "@/store";
-import {selectAllElement, selectElement} from "@/utils";
 
 export const TodoListOfTeam = class extends Component {
 

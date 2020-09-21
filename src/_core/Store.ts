@@ -1,4 +1,4 @@
-import {Observable, observable} from "@/core/Observer";
+import {observable} from "@/_core";
 
 export type Getter<T> = (state: T) => unknown;
 export type Getters<T> = Record<string, Getter<T>>;

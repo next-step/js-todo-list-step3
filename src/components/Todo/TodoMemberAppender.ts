@@ -1,4 +1,4 @@
-import {Component} from "@/core";
+import {Component} from "@/_core";
 import {SET_OPENED_MEMBER_APPEND_FORM, todoOfTeamStore} from "@/store";
 
 export const TodoMemberAppender = class extends Component {
