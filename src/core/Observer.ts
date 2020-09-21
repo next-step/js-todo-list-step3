@@ -17,6 +17,7 @@ export const observableOfKey = (obj: any, key: string, defaultValue: any) => {
                 ? observable(defaultValue)
                 : defaultValue;
   Object.defineProperty(obj, key, {
+    enumerable: true,
     get() {
       if (currentObserver) observers.add(currentObserver);
       return _value;
