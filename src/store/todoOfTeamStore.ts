@@ -3,6 +3,7 @@ import {TeamService, TodoService} from "@/services";
 import {FilterTypes} from "@/constants";
 import {TodoItem, TodoMember, TodoTeam} from "@/domains";
 import {TodoServiceVO} from "@/services/TodoService";
+import {observable, observableOfKey} from "@/core/Observer";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
@@ -45,11 +46,11 @@ export const todoOfTeamStore = new Store<TodoOfTeamState>({
       state._id = _id;
       state.name = name;
       for (const member of members) {
-        state.members[member._id] = {
+        observableOfKey(state.members, member._id, {
           ...member,
           todoList: (member.todoList || []).filter(v => v !== null)
-        };
-        state.filterType[member._id] = FilterTypes.ALL;
+        });
+        observableOfKey(state.filterType, member._id, FilterTypes.ALL);
       }
     },
     [SET_TODO_LIST] (state, { memberId, todoList }: { memberId: string, todoList: TodoItem[] }) {
