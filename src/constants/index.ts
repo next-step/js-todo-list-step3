@@ -7,20 +7,15 @@ export const enum HttpMethod {
 }
 
 export const enum PriorityTypes {
-  NONE,
-  PRIMARY,
-  SECONDARY
+  NONE = 'NONE',
+  FIRST = 'FIRST',
+  SECOND = 'SECOND'
 }
 
-export const priorityValueOf = (priority: 0 | 1 | 2) =>
-  priority === 1 ? PriorityTypes.PRIMARY :
-  priority === 2 ? PriorityTypes.SECONDARY :
-  PriorityTypes.NONE
-
 export const getPriorityChip = (priority: PriorityTypes) => {
-  return priority === PriorityTypes.PRIMARY   ? 'primary' :
-         priority === PriorityTypes.SECONDARY ? 'secondary' :
-         priority === PriorityTypes.NONE      ? 'none' :
+  return priority === PriorityTypes.FIRST   ? 'primary' :
+         priority === PriorityTypes.SECOND  ? 'secondary' :
+         priority === PriorityTypes.NONE    ? 'none' :
          '';
 }
 

@@ -1,18 +1,22 @@
 import {Component} from "@/core";
 import {
   DELETE_ITEM,
+  DELETE_TEAM_MEMBER,
   SET_EDITING,
+  todoOfTeamStore,
   TOGGLE_ITEM,
   UPDATE_ITEM,
-  UPDATE_ITEM_PRIORITY,
-  todoOfTeamStore,
-  DELETE_TEAM_MEMBER
+  UPDATE_ITEM_PRIORITY
 } from "@/store";
 import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
-import {PriorityTypes, FilterTypes, getPriorityChip} from "@/constants";
+import {FilterTypes, getPriorityChip, PriorityTypes} from "@/constants";
 import {CommonEvent, KeyEvent, TodoItem} from "@/domains";
 import {selectParent} from "@/utils";
+
+const sortByPriority = (priority: PriorityTypes) =>
+  priority === PriorityTypes.FIRST ? 1 :
+  priority === PriorityTypes.SECOND ? 2 : 3;
 
 export const TodoList = class extends Component<{  id: string }> {
 
@@ -32,7 +36,8 @@ export const TodoList = class extends Component<{  id: string }> {
     const memberOfItem: Record<string, any> = todoOfTeamStore.$getters.membersByFilteredTodoList;
     const items: TodoItem[] = memberOfItem[this.id];
     if (this.filterType === FilterTypes.PRIORITY) {
-      items.sort((a, b) => (a.priority || 100) - (b.priority || 100));
+      items.sort((a, b) =>
+        sortByPriority(a.priority) - sortByPriority(b.priority));
     }
     return items;
   }
@@ -66,7 +71,7 @@ export const TodoList = class extends Component<{  id: string }> {
     todoOfTeamStore.commit(SET_EDITING, null);
   }
 
-  private updatePriority (itemId: string, priority: number) {
+  private updatePriority (itemId: string, priority: string) {
     todoOfTeamStore.dispatch(UPDATE_ITEM_PRIORITY, { memberId: this.id, itemId, priority });
   }
 
@@ -94,11 +99,11 @@ export const TodoList = class extends Component<{  id: string }> {
                   <input class="toggle" type="checkbox" data-ref="toggle" ${ isCompleted ? 'checked' : '' } />
                   <label class="label" data-ref="editing">
                     <div class="chip-container">
-                      ${priority === 0 ? `
+                      ${priority === PriorityTypes.NONE ? `
                         <select class="chip select" data-ref="priority">
                           <option value="${PriorityTypes.NONE}" selected>순위</option>
-                          <option value="${PriorityTypes.PRIMARY}">1순위</option>
-                          <option value="${PriorityTypes.SECONDARY}">2순위</option>
+                          <option value="${PriorityTypes.FIRST}">1순위</option>
+                          <option value="${PriorityTypes.SECOND}">2순위</option>
                         </select>` : `
                         <span class="chip ${getPriorityChip(priority)}">${priority}순위</span>                        
                       `}
@@ -151,7 +156,7 @@ export const TodoList = class extends Component<{  id: string }> {
       'priority',
       'change',
       ({ target }) => {
-      this.updatePriority(getId(target), Number(target.value));
+      this.updatePriority(getId(target), target.value);
     });
 
   }
