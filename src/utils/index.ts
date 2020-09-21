@@ -19,8 +19,8 @@ export const selectParent = <T = HTMLElement>(
 export const debounceOneFrame = (callback: Function) => {
   let timer: number = -1;
   return (props?: any) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => callback(props), ONE_FRAME);
+    cancelAnimationFrame(timer);
+    timer = requestAnimationFrame(() => callback(props));
   }
 }
 
