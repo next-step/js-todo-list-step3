@@ -1,4 +1,5 @@
 import { todoAdapterClient } from "@/adapter/todoAdapter";
+import {PriorityTypes} from "@/constants";
 
 export interface TodoServiceVO {
   itemId?: string;
@@ -27,7 +28,7 @@ export default Object.freeze({
   },
 
   updateItemPriority ({ teamId, memberId, itemId, priority }: TodoServiceVO) {
-    return todoAdapterClient.put(`/users/${memberId}/items/${itemId}/priority`, { priority });
+    return todoAdapterClient.put(`/teams/${teamId}/membersZ/${memberId}/items/${itemId}/priority`, { priority });
   },
 
   deleteItem ({ teamId, memberId, itemId }: TodoServiceVO) {
