@@ -18,10 +18,6 @@ export const TeamAppendForm = class extends Component {
     }
   }
 
-  protected componentInit() {
-    this.$stores = [ teamStore ];
-  }
-
   protected template () {
     const { openedAppendForm } = teamStore.$state;
     return openedAppendForm ? `

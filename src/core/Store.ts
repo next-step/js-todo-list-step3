@@ -1,5 +1,4 @@
-import { Component } from "./Component";
-import {Observable, observable} from "@/core/Observe";
+import {Observable, observable} from "@/core/Observer";
 
 export type Getter<T> = (state: T) => unknown;
 export type Getters<T> = Record<string, Getter<T>>;
@@ -17,7 +16,7 @@ export interface StoreProps<T> {
   actions?: Actions<T>
 }
 
-export class Store<T extends Observable> {
+export class Store<T> {
 
   public $state: T;
   public readonly $getters: Getters<T>;
@@ -25,7 +24,7 @@ export class Store<T extends Observable> {
   private readonly actions: Actions<T>;
 
   constructor({ state, getters = {}, mutations = {}, actions = {} }: StoreProps<T>) {
-    this.$state = observable<T>(state);
+    this.$state = observable(state);
     this.$getters = Object.entries(getters)
                           .reduce((getters, [key, getter]) => {
                             Object.defineProperty(getters, key, {

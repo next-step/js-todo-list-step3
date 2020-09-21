@@ -5,10 +5,6 @@ import {teamStore} from "@/store";
 
 export const TodoItemAppender = class extends Component<{ id: string }> {
 
-  protected componentInit() {
-    this.$stores = [ teamStore ];
-  }
-
   protected template () {
     return `
       <input class="new-todo" placeholder="할 일을 입력해주세요." data-ref="appender" autofocus />

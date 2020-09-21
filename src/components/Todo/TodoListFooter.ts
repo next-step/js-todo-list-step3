@@ -24,10 +24,6 @@ export const TodoListFooter = class extends Component<{ id: string }> {
     return memberOfItem[this.id].length;
   }
 
-  protected componentInit() {
-    this.$stores = [ teamStore ];
-  }
-
   protected template () {
     return `
       <span class="todo-count">총 <strong>${this.filteredCount}</strong> 개</span>

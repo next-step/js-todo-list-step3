@@ -59,7 +59,6 @@ export const TodoList = class extends Component<{ id: string }> {
   }
 
   protected componentInit() {
-    this.$stores = [ todoOfTeamStore ];
     const props = { id: this.id };
     this.$children = {
       TodoItemAppender: { constructor: TodoItemAppender, props  },

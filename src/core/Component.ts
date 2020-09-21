@@ -23,7 +23,7 @@ export class Component<Props = {}, State extends Record<string, any> = {} > {
 
   private async setup () {
     await this.componentInit();
-    this.$state = observable(this.$state);
+    this.$state = observable(this.$state || {});
     this.setEvent();
     observe(this.render);
   }

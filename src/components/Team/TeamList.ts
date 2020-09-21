@@ -5,10 +5,6 @@ import {selectElement, selectParent} from "@/utils";
 
 export const TeamList = class extends Component {
 
-  protected componentInit() {
-    this.$stores = [ teamStore ];
-  }
-
   protected template () {
     const { teams } = teamStore.$state;
 
