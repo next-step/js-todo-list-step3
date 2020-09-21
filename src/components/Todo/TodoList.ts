@@ -55,7 +55,7 @@ export const TodoList = class extends Component<{  id: string }> {
   }
 
   private removeMember () {
-    todoOfTeamStore.dispatch(DELETE_TEAM_MEMBER, { memberId: this.id });
+    todoOfTeamStore.dispatch(DELETE_TEAM_MEMBER, this.id);
   }
 
   private editing (itemId: string) {
