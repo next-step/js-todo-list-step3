@@ -3,7 +3,7 @@ import {TeamService, TodoService} from "@/services";
 import {FilterTypes} from "@/constants";
 import {TodoItem, TodoMember, TodoTeam} from "@/domains";
 import {TodoServiceVO} from "@/services/TodoService";
-import {observable, observableOfKey} from "@/core/Observer";
+import {observableOfKey} from "@/core/Observer";
 
 export const INIT = 'INIT';
 export const SET_TODO_LIST = 'SET_TODO_LIST';
@@ -73,9 +73,9 @@ export const todoOfTeamStore = new Store<TodoOfTeamState>({
             .reduce((temp, [ id, { todoList } ]) => ({
               ...temp,
               [id]: todoList.filter(({ isCompleted }) => (filterType[id] === FilterTypes.ALL) ||
-                                                         (filterType[id] === FilterTypes.PRIORITY) ||
-                                                         (filterType[id] === FilterTypes.COMPLETED && isCompleted) ||
-                                                         (filterType[id] === FilterTypes.ACTIVE && !isCompleted))
+                                                                  (filterType[id] === FilterTypes.PRIORITY) ||
+                                                                  (filterType[id] === FilterTypes.COMPLETED && isCompleted) ||
+                                                                  (filterType[id] === FilterTypes.ACTIVE && !isCompleted))
             }), {}),
   },
 
