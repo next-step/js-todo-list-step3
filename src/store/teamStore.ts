@@ -1,11 +1,14 @@
 import {Store} from "@/core";
 import {TeamService} from "@/services";
 import {TodoTeam} from "@/domains";
+import {todoRouter} from "@/router";
 
 export const SET_TEAMS = 'SET_TEAMS';
+export const SET_OPENED_TEAM_APPEND_FORM = 'SET_OPENED_TEAM_APPEND_FORM';
+
 export const FETCH_TEAMS = 'FETCH_TEAMS';
 export const ADD_TEAM = 'ADD_TEAM';
-export const SET_OPENED_TEAM_APPEND_FORM = 'SET_OPENED_TEAM_APPEND_FORM';
+export const REMOVE_TEAM = 'REMOVE_TEAM';
 
 export interface TeamState {
   teams: TodoTeam[];
@@ -40,6 +43,12 @@ export const teamStore = new Store<TeamState>({
     async [ADD_TEAM] ({ dispatch }, name: string) {
       await TeamService.addTeam(name);
       return dispatch(FETCH_TEAMS);
+    },
+
+    async [REMOVE_TEAM] ({ dispatch }, teamId: string) {
+      await TeamService.deleteTeam(teamId);
+      alert('삭제되었습니다.');
+      todoRouter.push('./');
     },
 
   },
