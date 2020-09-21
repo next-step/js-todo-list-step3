@@ -1,10 +1,12 @@
+import {debounceOneFrame} from "@/utils";
+
 let currentObserver: Function|null = null;
 
 export type ObservableValue = undefined | null | string | number | boolean | Function | ObservableValue[];
 export type Observable = Record<string, ObservableValue | Record<string, ObservableValue>>;
 
 export const observe = (observer: Function) => {
-  currentObserver = observer;
+  currentObserver = debounceOneFrame(observer);
   observer();
   currentObserver = null;
 }
