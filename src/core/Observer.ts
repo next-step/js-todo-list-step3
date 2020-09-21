@@ -11,7 +11,7 @@ export const observe = (observer: Function) => {
   currentObserver = null;
 }
 
-export const observable = (target: Observable) =>
+export const observable = (target: any): any =>
   Object.keys(target)
         .reduce((obj, key) => {
           const observers: Set<Function> = new Set();

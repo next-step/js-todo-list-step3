@@ -1,4 +1,5 @@
 import { Component } from "./Component";
+import {Observable, observable} from "@/core/Observe";
 
 export type Getter<T> = (state: T) => unknown;
 export type Getters<T> = Record<string, Getter<T>>;
@@ -16,16 +17,15 @@ export interface StoreProps<T> {
   actions?: Actions<T>
 }
 
-export class Store<T> {
+export class Store<T extends Observable> {
 
   public $state: T;
   public readonly $getters: Getters<T>;
   private readonly mutations: Mutations<T>;
   private readonly actions: Actions<T>;
-  private readonly observers: Set<Component> = new Set();
 
   constructor({ state, getters = {}, mutations = {}, actions = {} }: StoreProps<T>) {
-    this.$state = state;
+    this.$state = observable<T>(state);
     this.$getters = Object.entries(getters)
                           .reduce((getters, [key, getter]) => {
                             Object.defineProperty(getters, key, {
@@ -38,26 +38,15 @@ export class Store<T> {
   }
 
   public commit (key: string, payload: any): void {
-    const newState: T = { ...this.$state };
-    this.mutations[key](newState, payload);
-    this.setState(newState);
+    this.mutations[key](this.$state, payload);
   }
 
   public dispatch (key: string, payload?: any): Promise<unknown> | void {
     return this.actions[key]({
       commit: (key: string, payload: any) => this.commit(key, payload),
       dispatch: (key: string, payload: any) => this.dispatch(key, payload),
-      state: { ...this.$state },
+      state: this.$state,
     }, payload);
-  }
-
-  public addObserver (...components: Component[]) {
-    components.forEach(component => this.observers.add(component));
-  }
-
-  private setState (newState: T) {
-    this.$state = { ...newState };
-    this.observers.forEach(component => component.render())
   }
 
 }

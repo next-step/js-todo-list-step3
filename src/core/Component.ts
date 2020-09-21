@@ -1,6 +1,6 @@
-import {addEventBubblingListener, debounceOneFrame, selectAllElement} from "@/utils";
-import {Store} from "./Store";
+import {addEventBubblingListener, selectAllElement} from "@/utils";
 import {CommonEvent, ComponentConstructable, PickEvent} from "@/domains";
+import {observe, observable} from "@/core/Observer";
 
 export interface ChildrenProp {
   constructor: ComponentConstructable,
@@ -9,10 +9,9 @@ export interface ChildrenProp {
 
 export type ChildrenProps = Record<string, ChildrenProp>;
 
-export class Component<Props = {}, State = {}> {
+export class Component<Props = {}, State extends Record<string, any> = {} > {
 
   protected $state?: State;
-  protected $stores: Store<any>[] = [];
   protected $children: ChildrenProps = {};
 
   constructor(
@@ -24,13 +23,9 @@ export class Component<Props = {}, State = {}> {
 
   private async setup () {
     await this.componentInit();
-    this.subscribeStore();
+    this.$state = observable(this.$state);
     this.setEvent();
-    this.setState(this.$state);
-  }
-
-  private subscribeStore () {
-    this.$stores.forEach(store => store.addObserver(this));
+    observe(this.render);
   }
 
   private buildChildren () {
@@ -49,9 +44,11 @@ export class Component<Props = {}, State = {}> {
     return ''
   }
 
-  protected setState (payload: any) {
-    this.$state = { ...this.$state, ...payload };
-    this.render();
+  protected setState (payload: Record<keyof State, any>) {
+    Object.entries(payload)
+          .forEach(([key, value]: [ keyof State, any]) => {
+            this.$state![key] = value;
+          });
   }
 
   protected addEvent <T = CommonEvent>(
@@ -62,10 +59,10 @@ export class Component<Props = {}, State = {}> {
     addEventBubblingListener(this.$target, `[data-ref="${ref}"]`, eventType, callback);
   }
 
-  public render = debounceOneFrame(() => {
+  public render = () => {
     this.$target.innerHTML = this.template();
     this.componentDidMount();
     this.buildChildren();
-  });
+  };
 
 }
