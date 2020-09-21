@@ -20,6 +20,7 @@ export const UPDATE_ITEM = 'UPDATE_ITEM';
 export const UPDATE_ITEM_PRIORITY = 'UPDATE_ITEM_PRIORITY';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const DELETE_ALL_ITEM = 'DELETE_ALL_ITEM';
+export const DELETE_TEAM_MEMBER = 'DELETE_TEAM_MEMBER';
 
 interface TodoOfTeamState {
   _id: string;
@@ -84,8 +85,8 @@ export const todoOfTeamStore = new Store<TodoOfTeamState>({
   },
 
   actions: {
-    async [FETCH_TEAM] ({ commit }, id) {
-      commit(INIT, await TeamService.fetchTeam(id));
+    async [FETCH_TEAM] ({ commit }, teamId) {
+      commit(INIT, await TeamService.fetchTeam(teamId));
     },
 
     async [FETCH_TODO_LIST] ({ commit, state: { _id: teamId } }, memberId: string) {
@@ -126,6 +127,12 @@ export const todoOfTeamStore = new Store<TodoOfTeamState>({
     async [ADD_TEAM_MEMBER] ({ commit, state: { _id: teamId } }, name: string) {
       return commit(INIT, await TeamService.addTeamMember(teamId, name));
     },
+
+    async [DELETE_TEAM_MEMBER] ({ dispatch, state: { _id: teamId } }, memberId: string) {
+      await TeamService.deleteTeamMember(teamId, memberId)
+      return dispatch(FETCH_TEAM, teamId);
+    },
+
   },
 
 });

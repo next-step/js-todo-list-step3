@@ -1,12 +1,20 @@
 import {Component} from "@/core";
-import {DELETE_ITEM, SET_EDITING, TOGGLE_ITEM, UPDATE_ITEM, UPDATE_ITEM_PRIORITY, todoOfTeamStore} from "@/store";
+import {
+  DELETE_ITEM,
+  SET_EDITING,
+  TOGGLE_ITEM,
+  UPDATE_ITEM,
+  UPDATE_ITEM_PRIORITY,
+  todoOfTeamStore,
+  DELETE_TEAM_MEMBER
+} from "@/store";
 import {TodoListFooter} from "./TodoListFooter";
 import {TodoItemAppender} from "./TodoItemAppender";
 import {PriorityTypes, FilterTypes, getPriorityChip} from "@/constants";
 import {CommonEvent, KeyEvent, TodoItem} from "@/domains";
 import {selectParent} from "@/utils";
 
-export const TodoList = class extends Component<{ id: string }> {
+export const TodoList = class extends Component<{  id: string }> {
 
   private get id () {
     return this.$props!.id;
@@ -41,6 +49,10 @@ export const TodoList = class extends Component<{ id: string }> {
     todoOfTeamStore.dispatch(DELETE_ITEM, { memberId: this.id, itemId });
   }
 
+  private removeMember () {
+    todoOfTeamStore.dispatch(DELETE_TEAM_MEMBER, { memberId: this.id });
+  }
+
   private editing (itemId: string) {
     todoOfTeamStore.commit(SET_EDITING, itemId);
   }
@@ -70,6 +82,7 @@ export const TodoList = class extends Component<{ id: string }> {
     return `
       <h2>
         <span><strong>${this.member.name}</strong>'s Todo List</span>
+        <button type="button" data-ref="removeMember">⌫</button>
       </h2>
       <div class="todoapp">
         <section data-component="TodoItemAppender" id="todo-item-appender" class="input-container"></section>
@@ -127,6 +140,11 @@ export const TodoList = class extends Component<{ id: string }> {
     this.addEvent('edited', 'keyup', e => {
       const { key } = e as KeyboardEvent;
       if (key === 'Escape') this.cancel();
+    });
+
+    this.addEvent('removeMember', 'click', () => {
+      if (!confirm('정말로 삭제하시겠습니까?')) return;
+      this.removeMember();
     });
 
     this.addEvent<CommonEvent<HTMLInputElement>>(

@@ -22,4 +22,8 @@ export default Object.freeze({
     return todoAdapterClient.delete(`teams/${teamId}`);
   },
 
+  deleteTeamMember (teamId: string, memberId: string) {
+    return todoAdapterClient.delete(`teams/${teamId}/members/${memberId}`);
+  },
+
 })
