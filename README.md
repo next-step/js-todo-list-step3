@@ -210,7 +210,7 @@
 ```javascript
 {
  requestBody: {
-   "priority": 1
+   "priority": "FIRST"
  },
  response: {
    "_id": "string",
