@@ -143,7 +143,7 @@
    {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
    ...
@@ -175,7 +175,7 @@
  response: {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
 }
@@ -195,7 +195,7 @@
  response:    {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
 }
@@ -215,7 +215,7 @@
  response: {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
  }
 }
