@@ -1,15 +1,17 @@
-
 export default {
-    addTeam(state , payload){
+    addTeam(state, payload) {
         state.team.push(payload);
         return state;
     },
-    getTeam(state, payload){
+    getTeam(state, payload) {
     },
-    getTeamList(state , payload){
+    getTeamList(state, payload) {
         state.team = payload;
         return state;
     },
-    deleteTeam(state, payload){
+    deleteTeam(state, payload) {
+        const idx = state.team.findIndex( (item) => payload === item._id )
+        state.team.splice(idx , 1);
+        return state;
     },
 }

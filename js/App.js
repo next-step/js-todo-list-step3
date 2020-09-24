@@ -1,19 +1,39 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
+import {path} from "./constants/constants.js";
+import {addTeam , getTeam,getTeamList} from "./service/TeamApi.js";
+import {Observer} from "./core/Observer.js";
+import TeamTitle from "./components/Team/TeamTitle.js";
+
+export class App{
+
+    constructor(currentPath) {
+
+        console.log(currentPath , "path");
+        switch (currentPath) {
+            case path.INDEX_HTML:
+                console.log('index.html');
+                break;
+            case path.KANBAN_HTML:
+                console.log('kanban.html');
+                break;
+            default:
+                console.log('kanban.html');
+                break;
+        }
     }
-  })
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
+    initTeam(){
+        this.Kanban = new TeamTitle();
+        this.store = new TeamStore();
+    }
+    initTodo(){
+        this.index ;
+        this.store = new TodoStore();
+    }
 }
-
-new App()
+const initState = {
+    filter : 'all',
+    status: '',
+    userList : [],
+    todoList : [],
+    selectedTeamId : null,
+}
