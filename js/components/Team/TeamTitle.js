@@ -31,33 +31,24 @@ export default class TeamTitle extends Component {
         </div>`
     }
 
-    async render() {
+     render() {
         let self = this;
 
-        if (store.state.team.length === 0) {
-
-            const teamList = await getTeamList();
-            store.dispatch('getTeamList', teamList);
             const template = this.teamTemplate(store.state.team);
             self.element.innerHTML = template;
             self.element.innerHTML += this.addTeamTemplate();
 
-            self.element.querySelector('#add-team-button').addEventListener('click', async e=>{
+            self.element.querySelector('#add-team-button').addEventListener('click', async e => {
                 const teamName = prompt('팀을 입력해주십시오.');
 
                 const response = await addTeam(teamName);
-                console.log(response , 'response');
+                store.dispatch('addTeam', response);
+                console.log(response, 'response');
+                console.log(store.state.team, 'response team');
             })
             return;
-        }
 
 
-        self.element.querySelectorAll('button').forEach((button, index) => {
-            console.log(index ,  'index');
-            button.addEventListener('click', () => {
-
-            })
-        })
 
     }
 }
