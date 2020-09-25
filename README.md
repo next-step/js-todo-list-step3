@@ -110,7 +110,7 @@
 }
 ```
 
-### 팀원별 TodoList 불러오기
+### 팀원별 TodoListContainer 불러오기
 
 | method | uri |
 |---|---|

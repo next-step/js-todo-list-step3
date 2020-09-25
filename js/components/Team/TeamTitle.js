@@ -13,7 +13,7 @@ export default class TeamTitle extends Component {
     teamTemplate = (teamList) => {
         const template = teamList.map((team) => {
             return `<div class="team-card-container">
-                <a href="/kanban.html/${team._id}"  class="card">
+                <a href="/kanban.html?name=${team._id}"  class="card">
                     <div class="card-title">
                         ${team.name}
                     </div>
@@ -59,8 +59,6 @@ export default class TeamTitle extends Component {
                 }
             })
         })
-        //     self.element.querySelector('')
-        return;
 
 
     }

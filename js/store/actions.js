@@ -11,5 +11,8 @@ export default {
     deleteTeam(context, payload){
         context.commit('deleteTeam' , payload);
     },
+    selectTeam(context , payload){
+        context.commit('selectTeam' , payload);
+    }
 
 }

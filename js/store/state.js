@@ -6,8 +6,10 @@ export default{
     * name : string
     * members : [ ...]
     * */
-    team : []
-    ,
+    team : [],
+    selectedTeam : [],
+    filter: '' ,
+
 
 
 

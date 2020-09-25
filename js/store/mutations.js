@@ -14,4 +14,9 @@ export default {
         state.team.splice(idx , 1);
         return state;
     },
+    selectTeam(state, payload){
+        const selectedTeam = state.team.filter((item) => payload === item._id)
+        state.selectedTeam = selectedTeam[0];
+        return state;
+    },
 }
