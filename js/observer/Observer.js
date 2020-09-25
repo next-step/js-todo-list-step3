@@ -1,5 +1,5 @@
 export const Observer = class {
-    _target; _state = {}; _service;
+    _state = {}; _service;_target;
     constructor(target, subject) {
         this._target = target;
         this._service = subject.service;
@@ -7,9 +7,6 @@ export const Observer = class {
     }
     get state(){
         return this._state;
-    }
-    get target(){
-        return this._target;
     }
 
     setEvent() {
@@ -22,7 +19,7 @@ export const Observer = class {
     }
 
     render(){
-        this._target.innerHTML = this.template();
+        throw new Error("not exists render logic yet");
     }
 
     template() {

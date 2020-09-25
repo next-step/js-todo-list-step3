@@ -41,8 +41,8 @@ export const Pipe = class {
                 toTarget['handler'].call(toTarget['context'], data);
                 return ;
             }
-            for (const target of targets) {
-                target['handler'].call(target['context'], data);
+            for (const [key, value] of targets) {
+                value['handler'].call(value['context'], data);
             }
         }
     }

@@ -1,8 +1,16 @@
-import { Observer } from "../observer/Observer.js";
-import { Priorities } from "../data/constant.js";
+import { Observer } from "../../observer/Observer.js";
+import { Priorities } from "../../data/constant.js";
+import { TodoItemFactory } from "../../factory/todo/TodoItemFactory.js";
+import { toHtml } from "../../utils/utils.js";
 
 export const TodoList = class extends Observer {
-
+    #pipe;#teamId;
+    constructor(target, subject) {
+        super(target, subject);
+        this.#pipe = subject.pipe;
+        this.#teamId =   this._service.currentTeam()._id;
+        this.initialize();
+    }
 
     setEvent() {
         this._target.addEventListener('click', ({ target }) => {
@@ -16,7 +24,7 @@ export const TodoList = class extends Observer {
             }
         });
         this._target.addEventListener('change', ({ target }) => {
-            if (target && target.tagName==="SELECT") {
+            if (target && target.tagName === "SELECT") {
                 this.#changePriority(target);
             }
         });
@@ -35,26 +43,73 @@ export const TodoList = class extends Observer {
                 this.#undo(target);
             }
         });
+
     }
+
+    initialize = () => {
+        this.#pipe.regist({
+            topic: "addMember",
+            key: "todoList",
+            handler: this.#renderAddMember,
+            context: this
+        });
+        this.#pipe.regist({
+            topic: "deleteMember",
+            key: "todoList",
+            handler: this.#renderDeleteMember,
+            context: this
+        });
+        this.#pipe.regist({
+            topic: "update",
+            key: "todoList",
+            handler: this.#renderDeleteMember,
+            context: this
+        });
+    }
+    getContainer = () => this._target.querySelector("todoapp-list-container");
+
+
+    #renderAddMember(member) {
+        const $ul = this.getContainer();
+        if ($ul) {
+            $ul.prepend(new TodoItemFactory(member).build());
+        }
+    }
+
+    #renderDeleteMember(memberId) {
+        const $ul = this.getContainer();
+        if ($ul) {
+            const $memberTodoItem = $ul.querySelector(`[data-container-index='${memberId}']`);
+            if ($memberTodoItem) {
+                $memberTodoItem.remove();
+            }
+        }
+    }
+
 
     #getItem(target) {
-        const $li = target.closest("li");
-        return { $li, itemId: $li.dataset["todoIdx"] }
+        const $li = target.closest(".todo-list-item");
+        const memberId = $li.closest(".todoapp-container").dataset["containerIndex"];
+        return { $li, itemId: $li.dataset["todoIdx"] , memberId}
     }
 
-    #destroy(target) {
-        const { itemId } = this.#getItem(target);
-        this._service.deleteItem(itemId);
+    async #toggle(target) {
+        const { $li, itemId, memberId } = this.#getItem(target);
+        $li.classList.toggle("completed");
+        await this._service.toggleTodoItemByTeamMember(this.#teamId, memberId, itemId);
+
     }
 
-    #toggle(target) {
-        const { itemId } = this.#getItem(target);
-        this._service.toggleItem(itemId)
+    async #destroy(target) {
+        const { $li, itemId, memberId } = this.#getItem(target);
+        $li.remove();
+        await this._service.deleteTodoItemByTeamMember(this.#teamId, memberId, itemId);
     }
 
     #modifyStart(target) {
         const { $li } = this.#getItem(target);
         $li.classList.add("editing");
+        $li.querySelector(".edit").focus()
     }
 
     #undo(target) {
@@ -63,51 +118,67 @@ export const TodoList = class extends Observer {
         $li.classList.remove("editing");
     }
 
-    #modifyComplete(target) {
-        const { $li, itemId } = this.#getItem(target);
+    async #modifyComplete(target) {
+        const { $li, itemId, memberId } = this.#getItem(target);
         const $label = $li.querySelector(".label-content");
         $li.classList.remove("editing");
-        if (target.value !== $label.textContent) {
-            this._service.updateItem(itemId, target.value);
+        const contents = target.value.toString().trim();
+        if (contents !== $label.textContent) {
+            $li.querySelector(".label-content").textContent = contents;
+            await this._service.modifyTodoItemByTeamMember(this.#teamId, memberId, itemId, contents);
         }
     }
-
 
     #changePriority(target) {
         const { itemId } = this.#getItem(target);
         this._service.updateItemPriority(itemId, target.value);
     }
 
-    setState() {
-        const todoList = this._service.currentFilteredTodoList();
-        super.setState({ todoList });
+
+    setState(subject) {
+        super.setState({ members: this._service.currentTeam().members });
     }
 
 
-    /*render() {
-        const { todoList } = this._state;
-        if (todoList)
-            this._target.innerHTML = todoList.map(item => templates.todoItem(item))
-    }*/
-    template() {
-        const { todoList } = this._state;
-        return todoList.map(({ _id, contents, isCompleted, priority })=> {
-            return `<li data-todo-idx="${_id}" class="${isCompleted ? "completed" : ""}">
-                      <div class="view">
-                        <input class="toggle" type="checkbox" ${isCompleted ? "checked" : ""} />
-                        <label class="label">
-                          <select class="chip ${priority === Priorities.FIRST ? "primary" : priority === Priorities.SECOND ? "secondary" : "select"}">
-                            <option value="0" ${priority === Priorities.NONE ? "selected" : ""}>순위</option>
-                            <option value="1" ${priority === Priorities.FIRST ? "selected" : ""}>1순위</option>
-                            <option value="2" ${priority === Priorities.SECOND ? "selected" : ""}>2순위</option>
-                          </select>
-                          <span class="label-content">${contents}</span>
-                        </label>
-                        <button class="destroy"></button>
-                      </div>
-                      <input class="edit" value="${contents}" />
-                    </li>`;
-        })
+    render() {
+        const $listNodes = this._target.querySelectorAll(".todoapp-list-container");
+        if ($listNodes) {
+            $listNodes.forEach(node => node.remove());
+        }
+        this._target.append(this.template());
+
+    }
+
+    template = () => {
+        const { members } = this._state;
+        const frame = toHtml(`<ul class="todoapp-list-container flex-column-container">
+                         <li class="add-user-button-container">
+                           <button id="add-user-button" class="ripple">
+                             <span class="material-icons">add</span>
+                           </button>
+                         </li>
+                       </ul>`);
+        if (members) {
+            members.forEach(member => {
+                const todoItem = new TodoItemFactory(member).build();
+                frame.prepend(todoItem);
+                this.#pipe.regist({
+                    topic: "addTodoItem",
+                    key: member._id,
+                    handler: this.#addToItem,
+                    context: this
+                });
+            });
+        }
+        return frame;
+    }
+
+
+    #addToItem = async ({ memberId, contents }) => {
+        const currentMember = await this._service.addTodoItemByTeamMember(this.#teamId, memberId, contents);
+        const $member = document.querySelector(`[data-container-index="${memberId}"]`);
+        const $newNode = new TodoItemFactory(currentMember).build();
+        this._target.querySelector(".todoapp-list-container").replaceChild($newNode, $member);
     }
 }
 

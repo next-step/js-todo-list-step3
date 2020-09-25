@@ -19,7 +19,7 @@ export const Subject = class {
 
     notify = () =>{
         if (this.#observers && this.#observers.size > 0) {
-            this.#observers.forEach(observer=> observer.setState());
+            this.#observers.forEach(observer=> observer.setState(this));
         }
     };
     execute(){

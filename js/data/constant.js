@@ -24,9 +24,9 @@ export class FooterTab {
 }
 
 export class Priorities {
-    static FIRST = "FIRST"
-    static SECOND = "SECOND"
-    static NONE = "NONE";
+    static FIRST = 1
+    static SECOND = 2
+    static NONE = 0;
 }
 
 export class HttpMethod {

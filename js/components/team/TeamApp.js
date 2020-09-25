@@ -9,7 +9,7 @@ export const TeamApp = class extends Subject {
 
     constructor(targets) {
         super();
-        this.#httpClient = new TeamHttpClient();
+        this.#httpClient= new TeamHttpClient();
         this.#teamService = new TeamService(this.#httpClient);
         this.#pipe = new Pipe();
         this.init(targets);
