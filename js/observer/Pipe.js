@@ -33,6 +33,13 @@ export const Pipe = class {
         }
     }
 
+    unregists({ topics, key }) {
+        topics.forEach(topic=>{
+            this.unregist({topic, key});
+        });
+    }
+
+
     notify({ topic, to, data }) {
         const targets = this.#topics.get(topic);
         if (targets) {

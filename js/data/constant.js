@@ -1,39 +1,34 @@
 
-export const FOOTER_TAB = {
-    SELECTED: "selected",
-    ALL: "all",
-    ACTIVE: "active",
-    COMPLETED: "completed",
-}
-
-export const TODO_COMPLETE_CLASS = "completed";
-export const TODO_EDIT_CLASS = "editing";
-
-export const STORAGE_ID = "todoItems";
 
 export const BASE_URL = "https://js-todo-list-9ca3a.df.r.appspot.com/api";
 
 export const NOOP = () => {};
 
 
-export class FooterTab {
-    static SELECTED = "selected";
-    static ALL = "all";
-    static ACTIVE = "active";
-    static COMPLETED = "completed";
+export const FooterTab = {
+    SELECTED:"selected",
+    ALL:"all",
+    ACTIVE:"active",
+    COMPLETED:"completed",
+    PRIORITY:"priority"
 }
 
-export class Priorities {
-    static FIRST = 1
-    static SECOND = 2
-    static NONE = 0;
+export const Priorities ={
+    FIRST: "FIRST",
+    SECOND: "SECOND",
+    NONE: "NONE",
+}
+export const Priorities_num = {
+    FIRST: 1,
+    SECOND: 2,
+    NONE: 0,
 }
 
-export class HttpMethod {
-    static GET = "GET";
-    static POST = "POST";
-    static PUT = "PUT";
-    static DELETE = "DELETE";
+export const HttpMethod ={
+    GET : "GET",
+    POST : "POST",
+    PUT : "PUT",
+    DELETE : "DELETE",
 }
 
 export default { Priorities, FooterTab, HttpMethod ,NOOP, BASE_URL};

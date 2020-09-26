@@ -1,5 +1,5 @@
 import { Subject } from "../../observer/Subject.js";
-import { TeamHttpClient } from "../../repository/TeamHttpClient.js";
+import { TeamHttpClient } from "../../apiclient/TeamHttpClient.js";
 import { TeamService } from "../../service/TeamService.js";
 import { TeamList } from "./TeamList.js";
 import { Pipe } from "../../observer/Pipe.js";

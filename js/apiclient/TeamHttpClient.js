@@ -31,6 +31,11 @@ export const TeamHttpClient = class extends HttpClientAdapter {
         return this.post(`/teams/${teamId}/members`, { name });
     }
 
+    //5.1. 팀 멤버 삭제
+    deleteTeamMember(teamId, memberId) {
+        return this.delete(`/teams/${teamId}/members/${memberId}`);
+    }
+
     //6. 팀원별 TodoList 불러오기
     loadTodoListByTeamMember(teamId, memberId) {
         return this.get(`/teams/${teamId}/members/${memberId}`);

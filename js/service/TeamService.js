@@ -11,18 +11,18 @@ export const TeamService = class {
         this.#subject = subject;
     }
 
-    setup = async (teamId=null) => {
-        if(teamId)
+    setup = async (teamId = null) => {
+        if (teamId)
             this.#currentTeam = await this.#httpClient.loadTeam(teamId);
         this.#teams = await this.#httpClient.loadTeams();
     }
 
-    currentTeam(){
+    currentTeam() {
         return this.#currentTeam;
     }
 
     getTeams() {
-        if(this.#teams.length <= 0)
+        if (this.#teams.length <= 0)
             return this.#httpClient.loadTeams();
         return this.#teams;
     }
@@ -33,6 +33,19 @@ export const TeamService = class {
         return true;
     }
 
+    addTeamMember = async (teamId, name) => {
+        await this.#httpClient.addTeamMember(teamId, name);
+        await this.setup(teamId);
+        return this.#currentTeam;
+    };
+
+    deleteTeamMember = async (teamId, memberId) => {
+        await this.#httpClient.deleteTeamMember(teamId, memberId);
+        await this.setup(teamId);
+        return this.#currentTeam;
+    };
+
+
     getTodoByTeamMember = (teamId, memberId) => {
         return this.#httpClient.loadTodoListByTeamMember(teamId, memberId);
     };
@@ -40,7 +53,7 @@ export const TeamService = class {
     addTodoItemByTeamMember = async (teamId, memberId, contents) => {
         await this.#httpClient.addTodoItemByTeamMember(teamId, memberId, contents);
         await this.setup(teamId);
-        return this.#currentTeam.members.find(({ _id }) => _id === memberId);
+        return this.findMember(memberId);
     };
 
     toggleTodoItemByTeamMember = async (teamId, memberId, itemId) => {
@@ -59,5 +72,26 @@ export const TeamService = class {
         await this.setup(teamId);
         return true;
     };
+
+    delteAllTodoItemByTeamMember = async (teamId, memberId) => {
+        await this.#httpClient.delteAllTodoItemByTeamMember(teamId, memberId);
+        await this.setup(teamId);
+        return true;
+    };
+
+    modifyPriorityTodoItemByTeamMember = async (teamId, memberId, itemId, priority) => {
+        await this.#httpClient.modifyPriorityTodoItemByTeamMember(teamId, memberId, itemId, priority);
+        await this.setup(teamId);
+        return true;
+    };
+
+    deleteTeam= async (teamId)=> {
+        await this.#httpClient.deleteTeam(teamId);
+        return true;
+    }
+
+
+    findMember = (memberId) => this.#currentTeam.members.find(({ _id }) => _id === memberId);
+
 
 };

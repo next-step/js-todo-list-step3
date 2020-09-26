@@ -4,7 +4,7 @@ import { TeamService } from "../../service/TeamService.js";
 import { TodoTitle } from "./TodoTitle.js";
 import { TodoList } from "./TodoList.js";
 import { Pipe } from "../../observer/Pipe.js";
-import { TeamHttpClient } from "../../repository/TeamHttpClient.js";
+import { TeamHttpClient } from "../../apiclient/TeamHttpClient.js";
 import { TodoInput } from "./TodoInput.js";
 import { TodoFooter } from "./TodoFooter.js";
 

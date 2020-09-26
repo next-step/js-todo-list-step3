@@ -1,6 +1,6 @@
 import { toHtml } from "../utils/utils.js";
 
-export const AbstTodoItemFactory = class {
+export const AbstTodoListFactory = class {
     frame;state;
 
     constructor(state) {
