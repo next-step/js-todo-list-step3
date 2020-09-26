@@ -30,10 +30,3 @@ export class App{
         this.store = new TodoStore();
     }
 }
-const initState = {
-    filter : 'all',
-    status: '',
-    userList : [],
-    todoList : [],
-    selectedTeamId : null,
-}

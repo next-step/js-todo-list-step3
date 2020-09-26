@@ -13,6 +13,9 @@ export default {
     },
     selectTeam(context , payload){
         context.commit('selectTeam' , payload);
+    },
+    addUser(context, payload){
+        context.commit('addUser' , payload);
     }
 
 }

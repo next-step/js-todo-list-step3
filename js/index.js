@@ -3,7 +3,7 @@ import store from './store/index.js'
 import TeamTitle from "./components/Team/TeamTitle.js";
 import {getTeamList} from "./service/TeamApi.js";
 import TodoTeamTitle from "./components/Todo/TodoTeamTitle.js";
-import TodoListContainer from "./components/Todo/TodoListContainer.js";
+import UserListContainer from "./components/Todo/UserListContainer.js";
 import UserTitle from "./components/Todo/UserTitle.js";
 
 
@@ -27,7 +27,7 @@ const TodoList = async  () =>{
     store.dispatch('getTeamList', teamList);
     store.dispatch('selectTeam', selectedTeamId);
     const todoTeamTitleInstance = new TodoTeamTitle();
-    const todoListInstance = new TodoListContainer();
+    const todoListInstance = new UserListContainer();
     todoTeamTitleInstance.render();
     todoListInstance.render();
 
