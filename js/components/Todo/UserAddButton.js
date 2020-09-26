@@ -6,7 +6,7 @@ export default class UserAddButton extends Component {
     constructor() {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element: document.querySelector('.add-user-button-container')
         });
     }
 
@@ -22,7 +22,7 @@ export default class UserAddButton extends Component {
         let i = 1;
         console.log('test' , i++ );
 
-        self.element.innerHTML += this.addUserTemplate();
+        self.element.innerHTML = this.addUserTemplate();
 
         self.element.querySelector('#add-user-button').addEventListener('click', async e => {
             const userName = prompt('유저 이름을 입력해주십시오.');

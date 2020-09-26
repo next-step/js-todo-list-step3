@@ -16,6 +16,9 @@ export default class UserListContainer extends Component {
                     </section>
                 </div>
 </li>`;
+    userAddContainerTemplate = () => `
+        <li class="add-user-button-container">
+            </li>`
 
     constructor() {
         super({
@@ -35,9 +38,9 @@ export default class UserListContainer extends Component {
         store.state.selectedTeam.members.forEach(member => {
             self.element.innerHTML += this.todoUserContainerTemplate(member);
         })
+        self.element.innerHTML+= this.userAddContainerTemplate();
 
         const userAddButtonInstance = new UserAddButton();
-
         userAddButtonInstance.render();
         const userTitleInstance = new UserTitle();
         const TodoInputInstance = new TodoInput();
