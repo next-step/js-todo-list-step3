@@ -16,3 +16,13 @@ export const priority = {
     SECOND : "SECOND",
     NONE : "NONE",
 }
+export const keyboardKey = {
+    Enter : 'Enter',
+    Esc : 'Escape'
+}
+export const filter = {
+    ALL : 'all',
+    PRIORITY : 'priority',
+    ACTIVE : 'active',
+    COMPLETED : 'completed',
+}

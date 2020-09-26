@@ -16,6 +16,9 @@ export default {
     },
     addUser(context, payload){
         context.commit('addUser' , payload);
+    },
+    getMemberTodoList(context , payload){
+        context.commit('getMemberTodoList' , payload);
     }
 
 }

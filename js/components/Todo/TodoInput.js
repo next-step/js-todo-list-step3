@@ -1,5 +1,6 @@
 import Component from "../../core/component.js";
 import store from '../../store/index.js';
+import {keyboardKey} from "../../constants/constants.js";
 
 export default class TodoInput extends Component {
     constructor() {
@@ -19,9 +20,11 @@ export default class TodoInput extends Component {
         self.element.querySelectorAll('.input-container').forEach((node) => {
 
             node.innerHTML = this.todoInputTemplate();
-            node.addEventListener('keyup', async e => {
-                if (e.key === 'Enter') {
-                    console.log('entered');
+            node.addEventListener('keyup', async ({key, target}) => {
+                if (key === keyboardKey.Enter) {
+
+
+                    target.value = '';
                 }
             })
 

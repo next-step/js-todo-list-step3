@@ -1,5 +1,5 @@
-const todoFooter = `<div class="count-container">
-                    <span class="todo-count">총 <strong>0</strong> 개</span>
+const todoFooter = (todoList , filter) =>`<div class="count-container">
+                    <span class="todo-count">총 <strong>${todoList.length()}</strong> 개</span>
                     <ul class="filters">
                         <li>
                             <a href="#all" class="selected">전체보기</a>
@@ -16,3 +16,6 @@ const todoFooter = `<div class="count-container">
                     </ul>
                     <button class="clear-completed">모두 삭제</button>
                 </div>`;
+
+
+
