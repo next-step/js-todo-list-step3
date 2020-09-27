@@ -15,6 +15,8 @@ export default class UserListContainer extends Component {
                     </section>
                     <section class="main" data-member-id="${_id}" >
                     </section>
+                    <div class="count-container"  data-member-id="${_id}" >
+                    </div>
                 </div>
             </li>`;
     userAddContainerTemplate = () => `
@@ -39,7 +41,7 @@ export default class UserListContainer extends Component {
         store.state.selectedTeam.members.forEach(member => {
             self.element.innerHTML += this.todoUserContainerTemplate(member);
         })
-        self.element.innerHTML+= this.userAddContainerTemplate();
+        self.element.innerHTML += this.userAddContainerTemplate();
 
         const TodoListContainerInstance = new TodoListContainer();
         const userTitleInstance = new UserTitle();

@@ -3,6 +3,7 @@ import store from '../../store/index.js';
 import TodoList from "./TodoList.js";
 import {getTeamToMemberToTodoList} from "../../service/TodoApi.js";
 import {keyboardKey} from "../../constants/constants.js";
+import TodoFooter from "./TodoFooter.js";
 
 export default class TodoListContainer extends Component {
     constructor() {
@@ -31,7 +32,11 @@ export default class TodoListContainer extends Component {
             node.innerHTML = this.todoListUlTemplate(memberId);
         });
         const todoListInstance = new TodoList();
+        const todoFooterInstance = new TodoFooter();
+
+
         todoListInstance.render();
+        todoFooterInstance.render();
         /*   self.element.innerHTML = '';
            self.element.innerHTML += this.todoListUlTemplate();
 
