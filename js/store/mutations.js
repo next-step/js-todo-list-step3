@@ -30,14 +30,10 @@ export default {
         return state;
     },
     getMemberTodoList(state, payload){
+        if(payload){
+            return state
 
-        console.log(payload);
-        if(payload.todoList.length > 0){
-            const idx = state.selectedTeam.members.findIndex((item) => payload === item._id)
-            state.selectedTeam.members[idx].todoList.push(payload.todoList);
-
-            console.log(state.selectedTeam.members[idx].todoList, 'todoList');
         }
-        return state
+        //console.log(payload , 'getMembers');
     }
 }

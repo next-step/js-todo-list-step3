@@ -1,6 +1,6 @@
 import Component from "../../core/component.js";
 import store from '../../store/index.js';
-import {getTeamToMemberToTodoList} from "../../service/TodoApi.js";
+import TodoList from "./TodoList.js";
 
 export default class TodoListContainer extends Component {
     constructor() {
@@ -13,8 +13,8 @@ export default class TodoListContainer extends Component {
     todoListUlTemplate = () => `<ul class="todo-list">
                         </ul>`
 
-    todoListLiTemplate = (member, todoList) => `
-                        <li class="todo-list-item" >
+    todoListLiTemplate = (member) => `
+                        <li class="todo-list-item" data-member-id="${member._id}" >
                             <div class="view">
                             </div>
                         </li>`
@@ -23,21 +23,20 @@ export default class TodoListContainer extends Component {
     render() {
         let self = this;
 
-        self.element.innerHTML = '';
-        self.element.innerHTML += this.todoListUlTemplate();
+        if(self.element){
 
-        let length = store.state.selectedTeam.members.length;
+            self.element.innerHTML = '';
+            self.element.innerHTML += this.todoListUlTemplate();
 
-        store.state.selectedTeam.members.forEach(async member => {
+            store.state.selectedTeam.members.forEach(member => {
+                self.element.innerHTML += this.todoListLiTemplate(member);
 
-            const response = await getTeamToMemberToTodoList(store.state.selectedTeam._id , member._id );
-            self.element.innerHTML += this.todoListLiTemplate(response);
+            })
 
-            console.log(response , 'response');
+            const todoListInstance = new TodoList();
+            todoListInstance.render();
 
-        })
-//        store.dispatch('getMemberTodoList' , response);
-
+        }
         /*
         * 포이치안에 상태값을 변경시키면 계속 무한루프가 호출된다.
         * */

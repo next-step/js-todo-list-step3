@@ -47,9 +47,9 @@ export default class UserListContainer extends Component {
         const userAddButtonInstance = new UserAddButton();
         TodoListContainerInstance.render();
         userTitleInstance.render();
-
         TodoInputInstance.render();
         userAddButtonInstance.render();
+
 
     }
 }
