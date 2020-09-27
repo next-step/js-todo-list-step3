@@ -5,8 +5,6 @@ export default {
         state.team.push(payload);
         return state;
     },
-    getTeam(state, payload) {
-    },
     getTeamList(state, payload) {
         state.team = payload;
         return state;
@@ -22,13 +20,11 @@ export default {
         return state;
     },
     addUser(state, payload) {
-
         state.selectedTeam.members = [];
         state.selectedTeam.members = payload.members;
         const idx = state.team.findIndex((item) => payload === item._id)
         state.team.splice(idx, 1);
         state.team.push(payload);
-
         return state;
     },
     getMemberTodoList(state, payload) {
@@ -36,12 +32,10 @@ export default {
             const idx = state.selectedTeam.members.findIndex((item) => payload._id === item._id)
             state.selectedTeam.members.splice(idx, 1);
             state.selectedTeam.members.push(payload);
-
         }
         return state
     },
     addMemberTodoItem(state, payload) {
-
         const idx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
         if(state.selectedTeam.members[idx].todoList){
             state.selectedTeam.members[idx].todoList.push(payload.todoList);
@@ -83,7 +77,6 @@ export default {
 
         const memberIdx = state.selectedTeam.members.findIndex((item) => payload === item._id)
 
-        console.log(state.selectedTeam.members[memberIdx].todoList , 'before');
         state.selectedTeam.members[memberIdx].todoList.map( todo =>{
             switch (todo.priority) {
                 case priority.FIRST:
@@ -102,13 +95,11 @@ export default {
             const sortingField = "priorityNumber";
             return b[sortingField] - a[sortingField];
         })
-        console.log(state.selectedTeam.members[memberIdx].todoList, 'after');
         return state;
     },
     getMemberTodoItemFilter(state, payload) {
         const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
         state.selectedTeam.members[memberIdx].filterType = payload.filterType;
-        console.log(state.selectedTeam.members[memberIdx]);
         return state;
     },
 }

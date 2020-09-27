@@ -57,15 +57,12 @@ const findGetParameter = (parameterName) => {
 const init = () => {
     switch (location.pathname) {
         case '/kanban.html':
-            console.log('kanban');
             TodoList();
             break;
         case '/index.html':
-            console.log('index');
             Team();
             break;
         default :
-            console.log('default');
             Team();
             break;
     }
