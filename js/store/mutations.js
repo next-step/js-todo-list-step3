@@ -1,3 +1,5 @@
+import {priority} from "../constants/constants.js";
+
 export default {
     addTeam(state, payload) {
         state.team.push(payload);
@@ -37,9 +39,6 @@ export default {
 
         }
         return state
-
-
-        //console.log(payload , 'getMembers');
     },
     addMemberTodoItem(state, payload) {
 
@@ -78,6 +77,32 @@ export default {
         const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
         const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoList._id === item._id)
         state.selectedTeam.members[memberIdx].todoList[todoIdx].isCompleted = payload.todoList.isCompleted;
+        return state;
+    },
+    sortMemberTodoItemPriority(state , payload){
+
+        const memberIdx = state.selectedTeam.members.findIndex((item) => payload === item._id)
+
+        console.log(state.selectedTeam.members[memberIdx].todoList , 'before');
+        state.selectedTeam.members[memberIdx].todoList.map( todo =>{
+            switch (todo.priority) {
+                case priority.FIRST:
+                    todo.priorityNumber = 3;
+                    break;
+                case priority.SECOND:
+                    todo.priorityNumber = 2;
+                    break;
+                case priority.NONE:
+                    todo.priorityNumber = 1;
+                    break;
+
+            }
+        });
+        state.selectedTeam.members[memberIdx].todoList.sort((a , b) => {
+            const sortingField = "priorityNumber";
+            return b[sortingField] - a[sortingField];
+        })
+        console.log(state.selectedTeam.members[memberIdx].todoList, 'after');
         return state;
     }
 }

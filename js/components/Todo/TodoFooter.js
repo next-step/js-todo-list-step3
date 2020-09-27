@@ -4,20 +4,22 @@ import {filter,eventType} from "../../constants/constants.js";
 import { deleteTeamToMemberToTodoList} from "../../service/TodoApi.js";
 
 export default class TodoFooter extends Component {
-    todoListCountTemplate = (filter, todoList , memberId) => {
-        return `<span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
+    todoListCountTemplate = (selectedFilter, todoList , memberId) => {
+
+
+        return `<span class="todo-count">총 <strong>${todoList ? todoList.length : '0'}</strong> 개</span>
                     <ul class="filters">
                         <li>
-                            <a href="#all" ${filter === filter.ALL ? "class='selected'" :''} >전체보기</a>
+                            <a href="#all"  data-filter=${filter.ALL} data-member-id="${memberId}" class="${selectedFilter === filter.ALL ? 'anchor selected' :'anchor'}" >전체보기</a>
                         </li>
                         <li>
-                            <a href="#priority" ${filter === filter.PRIORITY ? "class='selected'" :''} >우선 순위</a>
+                            <a href="#priority" data-filter=${filter.PRIORITY} data-member-id="${memberId}" class="${selectedFilter === filter.PRIORITY ? 'anchor selected' :'anchor'}" >우선 순위</a>
                         </li>
                         <li>
-                            <a href="#active" ${filter === filter.ACTIVE ? "class='selected'" :''} >해야할 일</a>
+                            <a href="#active" data-filter=${filter.ACTIVE} data-member-id="${memberId}" class="${selectedFilter === filter.ACTIVE ? 'anchor selected' :'anchor'}" >해야할 일</a>
                         </li>
                         <li>
-                            <a href="#completed" ${filter === filter.COMPLETED ? "class='selected'" :''} >완료한 일</a>
+                            <a href="#completed" data-filter=${filter.COMPLETED} data-member-id="${memberId}" class="${selectedFilter === filter.COMPLETED ? 'anchor selected' :'anchor'}" >완료한 일</a>
                         </li>
                     </ul>
                     <button class="clear-completed" data-member-id="${memberId}" >모두 삭제</button>
@@ -40,7 +42,7 @@ export default class TodoFooter extends Component {
             const memberId = node.dataset.memberId;
             const memberIdx = store.state.selectedTeam.members.findIndex((item) => memberId === item._id);
             const todoList = store.state.selectedTeam.members[memberIdx].todoList;
-            const template = this.todoListCountTemplate( 'ALL' , todoList , memberId);
+            const template = this.todoListCountTemplate( "all" , todoList , memberId);
             node.innerHTML = template;
 
         })
@@ -54,6 +56,27 @@ export default class TodoFooter extends Component {
                 }
                 const response = await deleteTeamToMemberToTodoList(store.state.selectedTeam._id, memberId);
                 store.dispatch('deleteMemberAllTodoList', deletedTodoItem);
+
+            })
+        })
+        this.element.querySelectorAll('.anchor').forEach(async (node) => {
+
+            node.addEventListener(eventType.CLICK, async (e) => {
+                e.preventDefault();
+                const memberId = node.dataset.memberId;
+                const filterType = node.dataset.filter;
+
+                console.log(memberId);
+                console.log(filterType);
+
+
+                switch (filterType) {
+                    case filter.PRIORITY:
+                        store.dispatch('sortMemberTodoItemPriority', memberId);
+                        break;
+                    case filter.ALL :
+                        break;
+                }
 
             })
         })

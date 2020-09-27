@@ -38,6 +38,8 @@ export default {
     putMemberTodoItemToggle(context , payload){
         context.commit('putMemberTodoItemToggle' , payload);
     },
-
+    sortMemberTodoItemPriority(context , payload){
+        context.commit('sortMemberTodoItemPriority' , payload);
+    },
 
 }
