@@ -4,10 +4,10 @@ import TeamTitle from "./components/Team/TeamTitle.js";
 import {getTeamList} from "./service/TeamApi.js";
 import TodoTeamTitle from "./components/Todo/TodoTeamTitle.js";
 import UserListContainer from "./components/Todo/UserListContainer.js";
-import UserTitle from "./components/Todo/UserTitle.js";
+import {getTeamToMemberToTodoList} from "./service/TodoApi.js";
 
 
-const Team = async ()=>{
+const Team = async () => {
     const teamList = await getTeamList();
     store.dispatch('getTeamList', teamList);
 
@@ -15,17 +15,26 @@ const Team = async ()=>{
     teamInstance.render();
 
 }
-const TodoList = async  () =>{
+const TodoList = async () => {
     const selectedTeamId = findGetParameter("name");
-    if(!selectedTeamId){
+    if (!selectedTeamId) {
         alert('팀이 잘못 선택되었습니다.');
         location.history.back();
         return;
     }
 
+
     const teamList = await getTeamList();
     store.dispatch('getTeamList', teamList);
     store.dispatch('selectTeam', selectedTeamId);
+
+
+    store.state.selectedTeam.members.forEach( async member => {
+        const response = await getTeamToMemberToTodoList(store.state.selectedTeam._id,member._id);
+        console.log(response);
+        store.dispatch('getMemberTodoList', response);
+    })
+
     const todoTeamTitleInstance = new TodoTeamTitle();
     const todoListInstance = new UserListContainer();
     todoTeamTitleInstance.render();
@@ -34,7 +43,7 @@ const TodoList = async  () =>{
 
 }
 
-const findGetParameter = (parameterName) =>{
+const findGetParameter = (parameterName) => {
     let result = null,
         tmp = [];
     location.search
@@ -46,7 +55,7 @@ const findGetParameter = (parameterName) =>{
         });
     return result;
 }
-const init =() => {
+const init = () => {
     switch (location.pathname) {
         case '/kanban.html':
             console.log('kanban');

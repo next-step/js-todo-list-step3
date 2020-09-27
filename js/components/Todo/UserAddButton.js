@@ -20,7 +20,6 @@ export default class UserAddButton extends Component {
     render() {
         let self = this;
         let i = 1;
-        console.log('test' , i++ );
 
         self.element.innerHTML = this.addUserTemplate();
 

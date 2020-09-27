@@ -29,11 +29,22 @@ export default {
 
         return state;
     },
-    getMemberTodoList(state, payload){
-        if(payload){
-            return state
+    getMemberTodoList(state, payload) {
+        if(payload.todoList){
+            const idx = state.selectedTeam.members.findIndex((item) => payload._id === item._id)
+            state.selectedTeam.members.splice(idx, 1);
+            state.selectedTeam.members.push(payload);
 
         }
+        return state
+
+
         //console.log(payload , 'getMembers');
+    },
+    addMemberTodoItem(state ,payload){
+
+        const idx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
+        state.selectedTeam.members[idx].todoList.push(payload.todoList);
+        return state;
     }
 }

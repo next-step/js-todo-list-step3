@@ -7,13 +7,13 @@ import TodoListContainer from "./TodoListContainer.js";
 
 export default class UserListContainer extends Component {
     todoUserContainerTemplate = ({_id}) =>
-        `<li class="todoapp-container" data-team-id="${_id}">
-                <section class="user-name-container" data-team-id="${_id}">
+        `<li class="todoapp-container" data-member-id="${_id}">
+                <section class="user-name-container" data-member-id="${_id}">
                 </section>
                   <div class="todoapp">
-                    <section class="input-container">
+                    <section class="input-container" data-member-id="${_id}">
                     </section>
-                    <section class="main" data-team-id="${_id}" >
+                    <section class="main" data-member-id="${_id}" >
                     </section>
                 </div>
             </li>`;

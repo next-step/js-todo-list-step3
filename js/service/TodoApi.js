@@ -12,7 +12,7 @@ export const getTeamToMemberToTodoList = async (teamId, memberId) => {
 
 }
 
-export const postTeamToMemberToTodoItem = async (teamId, memberId, contents) => {
+export const addTeamToMemberToTodoItem = async (teamId, memberId, contents) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items`, options(method.POST, {contents}))
 }
 
