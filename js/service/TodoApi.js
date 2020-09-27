@@ -25,7 +25,7 @@ export const putTeamToMemberToTodoItemToToggle = async (teamId, memberId, itemId
 }
 
 export const putTeamToMemberToTodoItemToContents = async (teamId, memberId, itemId, contents) => {
-    return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, options(method.POST, {contents}))
+    return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, options(method.PUT, {contents}))
 }
 
 export const putTeamToMemberToTodoItemToPriority = async (teamId, memberId, itemId, priority) => {

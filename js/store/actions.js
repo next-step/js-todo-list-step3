@@ -22,6 +22,14 @@ export default {
     },
     addMemberTodoItem(context, payload){
         context.commit('addMemberTodoItem' , payload);
+    },
+    deleteMemberAllTodoList(context , payload){
+        context.commit('deleteMemberAllTodoList' , payload);
+    },
+    deleteMemberTodoList(context , payload){
+        context.commit('deleteMemberTodoList' , payload);
+    },
+    putMemberTodoItemContents(context , payload){
+        context.commit('putMemberTodoItemContents' , payload);
     }
-
 }

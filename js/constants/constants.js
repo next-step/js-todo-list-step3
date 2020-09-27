@@ -20,6 +20,12 @@ export const keyboardKey = {
     Enter : 'Enter',
     Esc : 'Escape'
 }
+export const eventType = {
+    CLICK : 'click',
+    DOUBLE_CLICK : 'dblclick',
+    CHANGE : 'change',
+    KEY_UP : 'keyup',
+}
 export const filter = {
     ALL : 'all',
     PRIORITY : 'priority',
