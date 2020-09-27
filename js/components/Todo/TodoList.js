@@ -27,7 +27,7 @@ export default class TodoList extends Component {
                 }
                 return `<li class="todo-list-item ${todo.isCompleted ? ' completed' : ''}" data-member-id="${memberId}" data-todo-id="${todo._id}">
                             <div class="view">
-                                <input class="toggle" type="checkbox" ${todo.isCompleted ? 'checked' : ''} />
+                                <input class="toggle" type="checkbox"  data-member-id="${memberId}" data-todo-id="${todo._id}" ${todo.isCompleted ? 'checked' : ''} />
                                 <label class="label">
                                     <div class="chip-container">
                                         <select class="chip ${priorityClassName}" data-member-id="${memberId}" data-todo-id="${todo._id}">
@@ -88,16 +88,15 @@ export default class TodoList extends Component {
         this.element.querySelectorAll('.toggle').forEach(async (node) => {
             node.addEventListener(eventType.CHANGE, async ({key, target}) => {
 
-                console.log('change,toggle');
-                console.log(target.checked, 'test');
                 const memberId = node.dataset.memberId;
                 const todoId = node.dataset.todoId;
-                const deletedTodoItem = {
-                    memberId,
-                    todoId
-                }
+
                 const response = await putTeamToMemberToTodoItemToToggle(store.state.selectedTeam._id, memberId, todoId);
-                store.dispatch('putMemberTodoItemToggle', deletedTodoItem);
+                const changedTodoItemToggle = {
+                    memberId,
+                    todoList : response
+                }
+                store.dispatch('putMemberTodoItemToggle', changedTodoItemToggle);
 
             })
         })

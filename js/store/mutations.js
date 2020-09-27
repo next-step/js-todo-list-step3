@@ -73,5 +73,11 @@ export default {
         const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoList._id === item._id)
         state.selectedTeam.members[memberIdx].todoList[todoIdx].priority = payload.todoList.priority;
         return state;
+    },
+    putMemberTodoItemToggle(state, payload) {
+        const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
+        const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoList._id === item._id)
+        state.selectedTeam.members[memberIdx].todoList[todoIdx].isCompleted = payload.todoList.isCompleted;
+        return state;
     }
 }

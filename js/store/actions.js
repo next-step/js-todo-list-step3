@@ -35,6 +35,9 @@ export default {
     putMemberTodoListPriority(context , payload){
         context.commit('putMemberTodoListPriority' , payload);
     },
+    putMemberTodoItemToggle(context , payload){
+        context.commit('putMemberTodoItemToggle' , payload);
+    },
 
 
 }
