@@ -6,15 +6,15 @@ import {
     putTeamToMemberToTodoItemToPriority,
     putTeamToMemberToTodoItemToToggle
 } from "../../service/TodoApi.js";
-import {priority, eventType, keyboardKey} from "../../constants/constants.js";
+import {filter,priority, eventType, keyboardKey} from "../../constants/constants.js";
 
 export default class TodoList extends Component {
-    todoListTemplate = (memberId, {todoList}) => {
+    todoListTemplate = (filterType, memberId, {todoList}) => {
         if (todoList && todoList.length > 0) {
             return todoList.map(todo => {
 
                 let priorityClassName = '';
-                switch(todo.priority){
+                switch (todo.priority) {
                     case priority.NONE :
                         priorityClassName = 'select';
                         break;
@@ -23,6 +23,14 @@ export default class TodoList extends Component {
                         break;
                     case priority.SECOND :
                         priorityClassName = 'secondary';
+                        break;
+                }
+                switch (filterType) {
+                    case  filter.ACTIVE :
+                        if(todo.isCompleted) return;
+                        break;
+                    case  filter.COMPLETED :
+                        if(!todo.isCompleted) return ;
                         break;
                 }
                 return `<li class="todo-list-item ${todo.isCompleted ? ' completed' : ''}" data-member-id="${memberId}" data-todo-id="${todo._id}">
@@ -61,8 +69,9 @@ export default class TodoList extends Component {
         this.element.querySelectorAll('.todoapp-container').forEach((node) => {
             const nodeId = node.dataset.memberId;
             const memberIdx = store.state.selectedTeam.members.findIndex((item) => nodeId === item._id);
+            const selectedMember = store.state.selectedTeam.members[memberIdx];
             const $ul = node.querySelector('.todo-list');
-            const template = this.todoListTemplate(nodeId, store.state.selectedTeam.members[memberIdx]);
+            const template = this.todoListTemplate(selectedMember.filterType, nodeId, selectedMember);
             $ul.innerHTML = template;
 
         })
@@ -71,7 +80,6 @@ export default class TodoList extends Component {
         this.element.querySelectorAll('.chip.select').forEach(async (node) => {
             node.addEventListener(eventType.CHANGE, async ({key, target}) => {
 
-                console.log(target.value, '333');
                 const memberId = node.dataset.memberId;
                 const todoId = node.dataset.todoId;
 
@@ -79,7 +87,7 @@ export default class TodoList extends Component {
                 const response = await putTeamToMemberToTodoItemToPriority(store.state.selectedTeam._id, memberId, todoId, priorityName);
                 const changedTodoItemPriority = {
                     memberId,
-                    todoList : response
+                    todoList: response
                 }
                 store.dispatch('putMemberTodoListPriority', changedTodoItemPriority);
 
@@ -94,7 +102,7 @@ export default class TodoList extends Component {
                 const response = await putTeamToMemberToTodoItemToToggle(store.state.selectedTeam._id, memberId, todoId);
                 const changedTodoItemToggle = {
                     memberId,
-                    todoList : response
+                    todoList: response
                 }
                 store.dispatch('putMemberTodoItemToggle', changedTodoItemToggle);
 
@@ -131,7 +139,6 @@ export default class TodoList extends Component {
                         store.dispatch('putMemberTodoItemContents', newTodoItem);
                         target.value = '';
                         const $li = node.closest('.todo-list-item');
-                        console.log($li);
                         $li.className = `todo-list-item ${response.isCompleted ? ' completed' : ''}`;
                     }
 

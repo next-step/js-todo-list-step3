@@ -6,6 +6,7 @@ import { deleteTeamToMemberToTodoList} from "../../service/TodoApi.js";
 export default class TodoFooter extends Component {
     todoListCountTemplate = (selectedFilter, todoList , memberId) => {
 
+        if(!selectedFilter) selectedFilter = filter.ALL;
 
         return `<span class="todo-count">총 <strong>${todoList ? todoList.length : '0'}</strong> 개</span>
                     <ul class="filters">
@@ -42,7 +43,7 @@ export default class TodoFooter extends Component {
             const memberId = node.dataset.memberId;
             const memberIdx = store.state.selectedTeam.members.findIndex((item) => memberId === item._id);
             const todoList = store.state.selectedTeam.members[memberIdx].todoList;
-            const template = this.todoListCountTemplate( "all" , todoList , memberId);
+            const template = this.todoListCountTemplate( store.state.selectedTeam.members[memberIdx].filterType , todoList , memberId);
             node.innerHTML = template;
 
         })
@@ -66,17 +67,12 @@ export default class TodoFooter extends Component {
                 const memberId = node.dataset.memberId;
                 const filterType = node.dataset.filter;
 
-                console.log(memberId);
-                console.log(filterType);
 
 
-                switch (filterType) {
-                    case filter.PRIORITY:
-                        store.dispatch('sortMemberTodoItemPriority', memberId);
-                        break;
-                    case filter.ALL :
-                        break;
-                }
+                if(filterType === filter.PRIORITY)store.dispatch('sortMemberTodoItemPriority', memberId);
+
+                store.dispatch('getMemberTodoItemFilter', {memberId ,filterType});
+                node.className = 'anchor selected';
 
             })
         })

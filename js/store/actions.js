@@ -41,5 +41,8 @@ export default {
     sortMemberTodoItemPriority(context , payload){
         context.commit('sortMemberTodoItemPriority' , payload);
     },
+    getMemberTodoItemFilter(context , payload){
+        context.commit('getMemberTodoItemFilter' , payload);
+    },
 
 }

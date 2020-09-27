@@ -104,5 +104,11 @@ export default {
         })
         console.log(state.selectedTeam.members[memberIdx].todoList, 'after');
         return state;
-    }
+    },
+    getMemberTodoItemFilter(state, payload) {
+        const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
+        state.selectedTeam.members[memberIdx].filterType = payload.filterType;
+        console.log(state.selectedTeam.members[memberIdx]);
+        return state;
+    },
 }

@@ -31,7 +31,6 @@ const TodoList = async () => {
 
     store.state.selectedTeam.members.forEach( async member => {
         const response = await getTeamToMemberToTodoList(store.state.selectedTeam._id,member._id);
-        console.log(response);
         store.dispatch('getMemberTodoList', response);
     })
 
