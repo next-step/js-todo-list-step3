@@ -44,7 +44,11 @@ export default {
     addMemberTodoItem(state, payload) {
 
         const idx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
-        state.selectedTeam.members[idx].todoList.push(payload.todoList);
+        if(state.selectedTeam.members[idx].todoList){
+            state.selectedTeam.members[idx].todoList.push(payload.todoList);
+            return state;
+        }
+        state.selectedTeam.members[idx].todoList = [payload.todoList];
         return state;
     },
     deleteMemberAllTodoList(state, payload) {
@@ -54,7 +58,7 @@ export default {
     },
     deleteMemberTodoList(state, payload) {
         const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
-        const todoIdx = state.selectedTeam.members[memberIdx].findIndex((item) => payload.todoId === item._id)
+        const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoId === item._id)
         state.selectedTeam.members[memberIdx].todoList.splice(todoIdx, 1);
         return state;
     },
@@ -62,6 +66,12 @@ export default {
         const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
         const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoList._id === item._id)
         state.selectedTeam.members[memberIdx].todoList[todoIdx].contents = payload.todoList.contents;
+        return state;
+    },
+    putMemberTodoListPriority(state, payload) {
+        const memberIdx = state.selectedTeam.members.findIndex((item) => payload.memberId === item._id)
+        const todoIdx = state.selectedTeam.members[memberIdx].todoList.findIndex((item) => payload.todoList._id === item._id)
+        state.selectedTeam.members[memberIdx].todoList[todoIdx].priority = payload.todoList.priority;
         return state;
     }
 }

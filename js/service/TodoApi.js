@@ -29,7 +29,7 @@ export const putTeamToMemberToTodoItemToContents = async (teamId, memberId, item
 }
 
 export const putTeamToMemberToTodoItemToPriority = async (teamId, memberId, itemId, priority) => {
-    return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, options(method.PUT, {priority}))
+    return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, options(method.PUT, {priority}))
 }
 
 export const deleteTeamToMemberToTodoList = async (teamId, memberId) => {

@@ -31,5 +31,10 @@ export default {
     },
     putMemberTodoItemContents(context , payload){
         context.commit('putMemberTodoItemContents' , payload);
-    }
+    },
+    putMemberTodoListPriority(context , payload){
+        context.commit('putMemberTodoListPriority' , payload);
+    },
+
+
 }

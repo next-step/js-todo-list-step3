@@ -1,18 +1,36 @@
 import Component from "../../core/component.js";
 import store from '../../store/index.js';
-import {deleteTeamToMemberToTodoItem , putTeamToMemberToTodoItemToContents} from "../../service/TodoApi.js";
+import {
+    deleteTeamToMemberToTodoItem,
+    putTeamToMemberToTodoItemToContents,
+    putTeamToMemberToTodoItemToPriority,
+    putTeamToMemberToTodoItemToToggle
+} from "../../service/TodoApi.js";
 import {priority, eventType, keyboardKey} from "../../constants/constants.js";
 
 export default class TodoList extends Component {
     todoListTemplate = (memberId, {todoList}) => {
         if (todoList && todoList.length > 0) {
             return todoList.map(todo => {
+
+                let priorityClassName = '';
+                switch(todo.priority){
+                    case priority.NONE :
+                        priorityClassName = 'select';
+                        break;
+                    case priority.FIRST :
+                        priorityClassName = 'primary';
+                        break;
+                    case priority.SECOND :
+                        priorityClassName = 'secondary';
+                        break;
+                }
                 return `<li class="todo-list-item ${todo.isCompleted ? ' completed' : ''}" data-member-id="${memberId}" data-todo-id="${todo._id}">
                             <div class="view">
                                 <input class="toggle" type="checkbox" ${todo.isCompleted ? 'checked' : ''} />
                                 <label class="label">
                                     <div class="chip-container">
-                                        <select class="chip select" data-member-id="${memberId}" data-todo-id="${todo._id}">
+                                        <select class="chip ${priorityClassName}" data-member-id="${memberId}" data-todo-id="${todo._id}">
                                             <option value="NONE" ${todo.priority === priority.NONE ? 'selected' : ''}>순위</option>
                                             <option value="FIRST" ${todo.priority === priority.FIRST ? 'selected' : ''}>1순위</option>
                                             <option value="SECOND" ${todo.priority === priority.SECOND ? 'selected' : ''}>2순위</option>
@@ -52,30 +70,35 @@ export default class TodoList extends Component {
 
         this.element.querySelectorAll('.chip.select').forEach(async (node) => {
             node.addEventListener(eventType.CHANGE, async ({key, target}) => {
-                console.log('change');
-                /*  const memberId = node.dataset.memberId;
-                  const todoId = node.dataset.todoId;
-                  const deletedTodoItem = {
-                      memberId,
-                      todoId
-                  }
-                  const response = await putTeamToMemberToTodoItemToPriority(store.state.selectedTeam._id, memberId, todoId);
-                  store.dispatch('deleteMemberTodoList', deletedTodoItem);
-  */
+
+                console.log(target.value, '333');
+                const memberId = node.dataset.memberId;
+                const todoId = node.dataset.todoId;
+
+                const priorityName = target.value;
+                const response = await putTeamToMemberToTodoItemToPriority(store.state.selectedTeam._id, memberId, todoId, priorityName);
+                const changedTodoItemPriority = {
+                    memberId,
+                    todoList : response
+                }
+                store.dispatch('putMemberTodoListPriority', changedTodoItemPriority);
+
             })
         })
         this.element.querySelectorAll('.toggle').forEach(async (node) => {
             node.addEventListener(eventType.CHANGE, async ({key, target}) => {
+
                 console.log('change,toggle');
-                /*const memberId = node.dataset.memberId;
+                console.log(target.checked, 'test');
+                const memberId = node.dataset.memberId;
                 const todoId = node.dataset.todoId;
                 const deletedTodoItem = {
                     memberId,
                     todoId
                 }
-                const response = await putTeamToMemberToTodoItemToPriority(store.state.selectedTeam._id, memberId, todoId);
-                store.dispatch('deleteMemberTodoList', deletedTodoItem);
-*/
+                const response = await putTeamToMemberToTodoItemToToggle(store.state.selectedTeam._id, memberId, todoId);
+                store.dispatch('putMemberTodoItemToggle', deletedTodoItem);
+
             })
         })
         this.element.querySelectorAll('.destroy').forEach(async (node) => {
@@ -101,7 +124,7 @@ export default class TodoList extends Component {
             node.addEventListener(eventType.KEY_UP, async ({key, target}) => {
                 if (key === keyboardKey.Enter) {
                     if (target.value !== '') {
-                        const response = await putTeamToMemberToTodoItemToContents(store.state.selectedTeam._id, node.dataset.memberId,node.dataset.todoId, target.value);
+                        const response = await putTeamToMemberToTodoItemToContents(store.state.selectedTeam._id, node.dataset.memberId, node.dataset.todoId, target.value);
                         const newTodoItem = {
                             memberId: node.dataset.memberId,
                             todoList: response
