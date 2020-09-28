@@ -12,13 +12,14 @@ export default class TeamList extends Component {
   initEventListener = () => {
     this.$target.addEventListener('click', (e) => {
       e.preventDefault();
-      this.props.routeTo('/kanban');
+      if (e.target.closest('.team-card-container'))
+        this.props.routeTo('/kanban', { hi: 'hi' }, 'hi');
     });
   };
 
   render = () => {
     this.$target.innerHTML = '';
-    new TeamButton(this.$target);
-    new AddButton(this.$target);
+    new TeamButton(this.$target, { class: ['team-card-container'] });
+    new AddButton(this.$target, { class: ['add-team-button-container'] });
   };
 }

@@ -7,7 +7,6 @@ export default class TodoList extends Component {
   }
   render() {
     this.$target.innerHTML = `
-		<ul class="todoapp-list-container flex-column-container">
 		<li class="todoapp-container">
 			<h2>
 				<span><strong>eastjun</strong>'s Todo List</span>
@@ -297,6 +296,6 @@ export default class TodoList extends Component {
 				<span class="material-icons">add</span>
 			</button>
 		</li>
-	</ul>`;
+		`;
   }
 }

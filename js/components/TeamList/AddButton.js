@@ -1,8 +1,8 @@
 import Component from '../../core/Component.js';
 
 export default class AddButton extends Component {
-  constructor($parent) {
-    super($parent);
+  constructor($parent, props) {
+    super($parent, props);
     this.render();
   }
 
@@ -14,11 +14,9 @@ export default class AddButton extends Component {
 
   render = () => {
     this.$target.innerHTML = `
-    	<div class="add-team-button-container">
-    		<button id="add-team-button" class="ripple">
-    			<span class="material-icons">add</span>
-    		</button>
-    	</div>
+      <button id="add-team-button" class="ripple">
+        <span class="material-icons">add</span>
+      </button>
     `;
   };
 }
