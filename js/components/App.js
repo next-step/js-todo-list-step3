@@ -1,25 +1,23 @@
 import Component from '../core/Component.js';
-import { strToHTML } from '../utils/index.js';
+import Router from '../router/index.js';
+import Title from '../components/Title.js';
 
 export default class App extends Component {
   $target;
   #teams;
-  #title = 'Team';
+  title = 'Team';
 
-  constructor($target, props) {
-    super($target, props);
+  constructor($target) {
+    super();
+    this.$target = $target;
+    this.render();
   }
 
-  initEventListener = () => {};
-  render() {
-    console.log('hi');
-    this.$target.innerHTML = '';
-
-    new TodoTitle($target, { title: this.#title });
-    const $container = document.createElement('div');
-    new Router($container);
-    this.$target.appendChild($container);
-  }
+  initEventListener() {}
+  render = () => {
+    new Title(this.$target, { id: 'user-title', title: this.title }, 'h1');
+    new Router(this.$target);
+  };
 }
 
 // function App() {
