@@ -9,7 +9,7 @@ export default class AddButton extends Component {
   initEventListener() {
     this.$target.addEventListener('click', () => {
       const result = prompt('팀 이름을 입력해주세요');
-      this.props.addTeam(result);
+      if (!!result) this.props.addTeam(result);
     });
   }
 

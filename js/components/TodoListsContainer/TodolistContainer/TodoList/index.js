@@ -2,17 +2,29 @@ import Component from '../../../../core/Component.js';
 import TodoInput from './TodoInput.js';
 import TodoMain from './TodoMain.js';
 import TodoCountContainer from './TodoCountContainer/index.js';
-import State from '../../../../core/State.js';
+import State, { ComputedState } from '../../../../core/State.js';
 import api from '../../../../api/ApiService.js';
-import { Priority } from '../../../../constants/index.js';
+import {
+  ALL,
+  Priority,
+  ACTIVE,
+  COMPLETED,
+  PRIORITY,
+} from '../../../../constants/index.js';
 
 export default class TodoList extends Component {
   todos;
+  filterType;
 
   constructor($parent, props) {
     super($parent, props);
 
+    this.filterType = new State(ALL);
     this.todos = new State(props.todos);
+    this.filteredTodos = new ComputedState(this.computeTodoList, [
+      this.todos,
+      this.filterType,
+    ]);
     this.render();
   }
 
@@ -50,6 +62,31 @@ export default class TodoList extends Component {
     this.todos.value = (await api.getMemberTodo(teamId, memberId)).todoList;
   };
 
+  computeTodoList = () => {
+    let todoList = this.todos.value || [];
+
+    todoList = todoList.filter((todoItem) => {
+      if (todoItem.isCompleted && this.filterType.value === COMPLETED)
+        return true;
+      else if (!todoItem.isCompleted && this.filterType.value === ACTIVE)
+        return true;
+      else if (
+        this.filterType.value === ALL ||
+        this.filterType.value === PRIORITY
+      )
+        return true;
+    });
+    if (this.filterType.value === PRIORITY)
+      todoList.sort((a, b) => {
+        if (a.priority === b.priority) return 0;
+        if (a.priority === Priority.First) return -1;
+        if (b.priority === Priority.First) return 1;
+        if (a.priority === Priority.Second) return -1;
+        if (b.priority === Priority.Second) return 1;
+      });
+    return todoList;
+  };
+
   render = () => {
     this.$target.innerHTML = '';
     new TodoInput(
@@ -61,7 +98,7 @@ export default class TodoList extends Component {
       this.$target,
       {
         class: ['main'],
-        todos: this.todos,
+        todos: this.filteredTodos,
         deleteTodo: this.deleteTodo,
         editTodo: this.editTodo,
         changeTodoPriority: this.changeTodoPriority,
@@ -69,6 +106,9 @@ export default class TodoList extends Component {
       },
       'section'
     );
-    new TodoCountContainer(this.$target, { class: ['count-container'] });
+    new TodoCountContainer(this.$target, {
+      filterType: this.filterType,
+      class: ['count-container'],
+    });
   };
 }

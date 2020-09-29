@@ -8,6 +8,7 @@ export const GET = 'GET';
 export const ALL = 'all';
 export const ACTIVE = 'active';
 export const COMPLETED = 'completed';
+export const PRIORITY = 'priority';
 export const SELECTED = 'selected';
 
 export const Priority = {

@@ -32,9 +32,10 @@ export default class State {
 export class ComputedState extends State {
   #value;
 
-  constructor(value, render, dependencies) {
+  constructor(value, dependencies, render) {
     super(value(), render);
 
+    this.#value = value();
     const handler = () => {
       this.#value = value();
       this.renderAll();

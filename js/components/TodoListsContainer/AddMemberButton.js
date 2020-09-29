@@ -2,9 +2,9 @@ import Component from '../../core/Component.js';
 
 export default class AddMemberButton extends Component {
   initEventListener() {
-    this.$target.addEventListener('click', (e) => {
+    this.$target.addEventListener('click', () => {
       const result = prompt('이름을 입력해주세요');
-      this.props.addTeamMember(result);
+      if (!!result) this.props.addTeamMember(result);
     });
   }
 

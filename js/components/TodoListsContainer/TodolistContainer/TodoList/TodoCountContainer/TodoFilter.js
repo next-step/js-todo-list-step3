@@ -1,5 +1,11 @@
-import { COMPLETED, ALL, ACTIVE, SELECTED } from '../constant/index.js';
-import Component from '../core/Component.js';
+import {
+  COMPLETED,
+  ALL,
+  ACTIVE,
+  SELECTED,
+  PRIORITY,
+} from '../../../../../constants/index.js';
+import Component from '../../../../../core/Component.js';
 
 export default class TodoFilter extends Component {
   $filters;
@@ -7,20 +13,8 @@ export default class TodoFilter extends Component {
   constructor($target, props) {
     super($target, props);
 
-    this.$filters = this.$target.querySelectorAll('a');
-    this.setDataToHTML();
+    this.$filters = this.$target.querySelectorAll('li > a');
   }
-
-  setDataToHTML = () => {
-    this.$filters.forEach(($filter) => {
-      if ($filter.classList.contains(ALL))
-        $filter.setAttribute('data-type', ALL);
-      else if ($filter.classList.contains(ACTIVE))
-        $filter.setAttribute('data-type', ACTIVE);
-      else if ($filter.classList.contains(COMPLETED))
-        $filter.setAttribute('data-type', COMPLETED);
-    });
-  };
 
   initEventListener() {
     this.$target.addEventListener('click', (e) => {
@@ -36,5 +30,21 @@ export default class TodoFilter extends Component {
         }
       });
     });
+  }
+  render() {
+    this.$target.innerHTML = `
+      <li>
+        <a href="#all" data-type=${ALL} class="selected">전체보기</a>
+      </li>
+      <li>
+        <a href="#priority" data-type=${PRIORITY}>우선 순위</a>
+      </li>
+      <li>
+        <a href="#active" data-type=${ACTIVE}>해야할 일</a>
+      </li>
+      <li>
+        <a href="#completed" data-type=${COMPLETED}>완료한 일</a>
+      </li>
+    `;
   }
 }
