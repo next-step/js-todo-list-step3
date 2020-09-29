@@ -22,7 +22,9 @@ class ApiService {
 
   deleteTeam() {}
 
-  addTeamMember() {}
+  async addTeamMember(teamId, name) {
+    return await this.#api.post(`/teams/${teamId}/members`, { name });
+  }
 
   getTodos() {}
 

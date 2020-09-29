@@ -15,7 +15,7 @@ export default class TodoInput extends Component {
         const memberId = target.closest(`[data-member-id]`)?.dataset.memberId;
 
         this.props.addTodo(teamId, memberId, target.value);
-        this.$target.value = '';
+        this.$target.querySelector('input').value = '';
       }
     });
   }

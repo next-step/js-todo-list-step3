@@ -21,9 +21,14 @@ export default class TeamContainer extends Component {
     this.render();
   }
 
-  render = () => {
-    console.log(this.#teamTodos.value);
+  addTeamMember = async (memberName) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const teamId = urlParams.get('id');
+    await api.addTeamMember(teamId, memberName);
+    await this.loadTeamTodos();
+  };
 
+  render = () => {
     this.$target.innerHTML = '';
     this.#teamTodos.value.members.forEach((member) => {
       new TodoListContainer(
@@ -34,7 +39,10 @@ export default class TeamContainer extends Component {
     });
     new AddMemberButton(
       this.$target,
-      { class: ['add-user-button-container'] },
+      {
+        class: ['add-user-button-container'],
+        addTeamMember: this.addTeamMember,
+      },
       'li'
     );
   };
