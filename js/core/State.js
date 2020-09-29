@@ -12,7 +12,9 @@ export default class State {
   };
 
   renderAll = () => {
-    this.#renders.forEach((render) => render());
+    this.#renders.forEach((render) => {
+      if (typeof render === 'function') render();
+    });
   };
 
   get value() {

@@ -8,8 +8,8 @@ export default class TeamButton extends Component {
 
   render = () => {
     this.$target.innerHTML = `
-      <a href="/kanban.html" class="card">
-      <div class="card-title">Black Coffee team</div>
+      <a id="${this.props._id}" href="/kanban.html" class="card">
+        <div class="card-title">${this.props.name}</div>
       </a>
 		`;
   };

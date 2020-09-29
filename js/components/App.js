@@ -1,41 +1,26 @@
 import Component from '../core/Component.js';
 import Router from '../router/index.js';
 import Title from '../components/Title.js';
+import State from '../core/State.js';
 
 export default class App extends Component {
   $target;
-  #teams;
-  title = 'Team';
+  title;
 
   constructor($target) {
     super();
     this.$target = $target;
+    this.title = new State('Team');
+
     this.render();
   }
 
-  initEventListener() {}
+  setTitle = (newTitle) => {
+    this.title.value = newTitle;
+  };
+
   render = () => {
     new Title(this.$target, { id: 'user-title', title: this.title }, 'h1');
-    new Router(this.$target);
+    new Router(this.$target, { setTitle: this.setTitle });
   };
 }
-
-// function App() {
-//   const $todoApps = document.querySelector('.todoapp-list-container')
-//   $todoApps.addEventListener('click', e => {
-//     const $target = e.target
-//     const targetClassList = $target.classList
-//     if (targetClassList.contains('chip')) {
-//       const $chipSelect = $target.closest('.chip-container').querySelector('select')
-//       $target.classList.add('hidden')
-//       $chipSelect.classList.remove('hidden')
-//     }
-//   })
-
-//   const $addUserButton = document.querySelector('#add-user-button')
-//   $addUserButton.addEventListener('click', () => {
-//     const result = prompt('새로운 팀원 이름을 입력해주세요')
-//   })
-// }
-
-// new App()
