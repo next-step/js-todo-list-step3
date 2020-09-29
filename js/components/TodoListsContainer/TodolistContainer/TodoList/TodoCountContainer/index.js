@@ -1,10 +1,9 @@
 import Component from '../../../../../core/Component.js';
-
 import TodoCount from './TodoCount.js';
 import TodoFilter from './TodoFilter.js';
 import TodoClearButton from './TodoClearButton.js';
 
-export default class TodoInput extends Component {
+export default class TodoCountConatiner extends Component {
   constructor($parent, props) {
     super($parent, props);
     this.render();
@@ -14,7 +13,7 @@ export default class TodoInput extends Component {
     this.$target.innerHTML = '';
     new TodoCount(
       this.$target,
-      { class: ['todo-count'], todoList: this.todoList },
+      { class: ['todo-count'], todos: this.props.todos },
       'span'
     );
     new TodoFilter(

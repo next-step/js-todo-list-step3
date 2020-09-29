@@ -108,6 +108,7 @@ export default class TodoList extends Component {
     );
     new TodoCountContainer(this.$target, {
       filterType: this.filterType,
+      todos: this.filteredTodos,
       class: ['count-container'],
     });
   };
