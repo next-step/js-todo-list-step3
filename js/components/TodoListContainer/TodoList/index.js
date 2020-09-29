@@ -97,8 +97,9 @@ export default class TodoList extends Component {
   };
 
   render = () => {
+    this.$target.innerHTML = '';
     new Title(this.$target, { title: this.title }, 'h2');
-    this.$target.innerHTML = '<div class="todoapp"></div>';
+    this.$target.innerHTML += '<div class="todoapp"></div>';
     const $todoapp = this.$target.querySelector('.todoapp');
     new TodoInput(
       $todoapp,
