@@ -1,19 +1,16 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
-    }
-  })
+import Team from './Team.js';
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
+function App() {
+  this.$app = document.querySelector('#app');
+
+  this.$app.innerHTML = `
+    <h1 id="user-title" data-username="eastjun">
+        <span><strong>Team</strong>'s Todo Lists</span>
+    </h1>
+    <div class="team-list-container"></div>
+    `;
+
+  new Team();
 }
 
-new App()
+new App();

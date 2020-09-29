@@ -4,8 +4,8 @@
 
 ## 🎯 index.html 팀 페이지 요구사항
 
-- [ ] 1. 팀 추가하기
-- [ ] 2. 팀 리스트 불러와서 화면에 보여주기
+- [x] 1. 팀 추가하기
+- [x] 2. 팀 리스트 불러와서 화면에 보여주기
 
 ## 🎯 kanban.html 팀의 투두리스트 페이지 요구사항
 
@@ -143,7 +143,7 @@
    {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
    ...
@@ -175,7 +175,7 @@
  response: {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
 }
@@ -195,7 +195,7 @@
  response:    {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
    }
 }
@@ -210,12 +210,12 @@
 ```javascript
 {
  requestBody: {
-   "priority": 1
+   "priority": "FIRST"
  },
  response: {
    "_id": "string",
    "contents": "string",
-   "priority": "number",
+   "priority": "string",
    "isCompleted": "boolean",
  }
 }
