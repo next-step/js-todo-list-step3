@@ -44,7 +44,9 @@ class ApiService {
     );
   }
 
-  deleteTodoAll() {}
+  async deleteTodoAll(teamId, memberId) {
+    return await this.#api.delete(`/teams/${teamId}/members/${memberId}/items`);
+  }
 
   async toggleTodo(teamId, memberId, itemId) {
     return await this.#api.put(

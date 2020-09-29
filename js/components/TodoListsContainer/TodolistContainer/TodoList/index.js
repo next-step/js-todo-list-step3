@@ -48,6 +48,11 @@ export default class TodoList extends Component {
     this.todos.value = (await api.getMemberTodo(teamId, memberId)).todoList;
   };
 
+  clearTodo = async (teamId, memberId) => {
+    await api.deleteTodoAll(teamId, memberId);
+    this.todos.value = [];
+  };
+
   changeTodoPriority = async (teamId, memberId, itemId, priorityId) => {
     await api.changeTodoPriority(
       teamId,
@@ -109,6 +114,7 @@ export default class TodoList extends Component {
     new TodoCountContainer(this.$target, {
       filterType: this.filterType,
       todos: this.filteredTodos,
+      clearTodo: this.clearTodo,
       class: ['count-container'],
     });
   };

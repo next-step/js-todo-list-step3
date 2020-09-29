@@ -21,6 +21,10 @@ export default class TodoCountConatiner extends Component {
       { class: ['filters'], filterType: this.props.filterType },
       'ul'
     );
-    new TodoClearButton(this.$target, { class: ['clear-completed'] }, 'button');
+    new TodoClearButton(
+      this.$target,
+      { class: ['clear-completed'], clearTodo: this.props.clearTodo },
+      'button'
+    );
   };
 }
