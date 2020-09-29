@@ -1,7 +1,7 @@
 import Component from '../../core/Component.js';
 import State from '../../core/State.js';
 import api from '../../api/ApiService.js';
-import TodoListContainer from './TodolistContainer/index.js';
+import TodoList from './TodoList/index.js';
 import AddMemberButton from './AddMemberButton.js';
 
 export default class TeamContainer extends Component {
@@ -31,7 +31,7 @@ export default class TeamContainer extends Component {
   render = () => {
     this.$target.innerHTML = '';
     this.#teamTodos.value.members.forEach((member) => {
-      new TodoListContainer(
+      new TodoList(
         this.$target,
         { class: ['todoapp-container'], 'data-member-id': member._id, member },
         'li'

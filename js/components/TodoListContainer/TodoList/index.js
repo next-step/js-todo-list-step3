@@ -1,26 +1,30 @@
-import Component from '../../../../core/Component.js';
+import Component from '../../../core/Component.js';
+import Title from '../../Title.js';
 import TodoInput from './TodoInput.js';
 import TodoMain from './TodoMain.js';
 import TodoCountContainer from './TodoCountContainer/index.js';
-import State, { ComputedState } from '../../../../core/State.js';
-import api from '../../../../api/ApiService.js';
+import State, { ComputedState } from '../../../core/State.js';
+import api from '../../../api/ApiService.js';
 import {
   ALL,
   Priority,
   ACTIVE,
   COMPLETED,
   PRIORITY,
-} from '../../../../constants/index.js';
+} from '../../../constants/index.js';
 
 export default class TodoList extends Component {
   todos;
+  title;
   filterType;
 
   constructor($parent, props) {
     super($parent, props);
 
+    this.$target.setAttribute('data-member-id', props['data-member-id']);
     this.filterType = new State(ALL);
-    this.todos = new State(props.todos);
+    this.title = new State(props.member.name);
+    this.todos = new State(props.member.todoList);
     this.filteredTodos = new ComputedState(this.computeTodoList, [
       this.todos,
       this.filterType,
@@ -93,14 +97,16 @@ export default class TodoList extends Component {
   };
 
   render = () => {
-    this.$target.innerHTML = '';
+    new Title(this.$target, { title: this.title }, 'h2');
+    this.$target.innerHTML = '<div class="todoapp"></div>';
+    const $todoapp = this.$target.querySelector('.todoapp');
     new TodoInput(
-      this.$target,
+      $todoapp,
       { class: ['input-container'], addTodo: this.addTodo },
       'section'
     );
     new TodoMain(
-      this.$target,
+      $todoapp,
       {
         class: ['main'],
         todos: this.filteredTodos,
@@ -111,7 +117,7 @@ export default class TodoList extends Component {
       },
       'section'
     );
-    new TodoCountContainer(this.$target, {
+    new TodoCountContainer($todoapp, {
       filterType: this.filterType,
       todos: this.filteredTodos,
       clearTodo: this.clearTodo,

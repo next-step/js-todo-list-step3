@@ -1,4 +1,4 @@
-import Component from '../../../../../core/Component.js';
+import Component from '../../../../core/Component.js';
 import TodoCount from './TodoCount.js';
 import TodoFilter from './TodoFilter.js';
 import TodoClearButton from './TodoClearButton.js';

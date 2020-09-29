@@ -1,6 +1,6 @@
 import Component from '../core/Component.js';
 import TeamList from '../components/TeamList/index.js';
-import TodoListContainer from '../components/TodoListsContainer/index.js';
+import TodoListContainer from '../components/TodoListContainer/index.js';
 
 export default class Router extends Component {
   constructor($parent, props) {

@@ -4,8 +4,8 @@ import {
   ACTIVE,
   SELECTED,
   PRIORITY,
-} from '../../../../../constants/index.js';
-import Component from '../../../../../core/Component.js';
+} from '../../../../constants/index.js';
+import Component from '../../../../core/Component.js';
 
 export default class TodoFilter extends Component {
   $filters;
