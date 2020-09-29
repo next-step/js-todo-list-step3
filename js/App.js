@@ -1,19 +1,79 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
+import HeaderTitle from './Header.js';
+import TeamBoard from './TeamBoard.js';
+import TodoBoard from './TodoBoard.js';
+
+import { getTeam, addTeamMember } from '../api/team.js';
+import { addUserButtonTemplate } from '../utils/template.js';
+
+export default class App {
+  constructor(currentPath) {
+    this.headerTitle = new HeaderTitle();
+    this.headerTitle.setState('Team');
+    this.currentTeamId = location.search.split('=')[1];
+
+    switch (currentPath) {
+      case '/index.html':
+        this.teamBoardInit();
+        break;
+      case '/kanban.html':
+        if (this.currentTeamId) {
+          this.todoBoardInit();
+        }
+        break;
+      default:
+        this.teamBoardInit();
     }
-  })
+  }
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
+  teamBoardInit() {
+    this.teamBoard = new TeamBoard();
+  }
+
+  async todoBoardInit() {
+    this.$todoAppListContainer = document.querySelector(
+      '.todoapp-list-container'
+    );
+    this.$todoAppListContainer.innerHTML = '';
+
+    this.teamInfo = await this.getTeamInfo(this.currentTeamId);
+    this.teamInfo.members.forEach((member) => {
+      const $todoContainer = document.createElement('li');
+      $todoContainer.id = member._id;
+      $todoContainer.className = 'todoapp-container';
+      new TodoBoard($todoContainer, member);
+    });
+    this.$todoAppListContainer.appendChild(this.addMemberButtonElement());
+    this.$addUserButton = document.querySelector('#add-user-button');
+    this.addNewMember();
+  }
+
+  addMemberButtonElement() {
+    const $addUserButtonContainer = document.createElement('li');
+    $addUserButtonContainer.className = 'add-user-button-container';
+    $addUserButtonContainer.innerHTML = addUserButtonTemplate;
+    return $addUserButtonContainer;
+  }
+
+  async getTeamInfo(teamId) {
+    try {
+      return await getTeam(teamId);
+    } catch (e) {
+      alert(`getTeamInfo Error: ${e.message}`);
+    }
+  }
+
+  addNewMember() {
+    this.$addUserButton.addEventListener('click', async () => {
+      const result = prompt('새로운 팀원 이름을 입력해주세요');
+      const newMemberName = result.trim();
+      if (newMemberName) {
+        try {
+          await addTeamMember(this.currentTeamId, newMemberName);
+          this.todoBoardInit();
+        } catch (e) {
+          alert(`addNewMember Error: ${e.message}`);
+        }
+      }
+    });
+  }
 }
-
-new App()
