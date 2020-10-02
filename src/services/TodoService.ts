@@ -28,7 +28,7 @@ export default Object.freeze({
   },
 
   updateItemPriority ({ teamId, memberId, itemId, priority }: TodoServiceVO) {
-    return todoAdapterClient.put(`/teams/${teamId}/membersZ/${memberId}/items/${itemId}/priority`, { priority });
+    return todoAdapterClient.put(`/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, { priority });
   },
 
   deleteItem ({ teamId, memberId, itemId }: TodoServiceVO) {
