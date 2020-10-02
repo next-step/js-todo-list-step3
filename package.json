@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "repository": "https://github.com/JunilHwang/js-todo-list-step3",
-  "author": "junilHwang <tjsdlf4261@naver.com>",
+  "author": "junilHwang <junil.h@kakao.com>",
   "license": "MIT",
   "scripts": {
     "watch": "webpack --watch --mode=development",
