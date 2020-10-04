@@ -8,61 +8,61 @@ class ApiService {
     this.#api = new ApiClient(API_BASE_URL);
   }
 
-  async addTeam(name) {
-    return await this.#api.post('/teams', { name });
+  addTeam(name) {
+    return this.#api.post('/teams', { name });
   }
 
-  async getTeam(teamId) {
-    return await this.#api.get(`/teams/${teamId}`);
+  getTeam(teamId) {
+    return this.#api.get(`/teams/${teamId}`);
   }
 
-  async getTeams() {
-    return await this.#api.get('/teams');
+  getTeams() {
+    return this.#api.get('/teams');
   }
 
   deleteTeam() {}
 
-  async addTeamMember(teamId, name) {
-    return await this.#api.post(`/teams/${teamId}/members`, { name });
+  addTeamMember(teamId, name) {
+    return this.#api.post(`/teams/${teamId}/members`, { name });
   }
 
   getTodos() {}
 
-  async getMemberTodo(teamdId, memberId) {
-    return await this.#api.get(`/teams/${teamdId}/members/${memberId}`);
+  getMemberTodo(teamdId, memberId) {
+    return this.#api.get(`/teams/${teamdId}/members/${memberId}`);
   }
 
-  async addTodo(teamId, memberId, contents) {
-    return await this.#api.post(`/teams/${teamId}/members/${memberId}/items`, {
+  addTodo(teamId, memberId, contents) {
+    return this.#api.post(`/teams/${teamId}/members/${memberId}/items`, {
       contents,
     });
   }
 
-  async deleteTodo(teamId, memberId, itemId) {
-    return await this.#api.delete(
+  deleteTodo(teamId, memberId, itemId) {
+    return this.#api.delete(
       `/teams/${teamId}/members/${memberId}/items/${itemId}`
     );
   }
 
-  async deleteTodoAll(teamId, memberId) {
-    return await this.#api.delete(`/teams/${teamId}/members/${memberId}/items`);
+  deleteTodoAll(teamId, memberId) {
+    return this.#api.delete(`/teams/${teamId}/members/${memberId}/items`);
   }
 
-  async toggleTodo(teamId, memberId, itemId) {
-    return await this.#api.put(
+  toggleTodo(teamId, memberId, itemId) {
+    return this.#api.put(
       `/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`
     );
   }
 
-  async editTodo(teamId, memberId, itemId, contents) {
-    return await this.#api.put(
+  editTodo(teamId, memberId, itemId, contents) {
+    return this.#api.put(
       `/teams/${teamId}/members/${memberId}/items/${itemId}`,
       { contents }
     );
   }
 
-  async changeTodoPriority(teamId, memberId, itemId, priority) {
-    return await this.#api.put(
+  changeTodoPriority(teamId, memberId, itemId, priority) {
+    return this.#api.put(
       `/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
       { priority }
     );
