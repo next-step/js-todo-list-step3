@@ -90,10 +90,11 @@ export default class TodoMain extends Component {
   render = () => {
     this.$target.innerHTML = `<ul class="todo-list"></ul>`;
     const $ul = this.$target.querySelector('.todo-list');
+    let tempHTML = '';
 
     this.props.todos.value.forEach(
       ({ _id, contents, isCompleted, priority }) => {
-        $ul.innerHTML += `
+        tempHTML += `
           <li class="todo-list-item ${
             isCompleted ? 'completed' : ''
           }" data-key="${_id}" >
@@ -114,5 +115,6 @@ export default class TodoMain extends Component {
       `;
       }
     );
+    $ul.innerHTML = tempHTML;
   };
 }
