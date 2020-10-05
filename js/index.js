@@ -16,7 +16,7 @@ const Team = async () => {
 
 }
 const TodoList = async () => {
-    const selectedTeamId = findGetParameter("name");
+    const selectedTeamId = findParameter("name");
     if (!selectedTeamId) {
         alert('팀이 잘못 선택되었습니다.');
         location.history.back();
@@ -42,7 +42,7 @@ const TodoList = async () => {
 
 }
 
-const findGetParameter = (parameterName) => {
+const findParameter = (parameterName) => {
     let result = null,
         tmp = [];
     location.search
