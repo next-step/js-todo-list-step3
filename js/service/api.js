@@ -8,17 +8,17 @@ export const request = async (url , option) =>{
         }
         return response.json();
     }catch(error){
-        throw new Error(error.message);
+        console.log(error);
     }
 }
 
 export const options = (method , body) =>{
-    if(body){
-        body = JSON.stringify(body);
-    }
-    return {
+    const options = {
         method,
         headers : {"Content-Type" : "application/json"},
-        body,
     };
+    if( body){
+        options.body = JSON.stringify(body);
+    }
+    return options;
 };
