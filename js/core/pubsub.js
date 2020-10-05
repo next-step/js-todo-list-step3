@@ -5,23 +5,22 @@ export default class PubSub {
 
 
     subscribe(event, callback) {
-        let self = this;
+        const {events} = this;
 
-        if(!self.events.hasOwnProperty(event)){
-            self.events[event] = [];
-        }
+        events[event] = events[event] || [];
 
-        return self.events[event].push(callback);
+        return events[event].push(callback);
     }
 
 
     publish(event , data ={}){
-        let self = this;
-        if(!self.events.hasOwnProperty(event)){
+        const {events} = this;
+        if(!events.hasOwnProperty(event)){
             return [];
         }
 
-        return self.events[event].map(callback => callback(data));
+
+        return events[event].map(callback => callback(data));
     }
 
 }
