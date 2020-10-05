@@ -34,9 +34,9 @@ export default class TeamTitle extends Component {
 
     render() {
 
-        const template = this.teamTemplate(store.state.team);
-        this.element.innerHTML = template;
-        this.element.innerHTML += this.addTeamTemplate();
+        let template = this.teamTemplate(store.state.team);
+        template += this.addTeamTemplate();
+        this.element.innerHTML  = template;
 
         this.element.querySelector('#add-team-button').addEventListener('click', async e => {
             const teamName = prompt('팀을 입력해주십시오.');
