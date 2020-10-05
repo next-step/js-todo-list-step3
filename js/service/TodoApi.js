@@ -3,35 +3,35 @@ import {request, options} from "./api.js";
 
 
 
-export const addTeamToMember = async (teamId, name) => {
+export const addTeamToMember =  (teamId, name) => {
     return request(`${baseUrl}/api/teams/${teamId}/members`, options(method.POST, {name}))
 }
 
-export const getTeamToMemberToTodoList = async (teamId, memberId) => {
+export const getTeamToMemberToTodoList =  (teamId, memberId) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}`, options(method.GET))
 
 }
 
-export const addTeamToMemberToTodoItem = async (teamId, memberId, contents) => {
+export const addTeamToMemberToTodoItem =  (teamId, memberId, contents) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items`, options(method.POST, {contents}))
 }
 
-export const deleteTeamToMemberToTodoItem = async (teamId, memberId, itemId) => {
+export const deleteTeamToMemberToTodoItem =  (teamId, memberId, itemId) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, options(method.DELETE))
 }
 
-export const putTeamToMemberToTodoItemToToggle = async (teamId, memberId, itemId) => {
+export const putTeamToMemberToTodoItemToToggle =  (teamId, memberId, itemId) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`, options(method.PUT))
 }
 
-export const putTeamToMemberToTodoItemToContents = async (teamId, memberId, itemId, contents) => {
+export const putTeamToMemberToTodoItemToContents =  (teamId, memberId, itemId, contents) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`, options(method.PUT, {contents}))
 }
 
-export const putTeamToMemberToTodoItemToPriority = async (teamId, memberId, itemId, priority) => {
+export const putTeamToMemberToTodoItemToPriority =  (teamId, memberId, itemId, priority) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, options(method.PUT, {priority}))
 }
 
-export const deleteTeamToMemberToTodoList = async (teamId, memberId) => {
+export const deleteTeamToMemberToTodoList =  (teamId, memberId) => {
     return request(`${baseUrl}/api/teams/${teamId}/members/${memberId}/items`, options(method.DELETE))
 }

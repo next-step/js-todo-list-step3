@@ -1,7 +1,7 @@
 import {baseUrl ,method} from "../constants/constants.js";
 import {request,options} from "./api.js";
 
-export const addTeam = async name => {
+export const addTeam = name => {
     return request(`${baseUrl}/api/teams` , options(method.POST , {name }))
 }
 
