@@ -1,6 +1,6 @@
 import Component from "../../core/component.js";
 import store from '../../store/index.js';
-import { addTeam ,deleteTeam} from "../../service/TeamApi.js";
+import {addTeam, deleteTeam} from "../../service/TeamApi.js";
 
 export default class TeamTitle extends Component {
     constructor(element) {
@@ -36,22 +36,26 @@ export default class TeamTitle extends Component {
 
         let template = this.teamTemplate(store.state.team);
         template += this.addTeamTemplate();
-        this.element.innerHTML  = template;
+        this.element.innerHTML = template;
 
         this.element.querySelector('#add-team-button').addEventListener('click', async e => {
             const teamName = prompt('팀을 입력해주십시오.');
-
-            const response = await addTeam(teamName);
-            store.dispatch('addTeam', response);
+            if (teamName) {
+                const response = await addTeam(teamName);
+                store.dispatch('addTeam', response);
+                return;
+            }
+            alert('아무것도 입력이 안되었습니다.');
+            return ;
         })
 
         this.element.querySelectorAll('.destroy').forEach((button) => {
             button.addEventListener('click', async ({target}) => {
-                const isDelete= confirm('정말 지우시겠습니까?');
-                if(isDelete){
+                const isDelete = confirm('정말 지우시겠습니까?');
+                if (isDelete) {
                     const targetTeamId = target.dataset.id;
                     const response = await deleteTeam(targetTeamId);
-                    store.dispatch('deleteTeam' , targetTeamId);
+                    store.dispatch('deleteTeam', targetTeamId);
                 }
             })
         })
