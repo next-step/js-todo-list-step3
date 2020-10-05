@@ -43,8 +43,6 @@ export default class TeamTitle extends Component {
 
             const response = await addTeam(teamName);
             store.dispatch('addTeam', response);
-            console.log(response, 'response');
-            console.log(store.state.team, 'response team');
         })
 
         this.element.querySelectorAll('.destroy').forEach((button) => {
@@ -54,7 +52,6 @@ export default class TeamTitle extends Component {
                     const targetTeamId = target.dataset.id;
                     const response = await deleteTeam(targetTeamId);
                     store.dispatch('deleteTeam' , targetTeamId);
-                    console.log(response , 'deleteItem');
                 }
             })
         })
