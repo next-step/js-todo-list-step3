@@ -3,10 +3,10 @@ import store from '../../store/index.js';
 import { addTeam ,deleteTeam} from "../../service/TeamApi.js";
 
 export default class TeamTitle extends Component {
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.team-list-container')
+            element
         });
     }
 

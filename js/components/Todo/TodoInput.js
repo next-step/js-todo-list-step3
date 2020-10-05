@@ -4,10 +4,10 @@ import {keyboardKey} from "../../constants/constants.js";
 import {addTeamToMemberToTodoItem} from "../../service/TodoApi.js";
 
 export default class TodoInput extends Component {
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
     }
 

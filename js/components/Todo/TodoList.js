@@ -55,10 +55,10 @@ export default class TodoList extends Component {
         return '할일을 입력해주세요.';
     }
 
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
 
     }

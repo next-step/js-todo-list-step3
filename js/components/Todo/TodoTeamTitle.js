@@ -2,10 +2,10 @@ import Component from "../../core/component.js";
 import store from '../../store/index.js';
 
 export default class TodoTeamTitle extends Component {
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('#user-title')
+            element
         });
     }
 

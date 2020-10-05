@@ -3,10 +3,10 @@ import store from '../../store/index.js';
 import {addTeamToMember} from "../../service/TodoApi.js";
 
 export default class UserAddButton extends Component {
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.add-user-button-container')
+            element
         });
     }
 

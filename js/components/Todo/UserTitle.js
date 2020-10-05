@@ -5,10 +5,10 @@ export default class UserTitle extends Component {
     userTitleTemplate = ({name}) =>
         `<h2><span><strong>${name}</strong>'s Todo List</span>`;
 
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
     }
 

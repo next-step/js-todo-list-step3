@@ -6,10 +6,10 @@ import {keyboardKey} from "../../constants/constants.js";
 import TodoFooter from "./TodoFooter.js";
 
 export default class TodoListContainer extends Component {
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
     }
 
@@ -29,8 +29,8 @@ export default class TodoListContainer extends Component {
             const memberId = node.dataset.memberId;
             node.innerHTML = this.todoListUlTemplate(memberId);
         });
-        const todoListInstance = new TodoList();
-        const todoFooterInstance = new TodoFooter();
+        const todoListInstance = new TodoList(document.querySelector('.todoapp-list-container.flex-column-container'));
+        const todoFooterInstance = new TodoFooter(document.querySelector('.todoapp-list-container.flex-column-container'));
 
 
         todoListInstance.render();

@@ -28,10 +28,10 @@ export default class TodoFooter extends Component {
 
     }
 
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
 
     }

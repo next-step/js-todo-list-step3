@@ -23,10 +23,10 @@ export default class UserListContainer extends Component {
         <li class="add-user-button-container">
             </li>`
 
-    constructor() {
+    constructor(element) {
         super({
             store,
-            element: document.querySelector('.todoapp-list-container.flex-column-container')
+            element
         });
     }
 
@@ -44,10 +44,10 @@ export default class UserListContainer extends Component {
         template += this.userAddContainerTemplate();
 
         this.element.innerHTML = template;
-        const TodoListContainerInstance = new TodoListContainer();
-        const userTitleInstance = new UserTitle();
-        const TodoInputInstance = new TodoInput();
-        const userAddButtonInstance = new UserAddButton();
+        const TodoListContainerInstance = new TodoListContainer(document.querySelector('.todoapp-list-container.flex-column-container'));
+        const userTitleInstance = new UserTitle(document.querySelector('.todoapp-list-container.flex-column-container'));
+        const TodoInputInstance = new TodoInput( document.querySelector('.todoapp-list-container.flex-column-container'));
+        const userAddButtonInstance = new UserAddButton(document.querySelector('.add-user-button-container'));
         TodoListContainerInstance.render();
         userTitleInstance.render();
         TodoInputInstance.render();

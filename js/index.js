@@ -11,7 +11,7 @@ const Team = async () => {
     const teamList = await getTeamList();
     store.dispatch('getTeamList', teamList);
 
-    const teamInstance = new TeamTitle();
+    const teamInstance = new TeamTitle(document.querySelector('.team-list-container'));
     teamInstance.render();
 
 }
@@ -34,8 +34,8 @@ const TodoList = async () => {
         store.dispatch('getMemberTodoList', response);
     })
 
-    const todoTeamTitleInstance = new TodoTeamTitle();
-    const todoListInstance = new UserListContainer();
+    const todoTeamTitleInstance = new TodoTeamTitle(document.querySelector('#user-title'));
+    const todoListInstance = new UserListContainer(document.querySelector('.todoapp-list-container.flex-column-container'));
     todoTeamTitleInstance.render();
     todoListInstance.render();
 
