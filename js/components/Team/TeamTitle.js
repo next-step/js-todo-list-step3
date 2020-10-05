@@ -33,13 +33,12 @@ export default class TeamTitle extends Component {
     }
 
     render() {
-        let self = this;
 
         const template = this.teamTemplate(store.state.team);
-        self.element.innerHTML = template;
-        self.element.innerHTML += this.addTeamTemplate();
+        this.element.innerHTML = template;
+        this.element.innerHTML += this.addTeamTemplate();
 
-        self.element.querySelector('#add-team-button').addEventListener('click', async e => {
+        this.element.querySelector('#add-team-button').addEventListener('click', async e => {
             const teamName = prompt('팀을 입력해주십시오.');
 
             const response = await addTeam(teamName);
@@ -48,7 +47,7 @@ export default class TeamTitle extends Component {
             console.log(store.state.team, 'response team');
         })
 
-        self.element.querySelectorAll('.destroy').forEach((button) => {
+        this.element.querySelectorAll('.destroy').forEach((button) => {
             button.addEventListener('click', async ({target}) => {
                 const isDelete= confirm('정말 지우시겠습니까?');
                 if(isDelete){

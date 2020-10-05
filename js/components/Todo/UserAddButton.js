@@ -18,18 +18,17 @@ export default class UserAddButton extends Component {
 
 
     render() {
-        let self = this;
         let i = 1;
 
-        self.element.innerHTML = this.addUserTemplate();
+        this.element.innerHTML = this.addUserTemplate();
 
-        self.element.querySelector('#add-user-button').addEventListener('click', async e => {
+        this.element.querySelector('#add-user-button').addEventListener('click', async e => {
             const userName = prompt('유저 이름을 입력해주십시오.');
 
             if (userName) {
                 const response = await addTeamToMember(store.state.selectedTeam._id, userName);
 
-                self.element.innerHTML = '';
+                this.element.innerHTML = '';
                 store.dispatch('addUser', response);
             }
         })

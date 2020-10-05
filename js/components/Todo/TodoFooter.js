@@ -37,9 +37,9 @@ export default class TodoFooter extends Component {
     }
 
     render() {
-        let self = this;
 
-        self.element.querySelectorAll('.count-container').forEach((node) => {
+
+        this.element.querySelectorAll('.count-container').forEach((node) => {
             const memberId = node.dataset.memberId;
             const memberIdx = store.state.selectedTeam.members.findIndex((item) => memberId === item._id);
             const todoList = store.state.selectedTeam.members[memberIdx].todoList;

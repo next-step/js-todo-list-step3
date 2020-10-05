@@ -15,10 +15,8 @@ export default class TodoInput extends Component {
 
 
     render() {
-        let self = this;
 
-
-        self.element.querySelectorAll('.input-container').forEach((node) => {
+        this.element.querySelectorAll('.input-container').forEach((node) => {
 
             node.innerHTML = this.todoInputTemplate(node.dataset.memberId);
 
@@ -26,7 +24,7 @@ export default class TodoInput extends Component {
         });
 
 
-        self.element.querySelectorAll('.new-todo').forEach((node) => {
+        this.element.querySelectorAll('.new-todo').forEach((node) => {
             node.addEventListener('keyup', async ({key, target}) => {
                 if (key === keyboardKey.Enter) {
 

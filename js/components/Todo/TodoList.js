@@ -64,7 +64,6 @@ export default class TodoList extends Component {
     }
 
     render() {
-        let self = this;
 
         this.element.querySelectorAll('.todoapp-container').forEach((node) => {
             const nodeId = node.dataset.memberId;

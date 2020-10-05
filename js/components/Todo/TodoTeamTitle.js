@@ -15,7 +15,6 @@ export default class TodoTeamTitle extends Component {
     }
 
     render() {
-        let self = this;
-        self.element.innerHTML = this.teamTitleTemplate(store.state.selectedTeam.name);
+        this.element.innerHTML = this.teamTitleTemplate(store.state.selectedTeam.name);
     }
 }

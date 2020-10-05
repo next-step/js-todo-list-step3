@@ -36,12 +36,11 @@ export default class UserListContainer extends Component {
     }
 
     render() {
-        let self = this;
-        self.element.innerHTML = '';
+        this.element.innerHTML = '';
         store.state.selectedTeam.members.forEach(member => {
-            self.element.innerHTML += this.todoUserContainerTemplate(member);
+            this.element.innerHTML += this.todoUserContainerTemplate(member);
         })
-        self.element.innerHTML += this.userAddContainerTemplate();
+        this.element.innerHTML += this.userAddContainerTemplate();
 
         const TodoListContainerInstance = new TodoListContainer();
         const userTitleInstance = new UserTitle();

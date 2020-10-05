@@ -23,11 +23,9 @@ export default class TodoListContainer extends Component {
 
 
     render() {
-        let self = this;
 
 
-
-        self.element.querySelectorAll('.main').forEach((node) => {
+        this.element.querySelectorAll('.main').forEach((node) => {
             const memberId = node.dataset.memberId;
             node.innerHTML = this.todoListUlTemplate(memberId);
         });
@@ -37,16 +35,6 @@ export default class TodoListContainer extends Component {
 
         todoListInstance.render();
         todoFooterInstance.render();
-        /*   self.element.innerHTML = '';
-           self.element.innerHTML += this.todoListUlTemplate();
-
-           if (store.state.selectedTeam.members.todoList) {
-               store.state.selectedTeam.members.todoList.forEach(todo => {
-                   self.element.innerHTML += this.todoListLiTemplate(todo);
-               })
-           }
-
-           */
 
 
         /*

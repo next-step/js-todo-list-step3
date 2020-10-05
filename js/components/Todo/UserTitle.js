@@ -14,9 +14,7 @@ export default class UserTitle extends Component {
 
 
     render() {
-        let self = this;
-
-        self.element.querySelectorAll('.user-name-container').forEach((node) => {
+        this.element.querySelectorAll('.user-name-container').forEach((node) => {
             const nodeId = node.dataset.memberId;
             const memberIdx = store.state.selectedTeam.members.findIndex((item) => nodeId === item._id);
             node.innerHTML = this.userTitleTemplate(store.state.selectedTeam.members[memberIdx]);
