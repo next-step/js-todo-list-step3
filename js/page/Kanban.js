@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Mission 3 Todo List For Team</title>
-    <meta charset="utf-8" />
-    <link href="./css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="app">
-      <h1 id="user-title" data-username="eastjun">
-        <span><strong>Team</strong>'s Todo List</span>
-      </h1>
-      <ul class="todoapp-list-container flex-column-container">
+const Kanban = () => {
+  return `      <ul class="todoapp-list-container flex-column-container">
         <li class="todoapp-container">
           <h2>
             <span><strong>eastjun</strong>'s Todo List</span>
@@ -294,7 +282,8 @@
           </button>
         </li>
       </ul>
-    </div>
-    <script src="./js/App.js"></script>
-  </body>
-</html>
+`;
+};
+
+export default Kanban;
+
