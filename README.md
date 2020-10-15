@@ -49,7 +49,7 @@
 
 | method | uri |
 |---|---|
-|GET|/api/teams/${itemId}|
+|GET|/api/teams/${teamId}|
 
 ```javascript
 {
