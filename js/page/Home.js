@@ -1,41 +1,26 @@
+import { dispatch, getter } from '../store/team.js';
+import TeamCard from '../components/team/TeamCard.js';
+import AddTeam from '../components/team/AddTeam.js';
+import CreateElement from '../lib/CreateElement.js';
+
+
 const Home = () => {
-  return `
-        <div class="team-list-container">
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Black Coffee team
-            </div>
-          </a>
-        </div>
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Black Coffee team
-            </div>
-          </a>
-        </div>
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Black Coffee team
-            </div>
-          </a>
-        </div>
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Black Coffee team
-            </div>
-          </a>
-        </div>
-        <div class="add-team-button-container">
-          <button id="add-team-button" class="ripple">
-            <span class="material-icons">add</span>
-          </button>
-        </div>
-      </div>
-`;
+  dispatch.teamList();
+
+  const dom = CreateElement('div');
+
+  const render = () => {
+    const teamList = getter.teamList(render);
+    dom.innerHTML = `
+    <div class="team-list-container">
+      ${TeamCard({ teamList })}
+      ${AddTeam()}
+    </div>
+    `;
+  };
+
+  render();
+  return dom;
 };
 
 export default Home;

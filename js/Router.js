@@ -1,11 +1,9 @@
 import App from './page/_app.js';
 import Home from './page/Home.js';
 import Kanban from './page/Kanban.js';
-import CreateElement from './lib/CreateElement.js';
 
 const $app = document.getElementById('app');
 const $fragment = document.createDocumentFragment();
-const $root = CreateElement('div');
 
 const page = {
   '/': Home,
@@ -18,9 +16,7 @@ const Router = {
     let children;
 
     children = page[pathname]();
-
-    $root.innerHTML = App({ children });
-    $fragment.appendChild($root);
+    $fragment.appendChild(App({ children }));
     $app.appendChild($fragment);
   },
 
