@@ -1,13 +1,29 @@
-const TeamCard = ({ teamList }) => {
-  return teamList?.map(({ name, _id }) => (
-    `<div class="team-card-container" data-index="${_id}">
-        <a href="/kanban.html" class="card">
-          <div class="card-title">
-            ${name}
-          </div>
-        </a>
-    </div>`
-  )).join('') || '';
+import CreateElement from '../../lib/CreateElement.js';
+
+const TeamCard = ({ team }) => {
+  const { name, _id } = team;
+  const dom = CreateElement(
+    'div',
+    {
+      className: 'team-card-container',
+      dataset: {
+        index: _id,
+      },
+    },
+  );
+
+  const render = () => {
+    dom.innerHTML =
+      `<a href="/kanban.html" class="card">
+        <div class="card-title">
+          ${name}
+        </div>
+      </a>`;
+  };
+  render();
+
+  console.log(dom)
+  return dom;
 };
 
 export default TeamCard;

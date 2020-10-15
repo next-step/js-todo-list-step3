@@ -7,16 +7,16 @@ import CreateElement from '../lib/CreateElement.js';
 const Home = () => {
   dispatch.teamList();
 
-  const dom = CreateElement('div');
+  const dom = CreateElement('div', { className: 'team-list-container' });
 
   const render = () => {
     const teamList = getter.teamList(render);
-    dom.innerHTML = `
-    <div class="team-list-container">
-      ${TeamCard({ teamList })}
-      ${AddTeam()}
-    </div>
-    `;
+    dom.innerHTML = '';
+    const teamCards = teamList.map((team) => TeamCard({ team }));
+    dom.append(
+       ...teamCards,
+      AddTeam()
+    );
   };
 
   render();

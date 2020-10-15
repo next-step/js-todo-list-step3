@@ -5,7 +5,7 @@ const CreateElement = (name, props = {}, ...children) => {
   Object.keys(props).forEach((key) => {
     if (['style', 'dataset'].includes(key)) {
       Object.keys(props[key]).forEach((k) => {
-        elem.style[k] = props[key][k];
+        elem[key][k] = props[key][k];
       });
     } else {
       elem[key] = props[key];
