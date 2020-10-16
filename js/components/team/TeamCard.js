@@ -21,8 +21,6 @@ const TeamCard = ({ team }) => {
       </a>`;
   };
   render();
-
-  console.log(dom)
   return dom;
 };
 
