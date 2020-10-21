@@ -9,6 +9,7 @@ const TeamCard = ({ team }) => {
       dataset: {
         component: 'card-container',
         key: _id,
+        name
       },
     },
   );
