@@ -3,25 +3,29 @@ import Home from './page/Home.js';
 import Kanban from './page/Kanban.js';
 
 const $app = document.getElementById('app');
-const $fragment = document.createDocumentFragment();
 
-const page = {
-  '/': Home,
-  '/kanban': Kanban,
+/*
+1. obj
+2. router #
+  - #
+*/
+const page = (pathname) => {
+  if (pathname.includes('kanban?')) return Kanban;
+  return Home;
 };
 
 const load = async() => {
-  const { pathname } = location;
   let children;
+  const $fragment = document.createDocumentFragment();
 
-  children = page[pathname];
+  children = page(location.hash);
   $fragment.append(App({ children }));
-  $app.appendChild($fragment);
-
+  $app.innerHTML = '';
+  $app.append($fragment);
 };
 
 const push = async(uri, data = null) => {
-  let url = uri;
+  let url = `#${uri}`;
   if (data) {
     url += '?';
     const entries = Object.entries(data);

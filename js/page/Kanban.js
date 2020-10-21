@@ -1,6 +1,11 @@
-const Kanban = () => {
-  return `      <ul class="todoapp-list-container flex-column-container">
-        <li class="todoapp-container">
+import CreateElement from '../lib/CreateElement.js';
+
+const Kanban = (props) => {
+  const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container ' });
+
+  const render = () => {
+    dom.innerHTML = `
+    <li class="todoapp-container">
           <h2>
             <span><strong>eastjun</strong>'s Todo List</span>
           </h2>
@@ -282,8 +287,30 @@ const Kanban = () => {
           </button>
         </li>
       </ul>
-`;
+    `;
+  };
+  render();
+
+  return dom;
 };
 
 export default Kanban;
 
+// dom.addEventListener('click', ({ target, target: { classList } }) => {
+//   if (!classList.contains('chip')) return;
+//
+//   const $chipSelect = target.closest('.chip-container').querySelector('select');
+//   classList.add('hidden');
+//   $chipSelect.classList.remove('hidden');
+// });
+
+//   const $todoApps = document.querySelector('.todoapp-list-container')
+//   $todoApps.addEventListener('click', e => {
+//     const $target = e.target
+//     const targetClassList = $target.classList
+//     if (targetClassList.contains('chip')) {
+//       const $chipSelect = $target.closest('.chip-container').querySelector('select')
+//       $target.classList.add('hidden')
+//       $chipSelect.classList.remove('hidden')
+//     }
+//   })
