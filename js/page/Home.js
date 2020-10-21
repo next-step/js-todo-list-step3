@@ -2,13 +2,12 @@ import { dispatch, getter } from '../store/team.js';
 import TeamCard from '../components/team/TeamCard.js';
 import AddTeam from '../components/team/AddTeam.js';
 import CreateElement from '../lib/CreateElement.js';
+import Router from '../Router.js';
 
-
-const Home = () => {
+const Home = (props) => {
   dispatch.teamList();
 
   const dom = CreateElement('ul', { className: 'team-list-container' });
-
   dom.addEventListener('click', async(event) => {
     event.preventDefault();
     const { target, target: { dataset } } = event;
