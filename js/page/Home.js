@@ -7,19 +7,29 @@ import CreateElement from '../lib/CreateElement.js';
 const Home = () => {
   dispatch.teamList();
 
-  const dom = CreateElement('div', { className: 'team-list-container' });
+  const dom = CreateElement('ul', { className: 'team-list-container' });
+
+  dom.addEventListener('click', async(event) => {
+    event.preventDefault();
+    const { target, target: { dataset } } = event;
+    if (dataset.component !== 'card') return;
+
+    const id = target.closest('li').dataset.key;
+
+    await Router.push('kanban', { id });
+  });
 
   const render = () => {
     const teamList = getter.teamList(render);
-    dom.innerHTML = '';
     const teamCards = teamList.map((team) => TeamCard({ team }));
+    dom.innerHTML = '';
     dom.append(
-       ...teamCards,
-      AddTeam()
+      ...teamCards,
+      AddTeam(),
     );
   };
-
   render();
+
   return dom;
 };
 

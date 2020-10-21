@@ -7,27 +7,39 @@ const $fragment = document.createDocumentFragment();
 
 const page = {
   '/': Home,
-  '/kanban': Kanban
+  '/kanban': Kanban,
 };
 
-const Router = {
-  async load() {
-    const { pathname } = location;
-    let children;
+const load = async() => {
+  const { pathname } = location;
+  let children;
 
-    children = page[pathname]();
-    $fragment.appendChild(App({ children }));
-    $app.appendChild($fragment);
-  },
+  children = page[pathname];
+  $fragment.append(App({ children }));
+  $app.appendChild($fragment);
 
-  async push(uri, data) {
-    // history.pushState(data, '', `${uri}/${data.idx}`);
-    await this.load();
-  },
 };
 
-window.onpopstate = () => Router.load();
+const push = async(uri, data = null) => {
+  let url = uri;
+  if (data) {
+    url += '?';
+    const entries = Object.entries(data);
+    entries.forEach(([key, value], i) => {
+      if (i === (entries.length - 1)) {
+        url += `${key}=${value}`;
+        return;
+      }
+      url += `${key}=${value}&`;
+    });
+  }
 
-Router.load();
+  history.pushState(data, '', url);
+  await load();
+  onpopstate = () => load();
+};
 
-export default Router;
+
+load();
+
+export default { push };

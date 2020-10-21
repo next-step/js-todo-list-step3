@@ -1,9 +1,7 @@
 import STRINGS from '../constant/STRINGS.js';
-import CreateElement from '../lib/CreateElement.js';
 
 const AppLayout = ({ children }) => {
-  const dom = CreateElement('div');
-
+  const dom = document.createElement('div');
   const render = () => {
     dom.innerHTML = `
     <header>
@@ -12,11 +10,9 @@ const AppLayout = ({ children }) => {
       </h1>
     </header>
     `;
-    dom.appendChild(children);
+    dom.append(children());
   };
-
   render();
-
   return dom;
 };
 

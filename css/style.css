@@ -586,3 +586,7 @@ select.chip {
 
 .add-team-button-container #add-team-button.ripple {
 }
+
+li {
+  list-style: none;
+}
