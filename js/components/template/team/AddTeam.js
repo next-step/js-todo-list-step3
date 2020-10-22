@@ -1,7 +1,7 @@
-import { postTeam } from '../../endpoint/team/controller.js';
-import { validateName } from '../../lib/validators.js';
-import { dispatch } from '../../store/team.js';
-import CreateElement from '../../lib/CreateElement.js';
+import { postTeam } from '../../../endpoint/team/controller.js';
+import { validateName } from '../../../lib/validators.js';
+import { dispatch } from '../../../store/team.js';
+import CreateElement from '../../../lib/CreateElement.js';
 
 const AddTeam = (props) => {
 

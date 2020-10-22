@@ -1,6 +1,6 @@
-import STRINGS from '../constant/STRINGS.js';
-import CreateElement from '../lib/CreateElement.js';
-import { getter } from '../store/team.js';
+import STRINGS from '../../constant/STRINGS.js';
+import CreateElement from '../../lib/CreateElement.js';
+import { getter } from '../../store/team.js';
 
 const Header = (props) => {
   const dom = CreateElement('header');

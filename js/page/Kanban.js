@@ -1,7 +1,7 @@
 import CreateElement from '../lib/CreateElement.js';
-import AddUser from '../components/kanban/AddUser.js';
-import UserTodoContainer from '../components/kanban/UserTodoContainer.js';
+import AddUser from '../components/template/kanban/AddUser.js';
 import { dispatch, getter } from '../store/team.js';
+import UserTodo from '../components/container/UserTodo.js';
 
 const Kanban = (props) => {
   dispatch.team(history.state.id);
@@ -13,7 +13,7 @@ const Kanban = (props) => {
     dom.innerHTML = '';
     if (teamMembers) {
       const teamMembersDom = Array.from(teamMembers,
-        ([key, [getMember, setMember]]) => UserTodoContainer({ getMember, setMember }));
+        ([key, [getMember, setMember]]) => UserTodo({ getMember, setMember }));
       dom.append(...teamMembersDom);
     }
     dom.append(

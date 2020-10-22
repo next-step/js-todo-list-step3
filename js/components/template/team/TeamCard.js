@@ -1,4 +1,4 @@
-import CreateElement from '../../lib/CreateElement.js';
+import CreateElement from '../../../lib/CreateElement.js';
 
 const TeamCard = ({ team }) => {
   const { name, _id } = team;

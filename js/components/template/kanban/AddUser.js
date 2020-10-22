@@ -1,4 +1,4 @@
-import CreateElement from '../../lib/CreateElement.js';
+import CreateElement from '../../../lib/CreateElement.js';
 
 const AddUser = (props) => {
   const dom = CreateElement('li', { className: 'add-user-button-container' });

@@ -1,4 +1,4 @@
-import AppLayout from '../components/AppLayout.js';
+import AppLayout from '../components/container/AppLayout.js';
 
 const App = ({ children }) => {
     return AppLayout({ children });

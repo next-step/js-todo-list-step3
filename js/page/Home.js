@@ -1,6 +1,6 @@
 import { dispatch, getter, setter } from '../store/team.js';
-import TeamCard from '../components/team/TeamCard.js';
-import AddTeam from '../components/team/AddTeam.js';
+import TeamCard from '../components/template/team/TeamCard.js';
+import AddTeam from '../components/template/team/AddTeam.js';
 import CreateElement from '../lib/CreateElement.js';
 import Router from '../Router.js';
 
@@ -9,6 +9,7 @@ const Home = (props) => {
   setter.teamName('team');
 
   const dom = CreateElement('ul', { className: 'team-list-container' });
+
   dom.addEventListener('click', async(event) => {
     event.preventDefault();
 
