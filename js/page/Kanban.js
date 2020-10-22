@@ -1,15 +1,22 @@
 import CreateElement from '../lib/CreateElement.js';
 import AddUser from '../components/kanban/AddUser.js';
 import UserTodoContainer from '../components/kanban/UserTodoContainer.js';
-import { dispatch } from '../store/team.js';
+import { dispatch, getter } from '../store/team.js';
 
 const Kanban = (props) => {
   dispatch.team(history.state.id);
 
   const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container ' });
+
   const render = () => {
+    const teamMembers = getter.teamMembers(render);
+    dom.innerHTML = '';
+    if (teamMembers) {
+      const teamMembersDom = Array.from(teamMembers,
+        ([key, [getMember, setMember]]) => UserTodoContainer({ getMember, setMember }));
+      dom.append(...teamMembersDom);
+    }
     dom.append(
-      UserTodoContainer(),
       AddUser(),
     );
   };

@@ -1,18 +1,27 @@
 import { getTeams, getTeam } from '../endpoint/team/controller.js';
-import { useState } from '../lib/state.js';
+import { useFamily, useState } from '../lib/state.js';
 
 const [teamName, setTeamName] = useState('team');
 const [teamList, setTeamList] = useState([]);
-const [team, setTeam] = useState({});
+const [teamID, setTeamID] = useState('');
+const [teamMembers, setTeamMembers, getMember, setMember] = useFamily('_id');
 
 export const getter = {
-  teamList, teamName, team
+  teamList, teamName, teamID, teamMembers, getMember
 };
 
 export const setter = {
   teamName(newTeamName) {
     setTeamName(newTeamName);
   },
+  teamInfo({ _id, name, members }) {
+    setTeamName(name);
+    setTeamID(_id);
+    setTeamMembers(members);
+  },
+  member({key, newValue}) {
+    setMember({key, newValue});
+  }
 };
 
 export const dispatch = {
@@ -23,11 +32,9 @@ export const dispatch = {
   },
 
   team(itemId) {
-    getTeam({ itemId }).then(res => {
-      setTeam(res);
-      if (res.name !== getter.teamName)
-        setter.teamName(res.name);
-    });
+    getTeam({ itemId }).then(({ _id, name, members }) => {
+      setter.teamInfo({ _id, name, members });
+    })
   },
 };
 
