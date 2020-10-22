@@ -8,7 +8,7 @@ const TodoApp = ({ _id, todoList }) => {
     'div',
     { className: 'todoapp' },
     TodoInput(),
-    TodoList(),
+    TodoList({todoList}),
     TodoCount(),
   );
 };
