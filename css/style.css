@@ -236,7 +236,7 @@ body {
 
 .todo-list li label {
   word-break: break-all;
-  padding: 10px 15px 15px 60px;
+  padding: 15px 15px 15px 60px;
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
@@ -466,7 +466,7 @@ button.ripple {
 .chip {
   width: 40px;
   font-size: 10px;
-  display: inline-block;
+  display: block;
   color: #fff;
   font-weight: normal;
   border-radius: 15px;
@@ -590,3 +590,4 @@ select.chip {
 li {
   list-style: none;
 }
+
