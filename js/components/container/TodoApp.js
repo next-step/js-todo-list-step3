@@ -7,8 +7,8 @@ const TodoApp = ({ _id, todoList }) => {
   return CreateElement(
     'div',
     { className: 'todoapp' },
-    TodoInput(),
-    TodoList({todoList}),
+    TodoInput({ _id }),
+    TodoList({ todoList }),
     TodoCount(),
   );
 };

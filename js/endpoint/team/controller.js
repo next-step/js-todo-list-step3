@@ -12,9 +12,9 @@ export const postTeam = async({ name }) => {
 };
 
 // 팀 불러오기
-export const getTeam = async({ itemId }) => {
+export const getTeam = async({ teamId }) => {
   try {
-    const result = await GET(team(itemId));
+    const result = await GET(team(teamId));
     return result;
   } catch (error) {
     console.log(error);
@@ -64,7 +64,7 @@ export const getMemberTodoList = async({ teamId, memberId }) => {
 
 
 // 팀원의 TodoItem 추가하기
-export const postMemberTodoList = async({ teamId, memberId, contents }) => {
+export const postMemberTodoItem = async({ teamId, memberId, contents }) => {
   try {
     // TODO 인자의 중첩을 줄이자
     const result = await POST(todoItem(teamId, memberId), { contents });

@@ -4,10 +4,10 @@ import { useFamily, useState } from '../lib/state.js';
 const [teamName, setTeamName] = useState('team');
 const [teamList, setTeamList] = useState([]);
 const [teamID, setTeamID] = useState('');
-const [teamMembers, setTeamMembers, getMember, setMember] = useFamily('_id');
+const [teamMembers, setTeamMembers] = useFamily('_id');
 
 export const getter = {
-  teamList, teamName, teamID, teamMembers, getMember
+  teamList, teamName, teamID, teamMembers,
 };
 
 export const setter = {
@@ -19,9 +19,19 @@ export const setter = {
     setTeamID(_id);
     setTeamMembers(members);
   },
-  member({key, newValue}) {
-    setMember({key, newValue});
-  }
+  addMemberTodoItem(teamId, memberId, newTodo) {
+    const [getMember, setMember] = getter.teamMembers().get(memberId);
+    const member = getMember();
+    const todoList = [
+      ...member.todoList,
+      newTodo,
+    ];
+    const newMember = {
+      ...member,
+      todoList,
+    };
+    setMember(newMember);
+  },
 };
 
 export const dispatch = {
@@ -31,10 +41,12 @@ export const dispatch = {
     });
   },
 
-  team(itemId) {
-    getTeam({ itemId }).then(({ _id, name, members }) => {
+  team(teamId) {
+    getTeam({ teamId }).then(({ _id, name, members }) => {
       setter.teamInfo({ _id, name, members });
-    })
+    });
   },
+
+
 };
 

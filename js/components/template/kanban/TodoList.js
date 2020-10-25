@@ -23,7 +23,7 @@ const TodoList = ({ todoList }) => {
   const render = () => {
     dom.innerHTML = `
     <ul class="todo-list">
-    ${todoList.map(({ _id, contents, priority, isCompleted }) => {
+    ${todoList?.map(({ _id, contents, priority, isCompleted }) => {
       return `
       <li class="todo-list-item ${liStyle(isCompleted, editID)}" data-key="${_id}">
         <div class="view">
@@ -41,7 +41,7 @@ const TodoList = ({ todoList }) => {
         <input class="edit" value="완료된 타이틀" />
       </li>
       `}).join('')}
-    </ul>`;
+    </ul>` || '';
   };
   render();
 

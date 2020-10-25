@@ -12,7 +12,9 @@ export const member = (teamId, memberId = null) => {
   return uri;
 };
 
-export const todoItem = (teamId, memberId, itemId = null, { toggle, priority } = null) => {
+export const todoItem = (teamId, memberId, itemId = null, option = { toggle: null, priority: null }) => {
+  const { toggle, priority } = option;
+
   let uri = `${teamAPI}/${teamId}/members/${memberId}/items`;
   if (itemId) uri += `/${itemId}`;
   if (toggle) uri += '/toggle';

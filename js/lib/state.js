@@ -2,7 +2,7 @@ export const useState = (initVal = undefined) => {
   let _state = initVal;
   const observable = new Set();
 
-  const state = (render) => {
+  const state = (render = null) => {
     if (render) observable.add(render);
     return _state;
   };
@@ -30,8 +30,8 @@ export const useFamily = (key) => {
   const setFamily = (arr = []) => {
     const newFamily = new Map();
     arr.forEach((obj) => {
-      const [getAtom, setAtom] = useState(obj);
-      newFamily.set(obj[key], [getAtom, setAtom]);
+      const [getState, setState] = useState(obj);
+      newFamily.set(obj[key], [getAtom(getState), setAtom(setState)]);
     });
     family = newFamily;
     render();
@@ -42,16 +42,10 @@ export const useFamily = (key) => {
     return family;
   };
 
-  const getAtom = (key, render = null) => {
-    const [get] = family[key];
-    return get(render);
-  };
+  const getAtom = (getState) => getState;
 
-  const setAtom = (key, newValue) => {
-    const [, set] = family[key];
-    set(newValue);
-  };
+  const setAtom = (setState) => setState;
 
-  return [getFamily, setFamily, getAtom, setAtom];
+  return [getFamily, setFamily];
 };
 
