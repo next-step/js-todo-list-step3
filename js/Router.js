@@ -4,11 +4,6 @@ import Kanban from './page/Kanban.js';
 
 const $app = document.getElementById('app');
 
-/*
-1. obj
-2. router #
-  - #
-*/
 const page = (pathname) => {
   if (pathname.includes('kanban?')) return Kanban;
   return Home;
