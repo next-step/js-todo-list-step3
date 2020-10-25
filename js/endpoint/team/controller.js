@@ -44,7 +44,7 @@ export const deleteTeam = async({ teamId }) => {
 // 팀에 멤버 추가
 export const postMember = async({ teamId, name }) => {
   try {
-    const result = await DELETE(member(teamId), { name });
+    const result = await POST(member(teamId), { name });
     return result;
   } catch (error) {
     console.log(error);

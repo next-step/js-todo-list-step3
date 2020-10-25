@@ -6,7 +6,7 @@ const TodoInput = () => {
 
   const render = () => {
     dom.innerHTML = `
-      <input class="new-todo" placeholder="${STRINGS.todoInputPlaceHoler}" autofocus />
+      <input class="new-todo" placeholder="${STRINGS.todoInputPlaceHolder}" autofocus />
     `;
   };
   render();

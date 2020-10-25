@@ -4,9 +4,10 @@ import { dispatch, getter } from '../store/team.js';
 import UserTodo from '../components/container/UserTodo.js';
 
 const Kanban = (props) => {
-  dispatch.team(history.state.id);
+  const teamId = history.state.id;
+  dispatch.team(teamId);
 
-  const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container ' });
+  const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container' });
 
   const render = () => {
     const teamMembers = getter.teamMembers(render);
@@ -17,7 +18,7 @@ const Kanban = (props) => {
       dom.append(...teamMembersDom);
     }
     dom.append(
-      AddUser(),
+      AddUser({ teamId }),
     );
   };
   render();
