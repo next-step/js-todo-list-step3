@@ -2,9 +2,9 @@ import {
   getTeams,
   getTeam,
   getMember,
-  deleteMemberTodoItem,
-  postMemberTodoItem,
-  postMember,
+  deleteTodoItem,
+  postTodoItem,
+  postMember, putTodoItemComplete,
 } from '../endpoint/team/controller.js';
 import { useFamily, useState } from '../lib/state.js';
 
@@ -26,7 +26,7 @@ export const setter = {
     setTeamID(_id);
     setTeamMembers(members);
   },
-  addMemberTodoItem(teamId, memberId, newTodo) {
+  addTodoItem(teamId, memberId, newTodo) {
     const [getMember, setMember] = getter.teamMembers().get(memberId);
     const member = getMember();
     const todoList = [
@@ -58,8 +58,8 @@ export const dispatch = {
     });
   },
 
-  async removeMemberTodoItem(teamId, memberId, itemId) {
-    await deleteMemberTodoItem({ teamId, memberId, itemId });
+  async removeTodoItem(teamId, memberId, itemId) {
+    await deleteTodoItem({ teamId, memberId, itemId });
     await this.readMemberInfo(teamId, memberId);
   },
 
@@ -68,14 +68,19 @@ export const dispatch = {
     setter.memberInfo(memberId, newMemberInfo);
   },
 
-  async createMemberTodoItem(teamId, memberId, contents) {
-    const newTodo = await postMemberTodoItem({ teamId, memberId, contents });
-    setter.addMemberTodoItem(teamId, memberId, newTodo);
+  async createTodoItem(teamId, memberId, contents) {
+    const newTodo = await postTodoItem({ teamId, memberId, contents });
+    setter.addTodoItem(teamId, memberId, newTodo);
   },
 
   async createTeamMember(teamId, name) {
-    const newTeamMembers = await postMember({ teamId, name })
+    const newTeamMembers = await postMember({ teamId, name });
     setter.teamInfo(newTeamMembers);
+  },
+
+  async updateTodoItemComplete (teamId, memberId, itemId) {
+    await putTodoItemComplete({ teamId, memberId, itemId });
+    // setter.teamInfo(newTeamMembers);
   },
 };
 

@@ -36,7 +36,7 @@ export const addTodoItemHandler = async(teamId, { key, target, target: { value, 
   const memberId = target.closest('li').dataset.key;
   const contents = value;
   target.value = '';
-  await dispatch.createMemberTodoItem(teamId, memberId, contents);
+  await dispatch.createTodoItem(teamId, memberId, contents);
 };
 
 export const removeTodoItemHandler = async(teamId, { target, target: { dataset } }) => {
@@ -44,7 +44,7 @@ export const removeTodoItemHandler = async(teamId, { target, target: { dataset }
 
   const itemId = target.closest('li').dataset.key;
   const memberId = target.closest('[data-component="todoApp"]').dataset.key;
-  await dispatch.removeMemberTodoItem(teamId, memberId, itemId);
+  await dispatch.removeTodoItem(teamId, memberId, itemId);
 };
 
 

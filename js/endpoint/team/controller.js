@@ -66,7 +66,7 @@ export const getMember = async({ teamId, memberId }) => {
 
 
 // 팀원의 TodoItem 추가하기
-export const postMemberTodoItem = async({ teamId, memberId, contents }) => {
+export const postTodoItem = async({ teamId, memberId, contents }) => {
   try {
     // TODO 인자의 중첩을 줄이자
     const result = await POST(todoItem(teamId, memberId), { contents });
@@ -80,7 +80,7 @@ export const postMemberTodoItem = async({ teamId, memberId, contents }) => {
 // 이미 삭제된 todo를 삭제할 경우의 서버의 에러처리는 없음. 프론트에서 todo를 삭제하기 전에 todo가 존재하는지의 여부를 확인하는 로직이 추가할 수있음
 // 성공할 경우 {} 빈 객체를 서버에서 보내줌.
 // 단일 todo를 get 하는 api가 존재하지 않음.
-export const deleteMemberTodoItem = async({ teamId, memberId, itemId }) => {
+export const deleteTodoItem = async({ teamId, memberId, itemId }) => {
   try {
     const result = await DELETE(todoItem(teamId, memberId, itemId));
     return result;
@@ -90,7 +90,7 @@ export const deleteMemberTodoItem = async({ teamId, memberId, itemId }) => {
 };
 
 // 팀원의 TodoItem toggle하기
-export const putMemberTodoListToggle = async({ teamId, memberId, itemId }) => {
+export const putTodoItemComplete = async({ teamId, memberId, itemId }) => {
   try {
     const result = await PUT(todoItem(teamId, memberId, itemId, { toggle: true }));
     return result;
