@@ -248,6 +248,7 @@ body {
 }
 
 .todo-list li .destroy {
+  cursor: pointer;
   display: none;
   position: absolute;
   top: 0;
