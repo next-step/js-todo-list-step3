@@ -6,10 +6,7 @@ const AddUser = ({ teamId }) => {
 
   dom.addEventListener(
     'click',
-    ({ target }) => {
-      if (target.closest('#add-user-button'))
-        addMemberHandler(teamId);
-    },
+    (event) => addMemberHandler(teamId, event)
   );
 
   const render = () => {

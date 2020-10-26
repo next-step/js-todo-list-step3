@@ -1,17 +1,18 @@
 import STRINGS from './constant/STRINGS.js';
 import { validateName } from './lib/validators.js';
-import { createMemberTodoItem, createTeamMember } from './endpoint/team/service.js';
 import { dispatch, setter } from './store/team.js';
 import { postTeam } from './endpoint/team/controller.js';
 
-export const addMemberHandler = async(teamId) => {
+
+export const addMemberHandler = async(teamId, { target }) => {
+  if (!target.closest('#add-user-button')) return;
+
   const name = prompt(STRINGS.memberNamePromptMessage);
   if (name === null) return;
 
   const isValid = await validateName(name, addMemberHandler);
   if (!isValid) return;
-  const newTeamMembers = await createTeamMember({ teamId, name });
-  setter.teamInfo(newTeamMembers);
+  await dispatch.createTeamMember(teamId, name);
 };
 
 export const addTeamHandler = async() => {
@@ -25,12 +26,25 @@ export const addTeamHandler = async() => {
   }
 };
 
-export const addTodoItemHandler = async(teamId, { target, target: { value } }) => {
+export const addTodoItemHandler = async(teamId, { key, target, target: { value, dataset } }) => {
+  if (!(
+    value?.length
+    && dataset?.component === 'todoInput'
+    && key === 'Enter'
+  )) return;
+
   const memberId = target.closest('li').dataset.key;
   const contents = value;
-
-  await createMemberTodoItem({ teamId, memberId, contents });
   target.value = '';
+  await dispatch.createMemberTodoItem(teamId, memberId, contents);
+};
+
+export const removeTodoItemHandler = async(teamId, { target, target: { dataset } }) => {
+  if (dataset?.component !== 'destroyButton') return;
+
+  const itemId = target.closest('li').dataset.key;
+  const memberId = target.closest('[data-component="todoApp"]').dataset.key;
+  await dispatch.removeMemberTodoItem(teamId, memberId, itemId);
 };
 
 

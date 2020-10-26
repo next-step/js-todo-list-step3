@@ -25,7 +25,7 @@ const TodoList = ({ todoList }) => {
     <ul class="todo-list">
     ${todoList?.map(({ _id, contents, priority, isCompleted }) => {
       return `
-      <li class="todo-list-item ${liStyle(isCompleted, editID)}" data-key="${_id}">
+      <li class="todo-list-item ${liStyle(isCompleted, editID)}" data-component="todoListItem" data-key="${_id}">
         <div class="view">
           <input class="toggle" type="checkbox" ${isChecked(isCompleted)}/>
           <label class="label">
@@ -36,7 +36,7 @@ const TodoList = ({ todoList }) => {
             </select>
             ${contents}
           </label>
-          <button class="destroy"></button>
+          <button class="destroy" data-component="destroyButton"></button>
         </div>
         <input class="edit" value="완료된 타이틀" />
       </li>

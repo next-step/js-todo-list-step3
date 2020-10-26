@@ -7,7 +7,13 @@ const UserTodo = ({ getMember }) => {
 
   const dom = CreateElement(
     'li',
-    { className: 'todoapp-container', dataset: { key: _id } },
+    {
+      className: 'todoapp-container',
+      dataset: {
+        component: 'todoApp',
+        key: _id,
+      },
+    },
   );
 
   const render = () => {
