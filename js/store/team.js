@@ -31,10 +31,7 @@ export const setter = {
   addTodoItem(memberId, newTodo) {
     const [getMember, setMember] = getter.teamMembers().get(memberId);
     const member = getMember();
-    const todoList = [
-      ...member.todoList,
-      newTodo,
-    ];
+    const todoList = member?.todoList?.concat(newTodo) || [newTodo];
     const newMember = {
       ...member,
       todoList,
