@@ -3,7 +3,10 @@ import AddUser from '../components/template/kanban/AddUser.js';
 import { dispatch, getter } from '../store/team.js';
 import UserTodo from '../components/template/kanban/UserTodo.js';
 import HashParse from '../lib/HashParse.js';
-import { addTodoItemHandler, removeTodoItemHandler } from '../eventHandler.js';
+import {
+  addTodoItemHandler,
+  updateTodoItemHandler,
+} from '../eventHandler.js';
 
 const Kanban = (props) => {
   const { id } = HashParse(location.hash);
@@ -12,9 +15,9 @@ const Kanban = (props) => {
 
   const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container' });
 
-  dom.addEventListener('keypress', (event) => addTodoItemHandler(teamId, event));
-
-  dom.addEventListener('click', (event) => removeTodoItemHandler(teamId, event));
+  dom.addEventListener('keypress', addTodoItemHandler);
+  updateTodoItemHandler(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
+  updateTodoItemHandler(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
 
   const render = () => {
     const teamMembers = getter.teamMembers(render);

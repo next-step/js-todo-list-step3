@@ -18,7 +18,7 @@ const chipStyle = (priority) => PRIORITY[priority].style;
 const TodoList = ({ todoList }) => {
   const editID = undefined;
 
-  const dom = CreateElement('section', { className: 'main ' });
+  const dom = CreateElement('section', { className: 'main' });
 
   const render = () => {
     dom.innerHTML = `
@@ -27,7 +27,7 @@ const TodoList = ({ todoList }) => {
       return `
       <li class="todo-list-item ${liStyle(isCompleted, editID)}" data-component="todoListItem" data-key="${_id}">
         <div class="view">
-          <input class="toggle" type="checkbox" ${isChecked(isCompleted)}/>
+          <input class="toggle" type="checkbox" ${isChecked(isCompleted)} data-component="todoItemToggleComplete"/>
           <label class="label">
             <select class="chip select ${chipStyle(priority)}">
               ${Object.entries(PRIORITY).map(([key, { ko, style }]) => (

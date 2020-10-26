@@ -89,7 +89,7 @@ export const deleteTodoItem = async({ teamId, memberId, itemId }) => {
   }
 };
 
-// 팀원의 TodoItem toggle하기
+// 팀원의 TodoItem toggle 하기
 export const putTodoItemComplete = async({ teamId, memberId, itemId }) => {
   try {
     const result = await PUT(todoItem(teamId, memberId, itemId, { toggle: true }));

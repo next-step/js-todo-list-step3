@@ -21,12 +21,14 @@ export const setter = {
   teamName(newTeamName) {
     setTeamName(newTeamName);
   },
+
   teamInfo({ _id, name, members }) {
     setTeamName(name);
     setTeamID(_id);
     setTeamMembers(members);
   },
-  addTodoItem(teamId, memberId, newTodo) {
+
+  addTodoItem(memberId, newTodo) {
     const [getMember, setMember] = getter.teamMembers().get(memberId);
     const member = getMember();
     const todoList = [
@@ -39,10 +41,26 @@ export const setter = {
     };
     setMember(newMember);
   },
+
+  todoItem(memberId, newTodo) {
+    const [getMember, setMember] = getter.teamMembers().get(memberId);
+    const member = getMember();
+    const { _id } = newTodo;
+
+    const todoList = member.todoList.map((todo) => (todo._id === _id) ? newTodo : todo);
+
+    const newMember = {
+      ...member,
+      todoList,
+    };
+    setMember(newMember);
+  },
+
   memberInfo(memberId, newMemberInfo) {
     const [, setMember] = getter.teamMembers().get(memberId);
     setMember(newMemberInfo);
   },
+
 };
 
 export const dispatch = {
@@ -58,9 +76,9 @@ export const dispatch = {
     });
   },
 
-  async removeTodoItem(teamId, memberId, itemId) {
+  async removeTodoItem({ teamId, memberId, itemId }) {
     await deleteTodoItem({ teamId, memberId, itemId });
-    await this.readMemberInfo(teamId, memberId);
+    await dispatch.readMemberInfo(teamId, memberId);
   },
 
   async readMemberInfo(teamId, memberId) {
@@ -70,7 +88,7 @@ export const dispatch = {
 
   async createTodoItem(teamId, memberId, contents) {
     const newTodo = await postTodoItem({ teamId, memberId, contents });
-    setter.addTodoItem(teamId, memberId, newTodo);
+    setter.addTodoItem(memberId, newTodo);
   },
 
   async createTeamMember(teamId, name) {
@@ -78,9 +96,9 @@ export const dispatch = {
     setter.teamInfo(newTeamMembers);
   },
 
-  async updateTodoItemComplete (teamId, memberId, itemId) {
-    await putTodoItemComplete({ teamId, memberId, itemId });
-    // setter.teamInfo(newTeamMembers);
+  async updateTodoItemComplete({ teamId, memberId, itemId }) {
+    const newTodoItem = await putTodoItemComplete({ teamId, memberId, itemId });
+    setter.todoItem(memberId, newTodoItem);
   },
 };
 
