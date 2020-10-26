@@ -12,7 +12,16 @@ const Kanban = (props) => {
 
   const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container' });
 
-  dom.addEventListener('keypress', (event) => addTodoItemHandler(teamId, event));
+  dom.addEventListener('keypress', async (event) => {
+    const { key, target: { value, dataset } } = event;
+    if(!(
+      value?.length
+      && dataset?.component === 'todoInput'
+      && key === 'Enter'
+    )) return;
+
+    await addTodoItemHandler(teamId, event);
+  });
 
   const render = () => {
     const teamMembers = getter.teamMembers(render);
@@ -32,3 +41,4 @@ const Kanban = (props) => {
 };
 
 export default Kanban;
+

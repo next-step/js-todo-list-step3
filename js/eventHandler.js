@@ -4,9 +4,7 @@ import { createMemberTodoItem, createTeamMember } from './endpoint/team/service.
 import { dispatch, setter } from './store/team.js';
 import { postTeam } from './endpoint/team/controller.js';
 
-export const addMemberHandler = async(teamId, { target }) => {
-  if (!target.closest('#add-user-button')) return;
-
+export const addMemberHandler = async(teamId) => {
   const name = prompt(STRINGS.memberNamePromptMessage);
   if (name === null) return;
 
@@ -16,7 +14,7 @@ export const addMemberHandler = async(teamId, { target }) => {
   setter.teamInfo(newTeamMembers);
 };
 
-export const addTeamHandler = async () => {
+export const addTeamHandler = async() => {
   const name = prompt(STRINGS.teamNamePromptMessage);
   if (name === null) return;
 
@@ -27,19 +25,13 @@ export const addTeamHandler = async () => {
   }
 };
 
-export const addTodoItemHandler = async(teamId, { key, target, target: { dataset, value } }) => {
-  if (!(
-    value?.length
-    && dataset?.component === 'todoInput'
-    && key === 'Enter'
-  )) return;
+export const addTodoItemHandler = async(teamId, { target, target: { value } }) => {
   const memberId = target.closest('li').dataset.key;
   const contents = value;
+
   await createMemberTodoItem({ teamId, memberId, contents });
   target.value = '';
 };
-
-
 
 
 // dom.addEventListener('click', ({ target, target: { classList } }) => {
