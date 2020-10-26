@@ -53,11 +53,13 @@ export const postMember = async({ teamId, name }) => {
 
 
 // 팀원별 TodoList 불러오기
-export const getMemberTodoList = async({ teamId, memberId }) => {
+export const getMember = async({ teamId, memberId }) => {
   try {
     const result = await GET(member(teamId, memberId));
     return result;
   } catch (error) {
+    // 멤버가 없을 경우 에러처리
+    // 팀이 없을 경우 에러처리
     console.log(error);
   }
 };
@@ -74,9 +76,11 @@ export const postMemberTodoItem = async({ teamId, memberId, contents }) => {
   }
 };
 
-
 // 팀원의 TodoItem 삭제하기
-export const deleteMemberTodoList = async({ teamId, memberId, itemId }) => {
+// 이미 삭제된 todo를 삭제할 경우의 서버의 에러처리는 없음. 프론트에서 todo를 삭제하기 전에 todo가 존재하는지의 여부를 확인하는 로직이 추가할 수있음
+// 성공할 경우 {} 빈 객체를 서버에서 보내줌.
+// 단일 todo를 get 하는 api가 존재하지 않음.
+export const deleteMemberTodoItem = async({ teamId, memberId, itemId }) => {
   try {
     const result = await DELETE(todoItem(teamId, memberId, itemId));
     return result;

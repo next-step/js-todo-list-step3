@@ -1,4 +1,11 @@
-import { getTeams, getTeam } from '../endpoint/team/controller.js';
+import {
+  getTeams,
+  getTeam,
+  getMember,
+  deleteMemberTodoItem,
+  postMemberTodoItem,
+  postMember,
+} from '../endpoint/team/controller.js';
 import { useFamily, useState } from '../lib/state.js';
 
 const [teamName, setTeamName] = useState('team');
@@ -32,6 +39,10 @@ export const setter = {
     };
     setMember(newMember);
   },
+  memberInfo(memberId, newMemberInfo) {
+    const [, setMember] = getter.teamMembers().get(memberId);
+    setMember(newMemberInfo);
+  },
 };
 
 export const dispatch = {
@@ -47,6 +58,24 @@ export const dispatch = {
     });
   },
 
+  async removeMemberTodoItem(teamId, memberId, itemId) {
+    await deleteMemberTodoItem({ teamId, memberId, itemId });
+    await this.readMemberInfo(teamId, memberId);
+  },
 
+  async readMemberInfo(teamId, memberId) {
+    const newMemberInfo = await getMember({ teamId, memberId });
+    setter.memberInfo(memberId, newMemberInfo);
+  },
+
+  async createMemberTodoItem(teamId, memberId, contents) {
+    const newTodo = await postMemberTodoItem({ teamId, memberId, contents });
+    setter.addMemberTodoItem(teamId, memberId, newTodo);
+  },
+
+  async createTeamMember(teamId, name) {
+    const newTeamMembers = await postMember({ teamId, name })
+    setter.teamInfo(newTeamMembers);
+  },
 };
 
