@@ -8,7 +8,7 @@ export const team = (teamId = null) => {
 
 export const member = (teamId, memberId = null) => {
   let uri = `${teamAPI}/${teamId}/members`;
-  if (memberId) uri += `${memberId}`;
+  if (memberId) uri += `/${memberId}`;
   return uri;
 };
 
