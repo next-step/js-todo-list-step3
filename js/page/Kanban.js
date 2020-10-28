@@ -19,6 +19,19 @@ const Kanban = (props) => {
   updateTodoItemHandler(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
   updateTodoItemHandler(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
 
+  dom.addEventListener('dblclick', (event) => {
+    const { target, target: { dataset } } = event;
+    if (dataset.component !== 'todoContents') return;
+
+    const todoItem = target.closest('[data-component="todoItem"]');
+    const todoView = target.closest('[data-component="todoView"]');
+    const todoEdit = todoView.nextElementSibling;
+
+    todoView.style.display = 'none';
+    todoEdit.style.display = 'block';
+
+  });
+
   const render = () => {
     const teamMembers = getter.teamMembers(render);
     dom.innerHTML = '';

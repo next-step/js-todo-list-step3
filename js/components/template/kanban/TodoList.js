@@ -26,7 +26,7 @@ const TodoList = ({ todoList }) => {
     ${todoList?.map(({ _id, contents, priority, isCompleted }) => {
       return `
       <li class="todo-list-item ${liStyle(isCompleted, editId)}" data-component="todoItem" data-key="${_id}">
-        <div class="view">
+        <div class="view" data-component="todoView">
           <input class="toggle" type="checkbox" ${isChecked(isCompleted)} data-component="todoItemToggleComplete"/>
           <label class="label" data-component="todoContents">
             <select class="chip select ${chipStyle(priority)}">
@@ -38,9 +38,10 @@ const TodoList = ({ todoList }) => {
           </label>
           <button class="destroy" data-component="destroyButton"></button>
         </div>
-        <input class="edit" value="완료된 타이틀" data-component="todoContentsEditInput"/>
+        <input class="edit" value="완료된 타이틀" data-component="todoEdit"/>
       </li>
-      `}).join('') || ''}
+      `;
+    }).join('') || ''}
     </ul>`;
   };
   render();
