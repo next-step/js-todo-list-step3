@@ -8,15 +8,15 @@ const PRIORITY = {
 
 const isChecked = (isCompleted) => isCompleted ? 'checked' : '';
 
-const liStyle = (isCompleted, editID) => `
+const liStyle = (isCompleted, editId) => `
     ${isCompleted ? ' completed ' : ''}
-    ${editID ? ' editing ' : ''}
+    ${editId ? ' editing ' : ''}
   `;
 
 const chipStyle = (priority) => PRIORITY[priority].style;
 
 const TodoList = ({ todoList }) => {
-  const editID = undefined;
+  const editId = undefined;
 
   const dom = CreateElement('section', { className: 'main' });
 
@@ -25,10 +25,10 @@ const TodoList = ({ todoList }) => {
     <ul class="todo-list">
     ${todoList?.map(({ _id, contents, priority, isCompleted }) => {
       return `
-      <li class="todo-list-item ${liStyle(isCompleted, editID)}" data-component="todoListItem" data-key="${_id}">
+      <li class="todo-list-item ${liStyle(isCompleted, editId)}" data-component="todoItem" data-key="${_id}">
         <div class="view">
           <input class="toggle" type="checkbox" ${isChecked(isCompleted)} data-component="todoItemToggleComplete"/>
-          <label class="label">
+          <label class="label" data-component="todoContents">
             <select class="chip select ${chipStyle(priority)}">
               ${Object.entries(PRIORITY).map(([key, { ko, style }]) => (
         `<option value="${key}" ${priority === key ? 'selected' : ''}>${ko}</option>`
@@ -38,7 +38,7 @@ const TodoList = ({ todoList }) => {
           </label>
           <button class="destroy" data-component="destroyButton"></button>
         </div>
-        <input class="edit" value="완료된 타이틀" />
+        <input class="edit" value="완료된 타이틀" data-component="todoContentsEditInput"/>
       </li>
       `}).join('') || ''}
     </ul>`;

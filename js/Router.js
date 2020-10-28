@@ -19,11 +19,11 @@ const load = async() => {
   $app.append($fragment);
 };
 
-const push = async(uri, data = null) => {
+const push = async(uri, query = null) => {
   let url = `#${uri}`;
-  if (data) {
+  if (query) {
     url += '?';
-    const entries = Object.entries(data);
+    const entries = Object.entries(query);
     entries.forEach(([key, value], i) => {
       if (i === (entries.length - 1)) {
         url += `${key}=${value}`;
@@ -33,7 +33,7 @@ const push = async(uri, data = null) => {
     });
   }
 
-  history.pushState(data, '', url);
+  history.pushState(query, '', url);
   await load();
   onpopstate = () => load();
 };
