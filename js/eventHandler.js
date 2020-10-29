@@ -82,26 +82,20 @@ export const todoViewModeHandler = ({ key, target, target: { dataset, value } })
   todoEdit.style.display = 'none';
 }
 
-export const todoContentUpdateHandler = (event) => {
+export const todoContentUpdateHandler = async({ key, target, target: { value, dataset } }) => {
+  if ( dataset.component !== 'todoEdit' || key !== 'Enter' || value === '') return;
 
+  const todoEdit = target;
+  const todoView = todoEdit.previousElementSibling;
+
+  const teamId = getter.teamID();
+  const itemId = target.closest('[data-component="todoItem"]').dataset.key;
+  const memberId = target.closest('[data-component="todoApp"]').dataset.key;
+  const contents = todoEdit.value;
+
+  await dispatch.updateTodoItemContents({ teamId, memberId, itemId, contents })
+
+  todoView.style.display = 'block';
+  todoEdit.style.display = 'none';
 }
 
-
-// dom.addEventListener('click', ({ target, target: { classList } }) => {
-//   if (!classList.contains('chip')) return;
-//
-//   const $chipSelect = target.closest('.chip-container').querySelector('select');
-//   classList.add('hidden');
-//   $chipSelect.classList.remove('hidden');
-// });
-
-//   const $todoApps = document.querySelector('.todoapp-list-container')
-//   $todoApps.addEventListener('click', e => {
-//     const $target = e.target
-//     const targetClassList = $target.classList
-//     if (targetClassList.contains('chip')) {
-//       const $chipSelect = $target.closest('.chip-container').querySelector('select')
-//       $target.classList.add('hidden')
-//       $chipSelect.classList.remove('hidden')
-//     }
-//   })

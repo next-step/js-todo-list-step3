@@ -100,7 +100,7 @@ export const putTodoItemComplete = async({ teamId, memberId, itemId }) => {
 };
 
 // 팀원의 TodoItem contents 수정하기
-export const putMemberTodoListContents = async({ teamId, memberId, itemId, contents }) => {
+export const putTodoItemContents = async({ teamId, memberId, itemId, contents }) => {
   try {
     const result = await PUT(todoItem(teamId, memberId, itemId), { contents });
     return result;
