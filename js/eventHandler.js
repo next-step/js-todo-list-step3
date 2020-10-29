@@ -36,7 +36,7 @@ export const updateTodoItemHandler = ($target, eventType, component, callback) =
     if (dataset?.component !== component) return;
 
     const teamId = getter.teamID();
-    const itemId = target.closest('li').dataset.key;
+    const itemId = target.closest('[data-component="todoItem"]').dataset.key;
     const memberId = target.closest('[data-component="todoApp"]').dataset.key;
 
     await callback({ teamId, itemId, memberId });
@@ -56,6 +56,27 @@ export const addTodoItemHandler = async({ key, target, target: { value, dataset 
   target.value = '';
   await dispatch.createTodoItem(teamId, memberId, contents);
 };
+
+export const todoEditModeHandler = ({ target, target: { dataset } }) => {
+  if (dataset.component !== 'todoContents') return;
+
+  const todoView = target.closest('[data-component="todoView"]');
+  const todoEdit = todoView.nextElementSibling;
+
+  todoView.style.display = 'none';
+  todoEdit.style.display = 'block';
+  todoEdit.focus();
+}
+
+export const todoViewModeHandler = ({ key, target, target: { dataset } }) => {
+  if (dataset.component !== 'todoEdit' || key !== 'Escape') return;
+
+  const todoEdit = target;
+  const todoView = todoEdit.previousElementSibling;
+
+  todoView.style.display = 'block';
+  todoEdit.style.display = 'none';
+}
 
 
 // dom.addEventListener('click', ({ target, target: { classList } }) => {

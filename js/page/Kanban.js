@@ -4,7 +4,7 @@ import { dispatch, getter } from '../store/team.js';
 import UserTodo from '../components/template/kanban/UserTodo.js';
 import HashParse from '../lib/HashParse.js';
 import {
-  addTodoItemHandler,
+  addTodoItemHandler, todoEditModeHandler, todoViewModeHandler,
   updateTodoItemHandler,
 } from '../eventHandler.js';
 
@@ -16,21 +16,11 @@ const Kanban = (props) => {
   const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container' });
 
   dom.addEventListener('keypress', addTodoItemHandler);
+  dom.addEventListener('dblclick', todoEditModeHandler);
+  dom.addEventListener('keyup', todoViewModeHandler);
   updateTodoItemHandler(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
   updateTodoItemHandler(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
 
-  dom.addEventListener('dblclick', (event) => {
-    const { target, target: { dataset } } = event;
-    if (dataset.component !== 'todoContents') return;
-
-    const todoItem = target.closest('[data-component="todoItem"]');
-    const todoView = target.closest('[data-component="todoView"]');
-    const todoEdit = todoView.nextElementSibling;
-
-    todoView.style.display = 'none';
-    todoEdit.style.display = 'block';
-
-  });
 
   const render = () => {
     const teamMembers = getter.teamMembers(render);
