@@ -11,8 +11,9 @@ const CLASS = {
 const TodoFooter = ({ todoClass }) => {
   const dom = CreateElement('div', { className: 'count-container' });
   const render = () => {
+    const filter = todoClass(render);
     const todoClassHTML = Object.entries(CLASS).map(([key, value]) => `
-              <li data-key="${key}"><button class="${todoClass() === key ? 'selected' : ''}">${value}</button></li>
+              <li data-key="${key}"><button class="${filter === key ? 'selected' : ''}">${value}</button></li>
              `).join('');
 
       dom.innerHTML = `

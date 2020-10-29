@@ -1,7 +1,7 @@
 import CreateElement from '../../../lib/CreateElement.js';
 import STRINGS from '../../../constant/STRINGS.js';
 
-const TodoInput = ({ _id }) => {
+const TodoInput = (props = {}) => {
   const dom = CreateElement('section', { className: 'input-container' });
 
   const render = () => {

@@ -1,10 +1,6 @@
 import CreateElement from '../../../lib/CreateElement.js';
-
-const PRIORITY = {
-  NONE: { ko: '순위', style: '' },
-  FIRST: { ko: '1순위', style: 'primary' },
-  SECOND: { ko: '2순위', style: 'secondary' },
-};
+import PRIORITY from '../../../constant/PRIORITY.js';
+import SortTodoListByPriority from '../../../lib/SortTodoListByPriority.js';
 
 const isChecked = (isCompleted) => isCompleted ? 'checked' : '';
 
@@ -15,15 +11,20 @@ const liStyle = (isCompleted, editId) => `
 
 const chipStyle = (priority) => PRIORITY[priority].style;
 
-const TodoList = ({ todoList }) => {
+const TodoList = ({ todoList, memberId, todoClass }) => {
   const editId = undefined;
 
   const dom = CreateElement('section', { className: 'main' });
-
+  let newTodoList = todoList
   const render = () => {
+    const filter = todoClass(render);
+    if (filter === 'priority') {
+      newTodoList = SortTodoListByPriority(memberId);
+    }
+
     dom.innerHTML = `
     <ul class="todo-list">
-    ${todoList?.map(({ _id, contents, priority, isCompleted }) => {
+    ${newTodoList?.map(({ _id, contents, priority, isCompleted }) => {
       return `
       <li class="todo-list-item ${liStyle(isCompleted, editId)}" data-component="todoItem" data-key="${_id}">
         <div class="view" data-component="todoView">

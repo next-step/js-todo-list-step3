@@ -19,6 +19,15 @@ const [teamMembers, setTeamMembers] = useFamily('_id');
 
 export const getter = {
   teamList, teamName, teamID, teamMembers,
+
+  memberById(memberId) {
+    const [getMember, ] = getter.teamMembers().get(memberId);
+    return getMember();
+  },
+  memberTodoList(memberId) {
+    const [getMember, ] = getter.teamMembers().get(memberId);
+    return [...getMember().todoList]; // 불변성 관리가 필요해짐! 불변성이 필요한곳을 탐색해보자 todoList sort 를 하는 부분에서 영감을!
+  }
 };
 
 export const setter = {
@@ -43,12 +52,23 @@ export const setter = {
     setMember(newMember);
   },
 
-  todoItem(memberId, newTodo) {
+  updateTodoItem(memberId, newTodo) {
     const [getMember, setMember] = getter.teamMembers().get(memberId);
     const member = getMember();
     const { _id } = newTodo;
 
     const todoList = member.todoList.map((todo) => (todo._id === _id) ? newTodo : todo);
+
+    const newMember = {
+      ...member,
+      todoList,
+    };
+    setMember(newMember);
+  },
+
+  updateTodoList(memberId, todoList) {
+    const [getMember, setMember] = getter.teamMembers().get(memberId);
+    const member = getMember();
 
     const newMember = {
       ...member,
@@ -99,17 +119,17 @@ export const dispatch = {
 
   async updateTodoItemComplete({ teamId, memberId, itemId }) {
     const newTodoItem = await putTodoItemComplete({ teamId, memberId, itemId });
-    setter.todoItem(memberId, newTodoItem);
+    setter.updateTodoItem(memberId, newTodoItem);
   },
 
   async updateTodoItemContents({ teamId, memberId, itemId, contents }) {
     const newTodoItem = await putTodoItemContents({ teamId, memberId, itemId, contents });
-    setter.todoItem(memberId, newTodoItem);
+    setter.updateTodoItem(memberId, newTodoItem);
   },
 
   async updateTodoItemPriority({ teamId, memberId, itemId, priority }) {
     const newTodoItem = await putTodoItemPriority({ teamId, memberId, itemId, priority });
-    setter.todoItem(memberId, newTodoItem);
+    setter.updateTodoItem(memberId, newTodoItem);
   },
 
   async removeAllTodoList({ teamId, memberId }) {

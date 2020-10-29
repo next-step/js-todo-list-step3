@@ -3,14 +3,18 @@ import TodoInput from '../template/kanban/TodoInput.js';
 import TodoList from '../template/kanban/TodoList.js';
 import TodoFooter from '../template/kanban/TodoFooter.js';
 
-const TodoApp = ({ _id, todoList, todoClass }) => {
-  // todo List filter
+const TodoApp = ({ memberId, todoList, todoClass }) => {
 
   return CreateElement(
     'div',
-    { className: 'todoapp' },
-    TodoInput({ _id }),
-    TodoList({ todoList }),
+    {
+      className: 'todoapp',
+      dataset: {
+        component: 'todoApp'
+      }
+    },
+    TodoInput({ memberId }),
+    TodoList({ todoList, memberId, todoClass }),
     TodoFooter({ todoClass }),
   );
 };

@@ -9,7 +9,9 @@ import {
   changeTodoEditModeHandler,
   changeTodoViewModeHandler,
   updateTodoItemEventListener,
-  updateTodoPriorityHandler
+  updateTodoPriorityHandler,
+  deleteAllTodoListHandler,
+  changeFilterHandler,
 } from '../eventHandler.js';
 
 const Kanban = (props) => {
@@ -24,6 +26,9 @@ const Kanban = (props) => {
   dom.addEventListener('keyup', changeTodoViewModeHandler);
   dom.addEventListener('keypress', updateTodoContentHandler);
   dom.addEventListener('change', updateTodoPriorityHandler);
+  dom.addEventListener('click', deleteAllTodoListHandler);
+  dom.addEventListener('click', changeFilterHandler);
+
 
   updateTodoItemEventListener(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
   updateTodoItemEventListener(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
