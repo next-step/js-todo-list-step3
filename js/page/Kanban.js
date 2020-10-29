@@ -5,7 +5,7 @@ import UserTodo from '../components/template/kanban/UserTodo.js';
 import HashParse from '../lib/HashParse.js';
 import {
   addTodoItemHandler, todoContentUpdateHandler, todoEditModeHandler, todoViewModeHandler,
-  updateTodoItemEventListener,
+  updateTodoItemEventListener, todoPriorityUpdateHandler
 } from '../eventHandler.js';
 
 const Kanban = (props) => {
@@ -19,6 +19,8 @@ const Kanban = (props) => {
   dom.addEventListener('dblclick', todoEditModeHandler);
   dom.addEventListener('keyup', todoViewModeHandler);
   dom.addEventListener('keypress', todoContentUpdateHandler);
+  dom.addEventListener('change', todoPriorityUpdateHandler);
+
   updateTodoItemEventListener(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
   updateTodoItemEventListener(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
 

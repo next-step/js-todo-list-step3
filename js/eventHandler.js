@@ -99,3 +99,13 @@ export const todoContentUpdateHandler = async({ key, target, target: { value, da
   todoEdit.style.display = 'none';
 }
 
+export const todoPriorityUpdateHandler = async ({ target, target: { dataset, value } }) => {
+  if (dataset.component !== 'todoPriority') return;
+
+  const teamId = getter.teamID();
+  const itemId = target.closest('[data-component="todoItem"]').dataset.key;
+  const memberId = target.closest('[data-component="todoApp"]').dataset.key;
+  const priority = value;
+
+  await dispatch.updateTodoItemPriority({ teamId, memberId, itemId, priority })
+}

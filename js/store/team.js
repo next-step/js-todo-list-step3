@@ -4,7 +4,10 @@ import {
   getMember,
   deleteTodoItem,
   postTodoItem,
-  postMember, putTodoItemComplete, putTodoItemContents,
+  postMember,
+  putTodoItemComplete,
+  putTodoItemContents,
+  putTodoItemPriority,
 } from '../endpoint/team/controller.js';
 import { useFamily, useState } from '../lib/state.js';
 
@@ -100,6 +103,11 @@ export const dispatch = {
 
   async updateTodoItemContents({ teamId, memberId, itemId, contents }) {
     const newTodoItem = await putTodoItemContents({ teamId, memberId, itemId, contents });
+    setter.todoItem(memberId, newTodoItem);
+  },
+
+  async updateTodoItemPriority({ teamId, memberId, itemId, priority }) {
+    const newTodoItem = await putTodoItemPriority({ teamId, memberId, itemId, priority })
     setter.todoItem(memberId, newTodoItem);
   }
 };

@@ -110,7 +110,7 @@ export const putTodoItemContents = async({ teamId, memberId, itemId, contents })
 };
 
 // 팀원의 TodoItem 우선순위 수정하기
-export const putMemberTodoListPriority = async({ teamId, memberId, itemId, priority }) => {
+export const putTodoItemPriority = async({ teamId, memberId, itemId, priority }) => {
   try {
     const result = await PUT(todoItem(teamId, memberId, itemId, { priority }), { priority });
     return result;
