@@ -57,7 +57,7 @@ export const addTodoItemHandler = async({ key, target, target: { value, dataset 
   await dispatch.createTodoItem(teamId, memberId, contents);
 };
 
-export const todoEditModeHandler = ({ target, target: { dataset } }) => {
+export const changeTodoEditModeHandler = ({ target, target: { dataset } }) => {
   if (dataset.component !== 'todoInfo') return;
 
   const todoView = target.closest('[data-component="todoView"]');
@@ -70,7 +70,7 @@ export const todoEditModeHandler = ({ target, target: { dataset } }) => {
   todoEdit.focus();
 }
 
-export const todoViewModeHandler = ({ key, target, target: { dataset, value } }) => {
+export const changeTodoViewModeHandler = ({ key, target, target: { dataset, value } }) => {
   if (dataset.component !== 'todoEdit' || key !== 'Escape') return;
 
   const originContents = value;
@@ -82,7 +82,7 @@ export const todoViewModeHandler = ({ key, target, target: { dataset, value } })
   todoEdit.style.display = 'none';
 }
 
-export const todoContentUpdateHandler = async({ key, target, target: { value, dataset } }) => {
+export const updateTodoContentHandler = async({ key, target, target: { value, dataset } }) => {
   if ( dataset.component !== 'todoEdit' || key !== 'Enter' || value === '') return;
 
   const todoEdit = target;
@@ -99,7 +99,7 @@ export const todoContentUpdateHandler = async({ key, target, target: { value, da
   todoEdit.style.display = 'none';
 }
 
-export const todoPriorityUpdateHandler = async ({ target, target: { dataset, value } }) => {
+export const updateTodoPriorityHandler = async ({ target, target: { dataset, value } }) => {
   if (dataset.component !== 'todoPriority') return;
 
   const teamId = getter.teamID();
@@ -108,4 +108,14 @@ export const todoPriorityUpdateHandler = async ({ target, target: { dataset, val
   const priority = value;
 
   await dispatch.updateTodoItemPriority({ teamId, memberId, itemId, priority })
+}
+
+export const deleteAllTodoListHandler = async(setTodoClass, { target, target: { dataset } }) => {
+  if (dataset.component !== 'deleteAllTodoList') return;
+
+  const memberId = target.closest('[data-component="todoApp"]').dataset.key;
+  const teamId = getter.teamID();
+
+  await dispatch.removeAllTodoList({ teamId, memberId });
+
 }

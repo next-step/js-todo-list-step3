@@ -117,8 +117,7 @@ body {
 .edit {
   display: block;
   padding: 15px;
-  margin-left: 60px;
-  width: calc(100% - 60px);
+  width: calc(100%);
   height: 73px;
   position: relative;
   font-size: 24px;
@@ -131,6 +130,11 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.edit {
+  margin-left: 60px;
+  width: calc(100% - 60px);
 }
 
 .new-todo {
@@ -324,13 +328,15 @@ body {
   position: absolute;
   right: 0;
   left: 0;
+  bottom: 0px;
 }
 
 .filters li {
   display: inline;
 }
 
-.filters li a {
+.filters li button {
+  cursor: pointer;
   color: inherit;
   margin: 3px;
   padding: 3px 7px;
@@ -339,11 +345,11 @@ body {
   border-radius: 3px;
 }
 
-.filters li a:hover {
+.filters li button:hover {
   border-color: rgba(175, 47, 47, 0.1);
 }
 
-.filters li a.selected {
+.filters li button.selected {
   border-color: rgba(175, 47, 47, 0.2);
 }
 

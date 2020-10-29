@@ -120,7 +120,7 @@ export const putTodoItemPriority = async({ teamId, memberId, itemId, priority })
 };
 
 // 팀원의 TodoItem 전부 삭제
-export const deleteMemberTodoListAll = async({ teamId, memberId }) => {
+export const deleteAllTodoList = async({ teamId, memberId }) => {
   try {
     const result = await DELETE(todoItem(teamId, memberId));
     return result;

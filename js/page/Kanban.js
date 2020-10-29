@@ -4,8 +4,12 @@ import { dispatch, getter } from '../store/team.js';
 import UserTodo from '../components/template/kanban/UserTodo.js';
 import HashParse from '../lib/HashParse.js';
 import {
-  addTodoItemHandler, todoContentUpdateHandler, todoEditModeHandler, todoViewModeHandler,
-  updateTodoItemEventListener, todoPriorityUpdateHandler
+  addTodoItemHandler,
+  updateTodoContentHandler,
+  changeTodoEditModeHandler,
+  changeTodoViewModeHandler,
+  updateTodoItemEventListener,
+  updateTodoPriorityHandler
 } from '../eventHandler.js';
 
 const Kanban = (props) => {
@@ -16,10 +20,10 @@ const Kanban = (props) => {
   const dom = CreateElement('ul', { className: 'todoapp-list-container flex-column-container' });
 
   dom.addEventListener('keypress', addTodoItemHandler);
-  dom.addEventListener('dblclick', todoEditModeHandler);
-  dom.addEventListener('keyup', todoViewModeHandler);
-  dom.addEventListener('keypress', todoContentUpdateHandler);
-  dom.addEventListener('change', todoPriorityUpdateHandler);
+  dom.addEventListener('dblclick', changeTodoEditModeHandler);
+  dom.addEventListener('keyup', changeTodoViewModeHandler);
+  dom.addEventListener('keypress', updateTodoContentHandler);
+  dom.addEventListener('change', updateTodoPriorityHandler);
 
   updateTodoItemEventListener(dom, 'click', 'destroyButton', dispatch.removeTodoItem);
   updateTodoItemEventListener(dom, 'click', 'todoItemToggleComplete', dispatch.updateTodoItemComplete);
