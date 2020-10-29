@@ -28,13 +28,13 @@ const TodoList = ({ todoList }) => {
       <li class="todo-list-item ${liStyle(isCompleted, editId)}" data-component="todoItem" data-key="${_id}">
         <div class="view" data-component="todoView">
           <input class="toggle" type="checkbox" ${isChecked(isCompleted)} data-component="todoItemToggleComplete"/>
-          <label class="label" data-component="todoContents">
-            <select class="chip select ${chipStyle(priority)}">
+          <label class="label" data-component="todoInfo">
+            <select class="chip select ${chipStyle(priority)}" data-component="todoPriority">
               ${Object.entries(PRIORITY).map(([key, { ko, style }]) => (
         `<option value="${key}" ${priority === key ? 'selected' : ''}>${ko}</option>`
       ))}
             </select>
-            ${contents}
+            <span data-component="todoContents">${contents}</span>
           </label>
           <button class="destroy" data-component="destroyButton"></button>
         </div>

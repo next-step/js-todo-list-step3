@@ -58,22 +58,27 @@ export const addTodoItemHandler = async({ key, target, target: { value, dataset 
 };
 
 export const todoEditModeHandler = ({ target, target: { dataset } }) => {
-  if (dataset.component !== 'todoContents') return;
+  if (dataset.component !== 'todoInfo') return;
 
   const todoView = target.closest('[data-component="todoView"]');
   const todoEdit = todoView.nextElementSibling;
+  const todoContents = todoView.querySelector('[data-component="todoContents"]').innerText;
 
+  todoEdit.value = todoContents;
   todoView.style.display = 'none';
   todoEdit.style.display = 'block';
   todoEdit.focus();
 }
 
-export const todoViewModeHandler = ({ key, target, target: { dataset } }) => {
+export const todoViewModeHandler = ({ key, target, target: { dataset, value } }) => {
   if (dataset.component !== 'todoEdit' || key !== 'Escape') return;
 
+  const originContents = value;
   const todoEdit = target;
   const todoView = todoEdit.previousElementSibling;
 
+
+  target.value = originContents;
   todoView.style.display = 'block';
   todoEdit.style.display = 'none';
 }
