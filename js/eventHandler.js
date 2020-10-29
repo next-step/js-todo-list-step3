@@ -29,7 +29,7 @@ export const addTeamHandler = async() => {
 };
 
 
-export const updateTodoItemHandler = ($target, eventType, component, callback) => {
+export const updateTodoItemEventListener = ($target, eventType, component, callback) => {
   $target.addEventListener(eventType, async(event) => {
     const { target, target: { dataset } } = event;
 
@@ -77,10 +77,13 @@ export const todoViewModeHandler = ({ key, target, target: { dataset, value } })
   const todoEdit = target;
   const todoView = todoEdit.previousElementSibling;
 
-
   target.value = originContents;
   todoView.style.display = 'block';
   todoEdit.style.display = 'none';
+}
+
+export const todoContentUpdateHandler = (event) => {
+
 }
 
 
