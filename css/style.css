@@ -32,7 +32,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
-  overflow-y: hidden;
 }
 
 :focus {
@@ -585,4 +584,91 @@ select.chip {
 }
 
 .add-team-button-container #add-team-button.ripple {
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  cursor: pointer;
+}
+
+.modal-box {
+  animation: modalOpen 0.5s;
+  background: #fff;
+  border-radius: 3px;
+  margin: 100px auto 0;
+  width: 500px;
+  padding: 20px;
+  box-shadow: 0 0 10px #666;
+  position: relative;
+  cursor: default;
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: inherit;
+  }
+}
+
+.modal-title {
+  font-size: 17px;
+  letter-spacing: -1px;
+}
+
+.modal-close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: #666;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-close-button:hover {
+  background-color: #000;
+}
+
+.appendForm {
+  display: flex;
+}
+
+.appendForm input[type="text"] {
+  height: 30px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 5px;
+  border: 1px solid #bebebe;
+  background: #fefefe;
+  margin-right: 5px;
+  width: calc(100% - 80px);
+}
+
+.appendForm button {
+  width: 75px;
+  height: 30px;
+  background-color: #09F;
+  transition: background-color 0.3s;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.appendForm button:hover {
+  background-color: #06F;
 }
