@@ -19,12 +19,13 @@ export default function App() {
   //   const result = prompt('새로운 팀원 이름을 입력해주세요')
   // })
 
-  // const hello1 = (action) => {
-  //   console.log('11111111')
-  //   return store.dispatch(action())
-  // }
-  store.dispatch(increament1);
+  const hello1 = (action) => {
+    console.log('api 통신')
+    return store.dispatch(action)
+  }
+  // store.dispatch(increament1);
 
+  hello1(increament)
   // store.dispatch(increament);
 
   const hello = store.getState();

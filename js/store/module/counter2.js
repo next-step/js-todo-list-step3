@@ -5,7 +5,9 @@ const ACTION = "INCREAMENT";
 
 
 export const increament1 = createAction(ACTION);
-
+export function getWidget () {
+    return dispatch => get('/widget').then(widget => dispatch(updateWidget(widget)))
+}
 
 const initialState = {
     number: 0,
