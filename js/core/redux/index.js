@@ -1,7 +1,7 @@
-import { combineReducers, createStore, createAction } from "./redux.js";
+import { combineReducers, createStore, createAction } from './redux.js';
 
 export {
-    combineReducers,
-    createStore,
-    createAction
-}
+  combineReducers,
+  createStore,
+  createAction,
+};

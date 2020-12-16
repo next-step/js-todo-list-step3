@@ -1,6 +1,6 @@
-import {store} from "./store";
-import {increament} from "./store/module/counter.js";
-import {increament1} from "./store/module/counter2.js";
+import { store } from './store';
+import { increament } from './store/module/counter.js';
+import { increament1 } from './store/module/counter2.js';
 
 export default function App() {
   // const $todoApps = document.querySelector('.todoapp-list-container')
@@ -20,16 +20,15 @@ export default function App() {
   // })
 
   const hello1 = (action) => {
-    console.log('api 통신')
-    return store.dispatch(action)
-  }
+    console.log('api 통신');
+    return store.dispatch(action);
+  };
   // store.dispatch(increament1);
 
-  hello1(increament)
+  hello1(increament);
   // store.dispatch(increament);
 
   const hello = store.getState();
 
   console.log(hello);
 }
-

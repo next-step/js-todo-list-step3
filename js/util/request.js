@@ -1,4 +1,5 @@
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
+
 const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/';
 
 export const request = (method, url = '/', payload = '') => {
