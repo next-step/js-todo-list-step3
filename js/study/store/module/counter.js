@@ -1,4 +1,4 @@
-import { createAction } from '../../core/redux/index.js';
+import { createAction } from '../../core/redux';
 
 const ACTION_INCR = 'INCREAMENT/COUNTER';
 

@@ -30,7 +30,7 @@ describe('API TEST', () => {
   });
 
   it('getTeamMembers', async () => {
-    const teamId = '3zOLp3bhG';
+    const teamId = 'DPwVtTcOy';
     const result = await getTeamMembers(teamId);
     console.log(result);
     expect(result._id).toBe(teamId);
