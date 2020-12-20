@@ -49,6 +49,16 @@ const User = class extends Set {
     const tasks = [...super.values()];
     if (this.filter === 'active') return tasks.filter((todo) => !todo.isCompleted);
     if (this.filter === 'completed') return tasks.filter((todo) => todo.isCompleted);
+    if (this.filter === 'priority') {
+      const sorted = tasks.reduce((acc, cur) => {
+        if (cur.priority === 'FIRST') acc.first.push(cur);
+        if (cur.priority === 'SECOND') acc.second.push(cur);
+        if (cur.priority === 'NONE') acc.none.push(cur);
+        return acc
+      }, {first: [], second: [], none: []});
+
+      return [...sorted.first, ...sorted.second, ...sorted.none]
+    }
     return tasks;
   }
 
