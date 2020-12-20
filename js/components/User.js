@@ -1,4 +1,4 @@
-import Task from './task.js';
+import Task from './Task.js';
 
 const User = class extends Set {
   constructor(_id, name, filter = 'all') {
@@ -14,9 +14,12 @@ const User = class extends Set {
 
   static load(json) {
     const user = new User(json._id, json.name);
-    json.todoList.forEach((t) => {
-      user.addTask(Task.load(t));
-    });
+    if(json.todoList instanceof Array){
+      json.todoList.forEach((t) => {
+        user.addTask(Task.load(t));
+      });
+    }
+
     return user;
   }
 
@@ -49,8 +52,9 @@ const User = class extends Set {
     return tasks;
   }
 
-  getId() {
-    return this._id;
+  getInfo() {
+    const {_id, name, filter} = this;
+    return {_id, name, filter};
   }
 
   add() {}

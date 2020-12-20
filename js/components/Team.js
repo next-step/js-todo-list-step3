@@ -1,5 +1,4 @@
 import User from "./User.js";
-import Task from "./Task";
 
 const Team = class extends Set {
   constructor(_id, name) {
@@ -21,12 +20,12 @@ const Team = class extends Set {
   }
 
   addUser(user) {
-    if (!(user instanceof User)) return console.log('invalid task');
+    if (!(user instanceof User)) return console.log('invalid User');
     super.add(user);
   }
 
   removeUser(user) {
-    if (!(user instanceof User)) return console.log('invalid task');
+    if (!(user instanceof User)) return console.log('invalid User');
     super.delete(user);
   }
 
@@ -38,8 +37,9 @@ const Team = class extends Set {
     return [...super.values()];
   }
 
-  getId() {
-    return this._id;
+  getInfo() {
+    const {_id, name} = this;
+    return {_id, name};
   }
 
   add() {}

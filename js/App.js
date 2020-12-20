@@ -1,4 +1,4 @@
-export default function App() {
+function App() {
   const $todoApps = document.querySelector('.todoapp-list-container')
   $todoApps.addEventListener('click', e => {
     const $target = e.target

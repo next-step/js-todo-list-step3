@@ -28,8 +28,9 @@ const Task = class {
     this.isCompleted = !this.isCompleted;
   }
 
-  getId() {
-    return this._id;
+  getInfo() {
+    const {_id, contents, priority, isCompleted} = this;
+    return {_id, contents, priority, isCompleted};
   }
 };
 export default Task;
