@@ -11,7 +11,7 @@ import {
   updateUserTodoContentsOfTeamMember,
   updateTodoPriorityOfTeamMember,
   deleteAllTodoListOfTeamMember,
-} from './index.js';
+} from './api.js';
 
 const getId = async () => {
   const name = 'test1111';

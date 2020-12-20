@@ -1,7 +1,7 @@
 import App from './components/app.js';
 import {
   getTeamList
-} from './util/index.js';
+} from './util/api.js';
 import {
   common, teamBoard,
 } from './constant/template.js'
@@ -24,15 +24,15 @@ class Renderer {
 class DOMRenderer extends Renderer {
   constructor(id, app) {
     super(app);
-    this.init();
+    this.init(id);
     // this.isEditMode = false;
-    this.$app = document.querySelector('#' + id);
+    this.$app.insertAdjacentHTML('afterbegin', common.title());
+    this.$title = this.$app.querySelector('#user-title strong');
     this.$teamList = this.$app.querySelector('.team-list-container');
-
   }
 
-  async init() {
-
+  async init(id) {
+    this.$app = document.querySelector('#' + id);
     const teamList = await getTeamList();
     this.app = App.load(teamList);
     this.render();
