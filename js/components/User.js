@@ -32,12 +32,16 @@ const User = class extends Set {
   }
 
   addTask(task) {
-    if (!(task instanceof Task)) return console.log('invalid task');
+    if (!(task instanceof Task)) {
+      return console.log('invalid task');
+    }
     super.add(task);
   }
 
   removeTask(task) {
-    if (!(task instanceof Task)) return console.log('invalid task');
+    if (!(task instanceof Task)) {
+      return console.log('invalid task');
+    }
     super.delete(task);
   }
 

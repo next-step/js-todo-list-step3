@@ -16,7 +16,6 @@ export class TodoList {
     this.isEditMode = false;
     this.init();
     this.render();
-    this.addDomEvent();
   }
 
   init() {
@@ -32,10 +31,10 @@ export class TodoList {
       ${todoList.todoBottom}
     `;
     this.$todoListContainer = li;
-    this.addDomEvent();
+    this.initDomElements();
   }
 
-  addDomEvent() {
+  initDomElements() {
     this.$newTodo = this.$todoListContainer.querySelector('.new-todo');
     this.$todoCount = this.$todoListContainer.querySelector('.todo-count strong');
     this.$filter = this.$todoListContainer.querySelector('.count-container .filters');
@@ -83,12 +82,16 @@ export class TodoList {
       alert('2글자 이상 입력하세요!');
       return;
     }
-    if (task) {
-      await this.updateContent(task, contents);
-    } else {
-      await this.creteTodo(contents);
+    try {
+      if (task) {
+        await this.updateContent(task, contents);
+      } else {
+        await this.creteTodo(contents);
+      }
+      this.render();
+    } catch (e) {
+      console.error(e)
     }
-    this.render();
   }
 
   async creteTodo(contents) {
@@ -116,6 +119,7 @@ export class TodoList {
     const {target} = e;
     if (target.classList.contains('edit')) {
       e.target.addEventListener('keydown', (e) => this.handleCreateTodo(e, task));
+      return;
     }
     try {
       if (target.classList.contains('toggle')) {
@@ -128,7 +132,6 @@ export class TodoList {
         await deleteTodoItemOfTeamMember(this.teamId, this.memberId, task.getInfo()._id);
         this.user.removeTask(task);
         this.render();
-
       }
     } catch (err) {
       console.error(err);
@@ -144,25 +147,23 @@ export class TodoList {
     if (e.target.tagName !== 'A') return;
     const targetClass = e.target.classList;
     const selection = this.user.getFilter();
-    if (targetClass.contains(selection)) return false;
+    if (targetClass.contains(selection)) return;
     this.$filter.querySelector(`.${selection}`).classList.remove('selected');
     targetClass.add('selected');
     this.user.setFilter(targetClass[0]);
     this.render();
   }
 
-  changeEditMode(e) {
-    if (e.target.classList.contains('label')) {
-      if (!this.isEditMode) {
-        this.isEditMode = true;
-        const li = e.target.closest('li');
-        li.setAttribute('class', 'editing');
-      }
-    }
+  changeEditMode = (e) => {
+    const isEditingMode = Boolean(!e.target.classList.contains('label') || this.isEditMode);
+    if (isEditingMode) return;
+    this.isEditMode = true;
+    const li = e.target.closest('li');
+    li.setAttribute('class', 'editing');
   }
 
-  async changeSelect(e, task) {
-    if (e.target.selectedIndex === 0) return false;
+  changeSelect = async (e, task) => {
+    if (e.target.selectedIndex === 0) return;
     const priority = PRIORITY[e.target.selectedIndex];
     try {
       await updateTodoPriorityOfTeamMember(this.teamId, this.memberId, task.getInfo()._id, priority);
@@ -174,31 +175,16 @@ export class TodoList {
   }
 
   createTodoTask(task) {
-    const {_id, contents, priority, isCompleted} = task.getInfo();
+    const {_id, priority, isCompleted} = task.getInfo();
     const li = document.createElement('li');
     li.classList.add('todo-list-item')
     li.classList.add(isCompleted && 'completed');
     li.dataset.id = _id;
     const priorHTML = this.makePriorityTag(priority);
-    li.innerHTML = `
-            <div class="view">
-                <input class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
-                <label class="label">
-                  ${priorHTML}
-                  ${contents}
-                </label>
-                <button class="destroy"></button>
-            </div>
-            <input class="edit" value=${contents} />`;
-    li.addEventListener('click', (e) => {
-      this.handleTodo(e, task);
-    });
-    li.addEventListener('dblclick', (e) => {
-      this.changeEditMode(e);
-    });
-    li.querySelector('.chip').addEventListener('change', (e) => {
-      this.changeSelect(e, task);
-    });
+    li.innerHTML = todoList.todoContent(task.getInfo(), priorHTML);
+    li.addEventListener('click', (e) => this.handleTodo(e, task));
+    li.addEventListener('dblclick', this.changeEditMode);
+    li.querySelector('.chip').addEventListener('change', (e) => this.changeSelect(e, task));
     this.$todoList.appendChild(li);
   }
 

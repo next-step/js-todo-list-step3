@@ -14,7 +14,9 @@ const App = class extends Set {
   }
 
   addTeam(team) {
-    if (!team instanceof Team) return console.log('invalid User');
+    if (!team instanceof Team) {
+      return console.log('invalid User');
+    }
     super.add(team);
   }
 

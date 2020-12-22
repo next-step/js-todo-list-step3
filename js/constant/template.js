@@ -44,14 +44,15 @@ export const todoList = {
                       </ul>
                   </section>`,
 
-  todoContent: (task) => ` <div class="view">
-                             <input class="toggle" type="checkbox" ${task.isCompleted ? 'checked' : ''}/>
-                             <label class="label">
-                                ${task.contents}
-                             </label>
-                             <button class="destroy"></button>
-                           </div>
-                           <input class="edit" value=${task.contents} />`,
+  todoContent: ({isCompleted, contents}, priorHTML) => `<div class="view">
+                            <input class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
+                            <label class="label">
+                                ${priorHTML}
+                                ${contents}
+                            </label>
+                            <button class="destroy"></button>
+                         </div>
+                         <input class="edit" value=${contents} />`,
 
   todoBottom: `
                     <div class="count-container">

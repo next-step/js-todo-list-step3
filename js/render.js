@@ -47,16 +47,16 @@ class DOMRenderer extends Renderer {
   }
 
   bindEvents() {
-    this.$teamList.addEventListener('click', e => this.handleTemBoard(e));
+    this.$teamList.addEventListener('click', this.handleTemBoard);
   }
 
-  handleTemBoard(e) {
+  handleTemBoard = (e) => {
     const {id, name} = e.target.closest('div').dataset;
     if (typeof id === 'undefined') return false;
     this.goKanBanBoard(id, name);
   }
 
-  async handleCreateTeam() {
+  handleCreateTeam = async () => {
     let teamName = prompt('팀 이름을 입력해주세요');
     if (teamName.length < 3) {
       alert('User의 이름은 최소 2글자 이상이어야 합니다.');
@@ -70,7 +70,7 @@ class DOMRenderer extends Renderer {
     }
   }
 
-  async handleCreateTeamMember(e) {
+  handleCreateTeamMember = async (e) => {
     if (e.target.closest('#add-user-button') === null) return;
     const name = prompt('추가하고 싶은 이름을 입력해주세요.');
     try {
@@ -101,14 +101,14 @@ class DOMRenderer extends Renderer {
       const addCard = document.createElement('div');
       addCard.classList.add('add-team-button-container');
       addCard.innerHTML = teamBoard.addCard;
-      addCard.addEventListener('click', (e) => this.handleCreateTeam(e));
+      addCard.addEventListener('click', this.handleCreateTeam);
       el.appendChild(addCard);
       return;
     }
     const addCard = document.createElement('li');
     addCard.classList.add('add-user-button-container');
     addCard.innerHTML = kanbanBoard.addTodoList;
-    addCard.addEventListener('click', (e) => this.handleCreateTeamMember(e));
+    addCard.addEventListener('click', this.handleCreateTeamMember);
     el.appendChild(addCard);
   }
 

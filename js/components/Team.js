@@ -20,12 +20,16 @@ const Team = class extends Set {
   }
 
   addUser(user) {
-    if (!(user instanceof User)) return console.log('invalid User');
+    if (!(user instanceof User)) {
+      return console.log('invalid User');
+    }
     super.add(user);
   }
 
   removeUser(user) {
-    if (!(user instanceof User)) return console.log('invalid User');
+    if (!(user instanceof User)) {
+      return console.log('invalid User');
+    }
     super.delete(user);
   }
 
