@@ -1,1 +1,0 @@
-export const MINIMUN_INPUT_LENGTH = 2;

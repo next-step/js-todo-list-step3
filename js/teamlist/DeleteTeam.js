@@ -1,5 +1,5 @@
 import { API } from "../api.js";
-import { getAllTeams, $teamListContainer } from "./showTeamList.js"
+import { getAllTeams, $teamListContainer } from "./showTeamList.js";
 
 export const initDeleteTeam = () => {
   $teamListContainer.addEventListener("auxclick", deleteCurrentTeam);

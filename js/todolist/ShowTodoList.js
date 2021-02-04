@@ -1,45 +1,21 @@
 import { API } from "../api.js";
-
-import {initAddTodoList} from "./addItem.js"
-import {initCheckTodoList} from "./checkItem.js"
-import {initUpdateTodoList} from "./updateItem.js"
-import {initDeleteTodoList} from "./deleteItem.js"
-import {initPrioritizeTodoList} from "./prioritizeItem.js"
-import {initDeleteAllTodoList} from "./deleteAllItems.js"
-import {initAddMember} from "./addMember.js"
-
-import { initTodolistButton, changeByHash } from "./controlTodoButton.js";
+import { changeByHash } from "./controlTodoButton.js";
 
 export const $todoApps = document.querySelector(".todoapp-list-container");
-export const teamId = location.hash.substr(1,9);
-
-const initTodoLists = () => {
-  getTeamList();
-  initAddMember();
-  initAddTodoList();
-  initCheckTodoList();
-  initUpdateTodoList();
-  initDeleteTodoList();
-  initPrioritizeTodoList();
-  initDeleteAllTodoList();
-  initTodolistButton();
-}
-
+export const teamId = location.hash.substr(1, 9);
 
 export const getTeamList = async () => {
-  
   const team = await API.getTeam(teamId);
   const members = team.members;
 
   clearTodoLists();
-  
+
   await members.forEach(async (data) => {
     assembleTodoList(data);
-  })
+  });
 
   const currenthash = location.hash.substr(11);
   changeByHash(currenthash);
-  
 };
 
 const assembleTodoList = async (data) => {
@@ -84,14 +60,11 @@ const assembleTodoList = async (data) => {
   data.todoList.forEach(async (item) => {
     li.appendChild(await assembleTodoItems(item));
   });
-
-  
-   
 };
 
 const assembleTodoItems = async (item) => {
   const li = itemAssemble(item.contents);
-  li.classList.add('selected');
+  li.classList.add("selected");
 
   const checkbox = li.querySelector(".toggle");
   const span = li.querySelector("span.chip");
@@ -116,17 +89,16 @@ const assembleTodoItems = async (item) => {
   return li;
 };
 
-const clearTodoLists = () =>{
-  const cards = $todoApps.querySelectorAll('.todoapp-container');
-  cards.forEach((item)=>{
+const clearTodoLists = () => {
+  const cards = $todoApps.querySelectorAll(".todoapp-container");
+  cards.forEach((item) => {
     item.remove();
-  })
-  
-}
+  });
+};
 
 function itemAssemble(content) {
   const li = document.createElement("li");
-  
+
   const listTemplate = `<div class="view">
                         <input class="toggle" type="checkbox"/>
                         <label class="label">
@@ -143,9 +115,6 @@ function itemAssemble(content) {
                       <input class="edit" value="${content}" />`;
 
   li.innerHTML = listTemplate;
-  
+
   return li;
 }
-
-
-initTodoLists();

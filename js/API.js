@@ -1,26 +1,27 @@
-const baseurl = 'https://js-todo-list-9ca3a.df.r.appspot.com/api/teams';
+const baseurl = "https://js-todo-list-9ca3a.df.r.appspot.com/api/teams";
+export const MINIMUN_INPUT_LENGTH = 2;
 
 const option = {
-  post : (data) =>({
+  post: (data) => ({
     method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-  }),
-  delete : () =>({
-    method: "DELETE",
-  }),
-  put : (data) =>({
-    method:"PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body : JSON.stringify(data),
-  })
+    body: JSON.stringify(data),
+  }),
+  delete: () => ({
+    method: "DELETE",
+  }),
+  put: (data) => ({
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }),
 };
 
-const request = async (url, option = {}) =>{
+const request = async (url, option = {}) => {
   try {
     const response = await fetch(`${baseurl}/${url}`, option);
     if (!response.ok) {
@@ -32,55 +33,65 @@ const request = async (url, option = {}) =>{
   }
 };
 
-
 export const API = {
   //GET
-  getTeams : () =>{
+  getTeams: () => {
     return request(``);
   },
-  getTeam : (teamId) =>{
+  getTeam: (teamId) => {
     return request(`${teamId}`);
   },
-  getMember : (teamId, memberId) =>{
+  getMember: (teamId, memberId) => {
     return request(`${teamId}/members/${memberId}`);
   },
 
   //POST
-  postTeam : (teamName) =>{
-    const dataset = {"name" : teamName };
-    return request('',option.post(dataset));
+  postTeam: (teamName) => {
+    const dataset = { name: teamName };
+    return request("", option.post(dataset));
   },
-  postMember : (teamId, memberName) =>{
-    const dataset = {"name" : memberName};
+  postMember: (teamId, memberName) => {
+    const dataset = { name: memberName };
     return request(`${teamId}/members/`, option.post(dataset));
   },
-  postItem : (teamId, memberId, item) =>{
-    const dataset = {"contents":item};
-    return request (`${teamId}/members/${memberId}/items`, option.post(dataset));
+  postItem: (teamId, memberId, item) => {
+    const dataset = { contents: item };
+    return request(`${teamId}/members/${memberId}/items`, option.post(dataset));
   },
 
   //PUT
-  putToggle : (teamId, memberId, itemId) =>{
-    return request (`${teamId}/members/${memberId}/items/${itemId}/toggle`, option.put());
+  putToggle: (teamId, memberId, itemId) => {
+    return request(
+      `${teamId}/members/${memberId}/items/${itemId}/toggle`,
+      option.put()
+    );
   },
-  putUpdate : (teamId, memberId, itemId, item) =>{
-    const dataset = {"contents":item};
-    return request (`${teamId}/members/${memberId}/items/${itemId}`, option.put(dataset))
+  putUpdate: (teamId, memberId, itemId, item) => {
+    const dataset = { contents: item };
+    return request(
+      `${teamId}/members/${memberId}/items/${itemId}`,
+      option.put(dataset)
+    );
   },
-  putPriority : (teamId, memberId, itemId, priority) =>{
-    const dataset = {"priority":priority};
-    return request (`${teamId}/members/${memberId}/items/${itemId}/priority`, option.put(dataset))
+  putPriority: (teamId, memberId, itemId, priority) => {
+    const dataset = { priority: priority };
+    return request(
+      `${teamId}/members/${memberId}/items/${itemId}/priority`,
+      option.put(dataset)
+    );
   },
-
 
   //DELETE
-  deleteTeam : (teamId) =>{
+  deleteTeam: (teamId) => {
     return request(`${teamId}`, option.delete());
   },
-  deleteItem : (teamId, memberId, itemId) =>{
-    return request (`${teamId}/members/${memberId}/items/${itemId}`, option.delete());
+  deleteItem: (teamId, memberId, itemId) => {
+    return request(
+      `${teamId}/members/${memberId}/items/${itemId}`,
+      option.delete()
+    );
   },
-  deleteAllItem : (teamId, memberId) =>{
-    return request (`${teamId}/members/${memberId}/items`, option.delete());
+  deleteAllItem: (teamId, memberId) => {
+    return request(`${teamId}/members/${memberId}/items`, option.delete());
   },
-}
+};

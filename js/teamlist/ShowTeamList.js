@@ -1,35 +1,26 @@
-import { API } from "../api.js"
+import { API } from "../api.js";
 
-import {initAddTeam} from "./addTeam.js"
-import {initDeleteTeam} from "./deleteTeam.js"
-
-export const $teamListContainer = document.querySelector('.team-list-container');
-
-
-const initTeamList = () =>{
-  initAddTeam();
-  initDeleteTeam();
-  getAllTeams();
-};
-
+export const $teamListContainer = document.querySelector(
+  ".team-list-container"
+);
 
 export const getAllTeams = async () => {
   let post = await API.getTeams();
   clearTeamList();
-  
-  post.forEach(data=>{
-    assembleTeamCard(data)
+
+  post.forEach((data) => {
+    assembleTeamCard(data);
   });
-}
+};
 
-const clearTeamList = () =>{
-  const cards = $teamListContainer.querySelectorAll('.team-card-container');
-  cards.forEach((item)=>{
+const clearTeamList = () => {
+  const cards = $teamListContainer.querySelectorAll(".team-card-container");
+  cards.forEach((item) => {
     item.remove();
-  })
-}
+  });
+};
 
-const assembleTeamCard = async (data) =>{
+const assembleTeamCard = async (data) => {
   const template = `<div class="team-card-container" id=${data._id}>
                       <a href="kanban.html#${data._id}#all" class="card">
                         <div class="card-title">
@@ -37,8 +28,5 @@ const assembleTeamCard = async (data) =>{
                         </div>
                       </a>
                     </div>`;
-  $teamListContainer.insertAdjacentHTML("afterbegin",template);
-}
-
-
-initTeamList();
+  $teamListContainer.insertAdjacentHTML("afterbegin", template);
+};
