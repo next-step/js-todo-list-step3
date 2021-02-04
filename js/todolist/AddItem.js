@@ -1,5 +1,5 @@
-import { listAssemble, MINIMUN_INPUT_LENGTH } from "./AddNewItem.js";
-import { API } from "./API.js";
+import { MINIMUN_INPUT_LENGTH } from "../index.js";
+import { API } from "../API.js";
 import { getTeamList, $todoApps, teamId } from "./ShowTodoList.js"
 
 

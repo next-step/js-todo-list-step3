@@ -21,7 +21,6 @@ const option = {
 };
 
 const request = async (url, option = {}) =>{
-  console.log(url, option);
   try {
     const response = await fetch(`${baseurl}/${url}`, option);
     if (!response.ok) {
@@ -64,10 +63,24 @@ export const API = {
   putToggle : (teamId, memberId, itemId) =>{
     return request (`${teamId}/members/${memberId}/items/${itemId}/toggle`, option.put());
   },
+  putUpdate : (teamId, memberId, itemId, item) =>{
+    const dataset = {"contents":item};
+    return request (`${teamId}/members/${memberId}/items/${itemId}`, option.put(dataset))
+  },
+  putPriority : (teamId, memberId, itemId, priority) =>{
+    const dataset = {"priority":priority};
+    return request (`${teamId}/members/${memberId}/items/${itemId}/priority`, option.put(dataset))
+  },
 
 
   //DELETE
   deleteTeam : (teamId) =>{
     return request(`${teamId}`, option.delete());
-  }
+  },
+  deleteItem : (teamId, memberId, itemId) =>{
+    return request (`${teamId}/members/${memberId}/items/${itemId}`, option.delete());
+  },
+  deleteAllItem : (teamId, memberId) =>{
+    return request (`${teamId}/members/${memberId}/items`, option.delete());
+  },
 }

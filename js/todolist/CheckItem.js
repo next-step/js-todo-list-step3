@@ -1,18 +1,18 @@
-import { API } from "./API.js";
+import { API } from "../API.js";
 import { getTeamList, $todoApps, teamId } from "./ShowTodoList.js"
 
 
 export const initCheckTodoList = () => {
-    $todoApps.addEventListener("click", checkItem);
+    $todoApps.addEventListener("click", workCheck);
 }
 
-function workCheck({ target }) {
+// function workCheck({ target }) {
     
-    if (/(active)/.exec(window.location.href)) chooseButton("active");
-    else if (/(completed)/.exec(window.location.href)) chooseButton("completed");
-  }
+//     if (/(active)/.exec(window.location.href)) chooseButton("active");
+//     else if (/(completed)/.exec(window.location.href)) chooseButton("completed");
+// }
 
-const checkItem = async ({target}) => {
+const workCheck = async ({target}) => {
     if(!target.classList.contains('toggle')) return;
 
     const li = target.closest("li");
