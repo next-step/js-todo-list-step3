@@ -1,4 +1,4 @@
-import { $todoApps, getTeamList } from "./ShowTodoList.js"
+import { $todoApps, getTeamList } from "./showTodoList.js"
 
 export function initTodolistButton(){
   $todoApps.addEventListener('click', controlFilterButton);

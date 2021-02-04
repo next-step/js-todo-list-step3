@@ -1,7 +1,7 @@
-import { API } from "../API.js"
+import { API } from "../api.js"
 
-import {initAddTeam} from "./AddTeam.js"
-import {initDeleteTeam} from "./DeleteTeam.js"
+import {initAddTeam} from "./addTeam.js"
+import {initDeleteTeam} from "./deleteTeam.js"
 
 export const $teamListContainer = document.querySelector('.team-list-container');
 

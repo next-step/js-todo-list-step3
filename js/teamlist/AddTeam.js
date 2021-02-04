@@ -1,6 +1,6 @@
-import { API } from "../API.js";
+import { API } from "../api.js";
 import { MINIMUN_INPUT_LENGTH } from "../index.js";
-import { getAllTeams } from "./ShowTeamList.js"
+import { getAllTeams } from "./showTeamList.js"
 
 const $addTeamButton = document.querySelector('#add-team-button');
 

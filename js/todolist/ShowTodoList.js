@@ -1,14 +1,14 @@
-import { API } from "../API.js";
+import { API } from "../api.js";
 
-import {initAddTodoList} from "./AddItem.js"
-import {initCheckTodoList} from "./CheckItem.js"
-import {initUpdateTodoList} from "./UpdateItem.js"
-import {initDeleteTodoList} from "./DeleteItem.js"
-import {initPrioritizeTodoList} from "./PrioritizeItem.js"
-import {initDeleteAllTodoList} from "./DeleteAllItems.js"
-import {initAddMember} from "./AddMember.js"
+import {initAddTodoList} from "./addItem.js"
+import {initCheckTodoList} from "./checkItem.js"
+import {initUpdateTodoList} from "./updateItem.js"
+import {initDeleteTodoList} from "./deleteItem.js"
+import {initPrioritizeTodoList} from "./prioritizeItem.js"
+import {initDeleteAllTodoList} from "./deleteAllItems.js"
+import {initAddMember} from "./addMember.js"
 
-import { initTodolistButton, changeByHash } from "./ControlTodoButton.js";
+import { initTodolistButton, changeByHash } from "./controlTodoButton.js";
 
 export const $todoApps = document.querySelector(".todoapp-list-container");
 export const teamId = location.hash.substr(1,9);

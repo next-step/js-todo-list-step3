@@ -1,5 +1,5 @@
-import { API } from "../API.js";
-import { getTeamList, $todoApps, teamId } from "./ShowTodoList.js"
+import { API } from "../api.js";
+import { getTeamList, $todoApps, teamId } from "./showTodoList.js"
 import { MINIMUN_INPUT_LENGTH } from "../index.js";
 
 
