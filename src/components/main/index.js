@@ -1,5 +1,6 @@
 import { createElement } from "../../utils/createElement.js";
-import $router from "../../router/index.js";
+
+import TeamCard from "./TeamCard.js";
 
 const template = `
   <div>      
@@ -7,11 +8,6 @@ const template = `
       <strong>Team</strong>'s Todo Lists
     </h1>
     <div class="team-list-container">
-      <div class="team-card-container">
-        <div class="card">
-          <div class="card-title">Black Coffee team</div>
-        </div>
-      </div>
       <div class="add-team-button-container">
         <button id="add-team-button" class="ripple">
           <span class="material-icons">add</span>
@@ -23,14 +19,24 @@ const template = `
 
 export default function Main() {
   const dom = createElement(template);
-  const card = dom.querySelector(".card");
+  const teamList = dom.querySelector(".team-list-container");
+  const createBtn = dom.querySelector(".add-team-button-container");
 
   const init = () => {
-    card.addEventListener("click", onLinkToTeam);
+    render();
   };
 
-  const onLinkToTeam = () => {
-    $router.route("/kanban");
+  const render = () => {
+    const teams = [{ _id: 0, name: "Black Coffee" }];
+
+    teamList.innerHTML = "";
+    teams.forEach(renderEachTeam);
+    teamList.appendChild(createBtn);
+  };
+
+  const renderEachTeam = (team) => {
+    const teamCard = new TeamCard({ team });
+    teamList.appendChild(teamCard);
   };
 
   init();

@@ -20,22 +20,23 @@ const $router = (() => {
     window.addEventListener("popstate", popState);
   };
 
-  const route = (pathname = "/") => {
-    history.pushState({}, "", pathname);
-    renderView(pathname);
+  const route = (pathname = "/", state) => {
+    history.pushState(state, state?.title, pathname);
+    renderView(pathname, state);
   };
 
-  const popState = () => {
-    renderView(location.pathname);
+  const popState = ({ state }) => {
+    renderView(location.pathname, state);
   };
 
-  const renderView = (pathname) => {
+  const renderView = (pathname, state) => {
+    console.log(state);
     const target = Object.values(ROUTER_INFO).find(
       ({ path }) => path === pathname
     );
 
     if (typeof target.component === "function") {
-      target.component = new target.component();
+      target.component = new target.component(state);
     }
 
     view.innerHTML = "";
