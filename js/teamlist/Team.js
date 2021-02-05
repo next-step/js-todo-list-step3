@@ -1,9 +1,9 @@
 import { initAddTeam } from "./addTeam.js";
 import { initDeleteTeam } from "./deleteTeam.js";
-import { getAllTeams } from "./showTeamList.js";
+import { getAllTeamsList } from "./showTeamList.js";
 
 const initTeam = () => {
-  getAllTeams();
+  getAllTeamsList();
   initAddTeam();
   initDeleteTeam();
 };

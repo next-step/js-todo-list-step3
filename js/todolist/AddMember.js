@@ -1,5 +1,5 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getTeamList, teamId } from "./showTodoList.js";
+import { getAllTodoList, teamId } from "./showTodoList.js";
 
 const $addUserButton = document.querySelector("#add-user-button");
 
@@ -15,5 +15,5 @@ const addNewMember = async () => {
     return;
   }
   await API.postMember(teamId, result);
-  getTeamList();
+  getAllTodoList();
 };

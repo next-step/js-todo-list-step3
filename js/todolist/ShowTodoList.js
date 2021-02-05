@@ -4,7 +4,7 @@ import { changeByHash } from "./controlTodoButton.js";
 export const $todoApps = document.querySelector(".todoapp-list-container");
 export const teamId = location.hash.substr(1, 9);
 
-export const getTeamList = async () => {
+export const getAllTodoList = async () => {
   const team = await API.getTeam(teamId);
   const members = team.members;
 
@@ -19,7 +19,6 @@ export const getTeamList = async () => {
 };
 
 const assembleTodoList = async (data) => {
-  const $todoApps = document.querySelector(".todoapp-list-container");
   const template = `
   <li class="todoapp-container" id=${data._id}>
           <h2>

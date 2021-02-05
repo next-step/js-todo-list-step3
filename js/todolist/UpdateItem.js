@@ -1,5 +1,5 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getTeamList, $todoApps, teamId } from "./showTodoList.js";
+import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
 export const initUpdateTodoList = () => {
   $todoApps.addEventListener("dblclick", workContentCopy);
@@ -37,6 +37,6 @@ const workUpdate = async ({ target, key }) => {
     label.innerText = target.value;
     li.classList.remove("editing");
 
-    getTeamList();
+    getAllTodoList();
   }
 };

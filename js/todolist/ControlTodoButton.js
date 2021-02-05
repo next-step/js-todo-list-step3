@@ -1,4 +1,4 @@
-import { $todoApps, getTeamList } from "./showTodoList.js";
+import { $todoApps, getAllTodoList } from "./showTodoList.js";
 
 export function initTodolistButton() {
   $todoApps.addEventListener("click", controlFilterButton);
@@ -12,7 +12,7 @@ const controlFilterButton = async ({ target }) => {
   if (target.nodeName !== "A") return;
   const currentButton = target.getAttribute("href").substr(11);
 
-  if (currentButton !== "priority") await getTeamList();
+  if (currentButton !== "priority") await getAllTodoList();
   else chooseButton("priority");
 
   changeBox({ target });

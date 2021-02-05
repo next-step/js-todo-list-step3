@@ -1,5 +1,5 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getTeamList, $todoApps, teamId } from "./showTodoList.js";
+import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
 export const initAddTodoList = () => {
   $todoApps.addEventListener("keyup", addNewItem);
@@ -17,5 +17,5 @@ const addNewItem = async ({ target, key }) => {
   const memberId = target.closest("li").getAttribute("id");
 
   await API.postItem(teamId, memberId, str);
-  getTeamList();
+  getAllTodoList();
 };

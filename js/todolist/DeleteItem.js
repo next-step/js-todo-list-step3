@@ -1,5 +1,5 @@
 import { API } from "../api.js";
-import { getTeamList, $todoApps, teamId } from "./showTodoList.js";
+import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
 export const initDeleteTodoList = () => {
   $todoApps.addEventListener("click", workDelete);
@@ -12,6 +12,6 @@ const workDelete = async ({ target, key }) => {
     const itemId = target.closest("li").getAttribute("id");
 
     await API.deleteItem(teamId, memberId, itemId);
-    getTeamList();
+    getAllTodoList();
   }
 };

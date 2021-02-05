@@ -1,12 +1,12 @@
 import { API } from "../api.js";
-import { getTeamList, $todoApps, teamId } from "./showTodoList.js";
+import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
 export const initPrioritizeTodoList = () => {
   $todoApps.addEventListener("change", labelApply);
   $todoApps.addEventListener("click", labelChange);
 };
 
-function labelApply({ target }) {
+const labelApply = ({ target }) => {
   if (target.nodeName !== "SELECT") return;
 
   const selecter = target.closest("li").querySelector("select");
@@ -18,7 +18,7 @@ function labelApply({ target }) {
   workPrioritize({ target }, priority);
 }
 
-function labelChange({ target }) {
+const labelChange = ({ target }) => {
   if (
     !target.classList.contains("primary") &&
     !target.classList.contains("secondary")
@@ -36,5 +36,5 @@ const workPrioritize = async ({ target }, priority) => {
   const itemId = target.closest("li").getAttribute("id");
 
   await API.putPriority(teamId, memberId, itemId, priority);
-  getTeamList();
+  getAllTodoList();
 };

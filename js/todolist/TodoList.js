@@ -5,11 +5,11 @@ import { initDeleteTodoList } from "./deleteItem.js";
 import { initPrioritizeTodoList } from "./prioritizeItem.js";
 import { initDeleteAllTodoList } from "./deleteAllItems.js";
 import { initAddMember } from "./addMember.js";
-import { getTeamList } from "./showTodoList.js";
+import { getAllTodoList } from "./showTodoList.js";
 import { initTodolistButton } from "./controlTodoButton.js";
 
 const initTodoList = () => {
-  getTeamList();
+  getAllTodoList();
   initAddMember();
   initAddTodoList();
   initCheckTodoList();
