@@ -6,10 +6,7 @@ export default function App() {
 
   const init = () => {
     $router.setRouterView(dom);
-    $router.route();
-    window.onpopstate = () => {
-      $router.route();
-    };
+    $router.go("/");
   };
 
   init();

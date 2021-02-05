@@ -30,7 +30,7 @@ export default function Main() {
   };
 
   const onLinkToTeam = () => {
-    $router.route("/kanban");
+    $router.go("/kanban");
   };
 
   init();

@@ -17,10 +17,19 @@ const $router = (() => {
 
   const setRouterView = (target) => {
     view = target;
+    window.addEventListener("popstate", popState);
   };
 
-  const route = (pathname = "/") => {
-    window.history.pushState({}, "", pathname);
+  const go = (pathname = "/") => {
+    history.pushState({}, "", pathname);
+    renderView(pathname);
+  };
+
+  const popState = () => {
+    renderView(location.pathname);
+  };
+
+  const renderView = (pathname) => {
     const target = Object.values(ROUTER_INFO).find(
       ({ path }) => path === pathname
     );
@@ -35,7 +44,9 @@ const $router = (() => {
 
   return {
     setRouterView,
-    route,
+    go,
+    back: popState,
+    forward: popState,
   };
 })();
 
