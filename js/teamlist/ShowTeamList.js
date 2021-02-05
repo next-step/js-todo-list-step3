@@ -4,7 +4,7 @@ export const $teamListContainer = document.querySelector(
   ".team-list-container"
 );
 
-export const getAllTeams = async () => {
+export const getAllTeamsList = async () => {
   let post = await API.getTeams();
   clearTeamList();
 
