@@ -2,6 +2,9 @@ import { createElement } from "../../utils/createElement.js";
 
 import TeamCard from "./TeamCard.js";
 
+const teams = [{ _id: 0, name: "Black Coffee" }];
+let nextId = 1;
+
 const template = `
   <div>      
     <h1>
@@ -23,12 +26,12 @@ export default function Main() {
   const createBtn = dom.querySelector(".add-team-button-container");
 
   const init = () => {
+    createBtn.addEventListener("click", createTeam);
+
     render();
   };
 
   const render = () => {
-    const teams = [{ _id: 0, name: "Black Coffee" }];
-
     teamList.innerHTML = "";
     teams.forEach(renderEachTeam);
     teamList.appendChild(createBtn);
@@ -37,6 +40,21 @@ export default function Main() {
   const renderEachTeam = (team) => {
     const teamCard = new TeamCard({ team });
     teamList.appendChild(teamCard);
+  };
+
+  const createTeam = () => {
+    const name = prompt("팀 이름을 입력해주세요").trim();
+    if (name.length <= 2) {
+      alert("팀의 이름은 최소 2글자 이상이어야 합니다.");
+      return;
+    }
+
+    const newTeam = {
+      _id: nextId++,
+      name,
+    };
+    teams.push(newTeam);
+    render();
   };
 
   init();
