@@ -3,8 +3,8 @@ import $router from "../../router/index.js";
 
 const template = `
   <div>      
-    <h1 id="user-title" data-username="eastjun">
-      <span><strong>Team</strong>'s Todo Lists</span>
+    <h1>
+      <strong>Team</strong>'s Todo Lists
     </h1>
     <div class="team-list-container">
       <div class="team-card-container">
