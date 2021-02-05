@@ -1,9 +1,7 @@
 import { createElement } from "../../utils/createElement.js";
+import $api from "../../api/index.js";
 
 import TeamCard from "./TeamCard.js";
-
-const teams = [{ _id: 0, name: "Black Coffee" }];
-let nextId = 1;
 
 const template = `
   <div>      
@@ -31,7 +29,9 @@ export default function Main() {
     render();
   };
 
-  const render = () => {
+  const render = async () => {
+    const teams = await $api.team.getAll();
+
     teamList.innerHTML = "";
     teams.forEach(renderEachTeam);
     teamList.appendChild(createBtn);
@@ -42,19 +42,15 @@ export default function Main() {
     teamList.appendChild(teamCard);
   };
 
-  const createTeam = () => {
+  const createTeam = async () => {
     const name = prompt("팀 이름을 입력해주세요").trim();
     if (name.length <= 2) {
       alert("팀의 이름은 최소 2글자 이상이어야 합니다.");
       return;
     }
 
-    const newTeam = {
-      _id: nextId++,
-      name,
-    };
-    teams.push(newTeam);
-    render();
+    await $api.team.create(name);
+    await render();
   };
 
   init();

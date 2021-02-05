@@ -5,7 +5,7 @@
 ## 🎯 index.html 팀 페이지 요구사항
 
 - [x] 1. 팀 추가하기
-- [ ] 2. 팀 리스트 불러와서 화면에 보여주기
+- [x] 2. 팀 리스트 불러와서 화면에 보여주기
 
 ## 🎯 kanban.html 팀의 투두리스트 페이지 요구사항
 
@@ -30,7 +30,7 @@
 
 | method | uri        |
 | ------ | ---------- |
-| POST   | /api/teams |
+| POST   | /request/teams |
 
 ```javascript
 {
@@ -49,7 +49,7 @@
 
 | method | uri                  |
 | ------ | -------------------- |
-| GET    | /api/teams/${teamId} |
+| GET    | /request/teams/${teamId} |
 
 ```javascript
 {
@@ -65,7 +65,7 @@
 
 | method | uri        |
 | ------ | ---------- |
-| GET    | /api/teams |
+| GET    | /request/teams |
 
 ```javascript
 {
@@ -84,7 +84,7 @@
 
 | method | uri                  |
 | ------ | -------------------- |
-| DELETE | /api/teams/${teamId} |
+| DELETE | /request/teams/${teamId} |
 
 ```javascript
 {
@@ -97,7 +97,7 @@
 
 | method | uri                          |
 | ------ | ---------------------------- |
-| POST   | /api/teams/${teamId}/members |
+| POST   | /request/teams/${teamId}/members |
 
 ```javascript
 {
@@ -116,7 +116,7 @@
 
 | method | uri                                      |
 | ------ | ---------------------------------------- |
-| GET    | /api/teams/${teamId}/members/${memberId} |
+| GET    | /request/teams/${teamId}/members/${memberId} |
 
 ```javascript
 {
@@ -134,7 +134,7 @@
 
 | method | uri                                            |
 | ------ | ---------------------------------------------- |
-| POST   | /api/teams/${teamId}/members/${memberId}/items |
+| POST   | /request/teams/${teamId}/members/${memberId}/items |
 
 ```javascript
 {
@@ -157,7 +157,7 @@
 
 | method | uri                                                      |
 | ------ | -------------------------------------------------------- |
-| DELETE | /api/teams/${teamId}/members/${memberId}/items/${itemId} |
+| DELETE | /request/teams/${teamId}/members/${memberId}/items/${itemId} |
 
 ```javascript
 {
@@ -170,7 +170,7 @@
 
 | method | uri                                                             |
 | ------ | --------------------------------------------------------------- |
-| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle |
+| PUT    | /request/teams/${teamId}/members/${memberId}/items/${itemId}/toggle |
 
 ```javascript
 {
@@ -187,7 +187,7 @@
 
 | method | uri                                                      |
 | ------ | -------------------------------------------------------- |
-| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId} |
+| PUT    | /request/teams/${teamId}/members/${memberId}/items/${itemId} |
 
 ```javascript
 {
@@ -207,7 +207,7 @@
 
 | method | uri                                                               |
 | ------ | ----------------------------------------------------------------- |
-| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId}/priority |
+| PUT    | /request/teams/${teamId}/members/${memberId}/items/${itemId}/priority |
 
 ```javascript
 {
@@ -227,7 +227,7 @@
 
 | method | uri                                             |
 | ------ | ----------------------------------------------- |
-| DELETE | /api/teams/${teamId}/members/${memberId}/items/ |
+| DELETE | /request/teams/${teamId}/members/${memberId}/items/ |
 
 ```javascript
 {
