@@ -30,7 +30,6 @@ const $router = (() => {
   };
 
   const renderView = (pathname, state) => {
-    console.log(state);
     const target = Object.values(ROUTER_INFO).find(
       ({ path }) => path === pathname
     );
