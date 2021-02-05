@@ -33,6 +33,31 @@ const $todoAppContainer = (teamName, count)=>`
    </li>
 `
 
+const $indexTeam = (teamName,teamId)=> `
+        <div class="team-card-container">
+          <a href="./kanban.html?${teamId}" class="card">
+            <div class="card-title">
+             ${teamName}
+            </div>
+          </a>
+        </div>`
+
+const $indexTeamAdd = `
+        <div class="add-team-button-container">
+          <button id="add-team-button" class="ripple">
+            <span class="material-icons">add</span>
+          </button>
+        </div>`
+
+const kanbanHeader = (teamName)=>
+  `<div id="app">
+      <h1 id="user-title" data-username=${teamName}>
+        <span><strong>${teamName}</strong>'s Todo List</span>
+      </h1>
+      <ul class="todoapp-list-container flex-column-container">
+      </ul>
+    </div>`
+
 const $todoListItem = (item)=>`
         <li class="todo-list-item">
                   <div class="view">
@@ -60,22 +85,9 @@ const $todoListMember = `
           </button>
   </li>
 `
-const $indexTeam = (teamName)=> `
-        <div class="team-card-container">
-          <a href="#kanban.html" class="card">
-            <div class="card-title">
-             ${teamName}
-            </div>
-          </a>
-        </div>`
-
-const $indexTeamAdd = `
-        <div class="add-team-button-container">
-          <button id="add-team-button" class="ripple">
-            <span class="material-icons">add</span>
-          </button>
-        </div>`
 
 const $baseUrl = 'https://js-todo-list-9ca3a.df.r.appspot.com/'
 
-export {$todoAppContainer, $todoListItem, $todoListMember, $indexTeam,$indexTeamAdd, $baseUrl}
+
+
+export {$todoAppContainer, $todoListItem, $todoListMember, $indexTeam,$indexTeamAdd, $baseUrl , kanbanHeader}

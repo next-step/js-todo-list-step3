@@ -1,6 +1,5 @@
 import {$todoAppContainer, $todoListItem, $todoListMember} from "../content/shape.js";
 
-
 const $domTodoAppListContainer = document.querySelector('.todoapp-list-container');
 
 function addMemberEvent() {
@@ -21,13 +20,13 @@ function addMemberEvent() {
   })
 }
 
-function makeMemberList(teamName, count) {
-  $domTodoAppListContainer.innerHTML += $todoAppContainer(teamName,count);
+function makeMemberList(teamName, count,value) {
+  value.innerHTML += $todoAppContainer(teamName,count);
 }
 
-function addItem(item) {
-  const $domTodoListItem = document.querySelector('.todoapp-container > .todoapp > .main > .todo-list');
-  $domTodoListItem.innerHTML += $todoListItem(item);
+function addItem(item,index) {
+  const $domTodoListItem = document.querySelectorAll('.todoapp-container > .todoapp > .main > .todo-list');
+  $domTodoListItem[index].innerHTML += $todoListItem(item);
 }
 
 
