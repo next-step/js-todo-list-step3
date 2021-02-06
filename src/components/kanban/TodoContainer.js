@@ -40,7 +40,7 @@ export default function TodoContainer({ member }) {
     memberName.innerText = member.name;
     input.appendChild(new TodoInput(member));
     todoList.appendChild(new TodoList(member));
-    filter.appendChild(new TodoFilter());
+    filter.appendChild(new TodoFilter(member));
   };
 
   init();

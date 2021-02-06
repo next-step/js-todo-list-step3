@@ -1,8 +1,11 @@
 import $api from "../../api/index.js";
 import teamState from "./teamState.js";
 
+import { FILTERS } from "../../utils/constants.js";
+
 const todoState = (() => {
-  const subscriber = [];
+  const state = {};
+  const subscriber = {};
 
   const getTodos = async (memberId) => {
     return await $api.team.getTodos(teamState.getCurrentTeamId(), memberId);
@@ -14,7 +17,7 @@ const todoState = (() => {
       memberId,
       contents
     );
-    publish();
+    publish(memberId);
   };
 
   const deleteTodo = async (memberId, todoId) => {
@@ -24,7 +27,7 @@ const todoState = (() => {
 
   const toggleTodo = async (memberId, todoId) => {
     await $api.team.toggleTodo(teamState.getCurrentTeamId(), memberId, todoId);
-    publish();
+    publish(memberId);
   };
 
   const editTodo = async (memberId, todoId, contents) => {
@@ -34,15 +37,36 @@ const todoState = (() => {
       todoId,
       contents
     );
-    publish();
+    publish(memberId);
   };
 
-  const subscribe = (method) => {
-    subscriber.push(method);
+  const setFilter = (memberId, filter) => {
+    if (!state[memberId]) {
+      state[memberId] = {};
+    }
+    state[memberId].filter = filter;
+    publish(memberId);
   };
 
-  const publish = () => {
-    subscriber.forEach(async (method) => await method());
+  const getFilteredTodos = async (memberId) => {
+    const todos = await getTodos(memberId);
+    if (state[memberId]?.filter === FILTERS.ACTIVE) {
+      return todos.filter((todo) => !todo.isCompleted);
+    } else if (state[memberId]?.filter === FILTERS.COMPLETED) {
+      return todos.filter((todo) => todo.isCompleted);
+    }
+    return todos;
+  };
+
+  const subscribe = (memberId, method) => {
+    if (!subscriber[memberId]) {
+      subscriber[memberId] = [];
+    }
+    subscriber[memberId].push(method);
+  };
+
+  const publish = (memberId) => {
+    subscriber[memberId]?.forEach(async (method) => await method());
   };
 
   return {
@@ -51,6 +75,8 @@ const todoState = (() => {
     toggle: toggleTodo,
     edit: editTodo,
     getAll: getTodos,
+    setFilter,
+    getFiltered: getFilteredTodos,
     subscribe,
   };
 })();

@@ -1,5 +1,8 @@
 import { createElement } from "../../utils/createElement.js";
 
+import TodoFilterItem from "./TodoFilterItem.js";
+import { FILTERS } from "../../utils/constants.js";
+
 const template = `
   <ul class="filters">
     <li class="all">전체보기</li>
@@ -9,8 +12,24 @@ const template = `
   </ul>
 `;
 
-export default function TodoFilter() {
+export default function TodoFilter({ _id }) {
   const dom = createElement(template);
+
+  const init = () => {
+    render();
+  };
+
+  const render = () => {
+    dom.innerHTML = "";
+    Object.values(FILTERS).forEach(renderEachFilter);
+  };
+
+  const renderEachFilter = (filter) => {
+    const todoFilterItem = new TodoFilterItem({ memberId: _id, filter });
+    dom.appendChild(todoFilterItem);
+  };
+
+  init();
 
   return dom;
 }

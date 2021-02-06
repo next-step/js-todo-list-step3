@@ -7,12 +7,12 @@ export default function TodoList({ _id }) {
   const dom = createElement("<div></div>");
 
   const init = async () => {
-    $store.todo.subscribe(render);
+    $store.todo.subscribe(_id, render);
     await render();
   };
 
   const render = async () => {
-    const todos = await $store.todo.getAll(_id);
+    const todos = await $store.todo.getFiltered(_id);
 
     dom.innerHTML = "";
     todos?.forEach(renderEachTodo);
