@@ -2,10 +2,10 @@ import { createElement } from "../../utils/createElement.js";
 
 import TodoList from "./TodoList.js";
 
-const template = ({ name }) => `
+const template = `
   <li class="todoapp-container">
     <h2>
-      <span><strong>${name}</strong>'s Todo List</span>
+      <span><strong class="member-name">Member</strong>'s Todo List</span>
     </h2>
     <div class="todoapp">
       <section class="input-container">
@@ -42,10 +42,16 @@ const template = ({ name }) => `
 `;
 
 export default function TodoListContainer({ member }) {
-  const dom = createElement(template(member));
+  const dom = createElement(template);
+  const memberName = dom.querySelector(".member-name");
   const todoList = dom.querySelector(".todo-list");
 
   const init = () => {
+    render();
+  };
+
+  const render = () => {
+    memberName.innerText = member.name;
     todoList.appendChild(new TodoList({ todos: member.todoList }));
   };
 
