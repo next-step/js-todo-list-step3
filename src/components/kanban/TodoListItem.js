@@ -59,14 +59,9 @@ export default function TodoListItem({ memberId, todo }) {
     }
   };
 
-  const renderPriority = (priority) => {
-    const { className, text } = Object.values(PRIORITY).find(
-      ({ value }) => value === priority
-    );
-    return `
-      <span class="chip ${className}">${text}</span>
-    `;
-  };
+  const renderPriority = ({ className, text }) => `
+    <span class="chip ${className}">${text}</span>
+  `;
 
   const deleteTodo = async () => {
     dom.remove();

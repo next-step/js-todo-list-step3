@@ -1,14 +1,28 @@
 import $api from "../../api/index.js";
 import teamState from "./teamState.js";
 
-import { FILTERS } from "../../utils/constants.js";
+import { FILTERS, PRIORITY } from "../../utils/constants.js";
 
 const todoState = (() => {
   const state = {};
   const subscriber = {};
 
   const getTodos = async (memberId) => {
-    return await $api.team.getTodos(teamState.getCurrentTeamId(), memberId);
+    const response = await $api.team.getTodos(
+      teamState.getCurrentTeamId(),
+      memberId
+    );
+    return response?.map(mapToTodo);
+  };
+
+  const mapToTodo = (todo) => {
+    const priority = Object.values(PRIORITY).find(
+      ({ value }) => value === todo.priority
+    );
+    return {
+      ...todo,
+      priority,
+    };
   };
 
   const createTodo = async (memberId, contents) => {
