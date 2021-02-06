@@ -51,6 +51,13 @@ const team = (() => {
     });
   };
 
+  const setTodoPriority = (teamId, memberId, todoId, priority) => {
+    return request.put(
+      `/teams/${teamId}/members/${memberId}/items/${todoId}/priority`,
+      { priority }
+    );
+  };
+
   return {
     getAll,
     getById,
@@ -61,6 +68,7 @@ const team = (() => {
     deleteAllTodo,
     toggleTodo,
     editTodo,
+    setTodoPriority,
     getTodos,
   };
 })();

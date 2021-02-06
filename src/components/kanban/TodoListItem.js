@@ -1,6 +1,8 @@
 import { createElement } from "../../utils/createElement.js";
 import $store from "../../store/index.js";
 
+import { PRIORITY } from "../../utils/constants.js";
+
 const template = `
   <li class="todo-list-item">
     <div class="view">
@@ -9,7 +11,14 @@ const template = `
         type="checkbox" 
       />
       <label class="label">
-        contents
+        <div class="chip-container">
+          <select class="chip select">
+            <option value="NONE" selected>순위</option>
+            <option value="FIRST">1순위</option>
+            <option value="SECOND">2순위</option>
+          </select>
+        </div>
+        <span>contents</span>
       </label>
       <button class="destroy"></button>
     </div>
@@ -19,10 +28,12 @@ const template = `
 
 export default function TodoListItem({ memberId, todo }) {
   const dom = createElement(template);
-  const label = dom.querySelector(".label");
+  const label = dom.querySelector(".label span");
   const toggleBtn = dom.querySelector(".toggle");
   const deleteBtn = dom.querySelector(".destroy");
   const editInput = dom.querySelector(".edit");
+  const chip = dom.querySelector(".chip-container");
+  const prioritySelector = dom.querySelector(".select");
 
   const init = () => {
     deleteBtn.addEventListener("click", deleteTodo);
@@ -30,11 +41,12 @@ export default function TodoListItem({ memberId, todo }) {
     label.addEventListener("dblclick", toggleEditingTodo);
     editInput.addEventListener("keypress", editTodo);
     editInput.addEventListener("focusout", cancelEditingTodo);
+    prioritySelector.addEventListener("change", selectPriority);
     render();
   };
 
   const render = () => {
-    const { contents, isCompleted } = todo;
+    const { contents, isCompleted, priority } = todo;
 
     label.innerText = contents;
     editInput.value = contents;
@@ -42,6 +54,18 @@ export default function TodoListItem({ memberId, todo }) {
       dom.classList.add("completed");
       toggleBtn.checked = isCompleted;
     }
+    if (priority !== PRIORITY.NONE.value) {
+      chip.innerHTML = renderPriority(priority);
+    }
+  };
+
+  const renderPriority = (priority) => {
+    const { className, text } = Object.values(PRIORITY).find(
+      ({ value }) => value === priority
+    );
+    return `
+      <span class="chip ${className}">${text}</span>
+    `;
   };
 
   const deleteTodo = () => {
@@ -81,6 +105,14 @@ export default function TodoListItem({ memberId, todo }) {
   const cancelEditingTodo = () => {
     editInput.value = todo.contents;
     dom.classList.remove("editing");
+  };
+
+  const selectPriority = () => {
+    const selected = Object.values(PRIORITY).find(
+      ({ value }) => value === prioritySelector.value
+    );
+
+    $store.todo.setPriority(memberId, todo._id, selected.value);
   };
 
   init();

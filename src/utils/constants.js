@@ -17,4 +17,25 @@ const FILTERS = {
   },
 };
 
-export { FILTERS };
+const PRIORITY = {
+  NONE: {
+    seq: 0,
+    value: "NONE",
+    className: "",
+    text: "",
+  },
+  FIRST: {
+    seq: 1,
+    value: "FIRST",
+    className: "primary",
+    text: "1순위",
+  },
+  SECOND: {
+    seq: 2,
+    value: "SECOND",
+    className: "secondary",
+    text: "2순위",
+  },
+};
+
+export { FILTERS, PRIORITY };

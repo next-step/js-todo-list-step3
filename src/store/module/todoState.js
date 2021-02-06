@@ -45,6 +45,16 @@ const todoState = (() => {
     publish(memberId);
   };
 
+  const setTodoPriority = async (memberId, todoId, priority) => {
+    await $api.team.setTodoPriority(
+      teamState.getCurrentTeamId(),
+      memberId,
+      todoId,
+      priority
+    );
+    publish(memberId);
+  };
+
   const setFilter = (memberId, filter) => {
     if (!state[memberId]) {
       state[memberId] = {};
@@ -85,6 +95,7 @@ const todoState = (() => {
     toggle: toggleTodo,
     edit: editTodo,
     getAll: getTodos,
+    setPriority: setTodoPriority,
     setFilter,
     getFilter,
     getFiltered: getFilteredTodos,

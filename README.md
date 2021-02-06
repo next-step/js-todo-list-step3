@@ -15,7 +15,7 @@
 - [x] 4. 팀원별 todoItem 삭제하기
 - [x] 5. 팀원별 todoItem complete하기
 - [x] 6. 팀원별 todoItem contents 내용 수정하기
-- [ ] 7. todoItem의 우선 순위 정하기 (defulat값:0, 1순위:1, 2순위: 2)
+- [x] 7. todoItem의 우선 순위 정하기 (defulat값:0, 1순위:1, 2순위: 2)
 - [x] 8. todoList의 우측 하단의 `전체 삭제`버튼을 누르면 해당 유저의 아이템을 전체 삭제하기
 
 ## 🎯🎯 kanban.html 심화 요구사항
