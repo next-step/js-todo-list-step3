@@ -44,7 +44,7 @@ export default function Main() {
 
   const createTeam = async () => {
     const name = prompt("팀 이름을 입력해주세요").trim();
-    if (name.length <= 2) {
+    if (name.length < 2) {
       alert("팀의 이름은 최소 2글자 이상이어야 합니다.");
       return;
     }
