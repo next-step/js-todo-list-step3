@@ -1,5 +1,6 @@
 import { createElement } from "../../utils/createElement.js";
 
+import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
 
 const template = `
@@ -9,11 +10,6 @@ const template = `
     </h2>
     <div class="todoapp">
       <section class="input-container">
-        <input
-          class="new-todo"
-          placeholder="할 일을 입력해주세요."
-          autofocus
-        />
       </section>
       <section class="main">
         <ul class="todo-list">
@@ -44,6 +40,7 @@ const template = `
 export default function TodoContainer({ member }) {
   const dom = createElement(template);
   const memberName = dom.querySelector(".member-name");
+  const input = dom.querySelector(".input-container");
   const todoList = dom.querySelector(".todo-list");
 
   const init = () => {
@@ -52,7 +49,8 @@ export default function TodoContainer({ member }) {
 
   const render = () => {
     memberName.innerText = member.name;
-    todoList.appendChild(new TodoList({ todos: member.todoList }));
+    input.appendChild(new TodoInput(member));
+    todoList.appendChild(new TodoList(member));
   };
 
   init();

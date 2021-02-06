@@ -1,17 +1,21 @@
 import { createElement } from "../../utils/createElement.js";
+import $store from "../../store/index.js";
 
 import TodoListItem from "./TodoListItem.js";
 
-export default function TodoList({ todos }) {
+export default function TodoList({ _id }) {
   const dom = createElement("<div></div>");
 
   const init = async () => {
+    $store.todo.subscribe(render);
     await render();
   };
 
   const render = async () => {
+    const todos = await $store.todo.getAll(_id);
+
     dom.innerHTML = "";
-    todos.forEach(renderEachTodo);
+    todos?.forEach(renderEachTodo);
   };
 
   const renderEachTodo = (todo) => {

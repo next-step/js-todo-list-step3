@@ -25,7 +25,7 @@ export default function Kanban({ id }) {
   const memberCreateBtn = dom.querySelector(".add-user-button-container");
 
   const init = async () => {
-    $store.team.setTeamId(id);
+    $store.team.setCurrentTeamId(id);
     memberCreateBtn.addEventListener("click", createMember);
 
     await render();

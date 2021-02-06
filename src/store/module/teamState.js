@@ -3,10 +3,6 @@ import $api from "../../api/index.js";
 const teamState = (() => {
   const state = {};
 
-  const setTeamId = (id) => {
-    state.teamId = id;
-  };
-
   const getCurrentTeam = async () => {
     return await $api.team.getById(state.teamId);
   };
@@ -15,10 +11,19 @@ const teamState = (() => {
     return await $api.team.createMember(state.teamId, name);
   };
 
+  const setCurrentTeamId = (id) => {
+    state.teamId = id;
+  };
+
+  const getCurrentTeamId = () => {
+    return state.teamId;
+  };
+
   return {
-    setTeamId,
     getCurrentTeam,
     createMember,
+    setCurrentTeamId,
+    getCurrentTeamId,
   };
 })();
 

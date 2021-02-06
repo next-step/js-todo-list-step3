@@ -23,12 +23,19 @@ const team = (() => {
     });
   };
 
+  const getTodos = (teamId, memberId) => {
+    return request
+      .get(`/teams/${teamId}/members/${memberId}`)
+      .then((member) => member?.todoList);
+  };
+
   return {
     getAll,
     getById,
     create,
     createMember,
     createTodo,
+    getTodos,
   };
 })();
 
