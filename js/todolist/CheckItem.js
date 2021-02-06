@@ -1,10 +1,6 @@
 import { API } from "../api.js";
 import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
-export const initCheckTodoList = () => {
-  $todoApps.addEventListener("click", workCheck);
-};
-
 const workCheck = async ({ target }) => {
   if (!target.classList.contains("toggle")) return;
 
@@ -19,4 +15,8 @@ const workCheck = async ({ target }) => {
 
   await API.putToggle(teamId, memberId, itemId);
   getAllTodoList();
+};
+
+export const initCheckTodoList = () => {
+  $todoApps.addEventListener("click", workCheck);
 };

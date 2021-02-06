@@ -1,12 +1,6 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
 import { getAllTeamsList } from "./showTeamList.js";
 
-const $addTeamButton = document.querySelector("#add-team-button");
-
-export const initAddTeam = () => {
-  $addTeamButton.addEventListener("click", addNewTeam);
-};
-
 const addNewTeam = async () => {
   const result = prompt("팀 이름을 입력해주세요");
   if (result === null) return;
@@ -18,4 +12,10 @@ const addNewTeam = async () => {
 
   getAllTeamsList();
 };
+
+export const initAddTeam = () => {
+  const $addTeamButton = document.querySelector("#add-team-button");
+  $addTeamButton.addEventListener("click", addNewTeam);
+};
+
 

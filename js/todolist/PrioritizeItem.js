@@ -1,11 +1,6 @@
 import { API } from "../api.js";
 import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
-export const initPrioritizeTodoList = () => {
-  $todoApps.addEventListener("change", labelApply);
-  $todoApps.addEventListener("click", labelChange);
-};
-
 const labelApply = ({ target }) => {
   if (target.nodeName !== "SELECT") return;
 
@@ -37,4 +32,9 @@ const workPrioritize = async ({ target }, priority) => {
 
   await API.putPriority(teamId, memberId, itemId, priority);
   getAllTodoList();
+};
+
+export const initPrioritizeTodoList = () => {
+  $todoApps.addEventListener("change", labelApply);
+  $todoApps.addEventListener("click", labelChange);
 };

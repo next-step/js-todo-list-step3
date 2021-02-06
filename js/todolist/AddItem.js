@@ -1,10 +1,6 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
 import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
 
-export const initAddTodoList = () => {
-  $todoApps.addEventListener("keyup", addNewItem);
-};
-
 const addNewItem = async ({ target, key }) => {
   if (!target.classList.contains("new-todo")) return;
   if (key !== "Enter") return;
@@ -18,4 +14,8 @@ const addNewItem = async ({ target, key }) => {
 
   await API.postItem(teamId, memberId, str);
   getAllTodoList();
+};
+
+export const initAddTodoList = () => {
+  $todoApps.addEventListener("keyup", addNewItem);
 };

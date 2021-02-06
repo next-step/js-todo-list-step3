@@ -1,13 +1,5 @@
 import { $todoApps, getAllTodoList } from "./showTodoList.js";
 
-export function initTodolistButton() {
-  $todoApps.addEventListener("click", controlFilterButton);
-}
-
-export const changeByHash = (currenthash) => {
-  chooseButton(currenthash);
-};
-
 const controlFilterButton = async ({ target }) => {
   if (target.nodeName !== "A") return;
   const currentButton = target.getAttribute("href").substr(11);
@@ -126,4 +118,12 @@ const renewItemCount = () => {
   itemCount.forEach((strong) => {
     strong.innerText = listItems.shift();
   });
+};
+
+export function initTodolistButton() {
+  $todoApps.addEventListener("click", controlFilterButton);
+}
+
+export const changeByHash = (currenthash) => {
+  chooseButton(currenthash);
 };

@@ -1,12 +1,6 @@
 import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
 import { getAllTodoList, teamId } from "./showTodoList.js";
 
-const $addUserButton = document.querySelector("#add-user-button");
-
-export const initAddMember = () => {
-  $addUserButton.addEventListener("click", addNewMember);
-};
-
 const addNewMember = async () => {
   const result = prompt("새로운 팀원 이름을 입력해주세요");
   if (result === null) return;
@@ -16,4 +10,9 @@ const addNewMember = async () => {
   }
   await API.postMember(teamId, result);
   getAllTodoList();
+};
+
+export const initAddMember = () => {
+  const $addUserButton = document.querySelector("#add-user-button");
+  $addUserButton.addEventListener("click", addNewMember);
 };
