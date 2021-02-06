@@ -54,7 +54,7 @@ export default function TodoListItem({ memberId, todo }) {
       dom.classList.add("completed");
       toggleBtn.checked = isCompleted;
     }
-    if (priority !== PRIORITY.NONE.value) {
+    if (priority !== PRIORITY.NONE) {
       chip.innerHTML = renderPriority(priority);
     }
   };
