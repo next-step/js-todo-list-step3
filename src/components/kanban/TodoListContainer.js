@@ -1,5 +1,7 @@
 import { createElement } from "../../utils/createElement.js";
 
+import TodoList from "./TodoList.js";
+
 const template = ({ name }) => `
   <li class="todoapp-container">
     <h2>
@@ -41,6 +43,13 @@ const template = ({ name }) => `
 
 export default function TodoListContainer({ member }) {
   const dom = createElement(template(member));
+  const todoList = dom.querySelector(".todo-list");
+
+  const init = () => {
+    todoList.appendChild(new TodoList({ todos: member.todoList }));
+  };
+
+  init();
 
   return dom;
 }
