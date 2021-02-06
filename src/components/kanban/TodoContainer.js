@@ -41,7 +41,7 @@ const template = `
   </li>
 `;
 
-export default function TodoListContainer({ member }) {
+export default function TodoContainer({ member }) {
   const dom = createElement(template);
   const memberName = dom.querySelector(".member-name");
   const todoList = dom.querySelector(".todo-list");

@@ -1,7 +1,7 @@
 import { createElement } from "../../utils/createElement.js";
 import $api from "../../api/index.js";
 
-import TodoListContainer from "./TodoListContainer.js";
+import TodoContainer from "./TodoContainer.js";
 
 const template = `
   <div>
@@ -21,7 +21,7 @@ const template = `
 export default function Kanban({ id }) {
   const dom = createElement(template);
   const teamName = dom.querySelector(".team-name");
-  const todoAppListContainer = dom.querySelector(".todoapp-list-container");
+  const todoContainer = dom.querySelector(".todoapp-list-container");
   const memberCreateBtn = dom.querySelector(".add-user-button-container");
 
   const init = async () => {
@@ -32,14 +32,14 @@ export default function Kanban({ id }) {
     const { name, members } = await $api.team.getById(id);
 
     teamName.innerText = name;
-    todoAppListContainer.innerHTML = "";
+    todoContainer.innerHTML = "";
     members.forEach(renderEachMember);
-    todoAppListContainer.appendChild(memberCreateBtn);
+    todoContainer.appendChild(memberCreateBtn);
   };
 
   const renderEachMember = (member) => {
-    const todoListContainer = TodoListContainer({ member });
-    todoAppListContainer.appendChild(todoListContainer);
+    const todoListContainer = TodoContainer({ member });
+    todoContainer.appendChild(todoListContainer);
   };
 
   init();
