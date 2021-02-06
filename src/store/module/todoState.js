@@ -48,6 +48,10 @@ const todoState = (() => {
     publish(memberId);
   };
 
+  const getFilter = (memberId) => {
+    return state[memberId]?.filter ?? FILTERS.ALL;
+  };
+
   const getFilteredTodos = async (memberId) => {
     const todos = await getTodos(memberId);
     if (state[memberId]?.filter === FILTERS.ACTIVE) {
@@ -76,6 +80,7 @@ const todoState = (() => {
     edit: editTodo,
     getAll: getTodos,
     setFilter,
+    getFilter,
     getFiltered: getFilteredTodos,
     subscribe,
   };

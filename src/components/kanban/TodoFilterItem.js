@@ -1,8 +1,6 @@
 import { createElement } from "../../utils/createElement.js";
 import $store from "../../store/index.js";
 
-import { FILTERS } from "../../utils/constants.js";
-
 const template = `
   <li class="">text</li>
 `;
@@ -11,7 +9,7 @@ export default function TodoFilterItem({ memberId, filter }) {
   const dom = createElement(template);
 
   const init = () => {
-    if (filter === FILTERS.ALL) {
+    if (filter === $store.todo.getFilter(memberId)) {
       dom.classList.add("selected");
     }
     dom.addEventListener("click", selectFilter);
