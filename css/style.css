@@ -323,22 +323,19 @@ body {
 
 .filters li {
   display: inline;
-}
-
-.filters li a {
   color: inherit;
-  margin: 3px;
   padding: 3px 7px;
   text-decoration: none;
   border: 1px solid transparent;
   border-radius: 3px;
 }
 
-.filters li a:hover {
+.filters li:hover {
   border-color: rgba(175, 47, 47, 0.1);
+  cursor: pointer;
 }
 
-.filters li a.selected {
+.filters li.selected {
   border-color: rgba(175, 47, 47, 0.2);
 }
 

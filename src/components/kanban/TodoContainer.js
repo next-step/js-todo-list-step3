@@ -2,6 +2,7 @@ import { createElement } from "../../utils/createElement.js";
 
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
+import TodoFilter from "./TodoFilter.js";
 
 const template = `
   <li class="todoapp-container">
@@ -17,20 +18,7 @@ const template = `
       </section>
       <div class="count-container">
         <span class="todo-count">총 <strong>0</strong> 개</span>
-        <ul class="filters">
-          <li>
-            <a href="#all" class="selected">전체보기</a>
-          </li>
-          <li>
-            <a href="#priority">우선 순위</a>
-          </li>
-          <li>
-            <a href="#active">해야할 일</a>
-          </li>
-          <li>
-            <a href="#completed">완료한 일</a>
-          </li>
-        </ul>
+        <span class="todo-filter"></span>
         <button class="clear-completed">모두 삭제</button>
       </div>
     </div>
@@ -42,6 +30,7 @@ export default function TodoContainer({ member }) {
   const memberName = dom.querySelector(".member-name");
   const input = dom.querySelector(".input-container");
   const todoList = dom.querySelector(".todo-list");
+  const filter = dom.querySelector(".todo-filter");
 
   const init = () => {
     render();
@@ -51,6 +40,7 @@ export default function TodoContainer({ member }) {
     memberName.innerText = member.name;
     input.appendChild(new TodoInput(member));
     todoList.appendChild(new TodoList(member));
+    filter.appendChild(new TodoFilter());
   };
 
   init();
