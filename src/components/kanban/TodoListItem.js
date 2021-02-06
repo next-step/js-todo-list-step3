@@ -26,6 +26,7 @@ export default function TodoListItem({ memberId, todo }) {
 
   const init = () => {
     deleteBtn.addEventListener("click", deleteTodo);
+    toggleBtn.addEventListener("click", toggleTodo);
     render();
   };
 
@@ -42,6 +43,11 @@ export default function TodoListItem({ memberId, todo }) {
 
   const deleteTodo = () => {
     $store.todo.delete(memberId, todo._id);
+  };
+
+  const toggleTodo = () => {
+    dom.classList.toggle("completed");
+    $store.todo.toggle(memberId, todo._id);
   };
 
   init();
