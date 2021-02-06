@@ -1,4 +1,5 @@
 import { createElement } from "../../utils/createElement.js";
+import $store from "../../store/index.js";
 
 const template = `
   <li class="todo-list-item">
@@ -16,13 +17,15 @@ const template = `
   </li>
 `;
 
-export default function TodoListItem({ todo }) {
+export default function TodoListItem({ memberId, todo }) {
   const dom = createElement(template);
   const label = dom.querySelector(".label");
   const toggleBtn = dom.querySelector(".toggle");
+  const deleteBtn = dom.querySelector(".destroy");
   const editInput = dom.querySelector(".edit");
 
   const init = () => {
+    deleteBtn.addEventListener("click", deleteTodo);
     render();
   };
 
@@ -35,6 +38,10 @@ export default function TodoListItem({ todo }) {
       dom.classList.add("completed");
       toggleBtn.checked = isCompleted;
     }
+  };
+
+  const deleteTodo = () => {
+    $store.todo.delete(memberId, todo._id);
   };
 
   init();

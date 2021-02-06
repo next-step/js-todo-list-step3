@@ -23,6 +23,12 @@ const team = (() => {
     });
   };
 
+  const deleteTodo = (teamId, memberId, todoId) => {
+    return request.delete(
+      `/teams/${teamId}/members/${memberId}/items/${todoId}`
+    );
+  };
+
   const getTodos = (teamId, memberId) => {
     return request
       .get(`/teams/${teamId}/members/${memberId}`)
@@ -35,6 +41,7 @@ const team = (() => {
     create,
     createMember,
     createTodo,
+    deleteTodo,
     getTodos,
   };
 })();

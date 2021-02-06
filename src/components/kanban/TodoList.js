@@ -19,7 +19,7 @@ export default function TodoList({ _id }) {
   };
 
   const renderEachTodo = (todo) => {
-    const todoListItem = TodoListItem({ todo });
+    const todoListItem = TodoListItem({ memberId: _id, todo });
     dom.appendChild(todoListItem);
   };
 
