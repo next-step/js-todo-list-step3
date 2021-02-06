@@ -3,6 +3,7 @@ import { createElement } from "../../utils/createElement.js";
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
 import TodoFilter from "./TodoFilter.js";
+import TodoCount from "./TodoCount.js";
 
 const template = `
   <li class="todoapp-container">
@@ -17,7 +18,7 @@ const template = `
         </ul>
       </section>
       <div class="count-container">
-        <span class="todo-count">총 <strong>0</strong> 개</span>
+        <span class="todo-count"></span>
         <span class="todo-filter"></span>
         <button class="clear-completed">모두 삭제</button>
       </div>
@@ -31,6 +32,7 @@ export default function TodoContainer({ member }) {
   const input = dom.querySelector(".input-container");
   const todoList = dom.querySelector(".todo-list");
   const filter = dom.querySelector(".todo-filter");
+  const counter = dom.querySelector(".todo-count");
 
   const init = () => {
     render();
@@ -43,6 +45,7 @@ export default function TodoContainer({ member }) {
     input.appendChild(new TodoInput({ memberId }));
     todoList.appendChild(new TodoList({ memberId }));
     filter.appendChild(new TodoFilter({ memberId }));
+    counter.appendChild(new TodoCount({ memberId }));
   };
 
   init();
