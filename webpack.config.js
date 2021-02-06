@@ -12,6 +12,7 @@ module.exports = {
     filename: "[name].js", // 빌드 파일명
   },
   devServer: {
+    open: true,
     overlay: true,
     stats: "errors-only",
     historyApiFallback: true,
