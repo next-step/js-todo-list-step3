@@ -42,6 +42,7 @@ export default function TodoListItem({ memberId, todo }) {
   };
 
   const deleteTodo = () => {
+    dom.remove();
     $store.todo.delete(memberId, todo._id);
   };
 
