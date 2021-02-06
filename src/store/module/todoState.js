@@ -1,5 +1,4 @@
 import $api from "../../api/index.js";
-import teamState from "./teamState.js";
 
 import { FILTERS, PRIORITY } from "../../utils/constants.js";
 
@@ -8,10 +7,7 @@ const todoState = (() => {
   const subscriber = {};
 
   const getTodos = async (memberId) => {
-    const response = await $api.team.getTodos(
-      teamState.getCurrentTeamId(),
-      memberId
-    );
+    const response = await $api.todo.getTodos(memberId);
     return response?.map(mapToTodo);
   };
 
@@ -19,6 +15,7 @@ const todoState = (() => {
     const priority = Object.values(PRIORITY).find(
       ({ value }) => value === todo.priority
     );
+
     return {
       ...todo,
       priority,
@@ -26,46 +23,32 @@ const todoState = (() => {
   };
 
   const createTodo = async (memberId, contents) => {
-    await $api.team.createTodo(
-      teamState.getCurrentTeamId(),
-      memberId,
-      contents
-    );
+    await $api.todo.createTodo(memberId, contents);
     publish(memberId);
   };
 
   const deleteTodo = async (memberId, todoId) => {
-    await $api.team.deleteTodo(teamState.getCurrentTeamId(), memberId, todoId);
+    await $api.todo.deleteTodo(memberId, todoId);
     publish();
   };
 
   const deleteAllTodo = async (memberId) => {
-    await $api.team.deleteAllTodo(teamState.getCurrentTeamId(), memberId);
+    await $api.todo.deleteAllTodo(memberId);
     publish(memberId);
   };
 
   const toggleTodo = async (memberId, todoId) => {
-    await $api.team.toggleTodo(teamState.getCurrentTeamId(), memberId, todoId);
+    await $api.todo.toggleTodo(memberId, todoId);
     publish(memberId);
   };
 
   const editTodo = async (memberId, todoId, contents) => {
-    await $api.team.editTodo(
-      teamState.getCurrentTeamId(),
-      memberId,
-      todoId,
-      contents
-    );
+    await $api.todo.editTodo(memberId, todoId, contents);
     publish(memberId);
   };
 
   const setTodoPriority = async (memberId, todoId, priority) => {
-    await $api.team.setTodoPriority(
-      teamState.getCurrentTeamId(),
-      memberId,
-      todoId,
-      priority
-    );
+    await $api.todo.setTodoPriority(memberId, todoId, priority);
     publish(memberId);
   };
 

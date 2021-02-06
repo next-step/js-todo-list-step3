@@ -13,17 +13,13 @@ const teamState = (() => {
 
   const setCurrentTeamId = (id) => {
     state.teamId = id;
-  };
-
-  const getCurrentTeamId = () => {
-    return state.teamId;
+    $api.todo.setTeamId(state.teamId);
   };
 
   return {
     getCurrentTeam,
     createMember,
     setCurrentTeamId,
-    getCurrentTeamId,
   };
 })();
 
