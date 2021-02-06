@@ -67,7 +67,8 @@ export default function TodoListItem({ memberId, todo }) {
     }
 
     const contents = target.value.trim();
-    if (contents === "") {
+    if (contents?.length < 2) {
+      alert("할 일은 최소 2글자 이상이어야 합니다.");
       return;
     }
 
