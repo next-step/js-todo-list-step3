@@ -1,5 +1,5 @@
 import { createElement } from "../../utils/createElement.js";
-import $api from "../../api/index.js";
+import $store from "../../store/index.js";
 
 import TodoContainer from "./TodoContainer.js";
 
@@ -25,13 +25,14 @@ export default function Kanban({ id }) {
   const memberCreateBtn = dom.querySelector(".add-user-button-container");
 
   const init = async () => {
+    $store.team.setTeamId(id);
     memberCreateBtn.addEventListener("click", createMember);
 
     await render();
   };
 
   const render = async () => {
-    const { name, members } = await $api.team.getById(id);
+    const { name, members } = await $store.team.getCurrentTeam();
 
     teamName.innerText = name;
     todoContainer.innerHTML = "";
@@ -51,7 +52,7 @@ export default function Kanban({ id }) {
       return;
     }
 
-    await $api.team.createMember(id, name);
+    await $store.team.createMember(name);
     await render();
   };
 

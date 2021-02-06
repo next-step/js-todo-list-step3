@@ -13,8 +13,14 @@ const team = (() => {
     return request.post(`/teams`, { name });
   };
 
-  const createMember = (id, name) => {
-    return request.post(`/teams/${id}/members`, { name });
+  const createMember = (teamId, name) => {
+    return request.post(`/teams/${teamId}/members`, { name });
+  };
+
+  const createTodo = (teamId, memberId, contents) => {
+    return request.post(`/teams/${teamId}/members/${memberId}/items`, {
+      contents,
+    });
   };
 
   return {
@@ -22,6 +28,7 @@ const team = (() => {
     getById,
     create,
     createMember,
+    createTodo,
   };
 })();
 
