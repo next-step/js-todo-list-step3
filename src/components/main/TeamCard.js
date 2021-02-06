@@ -17,7 +17,7 @@ export default function TeamCard({ team }) {
   };
 
   const onLinkToTeam = () => {
-    $router.route("/kanban", { id: team._id });
+    $router.route("/kanban", { team });
   };
 
   init();

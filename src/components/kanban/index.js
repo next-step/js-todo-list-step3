@@ -1,9 +1,9 @@
 import { createElement } from "../../utils/createElement.js";
 
-const template = `
+const template = ({ name }) => `
   <div>
-    <h1 id="user-title" data-username="eastjun">
-      <span><strong>Team</strong>'s Todo List</span>
+    <h1 class="team-title">
+      <span><strong>${name}</strong>'s Todo List</span>
     </h1>
     <ul class="todoapp-list-container flex-column-container">
       <li class="todoapp-container">
@@ -51,8 +51,8 @@ const template = `
   </div>
 `;
 
-export default function Kanban() {
-  const dom = createElement(template);
+export default function Kanban({ team }) {
+  const dom = createElement(template(team));
 
   return dom;
 }
