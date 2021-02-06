@@ -51,8 +51,8 @@ export default function TodoContainer({ member }) {
     counter.appendChild(new TodoCount({ memberId }));
   };
 
-  const deleteAllTodo = () => {
-    $store.todo.deleteAll(member._id);
+  const deleteAllTodo = async () => {
+    await $store.todo.deleteAll(member._id);
   };
 
   init();

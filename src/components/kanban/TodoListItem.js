@@ -68,14 +68,14 @@ export default function TodoListItem({ memberId, todo }) {
     `;
   };
 
-  const deleteTodo = () => {
+  const deleteTodo = async () => {
     dom.remove();
-    $store.todo.delete(memberId, todo._id);
+    await $store.todo.delete(memberId, todo._id);
   };
 
-  const toggleTodo = () => {
+  const toggleTodo = async () => {
     dom.classList.toggle("completed");
-    $store.todo.toggle(memberId, todo._id);
+    await $store.todo.toggle(memberId, todo._id);
   };
 
   const toggleEditingTodo = () => {
@@ -107,12 +107,12 @@ export default function TodoListItem({ memberId, todo }) {
     dom.classList.remove("editing");
   };
 
-  const selectPriority = () => {
+  const selectPriority = async () => {
     const selected = Object.values(PRIORITY).find(
       ({ value }) => value === prioritySelector.value
     );
 
-    $store.todo.setPriority(memberId, todo._id, selected.value);
+    await $store.todo.setPriority(memberId, todo._id, selected.value);
   };
 
   init();
