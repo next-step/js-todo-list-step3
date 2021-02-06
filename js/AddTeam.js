@@ -1,13 +1,13 @@
-import { teamTemplate } from './template.js';
-import { teamTemplateHTML } from './template.js';
+import { teamTemplate } from './Template.js';
+import { teamTemplateHTML } from './Template.js';
 import { API } from './API.js';
 import { loadTeamList } from './LoadTeamList.js';
-import { renderTeamList } from './Team.js';
+import { getTeamList } from './TeamList.js';
 
 const $addTeamButton = document.querySelector('#add-team-button');
 const $addTeamButtonContainer = document.querySelector('div.add-team-button-container');
 
-$addTeamButton.addEventListener('click', () => addTeam())
+$addTeamButton.addEventListener('click', () => addTeam());
 
 export const addTeam = async () => {
     const teamname = prompt('팀 이름을 입력해주세요');
@@ -23,7 +23,7 @@ export const addTeam = async () => {
 
     try{
         await API.addTeam(team);
-        $addTeamButtonContainer.insertAdjacentHTML('beforebegin', teamTemplateHTML(team));
+        getTeamList();
     } catch(err){
         console.error(err);
     }

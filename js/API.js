@@ -25,7 +25,6 @@ export const API = {
     loadTeam: team => fetch(`${baseURL}/${team._id}`),
     loadTeamList: () => fetch(`${baseURL}`),
     deleteTeam: team => fetch(`${baseURL}/${team._id}`, option.delete),
-    deleteAllTeams: () => fetch(`${baseURL}`, option.delete),
     addMember: (team, member) => fetch(`${baseURL}/${team._id}/members`, option.post(member)),
     loadTodoListOfMember: (team, member) => fetch(`${baseURL}/${team._id}/members/${member._id}`),
     addTodoItem: (team, member, item) => fetch(`${baseURL}/${team._id}/members/${member._id}/items`, option.post(item)),

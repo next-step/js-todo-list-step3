@@ -1,20 +1,48 @@
-import { teamTemplateHTML } from './template.js';
-import { API } from './API.js';
-import { loadTeamList } from './LoadTeamList.js';
-import { addTeam } from './AddTeam.js';
+import { teamTemplate, todoListTemplateHTML } from './Template.js';
 
-export let teamList = [];
+import { loadTeam } from './LoadTeam.js';
+import { } from './AddUser.js';
 
-// const $teamList = document.querySelector('div.team-list-container');
-const $addTeamButtonContainer = document.querySelector('div.add-team-button-container');
+export let team = teamTemplate;
+let users = [];
 
-window.onload = async () => {
-  teamList = await loadTeamList();
-  // teamList.forEach(team => API.deleteTeam(team));
-  renderTeamList(teamList);
+const $teamTitle = document.querySelector('h1#user-title');
+const $todoApps = document.querySelector('.todoapp-list-container');
+const $addUserButtonContainer = document.querySelector('li.add-user-button-container');
+
+$todoApps.addEventListener('click', event => notUnderstoodYet(event));
+
+const teamID = window.location.hash.substr(1, 9);
+team._id = teamID;
+
+window.onload = () => {
+  getTeam();
 }
 
-export const renderTeamList = teamList => {
-  teamList.forEach(team => { $addTeamButtonContainer.insertAdjacentHTML('beforebegin', teamTemplateHTML(team)); });
+export const getTeam = async () => {
+  team = await loadTeam(team);
+  console.log(team);
+  users = team.members;
+  $teamTitle.innerHTML = `<span><strong>${team.name}</strong>'s Todo List</span>`
+  clearRenderedUserList();
+  renderUserList();
 }
 
+const clearRenderedUserList = () => {
+  let todoappContainer = document.querySelectorAll('li.todoapp-container');
+  todoappContainer.forEach(user => user.remove());
+}
+
+const renderUserList = () => {
+  users.forEach(user => { $addUserButtonContainer.insertAdjacentHTML('beforebegin', todoListTemplateHTML(user)); });
+}
+
+const notUnderstoodYet = event => {
+  const $target = event.target;
+  const targetClassList = $target.classList;
+  if (targetClassList.contains('chip')) {
+    const $chipSelect = $target.closest('.chip-container').querySelector('select');
+    $target.classList.add('hidden');
+    $chipSelect.classList.remove('hidden');
+  }
+}
