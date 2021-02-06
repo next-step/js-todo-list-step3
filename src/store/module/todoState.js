@@ -87,6 +87,8 @@ const todoState = (() => {
       return todos.filter((todo) => !todo.isCompleted);
     } else if (state[memberId]?.filter === FILTERS.COMPLETED) {
       return todos.filter((todo) => todo.isCompleted);
+    } else if (state[memberId]?.filter === FILTERS.PRIORITY) {
+      return todos.sort((a, b) => (a.priority.seq > b.priority.seq ? 1 : -1));
     }
     return todos;
   };
