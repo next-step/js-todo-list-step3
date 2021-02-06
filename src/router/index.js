@@ -33,13 +33,10 @@ const $router = (() => {
     const target = Object.values(ROUTER_INFO).find(
       ({ path }) => path === pathname
     );
-
-    if (typeof target.component === "function") {
-      target.component = new target.component(state);
-    }
+    const component = new target.component(state);
 
     view.innerHTML = "";
-    view.appendChild(target.component);
+    view.appendChild(component);
   };
 
   return {
