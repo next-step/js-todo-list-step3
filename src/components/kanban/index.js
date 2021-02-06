@@ -25,6 +25,8 @@ export default function Kanban({ id }) {
   const memberCreateBtn = dom.querySelector(".add-user-button-container");
 
   const init = async () => {
+    memberCreateBtn.addEventListener("click", createMember);
+
     await render();
   };
 
@@ -40,6 +42,17 @@ export default function Kanban({ id }) {
   const renderEachMember = (member) => {
     const todoListContainer = TodoContainer({ member });
     todoContainer.appendChild(todoListContainer);
+  };
+
+  const createMember = async () => {
+    const name = prompt("멤버 이름을 입력해주세요").trim();
+    if (name.length < 2) {
+      alert("멤버의 이름은 최소 2글자 이상이어야 합니다.");
+      return;
+    }
+
+    await $api.team.createMember(id, name);
+    await render();
   };
 
   init();
