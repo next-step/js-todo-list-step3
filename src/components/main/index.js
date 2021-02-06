@@ -21,10 +21,12 @@ const template = `
 export default function Main() {
   const dom = createElement(template);
   const teamList = dom.querySelector(".team-list-container");
-  const createBtn = dom.querySelector(".add-team-button-container");
+  const createBtnContainer = dom.querySelector(".add-team-button-container");
 
   const init = () => {
-    createBtn.addEventListener("click", createTeam);
+    createBtnContainer
+      .querySelector("button")
+      .addEventListener("click", createTeam);
 
     render();
   };
@@ -34,7 +36,7 @@ export default function Main() {
 
     teamList.innerHTML = "";
     teams.forEach(renderEachTeam);
-    teamList.appendChild(createBtn);
+    teamList.appendChild(createBtnContainer);
   };
 
   const renderEachTeam = (team) => {
@@ -43,7 +45,9 @@ export default function Main() {
   };
 
   const createTeam = async () => {
-    const name = prompt("팀 이름을 입력해주세요").trim();
+    const name = prompt("팀 이름을 입력해주세요")?.trim();
+
+    if (!name) return;
     if (name.length < 2) {
       alert("팀의 이름은 최소 2글자 이상이어야 합니다.");
       return;

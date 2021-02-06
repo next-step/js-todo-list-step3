@@ -22,11 +22,15 @@ export default function Kanban({ id }) {
   const dom = createElement(template);
   const teamName = dom.querySelector(".team-name");
   const todoContainer = dom.querySelector(".todoapp-list-container");
-  const memberCreateBtn = dom.querySelector(".add-user-button-container");
+  const memberCreateBtnContainer = dom.querySelector(
+    ".add-user-button-container"
+  );
 
   const init = async () => {
     $store.team.setCurrentTeamId(id);
-    memberCreateBtn.addEventListener("click", createMember);
+    memberCreateBtnContainer
+      .querySelector("button")
+      .addEventListener("click", createMember);
 
     await render();
   };
@@ -37,7 +41,7 @@ export default function Kanban({ id }) {
     teamName.innerText = name;
     todoContainer.innerHTML = "";
     members.forEach(renderEachMember);
-    todoContainer.appendChild(memberCreateBtn);
+    todoContainer.appendChild(memberCreateBtnContainer);
   };
 
   const renderEachMember = (member) => {
@@ -46,7 +50,9 @@ export default function Kanban({ id }) {
   };
 
   const createMember = async () => {
-    const name = prompt("멤버 이름을 입력해주세요").trim();
+    const name = prompt("멤버 이름을 입력해주세요")?.trim();
+
+    if (!name) return;
     if (name.length < 2) {
       alert("멤버의 이름은 최소 2글자 이상이어야 합니다.");
       return;
