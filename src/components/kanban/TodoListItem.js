@@ -27,6 +27,9 @@ export default function TodoListItem({ memberId, todo }) {
   const init = () => {
     deleteBtn.addEventListener("click", deleteTodo);
     toggleBtn.addEventListener("click", toggleTodo);
+    label.addEventListener("dblclick", toggleEditingTodo);
+    editInput.addEventListener("keypress", editTodo);
+    editInput.addEventListener("focusout", cancelEditingTodo);
     render();
   };
 
@@ -49,6 +52,34 @@ export default function TodoListItem({ memberId, todo }) {
   const toggleTodo = () => {
     dom.classList.toggle("completed");
     $store.todo.toggle(memberId, todo._id);
+  };
+
+  const toggleEditingTodo = () => {
+    const editingItem = document.querySelector(".editing");
+    editingItem?.classList.remove("editing");
+
+    dom.classList.add("editing");
+  };
+
+  const editTodo = async ({ key, target }) => {
+    if (key !== "Enter") {
+      return;
+    }
+
+    const contents = target.value.trim();
+    if (contents === "") {
+      return;
+    }
+
+    label.innerText = contents;
+    dom.classList.remove("editing");
+
+    await $store.todo.edit(memberId, todo._id, contents);
+  };
+
+  const cancelEditingTodo = () => {
+    editInput.value = todo.contents;
+    dom.classList.remove("editing");
   };
 
   init();

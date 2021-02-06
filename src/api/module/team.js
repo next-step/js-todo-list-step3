@@ -35,6 +35,12 @@ const team = (() => {
     );
   };
 
+  const editTodo = (teamId, memberId, todoId, contents) => {
+    return request.put(`/teams/${teamId}/members/${memberId}/items/${todoId}`, {
+      contents,
+    });
+  };
+
   const getTodos = (teamId, memberId) => {
     return request
       .get(`/teams/${teamId}/members/${memberId}`)
@@ -49,6 +55,7 @@ const team = (() => {
     createTodo,
     deleteTodo,
     toggleTodo,
+    editTodo,
     getTodos,
   };
 })();
