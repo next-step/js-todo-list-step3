@@ -17,7 +17,7 @@ export default function TodoCount({ memberId }) {
   };
 
   const render = async () => {
-    const { length } = await $store.todo.getFiltered(memberId);
+    const { length } = (await $store.todo.getFiltered(memberId)) ?? [];
     counter.innerText = length;
   };
 
