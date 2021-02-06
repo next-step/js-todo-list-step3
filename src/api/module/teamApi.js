@@ -1,6 +1,6 @@
 import request from "../utils/request.js";
 
-const team = (() => {
+const teamApi = (() => {
   const getAll = () => {
     return request.get(`/teams`);
   };
@@ -73,4 +73,4 @@ const team = (() => {
   };
 })();
 
-export default team;
+export default teamApi;
