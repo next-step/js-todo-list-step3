@@ -339,8 +339,8 @@ body {
   border-color: rgba(175, 47, 47, 0.2);
 }
 
-.clear-completed,
-html .clear-completed:active {
+.clear-todos-button,
+html .clear-todos-button:active {
   float: right;
   position: relative;
   line-height: 20px;
@@ -348,7 +348,7 @@ html .clear-completed:active {
   cursor: pointer;
 }
 
-.clear-completed:hover {
+.clear-todos-button:hover {
   text-decoration: underline;
 }
 

@@ -1,4 +1,5 @@
 import { createElement } from "../../utils/createElement.js";
+import $store from "../../store/index.js";
 
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
@@ -20,7 +21,7 @@ const template = `
       <div class="count-container">
         <span class="todo-count"></span>
         <span class="todo-filter"></span>
-        <button class="clear-completed">모두 삭제</button>
+        <button class="clear-todos-button">모두 삭제</button>
       </div>
     </div>
   </li>
@@ -33,8 +34,10 @@ export default function TodoContainer({ member }) {
   const todoList = dom.querySelector(".todo-list");
   const filter = dom.querySelector(".todo-filter");
   const counter = dom.querySelector(".todo-count");
+  const deleteAllTodoBtn = dom.querySelector(".clear-todos-button");
 
   const init = () => {
+    deleteAllTodoBtn.addEventListener("click", deleteAllTodo);
     render();
   };
 
@@ -46,6 +49,10 @@ export default function TodoContainer({ member }) {
     todoList.appendChild(new TodoList({ memberId }));
     filter.appendChild(new TodoFilter({ memberId }));
     counter.appendChild(new TodoCount({ memberId }));
+  };
+
+  const deleteAllTodo = () => {
+    $store.todo.deleteAll(member._id);
   };
 
   init();

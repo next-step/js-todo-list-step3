@@ -25,6 +25,11 @@ const todoState = (() => {
     publish();
   };
 
+  const deleteAllTodo = async (memberId) => {
+    await $api.team.deleteAllTodo(teamState.getCurrentTeamId(), memberId);
+    publish(memberId);
+  };
+
   const toggleTodo = async (memberId, todoId) => {
     await $api.team.toggleTodo(teamState.getCurrentTeamId(), memberId, todoId);
     publish(memberId);
@@ -76,6 +81,7 @@ const todoState = (() => {
   return {
     create: createTodo,
     delete: deleteTodo,
+    deleteAll: deleteAllTodo,
     toggle: toggleTodo,
     edit: editTodo,
     getAll: getTodos,

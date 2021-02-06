@@ -17,6 +17,12 @@ const team = (() => {
     return request.post(`/teams/${teamId}/members`, { name });
   };
 
+  const getTodos = (teamId, memberId) => {
+    return request
+      .get(`/teams/${teamId}/members/${memberId}`)
+      .then((member) => member?.todoList);
+  };
+
   const createTodo = (teamId, memberId, contents) => {
     return request.post(`/teams/${teamId}/members/${memberId}/items`, {
       contents,
@@ -27,6 +33,10 @@ const team = (() => {
     return request.delete(
       `/teams/${teamId}/members/${memberId}/items/${todoId}`
     );
+  };
+
+  const deleteAllTodo = (teamId, memberId) => {
+    return request.delete(`/teams/${teamId}/members/${memberId}/items`);
   };
 
   const toggleTodo = (teamId, memberId, todoId) => {
@@ -41,12 +51,6 @@ const team = (() => {
     });
   };
 
-  const getTodos = (teamId, memberId) => {
-    return request
-      .get(`/teams/${teamId}/members/${memberId}`)
-      .then((member) => member?.todoList);
-  };
-
   return {
     getAll,
     getById,
@@ -54,6 +58,7 @@ const team = (() => {
     createMember,
     createTodo,
     deleteTodo,
+    deleteAllTodo,
     toggleTodo,
     editTodo,
     getTodos,
