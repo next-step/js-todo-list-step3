@@ -1,8 +1,6 @@
 import { API } from "../api.js";
+import { $todoApps, teamId } from "./TodoList_DOM.js"
 import { changeByHash } from "./controlTodoButton.js";
-
-export const $todoApps = document.querySelector(".todoapp-list-container");
-export const teamId = location.hash.substr(1, 9);
 
 export const getAllTodoList = async () => {
   const team = await API.getTeam(teamId);

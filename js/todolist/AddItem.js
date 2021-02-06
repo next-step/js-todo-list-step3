@@ -1,16 +1,15 @@
-import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
+import { API } from "../api.js";
+import { isEnterKey , isEnoughLength } from "../validator.js"
+import { $todoApps, teamId } from "./TodoList_DOM.js"
+import { getAllTodoList } from "./showTodoList.js";
 
 const addNewItem = async ({ target, key }) => {
   if (!target.classList.contains("new-todo")) return;
-  if (key !== "Enter") return;
+  if (!isEnterKey(key)) return;
   const str = target.value;
   target.value = "";
-  if (str.length < MINIMUN_INPUT_LENGTH) {
-    alert(`${MINIMUN_INPUT_LENGTH}글자 이상 입력해주세요!`);
-    return;
-  }
-  const memberId = target.closest("li").getAttribute("id");
+  if (isEnoughLength(str)) return;
+  const memberId = target.closest("li").id;
 
   await API.postItem(teamId, memberId, str);
   getAllTodoList();

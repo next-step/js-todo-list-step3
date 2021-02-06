@@ -1,13 +1,13 @@
-import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getAllTodoList, teamId } from "./showTodoList.js";
+import { API } from "../api.js";
+import { isCanceled, isEnoughLength } from "../validator.js"
+import { teamId } from "./TodoList_DOM.js"
+import { getAllTodoList } from "./showTodoList.js";
 
 const addNewMember = async () => {
   const result = prompt("새로운 팀원 이름을 입력해주세요");
   if (result === null) return;
-  if (result.length < MINIMUN_INPUT_LENGTH) {
-    alert(`${MINIMUN_INPUT_LENGTH} 글자 이상 입력해주세요!`);
-    return;
-  }
+  if (isCanceled(result)) return;
+  if (isEnoughLength(result)) return;
   await API.postMember(teamId, result);
   getAllTodoList();
 };

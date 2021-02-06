@@ -1,13 +1,12 @@
-import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
+import { API } from "../api.js";
+import { isCanceled, isEnoughLength } from "../validator.js"
 import { getAllTeamsList } from "./showTeamList.js";
 
 const addNewTeam = async () => {
   const result = prompt("팀 이름을 입력해주세요");
-  if (result === null) return;
-  if (result.length < MINIMUN_INPUT_LENGTH) {
-    alert(`${MINIMUN_INPUT_LENGTH} 글자 이상 입력해주세요!`);
-    return;
-  }
+  if (isCanceled(result)) return;
+  if (isEnoughLength(result)) return;
+
   await API.postTeam(result);
 
   getAllTeamsList();

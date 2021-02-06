@@ -1,5 +1,4 @@
 const baseurl = "https://js-todo-list-9ca3a.df.r.appspot.com/api/teams";
-export const MINIMUN_INPUT_LENGTH = 2;
 
 const option = {
   post: (data) => ({

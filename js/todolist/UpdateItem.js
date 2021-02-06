@@ -1,5 +1,7 @@
-import { API, MINIMUN_INPUT_LENGTH } from "../api.js";
-import { getAllTodoList, $todoApps, teamId } from "./showTodoList.js";
+import { API } from "../api.js";
+import { isEnterKey, isEscKey } from "../validator.js";
+import { $todoApps, teamId } from "./TodoList_DOM.js"
+import { getAllTodoList } from "./showTodoList.js";
 
 const workContentCopy = ({ target }) => {
   if (!target.classList.contains("text")) {
@@ -13,19 +15,19 @@ const workContentCopy = ({ target }) => {
 
 const workUpdate = async ({ target, key }) => {
   const li = target.closest("li");
-  if (key === "Escape") {
+  if (isEscKey(key)) {
     li.classList.remove("editing");
     return;
   }
-  if (key === "Enter") {
+  if (isEnterKey(key)) {
     if (!target.classList.contains("edit")) return;
     const str = target.value;
     if (str.length < MINIMUN_INPUT_LENGTH) {
       alert(`${MINIMUN_INPUT_LENGTH}글자 이상 입력해주세요!`);
       return;
     }
-    const memberId = target.closest(".todoapp-container").getAttribute("id");
-    const itemId = target.closest("li").getAttribute("id");
+    const memberId = target.closest(".todoapp-container").id;
+    const itemId = target.closest("li").id;
     await API.putUpdate(teamId, memberId, itemId, str);
 
     let label = target.parentNode.querySelector(".text");

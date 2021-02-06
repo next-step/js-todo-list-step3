@@ -1,8 +1,5 @@
 import { API } from "../api.js";
-
-export const $teamListContainer = document.querySelector(
-  ".team-list-container"
-);
+import { $teamListContainer } from "./Team_DOM.js"
 
 export const getAllTeamsList = async () => {
   let post = await API.getTeams();
