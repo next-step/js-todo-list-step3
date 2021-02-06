@@ -26,8 +26,8 @@ export default function TodoInput({ _id }) {
       return;
     }
 
-    await $store.todo.create(_id, contents);
     target.value = "";
+    await $store.todo.create(_id, contents);
   };
 
   init();
