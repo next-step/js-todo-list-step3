@@ -3,23 +3,23 @@ import $store from "../../store/index.js";
 
 import TodoListItem from "./TodoListItem.js";
 
-export default function TodoList({ _id }) {
+export default function TodoList({ memberId }) {
   const dom = createElement("<div></div>");
 
   const init = async () => {
-    $store.todo.subscribe(_id, render);
+    $store.todo.subscribe(memberId, render);
     await render();
   };
 
   const render = async () => {
-    const todos = await $store.todo.getFiltered(_id);
+    const todos = await $store.todo.getFiltered(memberId);
 
     dom.innerHTML = "";
     todos?.forEach(renderEachTodo);
   };
 
   const renderEachTodo = (todo) => {
-    const todoListItem = TodoListItem({ memberId: _id, todo });
+    const todoListItem = TodoListItem({ memberId: memberId, todo });
     dom.appendChild(todoListItem);
   };
 

@@ -18,7 +18,7 @@ const template = `
   </div>
 `;
 
-export default function Kanban({ id }) {
+export default function Kanban({ teamId }) {
   const dom = createElement(template);
   const teamName = dom.querySelector(".team-name");
   const todoContainer = dom.querySelector(".todoapp-list-container");
@@ -27,7 +27,7 @@ export default function Kanban({ id }) {
   );
 
   const init = async () => {
-    $store.team.setCurrentTeamId(id);
+    $store.team.setCurrentTeamId(teamId);
     memberCreateBtnContainer
       .querySelector("button")
       .addEventListener("click", createMember);

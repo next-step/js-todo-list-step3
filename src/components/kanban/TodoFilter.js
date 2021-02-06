@@ -12,7 +12,7 @@ const template = `
   </ul>
 `;
 
-export default function TodoFilter({ _id }) {
+export default function TodoFilter({ memberId }) {
   const dom = createElement(template);
 
   const init = () => {
@@ -25,7 +25,7 @@ export default function TodoFilter({ _id }) {
   };
 
   const renderEachFilter = (filter) => {
-    const todoFilterItem = new TodoFilterItem({ memberId: _id, filter });
+    const todoFilterItem = new TodoFilterItem({ memberId, filter });
     dom.appendChild(todoFilterItem);
   };
 

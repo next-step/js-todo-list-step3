@@ -37,10 +37,12 @@ export default function TodoContainer({ member }) {
   };
 
   const render = () => {
+    const { _id: memberId } = member;
+
     memberName.innerText = member.name;
-    input.appendChild(new TodoInput(member));
-    todoList.appendChild(new TodoList(member));
-    filter.appendChild(new TodoFilter(member));
+    input.appendChild(new TodoInput({ memberId }));
+    todoList.appendChild(new TodoList({ memberId }));
+    filter.appendChild(new TodoFilter({ memberId }));
   };
 
   init();

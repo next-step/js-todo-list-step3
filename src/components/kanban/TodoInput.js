@@ -9,7 +9,7 @@ const template = `
   />
 `;
 
-export default function TodoInput({ _id }) {
+export default function TodoInput({ memberId }) {
   const dom = createElement(template);
 
   const init = () => {
@@ -27,7 +27,7 @@ export default function TodoInput({ _id }) {
     }
 
     target.value = "";
-    await $store.todo.create(_id, contents);
+    await $store.todo.create(memberId, contents);
   };
 
   init();
