@@ -79,6 +79,6 @@ export const todoItemTemplateHTML = item => `
             </label>
             <button class="destroy"></button>
         </div>
-        <input class="edit" value="완료된 타이틀" />
+        <input class="edit" value=${item.contents} />
     </li>
 `;

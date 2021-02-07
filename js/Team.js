@@ -6,7 +6,7 @@ import { renderTodoList } from './TodoList.js';
 import { addTodoItemEvent } from './AddTodoItem.js';
 import { deleteTodoItemEvent } from './DeleteTodoItem.js';
 import { deleteTodoItemAllEvent } from './DeleteTodoItemAll.js';
-import { toggleTodoItemEvent } from './ToggleTodoItem.js';
+import { ModifyTodoItemEvent } from './ModifyTodoItem.js';
 
 export let team = teamTemplate;
 export const teamID = window.location.hash.substr(1, 9);
@@ -31,7 +31,7 @@ export const getTeam = async () => {
   addTodoItemEvent();
   deleteTodoItemEvent();
   deleteTodoItemAllEvent();
-  toggleTodoItemEvent();
+  ModifyTodoItemEvent();
 }
 
 const clearRenderedUserList = () => {
