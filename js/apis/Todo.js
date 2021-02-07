@@ -1,45 +1,6 @@
-const BASE_URL = "https://js-todo-list-9ca3a.df.r.appspot.com/api";
-const METHOD = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE",
-};
+import { METHOD, fetchApi } from "./common.js";
 
-const fetchApi = async ({ uri = "", method = METHOD.GET, body = {} }) => {
-  try {
-    const option = {
-      method,
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-    };
-    if (method !== METHOD.GET) {
-      option.body = JSON.stringify(body);
-    }
-
-    const response = await fetch(`${BASE_URL}${uri}`, option);
-    return response.json();
-  } catch (err) {
-    console.warn(err);
-  }
-};
-
-export const User = {
-  URI: "/users",
-  async getUsers() {
-    return fetchApi({ uri: this.URI });
-  },
-  async addUser(name) {
-    return fetchApi({ uri: this.URI, method: METHOD.POST, body: { name } });
-  },
-  async getUser(userId) {
-    return fetchApi({ uri: `${this.URI}/${userId}` });
-  },
-  async deleteUser(userId) {
-    return fetchApi({ uri: `${this.URI}/${userId}`, method: METHOD.DELETE });
-  },
-};
-
-export const Todo = {
+const Todo = {
   priorities: ["NONE", "FIRST", "SECOND"],
   setUri: (userId, itemId = "") => `/users/${userId}/items/${itemId}`,
   async getTodos(userId) {
@@ -82,3 +43,5 @@ export const Todo = {
     });
   },
 };
+
+export default Todo;
