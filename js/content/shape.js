@@ -86,8 +86,30 @@ const $todoListMember = `
   </li>
 `
 
+const $baseIndex = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mission 3 Todo List For Team</title>
+    <meta charset="utf-8" />
+    <link href="./css/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app">
+      <h1 id="user-title" data-username="eastjun">
+        <span><strong>Team</strong>'s Todo Lists</span>
+      </h1>
+      <div class="team-list-container">
+      </div>
+    </div>
+    <script src="./js/index.js" type="module"></script>
+  </body>
+</html>
+`
+
 const $baseUrl = 'https://js-todo-list-9ca3a.df.r.appspot.com/'
 
 
 
-export {$todoAppContainer, $todoListItem, $todoListMember, $indexTeam,$indexTeamAdd, $baseUrl , kanbanHeader}
+export {$todoAppContainer, $todoListItem, $todoListMember, $indexTeam,$indexTeamAdd, $baseUrl , kanbanHeader, $baseIndex}
