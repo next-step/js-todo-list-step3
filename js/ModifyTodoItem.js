@@ -136,6 +136,8 @@ const setPriority = async event => {
 
     try{
         await API.updatePriority(team, user, todoItem);
+        user = await loadTodoList(team, user);
+        renderTodoList(user);
     } catch(err){
         console.error(err);
     }
