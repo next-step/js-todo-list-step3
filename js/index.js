@@ -1,4 +1,4 @@
-import TodoApp from "./components/TodoApp.js";
+import TeamApp from "./components/TeamApp.js";
 
 const appEl = document.querySelector("#app");
-new TodoApp(appEl);
+new TeamApp(appEl);
