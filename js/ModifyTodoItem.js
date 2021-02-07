@@ -67,6 +67,7 @@ const modifyContents = async event => {
             $item = $edit;
         }
     })
+    if(!found) return;
 
     const team = { _id : teamID };
     let user = { _id : event.target.closest('li.todoapp-container').id };

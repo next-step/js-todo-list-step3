@@ -10,6 +10,11 @@ export const renderTodoList = user => {
     }
   
     if(user.todoList.length > 0){
-        $todoList.innerHTML = user.todoList.map(todoItemTemplateHTML).join('');
+        const tempTodoList = [];
+        user.todoList.filter(item => item.priority === "FIRST").forEach(item => tempTodoList.push(item));
+        user.todoList.filter(item => item.priority === "SECOND").forEach(item => tempTodoList.push(item));
+        user.todoList.filter(item => item.priority === "NONE").forEach(item => tempTodoList.push(item));
+
+        $todoList.innerHTML = tempTodoList.map(todoItemTemplateHTML).join('');
     }
 }

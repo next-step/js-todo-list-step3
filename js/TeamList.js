@@ -5,7 +5,6 @@ import { } from './AddTeam.js';
 
 let teamList = [];
 
-// const $teamList = document.querySelector('div.team-list-container');
 const $addTeamButtonContainer = document.querySelector('div.add-team-button-container');
 
 window.onload = async () => {
