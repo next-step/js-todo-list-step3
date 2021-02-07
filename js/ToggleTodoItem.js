@@ -3,26 +3,30 @@ import { teamID } from './Team.js';
 import { loadTodoList } from './LoadTodoList.js';
 import { renderTodoList } from './TodoList.js';
 
-export const deleteTodoItemEvent = () => {
-    document.addEventListener('click', event => deleteTodoItem(event));
+export const toggleTodoItemEvent = () => {
+    document.addEventListener('click', event => toggleTodoItem(event));
 }
 
-const deleteTodoItem = async event => {
-    const $deleteItems = document.querySelectorAll('button.destroy');
+const toggleTodoItem = async event => {
+    const $toggleItems = document.querySelectorAll('input.toggle');
     let found = false;
-    $deleteItems.forEach($deleteItem => {
-        if($deleteItem.contains(event.target)){
+    let $item;
+    $toggleItems.forEach($toggleItem => {
+        if($toggleItem.contains(event.target)){
             found = true;
+            $item = $toggleItem;
         }
     })
     if(!found) return;
+
+    $item.checked = !$item.checked;
 
     const team = { _id : teamID };
     let user = { _id : event.target.closest('li.todoapp-container').id };
     const item = { _id : event.target.closest('li.todo-list-item').id };
     
     try{
-        await API.deleteTodoItem(team, user, item);
+        await API.toggleTodoItem(team, user, item);
         user = await loadTodoList(team, user);
         renderTodoList(user);
     } catch(err){

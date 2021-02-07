@@ -4,8 +4,6 @@ import { teamID } from './Team.js';
 import { loadTodoList } from './LoadTodoList.js';
 import { renderTodoList } from './TodoList.js';
 
-// const $todoappContainer = document.querySelector(`li.todoapp-container#${user._id}`);
-
 export const addTodoItemEvent = () => {
     const $inputItems = document.querySelectorAll('input.new-todo');    
     $inputItems.forEach($inputItem => $inputItem.addEventListener('keyup', event => addTodoItem(event)));
@@ -22,7 +20,6 @@ const addTodoItem = async event => {
     try{
         await API.addTodoItem(team, user, item);
         user = await loadTodoList(team, user);
-        console.log(user)
         renderTodoList(user);
     } catch(err){
         console.error(err);
