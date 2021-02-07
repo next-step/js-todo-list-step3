@@ -13,12 +13,12 @@ export const userTemplate = {
 export const todoItemTemplate = {
     _id: "",
     contents: "",
-    priority: "",
+    priority: "NONE",
     isCompleted: false,
 }
 
 export const teamTemplateHTML = team => `
-    <div class="team-card-container">
+    <div class="team-card-container" id=${team._id}>
         <a href="/kanban.html#${team._id}#all" class="card">
             <div class="card-title">
               ${team.name}
@@ -28,7 +28,7 @@ export const teamTemplateHTML = team => `
 `;
 
 export const todoListTemplateHTML = user => `
-    <li class="todoapp-container">
+    <li class="todoapp-container" id=${user._id}>
           <h2>
             <span><strong>${user.name}</strong>'s Todo List</span>
           </h2>
@@ -38,7 +38,7 @@ export const todoListTemplateHTML = user => `
             </section>
             <section class="main">
               <ul class="todo-list">
-              
+
               </ul>
             </section>
             <div class="count-container">
@@ -61,4 +61,24 @@ export const todoListTemplateHTML = user => `
             </div>
           </div>
         </li>
-`
+`;
+
+export const todoItemTemplateHTML = item => `
+    <li class="todo-list-item">
+        <div class="view">
+            <input class="toggle" type="checkbox" ${item.isCompleted ? 'completed': ''}/>
+            <label class="label">
+                <div class="chip-container">
+                    <select class="chip select">
+                        <option value="0" ${item.priority === "NONE" ? 'selected' : ''}>순위</option>
+                        <option value="1" ${item.priority === "FIRST" ? 'selected' : ''}>1순위</option>
+                        <option value="2" ${item.priority === "SECOND" ? 'selected' : ''}>2순위</option>
+                    </select>
+                </div>
+                ${item.contents}
+            </label>
+            <button class="destroy"></button>
+        </div>
+        <input class="edit" value="완료된 타이틀" />
+    </li>
+`;
