@@ -1,5 +1,5 @@
-import { $indexTeam, $indexTeamAdd,$baseIndex} from "../content/shape.js";
-import {addTeam , responseTeamApi, getTeamId} from "../server/Server.js";
+import { $indexTeam, $indexTeamAdd} from "../content/shape.js";
+import {addTeam, getTeamId} from "../server/indexServer.js";
 
 const $domTeamListContainer = document.querySelector('.team-list-container');
 
@@ -7,10 +7,9 @@ function makeTeamTitle(teamName,teamId) {
   $domTeamListContainer.innerHTML += $indexTeam(teamName,teamId);
 }
 
-function teamAddTitle(){
+function makeTeamCardContainer(){
   $domTeamListContainer.innerHTML += $indexTeamAdd;
 }
-
 
 function addTeamEvent() {
   const $addTeamButton = document.querySelector('#add-team-button')
@@ -27,6 +26,4 @@ function addTeamEventHandler(){
     alert('공백 혹은 정상적이지 않은 팀 이름 입력')
 }
 
-
-
-export {addTeamEvent,makeTeamTitle,teamAddTitle}
+export {addTeamEvent,makeTeamTitle,makeTeamCardContainer}
