@@ -33,7 +33,7 @@ export const API = {
         fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}/toggle`, option.put(item)),
     updateTodoItem: (team, member, item) => 
         fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}`, option.put(item)),
-    updatePriorityOfTodoItem: (team, member, item) => 
+    updatePriority: (team, member, item) => 
         fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}/priority`, option.put(item)),
     deleteAllItems: (team, member) => 
         fetch(`${baseURL}/${team._id}/members/${member._id}/items/`, option.delete),

@@ -69,7 +69,7 @@ export const todoItemTemplateHTML = item => `
             <input class="toggle" type="checkbox" ${item.isCompleted ? 'checked': ''}/>
             <label class="label">
                 <div class="chip-container">
-                    <select class="chip select">
+                    <select class="chip select ${(item.priority === "FIRST") ? 'primary' : (item.priority === "SECOND") ? 'secondary' : ''}">
                         <option value="0" ${item.priority === "NONE" ? 'selected' : ''}>순위</option>
                         <option value="1" ${item.priority === "FIRST" ? 'selected' : ''}>1순위</option>
                         <option value="2" ${item.priority === "SECOND" ? 'selected' : ''}>2순위</option>

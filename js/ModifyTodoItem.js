@@ -7,6 +7,34 @@ export const ModifyTodoItemEvent = () => {
     document.addEventListener('click', event => toggleTodoItem(event));
     document.addEventListener('dblclick', event => convertToEditMode(event));
     document.addEventListener('keyup', event => modifyContents(event));
+    document.addEventListener('change', event => setPriority(event));
+}
+
+const toggleTodoItem = async event => {
+    const $toggleItems = document.querySelectorAll('input.toggle');
+    let found = false;
+    let $item;
+    $toggleItems.forEach($toggleItem => {
+        if($toggleItem.contains(event.target)){
+            found = true;
+            $item = $toggleItem;
+        }
+    })
+    if(!found) return;
+
+    $item.checked = !$item.checked;
+
+    const team = { _id : teamID };
+    let user = { _id : event.target.closest('li.todoapp-container').id };
+    const item = { _id : event.target.closest('li.todo-list-item').id };
+    
+    try{
+        await API.toggleTodoItem(team, user, item);
+        user = await loadTodoList(team, user);
+        renderTodoList(user);
+    } catch(err){
+        console.error(err);
+    }
 }
 
 const convertToEditMode = event => {
@@ -54,29 +82,64 @@ const modifyContents = async event => {
     }
 }
 
-const toggleTodoItem = async event => {
-    const $toggleItems = document.querySelectorAll('input.toggle');
+const setPriority = async event => {
+    const $selects = document.querySelectorAll('select');
     let found = false;
     let $item;
-    $toggleItems.forEach($toggleItem => {
-        if($toggleItem.contains(event.target)){
+    $selects.forEach($select => {
+        if($select.contains(event.target)){
             found = true;
-            $item = $toggleItem;
+            $item = $select;
         }
-    })
+    });
     if(!found) return;
 
-    $item.checked = !$item.checked;
+    const $options = $item.querySelectorAll('option');
+    let $prevSelected, $newSelected;
+    $options.forEach($option => {
+        if($option.selected){
+            $prevSelected = $option;
+        }
+        if($option.value === $item.value){
+            $newSelected = $option;
+        }
+    });
 
     const team = { _id : teamID };
     let user = { _id : event.target.closest('li.todoapp-container').id };
-    const item = { _id : event.target.closest('li.todo-list-item').id };
-    
+    const todoItem = { _id : event.target.closest('li.todo-list-item').id, priority : ""};
+
+    if($item.value === "0"){
+        todoItem.priority = "NONE";
+        if($item.classList.contains('primary')){
+            $item.classList.remove('primary');
+        }
+        if($item.classList.contains('secondary')){
+            $item.classList.remove('secondary');
+        }
+    }
+    else if($item.value === "1"){
+        todoItem.priority = "FIRST";
+        if($item.classList.contains('secondary')){
+            $item.classList.remove('secondary');
+        }
+        $item.classList.add('primary');
+    }
+    else if($item.value === "2"){
+        todoItem.priority = "SECOND";
+        if($item.classList.contains('primary')){
+            $item.classList.remove('primary');
+        }
+        $item.classList.add('secondary');
+    }
+
     try{
-        await API.toggleTodoItem(team, user, item);
-        user = await loadTodoList(team, user);
-        renderTodoList(user);
+        await API.updatePriority(team, user, todoItem);
     } catch(err){
         console.error(err);
     }
+
+    $prevSelected.selected = false;
+    $newSelected.selected = true;
+    
 }
