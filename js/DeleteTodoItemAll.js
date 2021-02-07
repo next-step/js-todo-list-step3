@@ -3,15 +3,15 @@ import { teamID } from './Team.js';
 import { loadTodoList } from './LoadTodoList.js';
 import { renderTodoList } from './TodoList.js';
 
-export const deleteTodoItemEvent = () => {
-    document.addEventListener('click', event => deleteTodoItem(event));
+export const deleteTodoItemAllEvent = () => {
+    document.addEventListener('click', event => deleteTodoItemAll(event));
 }
 
-const deleteTodoItem = async event => {
-    const $deleteItems = document.querySelectorAll('button.destroy');
+const deleteTodoItemAll = async event => {
+    const $deleteItemAlls = document.querySelectorAll('button.clear-completed');
     let found = false;
-    $deleteItems.forEach($deleteItem => {
-        if($deleteItem.contains(event.target)){
+    $deleteItemAlls.forEach($deleteItemAll => {
+        if($deleteItemAll.contains(event.target)){
             found = true;
         }
     })
@@ -19,12 +19,11 @@ const deleteTodoItem = async event => {
 
     const team = { _id : teamID };
     let user = { _id : event.target.closest('li.todoapp-container').id };
-    const item = { _id : event.target.closest('li.todo-list-item').id };
     
     try{
-        await API.deleteTodoItem(team, user, item);
+        await API.deleteAllItems(team, user);
+        console.log(team, user);
         user = await loadTodoList(team, user);
-        console.log(user)
         renderTodoList(user);
     } catch(err){
         console.error(err);

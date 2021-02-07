@@ -5,6 +5,7 @@ import { } from './AddUser.js';
 import { renderTodoList } from './TodoList.js';
 import { addTodoItemEvent } from './AddTodoItem.js';
 import { deleteTodoItemEvent } from './DeleteTodoItem.js';
+import { deleteTodoItemAllEvent } from './DeleteTodoItemAll.js';
 
 export let team = teamTemplate;
 export const teamID = window.location.hash.substr(1, 9);
@@ -12,7 +13,7 @@ team._id = teamID;
 let users = [];
 
 const $teamTitle = document.querySelector('h1#user-title');
-const $todoApps = document.querySelector('.todoapp-list-container');
+// const $todoApps = document.querySelector('.todoapp-list-container');
 const $addUserButtonContainer = document.querySelector('li.add-user-button-container');
 
 window.onload = () => {
@@ -28,6 +29,7 @@ export const getTeam = async () => {
   users.forEach(renderTodoList);
   addTodoItemEvent();
   deleteTodoItemEvent();
+  deleteTodoItemAllEvent();
 }
 
 const clearRenderedUserList = () => {
