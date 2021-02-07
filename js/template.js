@@ -64,7 +64,7 @@ export const todoListTemplateHTML = user => `
 `;
 
 export const todoItemTemplateHTML = item => `
-    <li class="todo-list-item">
+    <li class="todo-list-item" id=${item._id}>
         <div class="view">
             <input class="toggle" type="checkbox" ${item.isCompleted ? 'completed': ''}/>
             <label class="label">

@@ -2,10 +2,9 @@ import { teamTemplate, todoListTemplateHTML } from './Template.js';
 
 import { loadTeam } from './LoadTeam.js';
 import { } from './AddUser.js';
-import { getTodoList } from './TodoList.js';
+import { renderTodoList } from './TodoList.js';
 import { addTodoItemEvent } from './AddTodoItem.js';
-import { loadTodoList } from './LoadTodoList.js';
-import { API } from './API.js';
+import { deleteTodoItemEvent } from './DeleteTodoItem.js';
 
 export let team = teamTemplate;
 export const teamID = window.location.hash.substr(1, 9);
@@ -26,9 +25,9 @@ export const getTeam = async () => {
   $teamTitle.innerHTML = `<span><strong>${team.name}</strong>'s Todo List</span>`
   clearRenderedUserList();
   renderUserList();
-  console.log(users)
-  users.forEach(getTodoList);
+  users.forEach(renderTodoList);
   addTodoItemEvent();
+  deleteTodoItemEvent();
 }
 
 const clearRenderedUserList = () => {
