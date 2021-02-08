@@ -24,12 +24,11 @@ const request = (url, option = {}) => {
     .catch((err) => console.error(err));
 };
 export const teamAPI = {
-  addTeam: (name) => request(`api/teams`, option.post({ name })),
+  addNewTeam: (name) => request(`api/teams`, option.post({ name })),
   getTeamList: () => request(`api/teams`),
   getTeam: (teamID) => request(`api/teams/${teamID}`),
   deleteTeam: (teamID) => request(`api/teams/${teamID}`, option.delete()),
 };
-const commonURL = "api/teams/${teamID}/members";
 export const memberAPI = {
   addMember: (teamID, name) =>
     request(`api/teams/${teamID}/members`, option.post({ name })),

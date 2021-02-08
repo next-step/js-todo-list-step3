@@ -5,9 +5,12 @@ export default class Component {
   constructor($target, props) {
     this.$target = $target;
     this.props = props;
-    this.setup();
-    this.render();
-    this.setEvent();
+    this.init();
+  }
+  async init() {
+    await this.setup();
+    await this.render();
+    await this.setEvent();
   }
   setup() {}
   mounted() {}
