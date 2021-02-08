@@ -25,12 +25,13 @@ function checkValidTeamName(name) {
 }
 
 function isAddTeamButton(target) {
-  return target.id === "add-team-button";
+  return target && target.id === "add-team-button";
 }
 
 // div element에서 closest('div') 하면 자기 자신을 찾는 문제가 있음.
 function isNormalButton(target) {
   return (
+    target &&
     target.closest("div") !== undefined &&
     target.parentNode.closest("div.team-card-container") !== null
   );
@@ -52,11 +53,10 @@ async function onClickAddTeamButton({ target }) {
 
 async function onRightClickTeamButtons(event) {
   event.preventDefault();
-  if (!event.target) return;
   if (isAddTeamButton(event.target) || !isNormalButton(event.target)) return;
 
   if (!confirm(`Remove team ${event.target.textContent.trim()}?`)) return;
-  const teamID = event.target.parentNode.closest("div").id;
-  deleteTeam(teamID);
-  event.target.closest("div.team-card-container").remove();
+  const team = event.target.closest("div.team-card-container");
+  deleteTeam(team.id);
+  team.remove();
 }

@@ -10,7 +10,7 @@ function isTodoProperFilterCompleted(todo) {
   return todo.classList.contains("completed");
 }
 
-export const filterRules = {
+const filterRules = {
   filterAll: isTodoProperFilterAll,
   filterActive: isTodoProperFilterActive,
   filterCompleted: isTodoProperFilterCompleted,

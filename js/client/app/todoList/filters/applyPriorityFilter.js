@@ -7,6 +7,7 @@ export async function applyPriorityFilter(userID) {
   const userUL = document.getElementById(userID).querySelector("ul.todo-list");
   const todoList = await loadTodoList(teamID, userID);
 
+  if (todoList.todoList === undefined) return;
   userUL.innerHTML = "";
 
   for (const todo of todoList.todoList) {
