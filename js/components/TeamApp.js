@@ -12,6 +12,13 @@ export default function TeamApp(appEl) {
     this.render();
   };
 
+  this.createTeam = async (name) => {
+    await Team.addTeam(name);
+
+    this.teams = await Team.getTeams();
+    this.render();
+  };
+
   this.render = () => {
     this.teamList.render();
   };
