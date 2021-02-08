@@ -1,5 +1,6 @@
+import {$todoApps, $addUserButton} from '../dom.js';
+
 function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
   $todoApps.addEventListener('click', e => {
     const $target = e.target
     const targetClassList = $target.classList
@@ -10,7 +11,6 @@ function App() {
     }
   })
 
-  const $addUserButton = document.querySelector('#add-user-button')
   $addUserButton.addEventListener('click', () => {
     const result = prompt('새로운 팀원 이름을 입력해주세요')
   })
