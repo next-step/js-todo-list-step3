@@ -1,6 +1,6 @@
-const $baseUrl = 'https://js-todo-list-9ca3a.df.r.appspot.com/'
+const $baseUrl = "https://js-todo-list-9ca3a.df.r.appspot.com/";
 
-const $todoAppContainer = (teamName, count)=>`
+const $todoAppContainer = (teamName, count) => `
   <li class="todoapp-container">
           <h2>
             <span><strong>${teamName}</strong>'s Todo List</span>
@@ -33,34 +33,34 @@ const $todoAppContainer = (teamName, count)=>`
             </div>
           </div>
    </li>
-`
+`;
 
-const $indexTeam = (teamName,teamId)=> `
+const $indexTeam = (teamName, teamId) => `
         <div class="team-card-container">
           <a href="./kanban.html?${teamId}" class="card">
             <div class="card-title">
              ${teamName}
             </div>
           </a>
-        </div>`
+        </div>`;
 
 const $indexTeamAdd = `
         <div class="add-team-button-container">
           <button id="add-team-button" class="ripple">
             <span class="material-icons">add</span>
           </button>
-        </div>`
+        </div>`;
 
-const kanbanHeader = (teamName)=>
+const kanbanHeader = (teamName) =>
   `<div id="app">
       <h1 id="user-title" data-username=${teamName}>
         <span><strong>${teamName}</strong>'s Todo List</span>
       </h1>
       <ul class="todoapp-list-container flex-column-container">
       </ul>
-    </div>`
+    </div>`;
 
-const $todoListItem = (item)=>`
+const $todoListItem = (item) => `
         <li class="todo-list-item">
                   <div class="view">
                     <input class="toggle" type="checkbox" />
@@ -78,14 +78,21 @@ const $todoListItem = (item)=>`
                   </div>
                   <input class="edit" value="완료된 타이틀" />
          </li>
-`
+`;
 
-const $todoListMember = `
-  <li class="add-user-button-container">
-          <button id="add-user-button" class="ripple">
-            <span class="material-icons">add</span>
-          </button>
-  </li>
-`
-
-export {$todoAppContainer, $todoListItem, $todoListMember, $indexTeam,$indexTeamAdd, $baseUrl , kanbanHeader}
+const $appMemberAdd = `
+    <li class="add-user-button-container">
+      <button id="add-user-button" class="ripple">
+        <span class="material-icons">add</span>
+      </button>
+    </li>
+`;
+export {
+  $todoAppContainer,
+  $todoListItem,
+  $indexTeam,
+  $indexTeamAdd,
+  $baseUrl,
+  kanbanHeader,
+  $appMemberAdd,
+};
