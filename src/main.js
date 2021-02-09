@@ -1,10 +1,3 @@
-import { filter, loadTeamList } from './Team/Team.js';
-import { $teamListContainer } from './dom.js';
+import { team } from './Team/Team.js';
 
-const app = async () => {
-  await loadTeamList();
-
-  $teamListContainer.addEventListener('click', filter);
-};
-
-app();
+team();
