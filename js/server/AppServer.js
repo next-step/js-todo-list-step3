@@ -1,49 +1,25 @@
 import {
-  makeMemberList,
-  addItem,
+  loadMemberList,
   makeAddList,
   addMemberEvent,
 } from "../App/AddMemberEvent.js";
 import { $baseUrl, kanbanHeader } from "../content/shape.js";
 
 let $domTodoAppListContainer;
-function getTeamNameAndTodoList($teamId) {
-  fetch(`${$baseUrl}api/teams`)
+function responseMemberApi($teamId) {
+  fetch(`${$baseUrl}api/teams/${$teamId}`)
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((team) => {
-        if (team._id === $teamId) {
-          document.body.innerHTML += kanbanHeader(team.name);
-        }
-      });
-    })
-    .then(() => {
+      document.body.innerHTML += kanbanHeader(data.name);
       $domTodoAppListContainer = document.querySelector(
         ".todoapp-list-container"
       );
-      responseMemberApi($domTodoAppListContainer, $teamId);
-    });
-}
-
-let count = -1;
-function responseMemberApi(value, teamId) {
-  fetch(`${$baseUrl}api/teams/${teamId}`)
-    .then((response) => response.json())
-    .then((data) => {
+      makeAddList($domTodoAppListContainer);
+      addMemberEvent($teamId);
+      let but = document.querySelector(".add-user-button-container");
       data.members.forEach((arr) => {
-        makeMemberList(arr.name, 0, value);
-        arr.todoList.forEach((arr, index) => {
-          //새로운 멤버의 할일로 바뀐다면
-          if (index == 0) {
-            count++;
-          }
-          addItem(arr.contents, count);
-          document.querySelectorAll(".todo-count > strong")[count].innerHTML =
-            index + 1;
-        });
+        loadMemberList(arr.name, but, arr.todoList, $teamId, arr._id);
       });
-      makeAddList(value);
-      addMemberEvent(teamId);
     });
 }
 
@@ -60,4 +36,4 @@ function addMember(teamName, teamId) {
     .catch(() => "오류 발생");
 }
 
-export { responseMemberApi, addMember, getTeamNameAndTodoList };
+export { addMember, responseMemberApi };

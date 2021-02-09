@@ -4,24 +4,15 @@ import {
   $appMemberAdd,
 } from "../content/shape.js";
 import { addMember, responseMemberApi } from "../server/AppServer.js";
+import {
+  countContainer,
+  initFilterEventListeners,
+  clickEraseButton,
+} from "./todoAppCountContainer.js";
 
-const $domTodoAppListContainer = document.querySelector(
-  ".todoapp-list-container"
-);
-
-function makeMemberList(teamName, count, value) {
-  value.innerHTML += $todoAppContainer(teamName, count);
-}
-
-function addItem(item, index) {
-  const $domTodoListItem = document.querySelectorAll(
-    ".todoapp-container > .todoapp > .main > .todo-list"
-  );
-  $domTodoListItem[index].innerHTML += $todoListItem(item);
-}
-
+//member add  관련
 function makeAddList(value) {
-  value.innerHTML += $appMemberAdd;
+  value.innerHTML = $appMemberAdd;
 }
 
 function addMemberEvent(teamId) {
@@ -29,9 +20,9 @@ function addMemberEvent(teamId) {
   $addTeamButton.addEventListener("click", () => addMemberEventHandler(teamId));
 }
 
-function addMemberEventHandler(teamId) {
+async function addMemberEventHandler(teamId) {
   const result = prompt("팀 이름을 입력해주세요");
-  if (/[\S]/gi.test(result)) {
+  if (/[\S]/gi.test(result) && result !== null) {
     addMember(result, teamId);
     memberRender();
     let $domTodoAppListContainer = document.querySelector(
@@ -51,4 +42,38 @@ function memberRender() {
   }
 }
 
-export { makeMemberList, addItem, addMemberEvent, makeAddList };
+//member별 item
+function loadMemberList(teamMember, button, todoList, teamId, memberId) {
+  button.insertAdjacentHTML("beforebegin", $todoAppContainer(teamMember));
+  let memberNameArr = document.querySelectorAll(
+    ".todoapp-container > h2 > span > strong"
+  );
+  let ulTodolist = document.querySelectorAll(".todo-list");
+  memberNameArr.forEach((memberName, index) => {
+    if (memberName.innerHTML === teamMember) {
+      loadItem(todoList, ulTodolist[index], memberName, teamId, memberId);
+    }
+  });
+}
+
+function loadItem(todoList, ulTag, memberName, teamId, memberId) {
+  let todoApp = ulTag.closest("div");
+  todoList.forEach((x) => {
+    ulTag.insertAdjacentHTML(
+      "beforeend",
+      $todoListItem(x.contents, x.isCompleted, x._id)
+    );
+    countContainer(
+      todoApp.querySelector(".count-container"),
+      ulTag.childElementCount
+    );
+    clickEraseButton(memberName, teamId, memberId, x._id);
+  });
+  initFilterEventListeners(
+    todoApp.querySelector(".count-container > .filters"),
+    ulTag,
+    todoApp.querySelector(".count-container > .todo-count >strong")
+  );
+}
+
+export { loadMemberList, loadItem, addMemberEvent, makeAddList };
