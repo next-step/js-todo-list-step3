@@ -6,6 +6,7 @@ export const template = {
             ${teamName}
           </div>
         </a>
+        <button class="destroy"></button>
       </div>`;
   },
 

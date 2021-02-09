@@ -571,6 +571,35 @@ select.chip {
   font-weight: bold;
 }
 
+/*destroy button*/
+
+.team-list-container .destroy {
+  display: none;
+  position: relative;
+  left: 200px;
+  bottom: 100px;
+  width : 40px;
+  height: 40px;
+  font-size: 24px;
+  color: #bfbfbf;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+}
+
+.team-list-container .destroy:hover {
+  color:  #c98787
+}
+
+.team-list-container .destroy::after {
+  content: 'x';
+}
+.team-list-container .team-card-container:hover .destroy {
+  display: block;
+}
+
+
+/*add team button*/
+
 .add-team-button-container {
   padding: 0 5px;
 }
