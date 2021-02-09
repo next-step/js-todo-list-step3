@@ -1,5 +1,6 @@
+import { Team } from "/js/apis/index.js";
+
 import TeamList from "./TeamList.js";
-import { Team } from "../apis/index.js";
 
 export default function TeamApp(appEl) {
   this.init = async () => {

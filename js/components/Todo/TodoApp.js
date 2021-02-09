@@ -1,8 +1,9 @@
+import { User, Todo } from "/js/apis/index.js";
+
 import TodoUser from "./TodoUser.js";
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
 import TodoCount from "./TodoCount.js";
-import { User, Todo } from "../apis/index.js";
 
 export default function TodoApp(appEl) {
   this.init = async () => {

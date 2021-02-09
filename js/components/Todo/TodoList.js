@@ -1,4 +1,4 @@
-import { Todo } from "../apis.js";
+import { Todo } from "/js/apis/index.js";
 
 const renderSkelMask = () => `
   <li>

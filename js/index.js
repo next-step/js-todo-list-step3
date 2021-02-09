@@ -1,4 +1,4 @@
-import TeamApp from "./components/TeamApp.js";
+import { TeamApp } from "/js/components/index.js";
 
 const appEl = document.querySelector("#app");
 new TeamApp(appEl);
