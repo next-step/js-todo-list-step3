@@ -23,12 +23,6 @@ export const render = (contents) => {
   $teamListContainer.insertAdjacentHTML('beforeend', contents);
 };
 
-/*
-const removeButton = () => {
-  $teamListContainer.lastChild.remove();
-};
-*/
-
 export const clearAllList = () => {
   while ($teamListContainer.firstChild) {
     $teamListContainer.lastChild.remove();
