@@ -8,7 +8,7 @@ const renderTeamItem = ({ _id, name }) => `
 `;
 
 export default function TeamList(listEl, teamApp) {
-  this.createTeam = async ({ target }) => {
+  this.createTeam = ({ target }) => {
     if (!target.classList.contains("ripple")) {
       return;
     }
@@ -22,15 +22,18 @@ export default function TeamList(listEl, teamApp) {
     teamApp.createTeam(name);
   };
 
-  this.deleteTeam = async ({ target }) => {
+  this.deleteTeam = ({ target }) => {
     if (!target.classList.contains("destroy")) {
       return;
     }
 
     const { teamId } = target.dataset;
-    if (!confirm(`정말로 삭제하시겠습니까?\n\n${teamId}`)) {
+    const { name } = teamApp.getTeam(teamId);
+    if (!confirm(`정말로 삭제하시겠습니까?\n\n${name}`)) {
       return;
     }
+
+    teamApp.deleteTeam(teamId);
   };
 
   this.render = () => {

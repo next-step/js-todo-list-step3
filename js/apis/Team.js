@@ -8,6 +8,9 @@ const Team = {
   async addTeam(name) {
     return fetchApi({ uri: this.URI, method: METHOD.POST, body: { name } });
   },
+  async deleteTeam(id) {
+    return fetchApi({ uri: `${this.URI}/${id}`, method: METHOD.DELETE });
+  },
 };
 
 export default Team;
