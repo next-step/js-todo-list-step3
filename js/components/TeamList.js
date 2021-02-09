@@ -3,6 +3,7 @@ const renderTeamItem = ({ _id, name }) => `
     <a href="/kanban.html?team-id=${_id}" class="card">
       <div class="card-title">${name}</div>
     </a>
+    <button class="destroy" data-team-id="${_id}"></button>
   </div>
 `;
 
@@ -21,6 +22,17 @@ export default function TeamList(listEl, teamApp) {
     teamApp.createTeam(name);
   };
 
+  this.deleteTeam = async ({ target }) => {
+    if (!target.classList.contains("destroy")) {
+      return;
+    }
+
+    const { teamId } = target.dataset;
+    if (!confirm(`정말로 삭제하시겠습니까?\n\n${teamId}`)) {
+      return;
+    }
+  };
+
   this.render = () => {
     listEl.innerHTML = `
       ${teamApp.teams.map(renderTeamItem).join("")}
@@ -33,4 +45,5 @@ export default function TeamList(listEl, teamApp) {
   };
 
   listEl.addEventListener("click", this.createTeam);
+  listEl.addEventListener("click", this.deleteTeam);
 }
