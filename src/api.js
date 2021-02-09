@@ -25,6 +25,7 @@ const request = async (url, option = {}) => {
     if (!response.ok) {
       throw new Error(response.status);
     }
+
     return await response.json();
   } catch (e) {
     console.log(e);
@@ -44,7 +45,7 @@ export const api = {
     return request(`${BASE_URL}/api/teams`);
   },
 
-  deleteTeam: () => {
-    return request(`${BASE_URL}api/teams/:${teamId}`, option.delete());
+  deleteTeam: (teamId) => {
+    return request(`${BASE_URL}/api/teams/${teamId}`, option.delete());
   },
 };

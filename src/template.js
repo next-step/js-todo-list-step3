@@ -1,7 +1,7 @@
 export const template = {
   cardContainer: (teamName, teamId) => {
     return `<div class="team-card-container" data-userid="${teamId}">
-        <a href="/kanban.html" class="card">
+        <a class="card">
           <div class="card-title">
             ${teamName}
           </div>
