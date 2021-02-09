@@ -5,8 +5,8 @@ export const template = {
           <div class="card-title">
             ${teamName}
           </div>
+          <button class="destroy"></button>
         </a>
-        <button class="destroy"></button>
       </div>`;
   },
 
