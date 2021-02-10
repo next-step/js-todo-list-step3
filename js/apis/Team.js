@@ -14,6 +14,13 @@ const Team = {
   async deleteTeam(id) {
     return fetchApi({ uri: `${this.URI}/${id}`, method: METHOD.DELETE });
   },
+  async addMember(id, name) {
+    return fetchApi({
+      uri: `${this.URI}/${id}/members`,
+      method: METHOD.POST,
+      body: { name },
+    });
+  },
 };
 
 export default Team;

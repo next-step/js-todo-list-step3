@@ -17,6 +17,13 @@ export default function MemberApp(appEl, teamId) {
     this.render();
   };
 
+  this.addMember = async (name) => {
+    await Team.addMember(teamId, name);
+
+    ({ members: this.members } = await Team.getTeam(teamId));
+    this.render();
+  };
+
   this.render = () => {
     this.memberTitle.render();
     this.memberList.render();
