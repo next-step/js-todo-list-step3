@@ -1,7 +1,6 @@
 import { API } from '../API.js';
 import { teamID } from './Team.js';
-import { loadTodoList } from './LoadTodoList.js';
-import { renderTodoList } from './TodoList.js';
+import { clearRenderedTodoList, renderTodoList } from './TodoList.js';
 
 export const deleteTodoItemAllEvent = () => {
     document.addEventListener('click', event => deleteTodoItemAll(event));
@@ -16,8 +15,7 @@ const deleteTodoItemAll = async event => {
     
     try{
         await API.deleteAllItems(teamID, userID);
-        const user = await loadTodoList(teamID, userID);
-        renderTodoList(user);
+        clearRenderedTodoList(userID);
     } catch(err){
         console.error(err);
     }

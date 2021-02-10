@@ -18,6 +18,12 @@ const setFilter = async event => {
 
     renderTodoList(user);
 }
+
+export const clearRenderedTodoList = userID => {
+    const $todoappContainer = document.querySelector(`.todoapp-container#${userID}`);
+    const $todoList = $todoappContainer.querySelector('.todo-list');
+    $todoList.innerHTML = ``;
+}
   
 export const renderTodoList = user => {
     const $todoappContainer = document.querySelector(`.todoapp-container#${user._id}`);
