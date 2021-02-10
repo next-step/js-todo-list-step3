@@ -5,6 +5,9 @@ const Team = {
   async getTeams() {
     return fetchApi({ uri: this.URI });
   },
+  async getTeam(id) {
+    return fetchApi({ uri: `${this.URI}/${id}` });
+  },
   async addTeam(name) {
     return fetchApi({ uri: this.URI, method: METHOD.POST, body: { name } });
   },
