@@ -1,8 +1,8 @@
 import { API } from '../API.js';
 
-export const loadTeam = async team => {
+export const loadTeam = async teamID => {
     try{
-        const res = await API.loadTeam(team);
+        const res = await API.loadTeam(teamID);
         return res.json();
     } catch(err){
         console.error(err);

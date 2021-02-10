@@ -22,19 +22,19 @@ const option = {
 
 export const API = {
     addTeam: team => fetch(`${baseURL}`, option.post(team)),
-    loadTeam: team => fetch(`${baseURL}/${team._id}`),
+    loadTeam: teamID => fetch(`${baseURL}/${teamID}`),
     loadTeamList: () => fetch(`${baseURL}`),
-    deleteTeam: team => fetch(`${baseURL}/${team._id}`, option.delete),
-    addMember: (team, member) => fetch(`${baseURL}/${team._id}/members`, option.post(member)),
-    loadTodoList: (team, member) => fetch(`${baseURL}/${team._id}/members/${member._id}`),
-    addTodoItem: (team, member, item) => fetch(`${baseURL}/${team._id}/members/${member._id}/items`, option.post(item)),
-    deleteTodoItem: (team, member, item) => fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}`, option.delete),
-    toggleTodoItem: (team, member, item) => 
-        fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}/toggle`, option.put(item)),
-    updateTodoItem: (team, member, item) => 
-        fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}`, option.put(item)),
-    updatePriority: (team, member, item) => 
-        fetch(`${baseURL}/${team._id}/members/${member._id}/items/${item._id}/priority`, option.put(item)),
-    deleteAllItems: (team, member) => 
-        fetch(`${baseURL}/${team._id}/members/${member._id}/items/`, option.delete),
+    deleteTeam: teamID => fetch(`${baseURL}/${teamID}`, option.delete),
+    addMember: (teamID, member) => fetch(`${baseURL}/${teamID}/members`, option.post(member)),
+    loadTodoList: (teamID, memberID) => fetch(`${baseURL}/${teamID}/members/${memberID}`),
+    addTodoItem: (teamID, memberID, item) => fetch(`${baseURL}/${teamID}/members/${memberID}/items`, option.post(item)),
+    deleteTodoItem: (teamID, memberID, itemID) => fetch(`${baseURL}/${teamID}/members/${memberID}/items/${itemID}`, option.delete),
+    toggleTodoItem: (teamID, memberID, item) => 
+        fetch(`${baseURL}/${teamID}/members/${memberID}/items/${item._id}/toggle`, option.put(item)),
+    updateTodoItem: (teamID, memberID, item) => 
+        fetch(`${baseURL}/${teamID}/members/${memberID}/items/${item._id}`, option.put(item)),
+    updatePriority: (teamID, memberID, item) => 
+        fetch(`${baseURL}/${teamID}/members/${memberID}/items/${item._id}/priority`, option.put(item)),
+    deleteAllItems: (teamID, memberID) => 
+        fetch(`${baseURL}/${teamID}/members/${memberID}/items/`, option.delete),
 }

@@ -1,55 +1,46 @@
 import { teamTemplate, todoListTemplateHTML } from '../Template.js';
-
 import { loadTeam } from './LoadTeam.js';
-import { } from './AddUser.js';
+import './AddUser.js';
 import { renderTodoList } from './TodoList.js';
 import { addTodoItemEvent } from './AddTodoItem.js';
 import { deleteTodoItemEvent } from './DeleteTodoItem.js';
 import { deleteTodoItemAllEvent } from './DeleteTodoItemAll.js';
-import { ModifyTodoItemEvent } from './ModifyTodoItem.js';
+import { modifyContentsEvent } from './ModifyContents.js';
+import { toggleTodoItemEvent } from './ToggleTodoItem.js';
+import { setPriorityEvent } from './SetPriority.js';
 
 export let team = teamTemplate;
 export const teamID = window.location.hash.substr(1, 9);
 team._id = teamID;
 let users = [];
 
-const $teamTitle = document.querySelector('h1#user-title');
-const $addUserButtonContainer = document.querySelector('li.add-user-button-container');
+const $teamTitle = document.querySelector('#user-title').querySelector('strong');
+const $addUserButtonContainer = document.querySelector('.add-user-button-container');
 
 window.onload = () => {
   getTeam();
 }
 
 export const getTeam = async () => {
-  team = await loadTeam(team);
+  team = await loadTeam(teamID);
   users = team.members;
-  $teamTitle.innerHTML = `<span><strong>${team.name}</strong>'s Todo List</span>`
+  $teamTitle.innerText = team.name;
   clearRenderedUserList();
   renderUserList();
   users.forEach(renderTodoList);
   addTodoItemEvent();
   deleteTodoItemEvent();
   deleteTodoItemAllEvent();
-  ModifyTodoItemEvent();
+  modifyContentsEvent();
+  toggleTodoItemEvent();
+  setPriorityEvent();
 }
 
 const clearRenderedUserList = () => {
-  const todoappContainer = document.querySelectorAll('li.todoapp-container');
+  const todoappContainer = document.querySelectorAll('.todoapp-container');
   todoappContainer.forEach(user => user.remove());
 }
 
 const renderUserList = () => {
   users.forEach(user => { $addUserButtonContainer.insertAdjacentHTML('beforebegin', todoListTemplateHTML(user)); });
 }
-
-// $todoApps.addEventListener('click', event => notUnderstoodYet(event));
-
-// const notUnderstoodYet = event => {
-//   const $target = event.target;
-//   const targetClassList = $target.classList;
-//   if (targetClassList.contains('chip')) {
-//     const $chipSelect = $target.closest('.chip-container').querySelector('select');
-//     $target.classList.add('hidden');
-//     $chipSelect.classList.remove('hidden');
-//   }
-// }

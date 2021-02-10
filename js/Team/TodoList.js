@@ -8,19 +8,11 @@ document.addEventListener('click', event => setFilter(event));
 
 const setFilter = async event => {
     const $as = document.querySelectorAll('a');
-    let $item;
-    let found = false;
-    $as.forEach($a => {
-        if($a.contains(event.target)){
-            $item = $a;
-            found = true;
-        }
-    })
-    if(!found) return;
+    const $item = Array.from($as).find($a => $a.contains(event.target));
+    if($item === undefined) return;
 
-    const team = { _id : teamID };
-    let user = { _id : event.target.closest('li.todoapp-container').id, todoList : [] };
-    user = await loadTodoList(team, user);
+    const userID = event.target.closest('.todoapp-container').id;
+    const user = await loadTodoList(teamID, userID);
 
     filter = event.target.hash.substr(1);
 
@@ -28,8 +20,8 @@ const setFilter = async event => {
 }
   
 export const renderTodoList = user => {
-    const $todoappContainer = document.querySelector(`li.todoapp-container#${user._id}`);
-    const $todoList = $todoappContainer.querySelector('ul.todo-list');
+    const $todoappContainer = document.querySelector(`.todoapp-container#${user._id}`);
+    const $todoList = $todoappContainer.querySelector('.todo-list');
 
     if(!user.todoList || user.todoList.length === 0){
         $todoList.innerHTML = ``;
@@ -58,6 +50,6 @@ const sortTodoList = user => {
 
 const filterList = (todoList, filter) => {
     if(filter === "all") return todoList;
-    if(filter === "active") return todoList.filter(item => item.isCompleted === false);
-    if(filter === "completed") return todoList.filter(item => item.isCompleted === true);
+    if(filter === "active") return todoList.filter(item => !item.isCompleted);
+    if(filter === "completed") return todoList.filter(item => item.isCompleted);
 }

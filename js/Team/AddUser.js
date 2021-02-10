@@ -15,11 +15,10 @@ export const addUser = async () => {
     }
 
     const user = userTemplate;
-    user._id = Math.random().toString(36).substr(2,10);
     user.name = username;
 
     try{
-        await API.addMember(team, user);
+        await API.addMember(team._id, user);
         getTeam();
     } catch(err){
         console.error(err);

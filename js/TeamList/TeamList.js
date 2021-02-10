@@ -1,6 +1,6 @@
 import { teamTemplateHTML, addTeamButtonHTML } from '../Template.js';
 import { loadTeamList } from './LoadTeamList.js';
-import { } from './AddTeam.js';
+import { addTeam } from './AddTeam.js';
 
 let teamList = [];
 
@@ -17,10 +17,13 @@ export const getTeamList = async () => {
 }
 
 const clearRenderedTeamList = () => {
-  let teamCards = document.querySelectorAll('div.team-card-container');
+  let teamCards = document.querySelectorAll('.team-card-container');
   teamCards.forEach(teamCard => teamCard.remove());
 }
 
 const renderTeamList = () => {
   $teamListContainer.innerHTML = teamList.map(teamTemplateHTML).join('') + addTeamButtonHTML;
+
+  const $addTeamButton = document.querySelector('#add-team-button');
+  $addTeamButton.addEventListener('click', () => addTeam());
 }
