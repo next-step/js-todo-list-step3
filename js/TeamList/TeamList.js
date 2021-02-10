@@ -12,7 +12,6 @@ window.onload = async () => {
 
 export const getTeamList = async () => {
   teamList = await loadTeamList();
-  // teamList.forEach(team => API.deleteTeam(team));
   clearRenderedTeamList();
   renderTeamList();
 }
