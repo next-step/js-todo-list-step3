@@ -1,10 +1,10 @@
-import { teamTemplateHTML } from '../Template.js';
+import { teamTemplateHTML, addTeamButtonHTML } from '../Template.js';
 import { loadTeamList } from './LoadTeamList.js';
 import { } from './AddTeam.js';
 
 let teamList = [];
 
-const $addTeamButtonContainer = document.querySelector('div.add-team-button-container');
+const $teamListContainer = document.querySelector('.team-list-container');
 
 window.onload = async () => {
   getTeamList();
@@ -22,5 +22,5 @@ const clearRenderedTeamList = () => {
 }
 
 const renderTeamList = () => {
-  teamList.forEach(team => { $addTeamButtonContainer.insertAdjacentHTML('beforebegin', teamTemplateHTML(team)); });
+  $teamListContainer.innerHTML = teamList.map(teamTemplateHTML).join('') + addTeamButtonHTML;
 }

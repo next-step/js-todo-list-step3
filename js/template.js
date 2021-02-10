@@ -82,3 +82,9 @@ export const todoItemTemplateHTML = item => `
         <input class="edit" value=${item.contents} />
     </li>
 `;
+
+export const addTeamButtonHTML = `
+  <button id="add-team-button" class="ripple">
+    <span class="material-icons">add</span>
+  </button>
+  `;
