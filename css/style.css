@@ -597,6 +597,18 @@ select.chip {
   display: block;
 }
 
+@media only screen and (min-width:1080px){
+  .team-list-container .destroy {
+    left: 210px;
+  }
+}
+
+@media only screen and (min-width:1240px){
+  .team-list-container .destroy {
+    left: 240px;
+  }
+}
+
 
 /*add team button*/
 

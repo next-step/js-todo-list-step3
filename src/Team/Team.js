@@ -16,7 +16,7 @@ const filter = ({ target }) => {
     removeTeam(target);
   } else if (targetClass === 'ripple') {
     createTeam();
-  }
+  } // 여기서 else로 a태그에 href속성 추가하는 코드를 넣고 싶단 말이죠
 };
 
 export const render = (contents) => {
