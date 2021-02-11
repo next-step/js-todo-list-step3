@@ -9,6 +9,8 @@ export const team = async () => {
   $teamListContainer.addEventListener('click', filter);
 };
 
+team();
+
 const filter = ({ target }) => {
   const targetClass = target.classList.item(0);
 

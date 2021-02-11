@@ -1,5 +1,5 @@
 import { loadTeamList } from './loadTeam.js';
-import { clearAllList } from './Team.js';
+import { clearAllList } from './team.js';
 import { api } from '../api.js';
 
 export const createTeam = async () => {

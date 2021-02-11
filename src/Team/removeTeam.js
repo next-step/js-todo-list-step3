@@ -1,4 +1,4 @@
-import { clearAllList } from './Team.js';
+import { clearAllList } from './team.js';
 import { loadTeamList } from './loadTeam.js';
 import { api } from '../api.js';
 
