@@ -20,13 +20,13 @@ const setFilter = async event => {
 }
 
 export const clearRenderedTodoList = userID => {
-    const $todoappContainer = document.querySelector(`.todoapp-container#${userID}`);
+    const $todoappContainer = document.querySelector(`.todoapp-container#${'id'+userID}`);
     const $todoList = $todoappContainer.querySelector('.todo-list');
     $todoList.innerHTML = ``;
 }
   
 export const renderTodoList = user => {
-    const $todoappContainer = document.querySelector(`.todoapp-container#${user._id}`);
+    const $todoappContainer = document.querySelector(`.todoapp-container#${'id'+user._id}`);
     const $todoList = $todoappContainer.querySelector('.todo-list');
 
     if(!user.todoList || user.todoList.length === 0){
