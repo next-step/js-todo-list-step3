@@ -19,7 +19,9 @@ const filter = ({ target }) => {
   } else if (targetClass === 'ripple') {
     createTeam();
   } else {
-    target.closest('a').setAttribute('href', './kanban.html');
+    const teamId = getTeamId(target);
+
+    target.closest('a').setAttribute('href', `./kanban.html#${teamId}`);
   }
 };
 
@@ -31,4 +33,11 @@ export const clearAllList = () => {
   while ($teamListContainer.firstChild) {
     $teamListContainer.lastChild.remove();
   }
+};
+
+export const getTeamId = (target) => {
+  const card = target.closest('a').parentElement;
+  const teamId = card.dataset.userid;
+
+  return teamId;
 };

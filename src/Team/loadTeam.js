@@ -9,5 +9,5 @@ export const loadTeamList = async () => {
     render(template.cardContainer(item.name, item._id));
   });
 
-  render(template.addCardButton());
+  render(template.addTeamButton());
 };

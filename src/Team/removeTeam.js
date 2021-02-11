@@ -1,4 +1,4 @@
-import { clearAllList } from './team.js';
+import { clearAllList, getTeamId } from './team.js';
 import { loadTeamList } from './loadTeam.js';
 import { api } from '../api.js';
 
@@ -7,8 +7,7 @@ export const removeTeam = async (target) => {
     return;
   }
 
-  const card = target.closest('a').parentElement;
-  const teamId = card.dataset.userid;
+  const teamId = getTeamId(target);
 
   await api.deleteTeam(teamId);
 
