@@ -51,33 +51,4 @@ function onCompletedFilterHandler(ulTag, todoCount) {
   todoCount.innerHTML = count;
 }
 
-function clickEraseButton(name, teamId, memberId, itemId) {
-  document.querySelectorAll(".destroy").forEach(($el) =>
-    $el.addEventListener("click", (e) => {
-      if ($el.closest("div").id === itemId);
-      clickEraseHanlder(e, $el, name, teamId, memberId, itemId);
-    })
-  );
-}
-
-function clickEraseHanlder(event, $el, name, teamId, memberId, itemId) {
-  event.target.closest("li").remove();
-  document.querySelector(
-    ".todo-count > strong"
-  ).innerText = document.querySelector(".todo-list").childElementCount;
-  getUserIdAndDeleteTodolist(teamId, memberId, itemId);
-}
-
-// 삭제버튼 클릭시 해당 TODOLIST의 item삭제하는 DELETE_TODOLIST함수 실행
-function getUserIdAndDeleteTodolist(teamId, memberId, itemId) {
-  fetch(
-    `https://js-todo-list-9ca3a.df.r.appspot.com/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-    { method: "DELETE" }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
-}
-
-export { countContainer, initFilterEventListeners, clickEraseButton };
+export { countContainer, initFilterEventListeners };

@@ -7,8 +7,13 @@ import { addMember, responseMemberApi } from "../server/AppServer.js";
 import {
   countContainer,
   initFilterEventListeners,
-  clickEraseButton,
 } from "./todoAppCountContainer.js";
+
+import {
+  clickEraseButton,
+  clickInput,
+  clickCheckboxButton,
+} from "./mainLiItem.js";
 
 //member add  관련
 function makeAddList(value) {
@@ -68,7 +73,9 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
       ulTag.childElementCount
     );
     clickEraseButton(memberName, teamId, memberId, x._id);
+    clickCheckboxButton(todoApp, teamId, memberId, x._id);
   });
+  clickInput(todoApp, teamId, memberId);
   initFilterEventListeners(
     todoApp.querySelector(".count-container > .filters"),
     ulTag,
