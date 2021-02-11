@@ -1,5 +1,4 @@
 import { api } from '../api.js';
-import { $todoApps } from '../dom.js';
 import { template } from '../template.js';
 import { teamId } from './todo.js';
 
@@ -9,7 +8,7 @@ export const todoInput = ({ target, key }) => {
 
   const addTodo = async () => {
     const $todoList = target.closest('div').querySelector('ul');
-    const memberId = target.parentElement.parentElement.parentElement.dataset.userid;
+    const memberId = target.parentElement.parentElement.parentElement.dataset.memberid;
     const todoContents = {
       contents: target.value,
     };

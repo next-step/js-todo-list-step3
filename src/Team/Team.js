@@ -37,7 +37,7 @@ export const clearAllList = () => {
 
 export const getTeamId = (target) => {
   const card = target.closest('a').parentElement;
-  const teamId = card.dataset.userid;
+  const teamId = card.dataset.teamid;
 
   return teamId;
 };

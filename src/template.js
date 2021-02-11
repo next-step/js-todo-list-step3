@@ -1,6 +1,6 @@
 export const template = {
   cardContainer: (teamName, teamId) => {
-    return `<div class="team-card-container" data-userid="${teamId}">
+    return `<div class="team-card-container" data-teamid="${teamId}">
         <a class="card">
           <div class="card-title">
             ${teamName}
@@ -18,8 +18,8 @@ export const template = {
   </div>`;
   },
 
-  todoAppContainer: (userId, userName) => {
-    return `<li class="todoapp-container" data-userid= "${userId}">
+  todoAppContainer: (memberId, userName) => {
+    return `<li class="todoapp-container" data-memberid= "${memberId}">
     <h2>
       <span><strong>${userName}</strong>'s Todo List</span>
     </h2>

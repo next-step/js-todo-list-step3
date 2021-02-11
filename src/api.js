@@ -29,6 +29,7 @@ const request = async (url, option = {}) => {
     return await response.json();
   } catch (e) {
     console.log(e);
+    return e;
   }
 };
 
