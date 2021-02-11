@@ -8,9 +8,11 @@ export const toggleTodoItemEvent = () => {
 }
 
 const toggleTodoItem = async event => {
-    const $toggleItems = document.querySelectorAll('.toggle');
-    const $item = Array.from($toggleItems).find($toggleItem => $toggleItem.contains(event.target));
-    if($item === undefined) return;
+    if(!event.target.classList.contains('toggle')){
+        return;
+    }
+
+    const $item = event.target;
 
     $item.checked = !$item.checked;
 

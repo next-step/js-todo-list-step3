@@ -8,9 +8,11 @@ export const setPriorityEvent = () => {
 }
 
 const setPriority = async event => {
-    const $selects = document.querySelectorAll('select');
-    const $item = Array.from($selects).find($select => $select.contains(event.target));
-    if($item === undefined) return;
+    if(!event.target.classList.contains('select')){
+        return;
+    }
+
+    const $item = event.target;
 
     const $options = $item.querySelectorAll('option');
     let $prevSelected, $newSelected;

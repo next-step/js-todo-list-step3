@@ -9,9 +9,11 @@ export const modifyContentsEvent = () => {
 }
 
 const convertToEditMode = event => {
-    const $labels = document.querySelectorAll('.label');
-    const $item = Array.from($labels).find($label => $label.contains(event.target));
-    if($item === undefined) return;
+    if(!event.target.classList.contains('label')){
+        return;
+    }
+
+    const $item = event.target;
     
     const itemElement = $item.closest('li');
     itemElement.classList.add('editing');
