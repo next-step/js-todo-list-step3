@@ -49,7 +49,7 @@ export const api = {
     return request(`${BASE_URL}/api/teams/${teamId}`, option.delete());
   },
 
-  addMember: (memberName) => {
+  addMember: (teamId, memberName) => {
     return request(`${BASE_URL}/api/teams/${teamId}/members`, option.post(memberName));
   },
 

@@ -29,7 +29,6 @@ export const loadTodo = async () => {
 
   renderButton();
 
-  console.log(members);
   const addTodoItem = (item) => {
     const teamElements = $todoApps.getElementsByClassName('todoapp-container');
 
