@@ -38,7 +38,7 @@ export const api = {
   },
 
   getTeam: (teamId) => {
-    return request(`${BASE_URL}/api/teams/:${teamId}`);
+    return request(`${BASE_URL}/api/teams/${teamId}`);
   },
 
   getTeamList: () => {
@@ -47,5 +47,52 @@ export const api = {
 
   deleteTeam: (teamId) => {
     return request(`${BASE_URL}/api/teams/${teamId}`, option.delete());
+  },
+
+  addMember: (memberName) => {
+    return request(`${BASE_URL}/api/teams/${teamId}/members`, option.post(memberName));
+  },
+
+  getTodo: (teamId, memberId) => {
+    return request(`${BASE_URL}/api/teams/${teamId}/members/${memberId}`);
+  },
+
+  addTodo: (teamId, memberId, contents) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
+      option.post(contents)
+    );
+  },
+
+  deleteTodo: (teamId, memberId, itemId) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+      option.delete()
+    );
+  },
+
+  toggleTodo: (teamId, memberId, itemId) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+      option.put()
+    );
+  },
+
+  editTodo: (teamId, memberId, itemId, contents) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+      option.put(contents)
+    );
+  },
+
+  setPriority: (teamId, memberId, itemId, contents) => {
+    return request(
+      `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
+      option.put(contents)
+    );
+  },
+
+  deleteAllTodo: (teamId, memberId) => {
+    return request(`${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`, option.delete());
   },
 };
