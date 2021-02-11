@@ -3,8 +3,6 @@ import { render } from './Team.js';
 import { api } from '../api.js';
 
 export const loadTeamList = async () => {
-  //render(template.cardContainer('test', '0'));
-
   const teamList = await api.getTeamList();
 
   teamList.map((item) => {

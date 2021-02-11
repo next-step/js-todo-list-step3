@@ -560,6 +560,7 @@ select.chip {
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .team-list-container .team-card-container {
