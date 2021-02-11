@@ -63,9 +63,27 @@ function putServerIsCompleted(teamId, memberId, itemId, IsCompleted) {
     .then((data) => console.log(data));
 }
 
+function addMemberItem(value, teamId, memberId) {
+  fetch(
+    `http://js-todo-list-9ca3a.df.r.appspot.com/api/teams/${teamId}/members/${memberId}/items`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: value,
+      }),
+    }
+  )
+    .then((response) => response.json())
+    .then(() => {
+      //전부 렌더링
+      responseMemberApi(teamId);
+    });
+}
 export {
   addMember,
   responseMemberApi,
   getUserIdAndDeleteTodolist,
   putServerIsCompleted,
+  addMemberItem,
 };

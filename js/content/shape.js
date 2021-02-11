@@ -60,11 +60,11 @@ const kanbanHeader = (teamName) =>
       </ul>
     </div>`;
 
-const $todoListItem = (item, isCompleted, itemId) => {
+const $todoListItem = (item, isCompleted) => {
   if (isCompleted)
     return `
         <li class="todo-list-item completed">
-                  <div class="view" id=${itemId}>
+                  <div class="view">
                     <input class="toggle" type="checkbox" checked="true" />
                     <label class="label">
                       <div class="chip-container">
@@ -84,7 +84,7 @@ const $todoListItem = (item, isCompleted, itemId) => {
   else
     return `
         <li class="todo-list-item active">
-                  <div class="view" id=${itemId}>
+                  <div class="view">
                     <input class="toggle" type="checkbox" />
                     <label class="label">
                       <div class="chip-container">

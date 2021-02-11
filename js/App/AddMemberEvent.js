@@ -66,7 +66,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   todoList.forEach((x) => {
     ulTag.insertAdjacentHTML(
       "beforeend",
-      $todoListItem(x.contents, x.isCompleted, x._id)
+      $todoListItem(x.contents, x.isCompleted)
     );
     countContainer(
       todoApp.querySelector(".count-container"),
@@ -75,7 +75,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
     clickEraseButton(memberName, teamId, memberId, x._id);
     clickCheckboxButton(todoApp, teamId, memberId, x._id);
   });
-  clickInput(todoApp, teamId, memberId);
+  clickInput(todoApp, ulTag, teamId, memberId);
   initFilterEventListeners(
     todoApp.querySelector(".count-container > .filters"),
     ulTag,

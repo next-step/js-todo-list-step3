@@ -1,7 +1,11 @@
 import {
   getUserIdAndDeleteTodolist,
   putServerIsCompleted,
+  addMemberItem,
+  responseMemberApi,
 } from "../server/AppServer.js";
+import { $todoListItem } from "../content/shape.js";
+import { countContainer } from "./todoAppCountContainer.js";
 
 function clickEraseButton(name, teamId, memberId, itemId) {
   document.querySelectorAll(".destroy").forEach(($el) =>
@@ -43,18 +47,19 @@ function clickCheckboxHandler({ target }, teamId, memberId, itemId) {
   }
 }
 
-function clickInput(todoApp, teamId, memberId) {
+function clickInput(todoApp, ulTag, teamId, memberId) {
   let newTodo = todoApp.querySelector(".input-container > .new-todo");
   newTodo.addEventListener("keyup", (e) =>
-    clickEnter(e, newTodo, teamId, memberId, todoApp)
+    clickEnter(e, newTodo, ulTag, teamId, memberId, todoApp)
   );
 }
 
-function clickEnter(event, newTodo, teamId, memberId, todoApp) {
+function clickEnter(event, newTodo, ulTag, teamId, memberId, todoApp) {
   if (event.key === "Enter" && /[\S]/gi.test(newTodo.value) !== true) {
     alert("공백을 입력했습니다.");
   } else if (event.key === "Enter" && /[\S]/gi.test(newTodo.value) == true) {
     {
+      addMemberItem(newTodo.value, teamId, memberId);
     }
     //입력한 할일 추가시 할일 공백으로 만들기
     newTodo.value = "";
