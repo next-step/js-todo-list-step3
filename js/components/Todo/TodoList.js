@@ -1,7 +1,7 @@
 import { Todo } from "/js/apis/index.js";
 
 const renderSkelMask = () => `
-  <li>
+  <li class="todo-list-item">
     <div class="view">
       <label class="label">
         <div class="animated-background">
@@ -30,22 +30,24 @@ const renderTodoItem = (
     .join("");
 
   return `
-  <li class="${
-    _id === editingId ? "editing" : isCompleted ? "completed" : ""
-  }" data-id="${_id}">
-    <div class="view">
-      <input class="toggle" type="checkbox" ${isCompleted ? "checked" : ""}>
-      <label class="label">
-        <select class="chip select ${chipClasses[priorityIndex] ?? ""}">
-          ${optionsDOMString}
-        </select>
-        ${contents}
-      </label>
-      <button class="destroy"></button>
-    </div>
-    <input class="edit" value="${contents}">
-  </li>
-`;
+    <li class="todo-list-item ${
+      _id === editingId ? "editing" : isCompleted ? "completed" : ""
+    }" data-id="${_id}">
+      <div class="view">
+        <input class="toggle" type="checkbox" ${isCompleted ? "checked" : ""}>
+        <label class="label">
+          <div class="chip-container">
+            <select class="chip select ${chipClasses[priorityIndex] ?? ""}">
+              ${optionsDOMString}
+            </select>
+          </div>
+          ${contents}
+        </label>
+        <button class="destroy"></button>
+      </div>
+      <input class="edit" value="${contents}">
+    </li>
+  `;
 };
 
 export default function TodoList(listEl, todoApp) {

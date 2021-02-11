@@ -10,6 +10,7 @@ export default function MemberApp(appEl, teamId) {
 
     const team = await Team.getTeam(teamId);
     ({ name: this.name, members: this.members } = team);
+    this.teamId = teamId;
 
     this.memberTitle = new MemberTitle(titleEl, this);
     this.memberList = new MemberList(listEl, this);
@@ -18,9 +19,9 @@ export default function MemberApp(appEl, teamId) {
   };
 
   this.addMember = async (name) => {
-    await Team.addMember(teamId, name);
+    await Team.addMember(this.teamId, name);
 
-    ({ members: this.members } = await Team.getTeam(teamId));
+    ({ members: this.members } = await Team.getTeam(this.teamId));
     this.render();
   };
 
