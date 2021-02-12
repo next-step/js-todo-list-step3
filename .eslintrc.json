@@ -11,11 +11,13 @@
   "rules": {
     "no-new": "off",
     "no-alert": "off",
+    "no-shadow": "off",
     "no-param-reassign": "off",
     "no-return-assign": "off",
     "import/extensions": "off",
+    "consistent-return": "off",
     "import/prefer-default-export": "off",
-    "max-depth": ["error", 1],
+    "max-depth": ["error", 2],
     "max-lines-per-function": ["error", 20]
   }
 }
