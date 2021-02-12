@@ -1,8 +1,8 @@
 /*@jsx Reilly.createElement */
-import ReillyDOM from 'reillyDOM';
 import Reilly from 'reilly';
+import ReillyDOM from 'reillyDOM';
 import App from './App';
-import './index.css';
+import './style.css';
 import configStore from './reducs/configStore';
 
 export const store = configStore();

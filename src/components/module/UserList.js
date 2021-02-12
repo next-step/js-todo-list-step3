@@ -1,5 +1,6 @@
-/*@jsx Reilly.createElement*/
+/*@jsx Reilly.createElement */
 import Reilly from 'reilly';
+
 import { Skeleton, UserMgmtButton, UserButton } from 'components';
 import { store } from '../..';
 import { Interactions } from 'utils';

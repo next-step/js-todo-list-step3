@@ -1,16 +1,17 @@
-/*@jsx Reilly.createElement*/
+/*@jsx Reilly.createElement */
 import Reilly from 'reilly';
+
 import { MESSAGES } from 'utils';
 
 function Title(props) {
-  const { id, user } = props;
+  const { id, name } = props;
 
   return (
     <h1 id={id} onclick={() => (location.href = '')}>
       <span>
-        {user ? (
+        {name ? (
           <span>
-            <strong>{user.name}</strong>'s Todo List
+            <strong>{name}</strong>'s Todo List
           </span>
         ) : (
           MESSAGES.WELCOME

@@ -26,7 +26,7 @@ const userReducer = (state = initialState, action) => {
     case LOAD_USERS:
       return { ...state, isUsersLoading: false, users: action.payload };
     case FAIL_LOAD_USERS:
-      return { ...state, isUsersLoading: false };
+      return { ...state, isUsersLoading: false, error: action.payload };
     case LOAD_USER:
       return {
         ...state,
@@ -42,7 +42,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
-        users: state.users?.filter(({ _id }) => _id !== action.payload),
+        users: state.users.filter(({ _id }) => _id !== action.payload),
       };
     case USER_ERROR:
       return {
@@ -67,8 +67,9 @@ export const fetchUsersAsync = () => async dispatch => {
 export const fetchUserAsync = id => async (dispatch, getState) => {
   try {
     const user = await UserService.fetchUser(id);
-    const todoList = await TodoService.fetchAll(user._id);
     dispatch(createAction(LOAD_USER, user));
+
+    const todoList = await TodoService.fetchAll(user._id);
     dispatch(createAction(FETCH_TODOS, todoList));
   } catch (error) {
     dispatch(createAction(USER_ERROR, error));

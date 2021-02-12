@@ -29,7 +29,7 @@ const TodoService = {
   async setPriority(userId, itemId, payload) {
     return await errorHandler(
       hermes.put,
-      getTodoUrl(userId, itemId) + '/priority',
+      getTodoUrl(userId, itemId, '/priority'),
       payload
     );
   },
@@ -37,16 +37,16 @@ const TodoService = {
   async toggleOne(userId, itemId) {
     return await errorHandler(
       hermes.put,
-      getTodoUrl(userId, itemId) + '/toggle'
+      getTodoUrl(userId, itemId, '/toggle')
     );
   },
 };
 
-function getTodoUrl(userId, itemId) {
+function getTodoUrl(userId, itemId, option) {
   itemId = itemId ? itemId : '';
   if (!typeChecks.isString(userId) && !typeChecks.isString(itemId))
     throw new Error('invalid query string');
-  return userId + '/items/' + itemId;
+  return userId + '/items/' + itemId + (option ? option : '');
 }
 
 export default TodoService;

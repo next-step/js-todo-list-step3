@@ -1,39 +1,38 @@
-/*@jsx Reilly.createElement*/
-import Reilly from "reilly";
-import { Title, Main } from "components";
-import { UserService } from "./services";
-import { store } from "./index";
-import ReillyDOM from "./lib/reillyDOM/ReillyDOM";
-import { UserList } from "./components";
-import { useSelector } from "./lib/reducs";
-import { fetchUsersAsync } from "./reducs/module/user";
+/*@jsx Reilly.createElement */
+import Reilly from 'reilly';
+import ReillyDOM from 'reillyDOM';
+import { Title, Main, TeamList } from 'components';
+import { store } from './index';
+import { useSelector } from './lib/reducs';
+import { fetchTeamsAsync } from './reducs/module/team';
 
 class App extends Reilly.Component {
   constructor(props) {
     super(props);
-    this.fetchUserList();
+    this.fetchTeams();
   }
 
-  async fetchUserList() {
-    store.dispatch(fetchUsersAsync());
+  async fetchTeams() {
+    store.dispatch(fetchTeamsAsync());
   }
 
   unsub;
   render() {
-    const { user, mode, error, editingId } = useSelector((state) => state.user);
+    const { teams, selectedTeam, error } = useSelector(state => state.team);
+    const { editingId } = useSelector(state => state.todo);
 
     if (this.unsub) this.unsub();
     this.unsub = store.subscribe(() => {
-      ReillyDOM.render(this.render(), document.getElementById("root"));
+      ReillyDOM.render(this.render(), document.getElementById('root'));
     });
 
     if (editingId) {
-      window.onbeforeunload = () => "작성 중인 메시지가 있습니다.";
+      window.onbeforeunload = () => '작성 중인 메시지가 있습니다.';
     } else {
       window.onbeforeunload = null;
     }
 
-    console.log("RENDERED!");
+    console.log('RENDERED!');
 
     if (error) {
       return (
@@ -48,11 +47,8 @@ class App extends Reilly.Component {
 
     return (
       <div id="app">
-        <Title id="user-title" user={user} />
-        <UserList />
-        <div className="todoapp">
-          {user && <Main mode={mode} editingId={editingId} />}
-        </div>
+        <Title id="user-title" name={selectedTeam?.name} />
+        {selectedTeam ? <Main team={selectedTeam} /> : <TeamList />}
       </div>
     );
   }
