@@ -2,7 +2,7 @@
   "name": "js-todo-list-step3",
   "version": "1.0.0",
   "description": "blackcoffee Level01 Mission03",
-  "main": "index.js",
+  "main": "src/team/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
