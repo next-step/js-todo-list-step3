@@ -82,8 +82,22 @@ function addMemberItem(value, teamId, memberId) {
 }
 
 function eraseMemberTodoList(teamId, memberId) {
-  fetch(`${$baseUrl}/api/teams/${teamId}/members/${memberId}/items`, {
+  fetch(`${$baseUrl}api/teams/${teamId}/members/${memberId}/items`, {
     method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((data) => console.log(data));
+}
+
+function contentsModify(value, teamId, memberId, itemId) {
+  console.log(teamId, memberId, itemId, value);
+  fetch(`${$baseUrl}api/teams/${teamId}/members/${memberId}/items/${itemId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: value,
+    }),
   })
     .then((response) => response.json())
     .then((data) => console.log(data))
@@ -96,4 +110,5 @@ export {
   putServerIsCompleted,
   addMemberItem,
   eraseMemberTodoList,
+  contentsModify,
 };

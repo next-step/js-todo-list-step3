@@ -13,6 +13,7 @@ import {
   clickEraseButton,
   clickInput,
   clickCheckboxButton,
+  clickLabel,
 } from "./mainLiItem.js";
 
 //member add  관련
@@ -74,6 +75,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
     );
     clickEraseButton(memberName, teamId, memberId, x._id);
     clickCheckboxButton(todoApp, teamId, memberId, x._id);
+    clickLabel(todoApp, teamId, memberId, x._id);
   });
   clickInput(todoApp, ulTag, teamId, memberId);
   initFilterEventListeners(

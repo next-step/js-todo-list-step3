@@ -3,8 +3,9 @@ import {
   putServerIsCompleted,
   addMemberItem,
   responseMemberApi,
+  contentsModify,
 } from "../server/AppServer.js";
-import { $todoListItem } from "../content/shape.js";
+import { $todoListItem, $label } from "../content/shape.js";
 import { countContainer } from "./todoAppCountContainer.js";
 
 function clickEraseButton(name, teamId, memberId, itemId) {
@@ -66,4 +67,37 @@ function clickEnter(event, newTodo, ulTag, teamId, memberId, todoApp) {
   }
 }
 
-export { clickEraseButton, clickInput, clickCheckboxButton };
+function clickLabel(todoApp, teamId, memberId, itemId) {
+  const liAll = todoApp.querySelectorAll(
+    ".main > .todo-list > .todo-list-item"
+  );
+  const realLiTag = liAll[liAll.length - 1];
+  const realLabel = realLiTag.querySelector(".view > .label");
+  const realEdit = realLiTag.querySelector(".edit");
+  realLabel.addEventListener("dblclick", (e) => {
+    clickLabelHandler(e, realEdit, teamId, memberId, itemId);
+  });
+}
+
+function clickLabelHandler(event, realEdit, teamId, memberId, itemId) {
+  let liClass = event.target.closest("li").getAttribute("class");
+  event.target.closest("li").setAttribute("class", "editing");
+  realEdit.addEventListener("keydown", (e) => {
+    keydownCheck(e, event, realEdit, liClass, teamId, memberId, itemId);
+  });
+}
+
+function keydownCheck(e, event, realEdit, liClass, teamId, memberId, itemId) {
+  if (e.key === "Enter" && /[\S]/gi.test(realEdit.value) == true) {
+    event.target.closest("label").innerHTML = $label(realEdit.value);
+    event.target.closest("li").setAttribute("class", "active");
+    event.target.closest("div").children[0].removeAttribute("checked");
+    contentsModify(realEdit.value, teamId, memberId, itemId);
+  } else if (e.key === "Escape") {
+    event.target.closest("li").setAttribute("class", liClass); //기존의 class로 바꾸기
+  } else if (e.key === "Enter" && /[\S]/gi.test(realEdit.value) == false) {
+    alert("공백 입력 금지");
+  }
+}
+
+export { clickEraseButton, clickInput, clickCheckboxButton, clickLabel };
