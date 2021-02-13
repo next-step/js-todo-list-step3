@@ -1,4 +1,4 @@
-const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/';
+import { BASE_URL } from '../constant/api.js';
 
 const option = {
   post: (contents) => ({
@@ -30,7 +30,7 @@ const request = async (url, option = {}) => {
   }
 };
 
-export const API = {
+export const api = {
   getUser: (userId) => {
     return request(`api/users/${userId}`);
   },
@@ -82,5 +82,13 @@ export const API = {
       `/api/users/${userId}/items/${itemId}/priority`,
       option.put({ priority }),
     );
+  },
+
+  getTeams: () => {
+    return request('/api/teams');
+  },
+
+  addTeam: (teamName) => {
+    return request('/api/teams', option.post({ name: teamName }));
   },
 };

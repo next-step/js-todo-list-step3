@@ -1,7 +1,7 @@
-export const Kanban = () => {
+const Kanban = () => {
   //
 };
 
-window.onload = () => {
+window.addEventListener('DOMContentLoaded', () => {
   Kanban();
-};
+});

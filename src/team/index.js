@@ -1,7 +1,9 @@
+import { loadTeam } from './loadTeam.js';
+
 const Team = () => {
-  //
+  loadTeam();
 };
 
-window.onload = () => {
+window.addEventListener('DOMContentLoaded', () => {
   Team();
-};
+});
