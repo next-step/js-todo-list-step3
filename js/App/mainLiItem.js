@@ -2,11 +2,9 @@ import {
   getUserIdAndDeleteTodolist,
   putServerIsCompleted,
   addMemberItem,
-  responseMemberApi,
   contentsModify,
 } from "../server/AppServer.js";
-import { $todoListItem, $label } from "../content/shape.js";
-import { countContainer } from "./todoAppCountContainer.js";
+import { $label } from "../content/shape.js";
 
 function clickEraseButton(name, teamId, memberId, itemId) {
   document.querySelectorAll(".destroy").forEach(($el) =>

@@ -30,11 +30,6 @@ async function addMemberEventHandler(teamId) {
   const result = prompt("팀 이름을 입력해주세요");
   if (/[\S]/gi.test(result) && result !== null) {
     addMember(result, teamId);
-    memberRender();
-    let $domTodoAppListContainer = document.querySelector(
-      ".todoapp-list-container"
-    );
-    setTimeout(() => responseMemberApi($domTodoAppListContainer, teamId), 500);
   } else alert("공백 혹은 정상적이지 않은 팀 이름 입력");
 }
 
@@ -88,4 +83,4 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   );
 }
 
-export { loadMemberList, loadItem, addMemberEvent, makeAddList };
+export { loadMemberList, loadItem, addMemberEvent, makeAddList, memberRender };
