@@ -8,6 +8,14 @@ const addTeamButtonTemplate = () => {
           </div>`;
 };
 
+const deleteTeamButtonTemplate = () => {
+  return `<div class="delete-team-button-container">
+            <button id="delete-team-button" class="ripple">
+              <span class="material-icons">delete</span>
+            </button>
+          </div>`;
+};
+
 const teamCardTemplate = ({ _id, name }) => {
   return `<div class="team-card-container" id="${_id}">
             <a href="/kanban.html" class="card">
@@ -24,7 +32,8 @@ export const loadTeam = async () => {
     if (teams.length) {
       $teamListContainer.innerHTML =
         teams.map((team) => teamCardTemplate(team)).join('') +
-        addTeamButtonTemplate();
+        addTeamButtonTemplate() +
+        deleteTeamButtonTemplate();
     }
   } catch (err) {
     throw new Error(err);

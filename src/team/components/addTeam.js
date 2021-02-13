@@ -12,8 +12,7 @@ export const addTeam = async () => {
   const teamName = teamNameInput.trim();
 
   if (teamName < TEAM.MIN_TEAM_NAME_LEN) {
-    alert(ERR_MSG.INVALID_TEAM_NAME_LEN);
-    return;
+    return alert(ERR_MSG.INVALID_TEAM_NAME_LEN);
   }
 
   try {

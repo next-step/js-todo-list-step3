@@ -91,4 +91,8 @@ export const api = {
   addTeam: (teamName) => {
     return request('/api/teams', option.post({ name: teamName }));
   },
+
+  deleteTeam: (teamId) => {
+    return request(`/api/teams/${teamId}`, option.delete());
+  },
 };
