@@ -29,6 +29,12 @@ export const loadTodo = async () => {
 
   renderButton();
 
+  // competed면 todoItem에 클래스 추가하게 코드짜야하는데 잠이오네유
+  const completeCheck = (isCompleted) => {
+    if (isCompleted) {
+    }
+  };
+
   const addTodoItem = (item) => {
     const teamElements = $todoApps.getElementsByClassName('todoapp-container');
 

@@ -54,7 +54,7 @@ export const template = {
   },
 
   todoItem: (contents, itemId) => {
-    return `<li class="todo-list-item" data-itemId="${itemId}">
+    return `<li class="todo-list-item ${isCompleted}" data-itemId="${itemId}">
     <div class="view">
       <input class="toggle" type="checkbox" />
       <label class="label">
