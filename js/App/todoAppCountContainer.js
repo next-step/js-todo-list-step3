@@ -1,8 +1,17 @@
+import { eraseMemberTodoList } from "../server/AppServer.js";
+
 function countContainer(countContainer, count) {
   countContainer.querySelector(".todo-count > strong").innerHTML = count;
 }
 
-function initFilterEventListeners(filters, ulTag, todoCount) {
+function initFilterEventListeners(
+  filters,
+  eraseButton,
+  ulTag,
+  todoCount,
+  teamId,
+  memberId
+) {
   filters
     .querySelector(" .all")
     .addEventListener("click", () => onAllFilterHandler(ulTag, todoCount));
@@ -14,6 +23,9 @@ function initFilterEventListeners(filters, ulTag, todoCount) {
     .addEventListener("click", () =>
       onCompletedFilterHandler(ulTag, todoCount)
     );
+  eraseButton.addEventListener("click", () =>
+    onEraseButtonHandler(eraseButton, teamId, memberId, ulTag)
+  );
 }
 
 function onAllFilterHandler(ulTag, todoCount) {
@@ -49,6 +61,20 @@ function onCompletedFilterHandler(ulTag, todoCount) {
     if (x.classList.contains("completed")) count++;
   });
   todoCount.innerHTML = count;
+}
+
+function onEraseButtonHandler(eraseButton, teamId, memberId, ulTag) {
+  if (confirm("지우시겠습니까?")) {
+    eraseAllLiTag(ulTag);
+    eraseMemberTodoList(teamId, memberId);
+  } else {
+    alert("멤버 지우기 취소");
+  }
+}
+
+function eraseAllLiTag(ulTag) {
+  let allLi = ulTag.querySelectorAll("li");
+  allLi.forEach((li) => li.remove());
 }
 
 export { countContainer, initFilterEventListeners };

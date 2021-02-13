@@ -78,8 +78,11 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   clickInput(todoApp, ulTag, teamId, memberId);
   initFilterEventListeners(
     todoApp.querySelector(".count-container > .filters"),
+    todoApp.querySelector(".count-container > .clear-completed"),
     ulTag,
-    todoApp.querySelector(".count-container > .todo-count >strong")
+    todoApp.querySelector(".count-container > .todo-count >strong"),
+    teamId,
+    memberId
   );
 }
 

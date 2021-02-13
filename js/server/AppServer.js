@@ -80,10 +80,20 @@ function addMemberItem(value, teamId, memberId) {
       responseMemberApi(teamId);
     });
 }
+
+function eraseMemberTodoList(teamId, memberId) {
+  fetch(`${$baseUrl}/api/teams/${teamId}/members/${memberId}/items`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((data) => console.log(data));
+}
 export {
   addMember,
   responseMemberApi,
   getUserIdAndDeleteTodolist,
   putServerIsCompleted,
   addMemberItem,
+  eraseMemberTodoList,
 };
