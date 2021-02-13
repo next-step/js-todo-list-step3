@@ -1,4 +1,4 @@
-import { BASE_URL } from '../constant/api.js';
+import { BASE_URL } from '../utils/constant.js';
 
 const option = {
   post: (contents) => ({

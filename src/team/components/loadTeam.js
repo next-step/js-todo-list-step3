@@ -1,4 +1,4 @@
-import { api } from '../api/api.js';
+import { api } from '../../api/api.js';
 
 const addTeamButtonTemplate = () => {
   return `<div class="add-team-button-container">

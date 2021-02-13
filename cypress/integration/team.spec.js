@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../src/constant/api';
+import { BASE_URL } from '../../src/utils/constant';
 
 describe('team-board', () => {
   beforeEach(() => {
@@ -6,7 +6,7 @@ describe('team-board', () => {
   });
 
   it('팀 불러오기 요청시, 팀이 화면에 정상적으로 표시되는지 확인한다.', () => {
-    cy.request(`${BASE_URL}//api/teams`).then((res) => {
+    cy.request(`${BASE_URL}/api/teams`).then((res) => {
       expect(res.status).to.equal(200);
       cy.get('.team-card-container')
         .its('length')
@@ -20,5 +20,9 @@ describe('team-board', () => {
       cy.contains('확인').click();
     });
     expect(cy.get('.team-card-container').contains('WooWa')).to.exist;
+  });
+
+  it('팀 삭제 버튼 클릭 시, 팀이 삭제되는지 확인한다.', () => {
+    //
   });
 });
