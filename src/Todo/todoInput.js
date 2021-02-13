@@ -13,7 +13,8 @@ export const todoInput = ({ target, key }) => {
       contents: target.value,
     };
 
-    $todoList.insertAdjacentHTML('beforeend', template.todoItem(target.value));
+    $todoList.insertAdjacentHTML('beforeend', template.todoItem(target.value, memberId));
+
     await api.addTodo(teamId, memberId, todoContents);
   };
 
