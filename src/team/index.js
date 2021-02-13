@@ -5,10 +5,10 @@ const init = () => {
   const $teamListContainer = document.querySelector('.team-list-container');
 
   $teamListContainer.addEventListener('click', handleTeamListClickEvent);
-  loadTeam();
 };
 
 export const Team = async () => {
+  loadTeam();
   init();
 };
 

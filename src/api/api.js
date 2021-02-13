@@ -31,68 +31,64 @@ const request = async (url, option = {}) => {
 };
 
 export const api = {
-  getUser: (userId) => {
-    return request(`api/users/${userId}`);
-  },
-
-  getUsers: () => {
-    return request('api/users');
-  },
-
-  addUser: (userName) => {
-    return request('api/users', option.post({ name: userName }));
-  },
-
-  deleteUser: (userId) => {
-    return request(`api/users/${userId}`, option.delete());
-  },
-
-  getUserTodos: (userId) => {
-    return request(`api/users/${userId}/items`);
-  },
-
-  addTodo: (title, userId) => {
-    return request(
-      `api/users/${userId}/items`,
-      option.post({ contents: title }),
-    );
-  },
-
-  toggleTodo: (userId, itemId) => {
-    return request(`api/users/${userId}/items/${itemId}/toggle`, option.put());
-  },
-
-  deleteTodo: (userId, itemId) => {
-    return request(`api/users/${userId}/items/${itemId}`, option.delete());
-  },
-
-  deleAllTodo: (userId) => {
-    return request(`/api/users/${userId}/items/`, option.delete());
-  },
-
-  editTodo: (newTitle, userId, itemId) => {
-    return request(
-      `/api/users/${userId}/items/${itemId}`,
-      option.put({ contents: newTitle }),
-    );
-  },
-
-  changePriority: (priority, userId, itemId) => {
-    return request(
-      `/api/users/${userId}/items/${itemId}/priority`,
-      option.put({ priority }),
-    );
-  },
-
   getTeams: () => {
     return request('/api/teams');
   },
 
-  addTeam: (teamName) => {
-    return request('/api/teams', option.post({ name: teamName }));
+  addTeam: (name) => {
+    return request('/api/teams', option.post({ name }));
   },
 
   deleteTeam: (teamId) => {
     return request(`/api/teams/${teamId}`, option.delete());
+  },
+
+  addMember: (teamId, name) => {
+    return request(`/api/teams/${teamId}/members`, option.post({ name }));
+  },
+
+  getMemberTodo: (teamId, memberId) => {
+    return request(`/api/teams/${teamId}/members/${memberId}`);
+  },
+
+  addMemberTodo: (teamId, memberId, contents) => {
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items`,
+      option.post({ contents }),
+    );
+  },
+
+  deleteMemberTodo: (teamId, memberId, itemId) => {
+    return (
+      request(`/api/teams/${teamId}/members/${memberId}/items/${itemId}`),
+      option.delete()
+    );
+  },
+
+  deleteMemberTodos: (teamId, memberId) => {
+    return (
+      request(`/api/teams/${teamId}/members/${memberId}/items`), option.delete()
+    );
+  },
+
+  toggleMemberTodo: (teamId, memberId, itemId) => {
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+      option.put(),
+    );
+  },
+
+  editMemberTodo: (teamId, memberId, itemId, contents) => {
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+      option.put({ contents }),
+    );
+  },
+
+  setPriorityMemberTodo: (teamId, memberId, itemId, priority) => {
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
+      option.put({ priority }),
+    );
   },
 };
