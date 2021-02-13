@@ -1,3 +1,5 @@
+import { BASE_URL } from '../../src/constant/api.js';
+
 describe('kanban-board', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/kanban.html');
