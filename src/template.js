@@ -69,7 +69,7 @@ export const template = {
       </label>
       <button class="destroy"></button>
     </div>
-    <input class="edit" value="완료된 타이틀" />
+    <input class="edit" value="${contents}" />
   </li>`;
   },
 
@@ -79,5 +79,15 @@ export const template = {
       <span class="material-icons">add</span>
     </button>
   </li>`;
+  },
+
+  chipContainer: () => {
+    return `<div class="chip-container">
+    <select class="chip select">
+      <option value="0" selected>순위</option>
+      <option value="1">1순위</option>
+      <option value="2">2순위</option>
+    </select>
+  </div>`;
   },
 };

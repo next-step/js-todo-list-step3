@@ -40,7 +40,6 @@ export const loadTodo = async () => {
     for (let i = 0; i < teamElements.length; i++) {
       const $todoList = teamElements[i].querySelector('.todo-list');
       const todoArr = members[i].todoList;
-      const memberId = members[i]._id;
 
       if (todoArr !== null) {
         todoArr.map((item) => {

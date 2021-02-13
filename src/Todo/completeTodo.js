@@ -5,10 +5,10 @@ export const completeTodo = async ({ target }) => {
   if (!target.classList.contains('toggle')) return;
 
   const $todoItem = target.closest('li');
-  completeCheck(target, $todoItem);
-
   const itemId = target.closest('li').dataset.itemid;
   const memberId = target.closest('.todoapp-container').dataset.memberid;
+
+  completeCheck(target, $todoItem);
 
   await api.toggleTodo(teamId, memberId, itemId);
 };
