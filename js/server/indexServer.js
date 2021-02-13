@@ -1,4 +1,4 @@
-import { $baseUrl } from "../content/shape.js";
+import { baseUrl } from "../content/shape.js";
 import {
   addTeamEvent,
   makeTeamTitle,
@@ -6,7 +6,7 @@ import {
 } from "../index/AddTeamEvent.js";
 
 function responseTeamApi() {
-  fetch(`${$baseUrl}api/teams`)
+  fetch(`${baseUrl}api/teams`)
     .then((response) => response.json())
     .then((data) => {
       data.forEach((teamArray) => {
@@ -18,7 +18,7 @@ function responseTeamApi() {
 }
 
 function addTeam(teamName) {
-  fetch(`${$baseUrl}api/teams`, {
+  fetch(`${baseUrl}api/teams`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -31,7 +31,7 @@ function addTeam(teamName) {
 }
 
 function getTeamId(teamName) {
-  fetch(`${$baseUrl}api/teams`)
+  fetch(`${baseUrl}api/teams`)
     .then((response) => response.json())
     .then((data) => {
       data.forEach((tN) => {

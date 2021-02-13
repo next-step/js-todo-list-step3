@@ -1,4 +1,4 @@
-const $baseUrl = "https://js-todo-list-9ca3a.df.r.appspot.com/";
+const baseUrl = "https://js-todo-list-9ca3a.df.r.appspot.com/";
 
 const $todoAppContainer = (teamName) => `
   <li class="todoapp-container">
@@ -51,7 +51,7 @@ const $indexTeamAdd = `
           </button>
         </div>`;
 
-const kanbanHeader = (teamName) =>
+const $kanbanHeader = (teamName) =>
   `<div id="app">
       <h1 id="user-title" data-username=${teamName}>
         <span><strong>${teamName}</strong>'s Todo List</span>
@@ -127,8 +127,8 @@ export {
   $todoListItem,
   $indexTeam,
   $indexTeamAdd,
-  $baseUrl,
-  kanbanHeader,
+  baseUrl,
+  $kanbanHeader,
   $appMemberAdd,
   $label,
 };
