@@ -1,12 +1,12 @@
 import { api } from '../api.js';
-import { teamId } from './todo.js';
+import { teamId, getItemId, getMemberId, getTodoItem } from './todo.js';
 
 export const completeTodo = async ({ target }) => {
   if (!target.classList.contains('toggle')) return;
 
-  const $todoItem = target.closest('li');
-  const itemId = target.closest('li').dataset.itemid;
-  const memberId = target.closest('.todoapp-container').dataset.memberid;
+  const $todoItem = getTodoItem(target);
+  const itemId = getItemId(target);
+  const memberId = getMemberId(target);
 
   completeCheck(target, $todoItem);
 

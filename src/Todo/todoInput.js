@@ -1,14 +1,14 @@
 import { api } from '../api.js';
 import { template } from '../template.js';
-import { teamId } from './todo.js';
+import { teamId, getMemberId } from './todo.js';
 
 export const todoInput = ({ target, key }) => {
   if (!target.classList.contains('new-todo')) return;
   if (!target.value || key !== 'Enter') return;
 
   const addTodo = async () => {
-    const $todoList = target.closest('div').querySelector('ul');
-    const memberId = target.parentElement.parentElement.parentElement.dataset.memberid;
+    const $todoList = target.closest('div').querySelector('.todo-list');
+    const memberId = getMemberId(target);
     const todoContents = {
       contents: target.value,
     };

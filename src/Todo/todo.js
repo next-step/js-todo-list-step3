@@ -19,3 +19,15 @@ export const todo = async () => {
 };
 
 todo();
+
+export const getItemId = (target) => {
+  return target.closest('li').dataset.itemid;
+};
+
+export const getMemberId = (target) => {
+  return target.closest('.todoapp-container').dataset.memberid;
+};
+
+export const getTodoItem = (target) => {
+  return target.closest('.todo-list-item');
+};

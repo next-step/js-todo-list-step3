@@ -1,15 +1,15 @@
 import { template } from '../template.js';
 import { api } from '../api.js';
-import { teamId } from './todo.js';
+import { teamId, getItemId, getMemberId, getTodoItem } from './todo.js';
 
 export const editTodo = ({ target }) => {
   if (!target.classList.contains('label')) return;
 
-  const $todoList = target.closest('li');
-  const $edit = $todoList.querySelector('.edit');
+  const $todoItem = getTodoItem(target);
+  const $edit = $todoItem.querySelector('.edit');
 
+  $todoItem.classList.toggle('editing');
   $edit.addEventListener('keyup', endInput);
-  $todoList.classList.toggle('editing');
 };
 
 const endInput = ({ target, key }) => {
@@ -30,8 +30,8 @@ const cancelEdit = ($list, target, value) => {
 
 const saveEdit = async ($list, target) => {
   const $label = $list.querySelector('.label');
-  const itemId = $list.dataset.itemid;
-  const memberId = target.closest('.todoapp-container').dataset.memberid;
+  const itemId = getItemId(target);
+  const memberId = getMemberId(target);
   const contents = {
     contents: target.value,
   };
