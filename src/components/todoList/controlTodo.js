@@ -22,5 +22,5 @@ const onControlTodo = async ({target}) => {
 
     target.className === 'destroy' ? await API.deleteTodo(teamId, memberId, itemId) : await API.toggleTodo(teamId, memberId, itemId); 
     classList[target.className];
-    loadMembers();
+    loadTodos(teamId, memberId);
 }

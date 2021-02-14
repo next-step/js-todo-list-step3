@@ -23,7 +23,6 @@ export const todoListTemplate =(todo, memberId) => {
                 </div>
                 <input class="edit" value="${todo.contents}" />
             </li>`;
-
 };
 
 
@@ -47,7 +46,7 @@ export const todoAppContainerTemplate = (memberId,memberName) => {
                 <div class="count-container">
                     <span class="todo-count">총 <strong>0</strong> 개</span>
                     <ul id="${memberId}"class="filters">
-                    <li> <a href="#all" id="all" class="all"> 전체보기 </a> </li>
+                    <li> <a href="#all" id="all" class="all selected"> 전체보기 </a> </li>
                     <li> <a href="#priority" id="priority" class="priority"> 우선 순위 </a> </li>
                     <li> <a href="#active" id="active" class="active"> 해야할 일 </a> </li>
                     <li> <a href="#completed" id="completed" class="completed"> 완료한 일 </a> </li>

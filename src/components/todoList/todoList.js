@@ -4,6 +4,7 @@ import {initEditPriority} from './editPriority.js';
 import {initDeleteAllTodos} from './deleteAllTodos.js';
 import {initFilterTodo} from './filterTodo.js';
 import {initEditTodo} from './editTodo.js';
+// import {initSortByPriority} from './sortByPriority.js';
 
 export const todoList = () => {
     initAddTodo();
@@ -12,4 +13,5 @@ export const todoList = () => {
     initDeleteAllTodos();
     initFilterTodo();
     initEditTodo();
+    // initSortByPriority();
 };

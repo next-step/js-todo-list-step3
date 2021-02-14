@@ -1,5 +1,6 @@
 import {API} from '../../api/api.js';
 import {loadMembers} from '../memberList/loadMembers.js';
+import {loadTodos} from '../todoList/loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
 import {MIN_TODO_LENGTH} from './addTodo.js';
 
@@ -17,7 +18,7 @@ const editTodo = async (target) => {
     const itemId = target.closest('li').id;
 
     await API.editTodo(teamId, memberId, itemId, newTitle);
-    loadMembers();
+    loadTodos(teamId, memberId);
 };
 
 const revertTodo = (target, prevTitle) => {

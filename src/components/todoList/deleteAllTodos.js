@@ -1,5 +1,5 @@
 import {API} from '../../api/api.js';
-import {loadMembers} from '../memberList/loadMembers.js';
+import {loadTodos} from '../todoList/loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
 
 export const initDeleteAllTodos = () => {
@@ -13,5 +13,5 @@ const onDeleteAllTodos = async ({target}) => {
     const memberId = target.closest('li').id;
     await API.deleteAllTodos(teamId, memberId);
 
-    loadMembers();
+    loadTodos(teamId, memberId);
 }

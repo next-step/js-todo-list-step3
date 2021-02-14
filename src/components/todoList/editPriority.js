@@ -1,5 +1,5 @@
 import {API} from '../../api/api.js';
-import {loadMembers} from '../memberList/loadMembers.js';
+import {loadTodos} from '../todoList/loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
 
 export const initEditPriority = () => {
@@ -23,5 +23,5 @@ const onEditPriority = async ({target}) => {
 
     await API.editPriority(teamId, memberId, itemId, priorityList[priority]);
 
-    loadMembers();
+    loadTodos(teamId, memberId);
 };

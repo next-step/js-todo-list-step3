@@ -1,6 +1,7 @@
 import {API} from '../../api/api.js';
 import {loadTodos} from '../todoList/loadTodos.js';
 import {addUserButtonTemplate} from '../memberList/memberTemplates.js';
+import {todoAppContainerTemplate} from '../todoList/todoTemplates.js';
 import {setTeamId} from '../../utils/localStorage.js';
 
 const setTeamName = (teamName) => {
@@ -20,7 +21,18 @@ export const loadMembers = async (option ='all') => {
     setTeamName(teamName);
 
     $todoAppList.innerHTML = '';
-    await members.map(async (member) => loadTodos(teamId, member, option));
+    await members.map(async (member) => {
+        const memberId = member._id;
+        const memberName = member.name;
+
+        renderTodoAppContainer(memberId, memberName);
+        loadTodos(teamId, memberId);
+    });
 
     $todoAppList.insertAdjacentHTML('beforeend', addUserButtonTemplate());
+};
+
+const renderTodoAppContainer = (memberId, memberName) => {
+    const $todoAppList = document.getElementById(`todoapp-list`);
+    $todoAppList.insertAdjacentHTML('beforeend', todoAppContainerTemplate(memberId, memberName));
 };

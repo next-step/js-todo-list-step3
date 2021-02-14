@@ -1,11 +1,12 @@
-import {loadMembers} from '../memberList/loadMembers.js';
+import {loadTodos} from '../todoList/loadTodos.js';
+import {getTeamId} from '../../utils/localStorage.js';
 
 export const initFilterTodo = () => {
     const $todoList = document.getElementById('todoapp-list');
     $todoList.addEventListener('click', onFilterTodo);
 }
 
-const selectOption = (option, memberId) => {
+const selectOption = (memberId, option) => {
     const $selectedTodoList = document.getElementById(`${memberId}`); 
     const buttons = $selectedTodoList.querySelectorAll('.filters a');
 
@@ -13,16 +14,18 @@ const selectOption = (option, memberId) => {
     $selectedTodoList.querySelector(`#${option}`).classList.add('selected');
 };
 
-const show = (option, memberId) => {
-    selectOption(option, memberId);
-    loadMembers(option);
+const showOption = (teamId, memberId, option) => {
+    selectOption(memberId, option);
+    loadTodos(teamId, memberId, option);
 };
 
 const onFilterTodo = ({target}) => {
-    const filters = ['all', 'active', 'completed'];
+    const filters = ['all', 'priority','active', 'completed'];
     if(!filters.includes(target.id)) return;
+
+    const teamId = getTeamId();
     const memberId = target.closest('ul').id;
-    show(target.id, memberId);
+    showOption(teamId, memberId, target.id);
 };
 
 
