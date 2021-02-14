@@ -6,7 +6,9 @@ export default class TodoList extends Component {
     return `
     ${filteredList.map(
       (todo) => `
-    <li class="todo-list-item" id="${todo._id}">
+    <li class="todo-list-item ${
+      todo.isCompleted ? "completed" : ""
+    }" id="${todo._id}">
       <div class="view">
         <input class="toggle" type="checkbox" ${
           todo.isCompleted ? "checked" : ""
@@ -43,27 +45,28 @@ export default class TodoList extends Component {
     const { toggleTodo, deleteTodo, onEditingMode, editTodo } = this.props;
 
     this.addEvent("click", ".toggle", ({ target }) => {
-      const seq = Number(target.closest("[data-seq]").dataset.seq);
-      toggleTodo(seq);
+      const itemID = this.getItemID(target, ".todo-list-item");
+      toggleTodo(itemID);
     });
     this.addEvent("click", ".destroy", ({ target }) => {
-      const itemID = target.closest(".todo-list-item").id;
+      const itemID = this.getItemID(target, ".todo-list-item");
       deleteTodo(itemID);
     });
     this.addEvent("dblclick", ".label", ({ target }) => {
-      const seq = Number(target.closest("[data-seq]").dataset.seq);
-      onEditingMode(seq);
+      const itemID = this.getItemID(target, ".todo-list-item");
+      onEditingMode(itemID);
     });
     this.addEvent("keyup", ".edit", ({ key, target }) => {
+      if (key !== "Enter" || key !== "Escape") return;
+      const itemID = this.getItemID(target, ".todo-list-item");
       if (key === "Enter") {
-        const seq = Number(target.closest("[data-seq]").dataset.seq);
-        editTodo(seq, target.value);
+        editTodo(itemID, target.value);
       } else if (key === "Escape") {
-        const seq = Number(target.closest("[data-seq]").dataset.seq);
-        onEditingMode(seq);
-      } else {
-        return;
+        onEditingMode(itemID);
       }
     });
+  }
+  getItemID(target, className) {
+    return target.closest(className).id;
   }
 }

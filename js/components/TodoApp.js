@@ -82,25 +82,16 @@ export default class TodoApp extends Component {
     });
   }
 
-  toggleTodo(seq) {
+  toggleTodo(itemID) {
     const { todoList } = this.state;
-    const index = todoList.findIndex((todo) => {
-      return todo.seq === seq;
-    });
-    if (todoList[index].state === "doing") {
-      todoList[index].state = "completed";
-    } else if (todoList[index].state === "completed") {
-      todoList[index].state = "doing";
-    }
+    const index = this.findIndexOfItem(todoList, itemID);
+    todoList[index].isCompleted = !todoList[index].isCompleted;
     this.setState({ todoList });
   }
 
   deleteTodo(itemID) {
     const { teamID, memberID, todoList } = this.state;
-
-    const index = todoList.findIndex((todo) => {
-      return todo._id === itemID;
-    });
+    const index = this.findIndexOfItem(todoList, itemID);
     todoList.splice(index, 1);
     memberAPI.deleteTodoItem(teamID, memberID, itemID);
     this.setState({ todoList });
@@ -108,9 +99,7 @@ export default class TodoApp extends Component {
 
   onEditingMode(seq) {
     const { todoList } = this.state;
-    const index = todoList.findIndex((todo) => {
-      return todo.seq === seq;
-    });
+    const index = this.findIndexOfItem(todoList, itemID);
     if (todoList[index].edit === "editing") {
       todoList[index].edit = "";
     } else if (todoList[index].edit === "") {
@@ -121,9 +110,7 @@ export default class TodoApp extends Component {
 
   editTodo(seq, editingContents) {
     const { todoList } = this.state;
-    const index = todoList.findIndex((todo) => {
-      return todo.seq === seq;
-    });
+    const index = this.findIndexOfItem(todoList, itemID);
     todoList[index].contents = editingContents;
     this.onEditingMode(seq);
     this.setState({ todoList });
@@ -131,5 +118,10 @@ export default class TodoApp extends Component {
 
   filterList(typeOfFilter) {
     this.setState({ typeOfFilter });
+  }
+  findIndexOfItem(todoList, itemID) {
+    return todoList.findIndex((todo) => {
+      return todo._id === itemID;
+    });
   }
 }

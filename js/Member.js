@@ -24,7 +24,7 @@ class Member extends Component {
     this.members.forEach((member) => {
       const $todoappContainer = document.createElement("li");
       $todoappContainer.classList.add("todoapp-container");
-      $todoappContainer.setAttribute("id", member.id);
+      $todoappContainer.setAttribute("id", member._id);
       new TodoApp($todoappContainer, { member, teamID: this.teamID });
       $todoListContainer.appendChild($todoappContainer);
     });
