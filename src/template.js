@@ -53,13 +53,31 @@ export const template = {
   </li>`;
   },
 
-  todoItem: (contents, itemId) => {
+  todoItem: (contents, itemId, priority) => {
+    let primary, secondary, select;
+
+    if (priority === 'FIRST') {
+      primary = '';
+      secondary = 'hidden';
+      select = 'hidden';
+    } else if (priority === 'SECOND') {
+      primary = 'hidden';
+      secondary = '';
+      select = 'hidden';
+    } else {
+      primary = 'hidden';
+      secondary = 'hidden';
+      select = '';
+    }
+
     return `<li class="todo-list-item" data-itemId="${itemId}">
     <div class="view">
       <input class="toggle" type="checkbox" />
       <label class="label">
         <div class="chip-container">
-          <select class="chip select">
+          <span class="chip primary ${primary}">1순위</span>
+          <span class="chip secondary ${secondary}">2순위</span>
+          <select class="chip select ${select}">
             <option value="0" selected>순위</option>
             <option value="1">1순위</option>
             <option value="2">2순위</option>
@@ -83,6 +101,8 @@ export const template = {
 
   chipContainer: () => {
     return `<div class="chip-container">
+    <span class="chip primary hidden">1순위</span>
+    <span class="chip secondary hidden">2순위</span>
     <select class="chip select">
       <option value="0" selected>순위</option>
       <option value="1">1순위</option>

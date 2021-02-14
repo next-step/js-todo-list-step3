@@ -22,8 +22,8 @@ export const loadTodo = async () => {
     $todoApps.insertAdjacentHTML('beforeend', template.addUserButton());
   };
 
-  const renderItem = ($todoList, contents, id, completed) => {
-    $todoList.insertAdjacentHTML('beforeend', template.todoItem(contents, id, completed));
+  const renderItem = ($todoList, contents, id, priority) => {
+    $todoList.insertAdjacentHTML('beforeend', template.todoItem(contents, id, priority));
   };
 
   clearAllList();
@@ -43,7 +43,8 @@ export const loadTodo = async () => {
 
       if (todoArr !== null) {
         todoArr.map((item) => {
-          renderItem($todoList, item.contents, item._id);
+          renderItem($todoList, item.contents, item._id, item.priority);
+
           if (item.isCompleted) {
             const $todoItem = $todoList.lastChild;
             const $toggle = $todoItem.querySelector('.toggle');

@@ -5,6 +5,7 @@ import { removeTodo } from './removeTodo.js';
 import { addMember } from './addMember.js';
 import { completeTodo } from './completeTodo.js';
 import { editTodo } from './editTodo.js';
+import { setPriority } from './setPriority.js';
 
 export const teamId = location.hash.substr(1, 9);
 
@@ -15,6 +16,7 @@ export const todo = async () => {
   $todoApps.addEventListener('click', removeTodo);
   $todoApps.addEventListener('click', addMember);
   $todoApps.addEventListener('click', completeTodo);
+  $todoApps.addEventListener('click', setPriority);
   $todoApps.addEventListener('dblclick', editTodo);
 };
 
