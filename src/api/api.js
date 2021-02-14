@@ -1,32 +1,36 @@
 export const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/';
 
 const option = {
-    post : (contents) => ({
+    post : (data) => ({
         method : 'POST', 
-        headers : {'Content-Type' : 'application/json'},
-        body : JSON.stringify(contents),
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(data),
     }),
 
     delete : () => ({
         method : 'DELETE',
     }),
 
-    put : (contents) => ({
+    put : (data) => ({
         method : 'PUT',
-        headers : {'Content-Type' : 'application/json'},
-        body : JSON.stringify(contents),
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(data),
     }),
 };
 
 const request = async (url, option = {}) => {
     try {
-      const response = await fetch(`${BASE_URL}${url}`, option);
+      const response = await fetch(`${BASE_URL}/${url}`, option);
       if (!response.ok) {
         throw new Error(response.status);
       }
       return await response.json();
     } catch (err) {
-      alert(`Error : ${err}`);
+      console.log(`Error : ${err}`);
     }
   };
 
@@ -50,7 +54,7 @@ const request = async (url, option = {}) => {
         return request(`api/teams/${teamId}`, option.delete());
     },
 
-    addMemerToTeam : (teamId, memberName) => {
+    addMemer : (teamId, memberName) => {
         const content = {
             name : memberName,
         };
@@ -61,10 +65,10 @@ const request = async (url, option = {}) => {
         return request(`api/teams/${teamId}/members/${memberId}`);
     },
 
-    addTodo : (teamId, memberId, todoItem) => {
+    addTodo : (teamId, memberId, todoTitle) => {
         const content = {
-            contents : todoItem,
-        }
+            contents : todoTitle,
+        };
         return request(`api/teams/${teamId}/members/${memberId}/items`, option.post(content));
     },
 
@@ -77,20 +81,20 @@ const request = async (url, option = {}) => {
     },
 
     editTodo : (teamId, memberId, itemId, newTitle) => {
-        content = {
+        const content = {
             contents : newTitle,
         };
         return request(`api/teams/${teamId}/members/${memberId}/items/${itemId}`, option.put(content));
     },
 
-    editPriority : (itemId, memberId, itemId, priority) => {
-        content = {
+    editPriority : (teamId, memberId, itemId, priority) => {
+        const content = {
             priority : priority,
         };
         return request(`api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`, option.put(content));
     },
 
-    deleteAllTodos : (itemId, memberId) => {
+    deleteAllTodos : (teamId, memberId) => {
         return request(`api/teams/${teamId}/members/${memberId}/items/`, option.delete());
     },
 
