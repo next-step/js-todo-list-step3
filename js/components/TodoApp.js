@@ -12,6 +12,7 @@ export default class TodoApp extends Component {
       teamID: this.props.teamID,
       memberID: this.member._id,
       todoList: this.member.todoList,
+      edit: false,
     };
   }
   template() {
@@ -83,9 +84,10 @@ export default class TodoApp extends Component {
   }
 
   toggleTodo(itemID) {
-    const { todoList } = this.state;
+    const { teamID, memberID, todoList } = this.state;
     const index = this.findIndexOfItem(todoList, itemID);
     todoList[index].isCompleted = !todoList[index].isCompleted;
+    memberAPI.toggleTodoItem(teamID, memberID, itemID);
     this.setState({ todoList });
   }
 
@@ -97,22 +99,18 @@ export default class TodoApp extends Component {
     this.setState({ todoList });
   }
 
-  onEditingMode(seq) {
+  onEditingMode(itemID) {
     const { todoList } = this.state;
     const index = this.findIndexOfItem(todoList, itemID);
-    if (todoList[index].edit === "editing") {
-      todoList[index].edit = "";
-    } else if (todoList[index].edit === "") {
-      todoList[index].edit = "editing";
-    }
+    todoList[index].edit = !todoList[index].edit;
     this.setState({ todoList });
   }
 
-  editTodo(seq, editingContents) {
-    const { todoList } = this.state;
+  editTodo(itemID, editingContents) {
+    const { teamID, memberID, todoList } = this.state;
     const index = this.findIndexOfItem(todoList, itemID);
     todoList[index].contents = editingContents;
-    this.onEditingMode(seq);
+    memberAPI.reviseContents(teamID, memberID, itemID, editingContents);
     this.setState({ todoList });
   }
 

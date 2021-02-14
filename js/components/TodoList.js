@@ -2,12 +2,11 @@ import Component from "../core/Component.js";
 export default class TodoList extends Component {
   template() {
     const { filteredList } = this.props;
-    console.log(filteredList);
     return `
     ${filteredList.map(
       (todo) => `
     <li class="todo-list-item ${
-      todo.isCompleted ? "completed" : ""
+      todo.isCompleted ? "completed" : todo.edit ? "editing" : ""
     }" id="${todo._id}">
       <div class="view">
         <input class="toggle" type="checkbox" ${
@@ -57,13 +56,12 @@ export default class TodoList extends Component {
       onEditingMode(itemID);
     });
     this.addEvent("keyup", ".edit", ({ key, target }) => {
-      if (key !== "Enter" || key !== "Escape") return;
+      if (key !== "Enter" && key !== "Escape") return;
       const itemID = this.getItemID(target, ".todo-list-item");
       if (key === "Enter") {
         editTodo(itemID, target.value);
-      } else if (key === "Escape") {
-        onEditingMode(itemID);
       }
+      onEditingMode(itemID);
     });
   }
   getItemID(target, className) {
