@@ -39,7 +39,6 @@ export default class TeamCard extends Component {
     const teamCard = document.createElement("div");
     teamCard.classList.add("team-card-container");
     teamCard.dataset.teamid = team._id;
-    console.log("test : ", team._id);
     teamCard.innerHTML = `
     <a href="/kanban.html#${team._id}" class="card">
       <div class="card-title">${team.name}</div>

@@ -71,7 +71,7 @@ export default class TodoApp extends Component {
   get filteredList() {
     const { typeOfFilter, todoList } = this.state;
     return todoList.filter(({ isCompleted }) => {
-      return typeOfFilter === "all" || typeOfFilter === isCompleted;
+      return typeOfFilter === "all" || typeOfFilter === String(isCompleted);
     });
   }
 
