@@ -1,5 +1,5 @@
-import Component from "../core/component.js";
-import { teamAPI } from "../api.js/api.js";
+import Component from "../core/Component.js";
+import { teamAPI } from "../api/api.js";
 export default class TeamCard extends Component {
   setup() {}
   template() {
@@ -9,7 +9,7 @@ export default class TeamCard extends Component {
         .map(
           (
             team
-          ) => `<div class="team-card-container" id="${team._id}"><a href="/kanban.html" class="card">
+          ) => `<div class="team-card-container" data-teamId="${team._id}"><a href="/kanban.html#${team._id}" class="card">
       <div class="card-title">${team.name}</div>
     </a></div>`
         )
@@ -28,8 +28,6 @@ export default class TeamCard extends Component {
       const newTeam = await teamAPI.addNewTeam(newTeamName);
 
       const $addTeamBtn = document.querySelector(".add-team-button-container");
-      console.log(this.$target);
-      console.log($addTeamBtn);
       this.$target.insertBefore(
         this.createNewTeamContainer(newTeam),
         $addTeamBtn
@@ -40,9 +38,10 @@ export default class TeamCard extends Component {
   createNewTeamContainer(team) {
     const teamCard = document.createElement("div");
     teamCard.classList.add("team-card-container");
-    teamCard.id = team._id;
+    teamCard.dataset.teamid = team._id;
+    console.log("test : ", team._id);
     teamCard.innerHTML = `
-    <a href="/kanban.html" class="card">
+    <a href="/kanban.html#${team._id}" class="card">
       <div class="card-title">${team.name}</div>
     </a>
   `;
