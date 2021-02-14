@@ -45,6 +45,7 @@ export default class TodoApp extends Component {
       onEditingMode,
       editTodo,
       filterList,
+      deleteAllTodo,
     } = this;
     const $todoAppender = this.$target.querySelector(".new-todo");
     const $todoList = this.$target.querySelector(".todo-list");
@@ -65,6 +66,7 @@ export default class TodoApp extends Component {
       typeOfFilter: this.state.typeOfFilter,
       filteredList,
       filterList: filterList.bind(this),
+      deleteAllTodo: deleteAllTodo.bind(this),
     });
   }
 
@@ -96,6 +98,12 @@ export default class TodoApp extends Component {
     const index = this.findIndexOfItem(todoList, itemID);
     todoList.splice(index, 1);
     memberAPI.deleteTodoItem(teamID, memberID, itemID);
+    this.setState({ todoList });
+  }
+  deleteAllTodo() {
+    const { teamID, memberID } = this.state;
+    memberAPI.deleteAllTodoItem(teamID, memberID);
+    const todoList = [];
     this.setState({ todoList });
   }
 

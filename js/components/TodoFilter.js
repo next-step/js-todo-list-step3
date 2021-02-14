@@ -31,10 +31,13 @@ export default class TodoFilter extends Component {
 `;
   }
   setEvent() {
-    const { filterList } = this.props;
+    const { filterList, deleteAllTodo } = this.props;
     this.addEvent("click", ".filterBtn", ({ target }) => {
       const typeOfFilter = target.dataset.typeOfFilter;
       filterList(typeOfFilter);
+    });
+    this.addEvent("click", ".clear-completed", () => {
+      deleteAllTodo();
     });
   }
 }
