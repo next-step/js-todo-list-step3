@@ -58,6 +58,7 @@ body {
 }
 
 #app h2 {
+  text-align: center;
   color: #333;
   font-weight: 100;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -301,6 +302,10 @@ body {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6,
     0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6,
     0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+.count-container a {
+  cursor: pointer;
 }
 
 .todo-count {
@@ -592,7 +597,4 @@ select.chip {
   bottom: 2px;
   box-shadow: none;
   color: dimgray;
-}
-
-.add-team-button-container #add-team-button.ripple {
 }
