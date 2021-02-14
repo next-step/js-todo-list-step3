@@ -2,7 +2,7 @@ import localStorage from '../../utils/localStorage.js';
 import { addTeam } from '../components/addTeam.js';
 import { deleteTeam } from '../components/deleteTeam.js';
 
-export const handleTeamListClickEvent = async ({ target }) => {
+export const handleTeamList = async ({ target }) => {
   if (target.classList.contains('card')) {
     const currentTeam = {
       id: target.closest('.team-card-container').id,

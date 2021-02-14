@@ -31,6 +31,10 @@ const request = async (url, option = {}) => {
 };
 
 export const api = {
+  getTeam: (teamId) => {
+    return request(`/api/teams/${teamId}`);
+  },
+
   getTeams: () => {
     return request('/api/teams');
   },
