@@ -7,11 +7,7 @@ const init = () => {
   $teamListContainer.addEventListener('click', handleTeamListClickEvent);
 };
 
-export const Team = async () => {
+export const Team = () => {
   loadTeam();
   init();
 };
-
-window.addEventListener('DOMContentLoaded', () => {
-  Team();
-});

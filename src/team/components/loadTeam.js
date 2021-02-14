@@ -18,7 +18,7 @@ const deleteTeamButtonTemplate = () => {
 
 const teamCardTemplate = ({ _id, name }) => {
   return `<div class="team-card-container" id="${_id}">
-            <a href="/kanban.html" class="card">
+            <a href="kanban.html" class="card">
               <div class="card-title">${name}</div>
             </a>
           </div>`;
