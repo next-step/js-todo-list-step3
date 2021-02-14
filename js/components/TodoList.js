@@ -1,3 +1,4 @@
+import { memberAPI } from "../api/api.js";
 import Component from "../core/Component.js";
 export default class TodoList extends Component {
   template() {
@@ -41,8 +42,18 @@ export default class TodoList extends Component {
   }
 
   setEvent() {
-    const { toggleTodo, deleteTodo, onEditingMode, editTodo } = this.props;
-
+    const {
+      toggleTodo,
+      deleteTodo,
+      onEditingMode,
+      editTodo,
+      revisePriority,
+    } = this.props;
+    const prioritySet = {
+      0: "NONE",
+      1: "FIRST",
+      2: "SECOND",
+    };
     this.addEvent("click", ".toggle", ({ target }) => {
       const itemID = this.getItemID(target, ".todo-list-item");
       toggleTodo(itemID);
@@ -62,6 +73,23 @@ export default class TodoList extends Component {
         editTodo(itemID, target.value);
       }
       onEditingMode(itemID);
+    });
+    this.addEvent("click", ".todo-list-item", ({ target }) => {
+      const targetClassList = target.classList;
+      if (targetClassList.contains("chip") && target.tagName === "SPAN") {
+        const $chipSelect = target
+          .closest(".chip-container")
+          .querySelector("select");
+        target.classList.add("hidden");
+        $chipSelect.classList.remove("hidden");
+        const itemID = this.getItemID(target, ".todo-list-item");
+        revisePriority(itemID, "NONE");
+      }
+    });
+    this.addEvent("change", ".select", ({ target }) => {
+      const itemID = this.getItemID(target, ".todo-list-item");
+      const priority = prioritySet[target.value];
+      revisePriority(itemID, priority);
     });
   }
   getItemID(target, className) {

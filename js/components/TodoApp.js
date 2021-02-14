@@ -46,6 +46,9 @@ export default class TodoApp extends Component {
       editTodo,
       filterList,
       deleteAllTodo,
+      revisePriority,
+      teamID,
+      memberID,
     } = this;
     const $todoAppender = this.$target.querySelector(".new-todo");
     const $todoList = this.$target.querySelector(".todo-list");
@@ -56,6 +59,7 @@ export default class TodoApp extends Component {
 
     new TodoList($todoList, {
       filteredList,
+      revisePriority: revisePriority.bind(this),
       toggleTodo: toggleTodo.bind(this),
       deleteTodo: deleteTodo.bind(this),
       onEditingMode: onEditingMode.bind(this),
@@ -121,7 +125,13 @@ export default class TodoApp extends Component {
     memberAPI.reviseContents(teamID, memberID, itemID, editingContents);
     this.setState({ todoList });
   }
-
+  revisePriority(itemID, priority) {
+    const { teamID, memberID, todoList } = this.state;
+    const index = this.findIndexOfItem(todoList, itemID);
+    todoList[index].priority = priority;
+    memberAPI.revisePriority(teamID, memberID, itemID, priority);
+    this.setState({ todoList });
+  }
   filterList(typeOfFilter) {
     this.setState({ typeOfFilter });
   }
