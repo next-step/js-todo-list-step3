@@ -1,6 +1,5 @@
 import { api } from '../../etc/api.js';
 import { teamId, getItemId, getMemberId } from '../todo.js';
-import { resetCount } from './todoCount.js';
 import { showMessage } from '../../etc/validator.js';
 
 export const removeTodo = async (target) => {
@@ -10,8 +9,6 @@ export const removeTodo = async (target) => {
   await api.deleteTodo(teamId, memberId, itemId);
 
   target.closest('li').remove();
-
-  resetCount(memberId);
 };
 
 export const removeAllTodo = async (target) => {

@@ -18,10 +18,3 @@ const countFilter = ($todoList, status) => {
     return countCompletedTodo;
   }
 };
-
-export const resetCount = (memberId) => {
-  const arr = document.querySelectorAll('.todoapp-container');
-
-  //todo.dataset.memberid == memberId
-  //이 테스트를 통과한 todo list의 count 부분을 지우는겨
-};
