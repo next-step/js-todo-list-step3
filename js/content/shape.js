@@ -1,4 +1,4 @@
-const baseUrl = "https://js-todo-list-9ca3a.df.r.appspot.com/";
+const baseUrl = "https://js-todo-list-9ca3a.df.r.appspot.com/api/teams/";
 
 const $todoAppContainer = (teamName) => `
   <li class="todoapp-container">

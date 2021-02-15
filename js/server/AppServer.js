@@ -6,11 +6,12 @@ import {
 } from "../App/AddMemberEvent.js";
 import { baseUrl, $kanbanHeader } from "../content/shape.js";
 import { todoCountMinus } from "../App/todoAppCountContainer.js";
+import { requestOption } from "../content/requestOption.js";
 
 let $domTodoAppListContainer;
 
 function responseMemberApi(teamId) {
-  fetch(`${baseUrl}api/teams/${teamId}`)
+  fetch(`${baseUrl}${teamId}`)
     .then((response) => response.json())
     .then((data) => {
       document.body.innerHTML += $kanbanHeader(data.name);
@@ -27,13 +28,7 @@ function responseMemberApi(teamId) {
 }
 
 function addMember(teamName, teamId) {
-  fetch(`${baseUrl}api/teams/${teamId}/members`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: `${teamName}`,
-    }),
-  })
+  fetch(`${baseUrl}${teamId}/members`, requestOption.addMember(teamName))
     .then(() => memberRender())
     .then(() => responseMemberApi(teamId))
     .catch(() => "오류 발생");
@@ -41,9 +36,10 @@ function addMember(teamName, teamId) {
 
 // 삭제버튼 클릭시 해당 TODOLIST의 item삭제하는 DELETE_TODOLIST함수 실행
 function getUserIdAndDeleteTodolist(todoApp, teamId, memberId, itemId) {
-  fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items/${itemId}`, {
-    method: "DELETE",
-  })
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}`,
+    requestOption.delete()
+  )
     .then((response) => response.json())
     .then((data) => {
       todoCountMinus(todoApp);
@@ -52,27 +48,18 @@ function getUserIdAndDeleteTodolist(todoApp, teamId, memberId, itemId) {
 
 function putServerIsCompleted(teamId, memberId, itemId, IsCompleted) {
   fetch(
-    `${baseUrl}api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        isCompleted: IsCompleted,
-      }),
-    }
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}/toggle`,
+    requestOption.completed(IsCompleted)
   )
     .then((response) => response.json())
     .then((data) => console.log(data));
 }
 
 function addMemberItem(value, teamId, memberId) {
-  fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: value,
-    }),
-  })
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items`,
+    requestOption.addMemberItem(value)
+  )
     .then((response) => response.json())
     .then(() => {
       //전부 렌더링
@@ -81,22 +68,17 @@ function addMemberItem(value, teamId, memberId) {
 }
 
 function eraseMemberTodoList(todoApp, teamId, memberId) {
-  fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items`, {
-    method: "DELETE",
-  })
+  fetch(`${baseUrl}${teamId}/members/${memberId}/items`, requestOption.delete())
     .then((response) => response.json())
     .then((data) => todoCountMinus(todoApp))
     .catch((data) => console.log(data));
 }
 
 function contentsModify(value, teamId, memberId, itemId) {
-  fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items/${itemId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: value,
-    }),
-  })
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}`,
+    requestOption.contentsModify(value)
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((data) => console.log(data));
