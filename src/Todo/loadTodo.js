@@ -1,17 +1,23 @@
 import { api } from '../api.js';
-import { $todoApps } from '../dom.js';
+import { $todoApps, $todoApp } from '../dom.js';
 import { template } from '../template.js';
 import { teamId } from './todo.js';
 import { completeCheck } from './completeTodo.js';
+import { todoCount } from './todoCount.js';
 
 export const loadTodo = async () => {
   const team = await api.getTeam(teamId);
+  const teamName = team.name;
   const members = team.members;
 
   const clearAllList = () => {
     while ($todoApps.firstChild) {
       $todoApps.lastChild.remove();
     }
+  };
+
+  const renderTeamName = (teamName) => {
+    $todoApp.insertAdjacentHTML('afterbegin', template.teamTitle(teamName));
   };
 
   const renderTodoContainer = (memberId, memberName) => {
@@ -26,6 +32,7 @@ export const loadTodo = async () => {
     $todoList.insertAdjacentHTML('beforeend', template.todoItem(contents, id, priority));
   };
 
+  renderTeamName(teamName);
   clearAllList();
 
   members.map((member) => {
@@ -53,6 +60,9 @@ export const loadTodo = async () => {
           }
         });
       }
+
+      //여기서 작업하는게 불안한데
+      todoCount($todoList, 'all');
     }
   };
 

@@ -18,10 +18,16 @@ export const template = {
   </div>`;
   },
 
-  todoAppContainer: (memberId, userName) => {
+  teamTitle: (teamName) => {
+    return `<h1 id="user-title" data-teamname="${teamName}">
+    <span><strong>${teamName}</strong>'s Todo List</span>
+  </h1>`;
+  },
+
+  todoAppContainer: (memberId, memberName) => {
     return `<li class="todoapp-container" data-memberid= "${memberId}">
     <h2>
-      <span><strong>${userName}</strong>'s Todo List</span>
+      <span><strong>${memberName}</strong>'s Todo List</span>
     </h2>
     <div class="todoapp">
       <section class="input-container">
@@ -32,7 +38,7 @@ export const template = {
         </ul>
       </section>
       <div class="count-container">
-        <span class="todo-count">총 <strong>0</strong> 개</span>
+        <span class="todo-count"></span>
         <ul class="filters">
           <li>
             <a href="#all" class="selected">전체보기</a>
@@ -109,5 +115,9 @@ export const template = {
       <option value="2">2순위</option>
     </select>
   </div>`;
+  },
+
+  count: (countNum) => {
+    return ` 총 <strong>${countNum}</strong> 개`;
   },
 };
