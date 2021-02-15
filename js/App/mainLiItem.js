@@ -5,8 +5,8 @@ import {
   contentsModify,
 } from "../server/AppServer.js";
 import { $label } from "../content/shape.js";
-import { countContainer } from "./todoAppCountContainer.js";
 
+//핸들러를 추가할 진짜 liTag(realLiTag)에 핸들러를 추가해준다. (다른 아래 내용도 마찬가지)
 function clickEraseButton(todoApp, name, teamId, memberId, itemId) {
   const liAll = todoApp.querySelectorAll(
     ".main > .todo-list > .todo-list-item"

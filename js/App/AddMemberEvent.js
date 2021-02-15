@@ -50,6 +50,7 @@ function loadMemberList(teamMember, button, todoList, teamId, memberId) {
     ".todoapp-container > h2 > span > strong"
   );
   let ulTodolist = document.querySelectorAll(".todo-list");
+  //각각의 '~'의 todoList의 '~'와 서버에서 가져온 '~'가 같으면 실행
   memberNameArr.forEach((memberName, index) => {
     if (memberName.innerHTML === teamMember) {
       loadItem(todoList, ulTodolist[index], memberName, teamId, memberId);
@@ -59,6 +60,7 @@ function loadMemberList(teamMember, button, todoList, teamId, memberId) {
 
 function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   let todoApp = ulTag.closest("div");
+  //멤버당 할일 갯수만큼 반복
   todoList.forEach((x) => {
     ulTag.insertAdjacentHTML(
       "beforeend",
@@ -72,6 +74,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
     clickCheckboxButton(todoApp, teamId, memberId, x._id);
     clickLabel(todoApp, teamId, memberId, x._id);
   });
+  //멤버당 한번씩 반복
   clickInput(todoApp, ulTag, teamId, memberId);
   initFilterEventListeners(
     todoApp,
