@@ -1,4 +1,4 @@
-import { Todo } from "/js/apis/index.js";
+import { Team } from "/js/apis/index.js";
 
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
@@ -6,7 +6,6 @@ import TodoCount from "./TodoCount.js";
 
 export default function TodoApp(appEl, { teamId, user }) {
   this.init = async () => {
-    const titleEl = appEl.querySelector("#user-title");
     const inputEl = appEl.querySelector(".new-todo");
     const listEl = appEl.querySelector(".todo-list");
     const countContainerEl = appEl.querySelector(".count-container");
@@ -29,50 +28,50 @@ export default function TodoApp(appEl, { teamId, user }) {
   this.addTodo = async (contents) =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      await Todo.addTodo(userId, contents);
+      await Team.addTodo(teamId, userId, contents);
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos } = await Team.getTodos(teamId, userId));
     });
 
   this.toggleIsComplete = async ({ _id: itemId }) =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      await Todo.toggleIsComplete(userId, itemId);
+      await Team.toggleIsComplete(teamId, userId, itemId);
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos } = await Team.getTodos(teamId, userId));
     });
 
   this.updatePriority = async (_id, priority) =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      priority = Todo.priorities[+priority];
-      await Todo.updatePriority(userId, { _id, priority });
+      priority = Team.priorities[+priority];
+      await Team.updatePriority(teamId, userId, { _id, priority });
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos } = await Team.getTodos(teamId, userId));
     });
 
   this.updateContents = async (todo) =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      await Todo.updateContents(userId, todo);
+      await Team.updateContents(teamId, userId, todo);
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos } = await Team.getTodos(teamId, userId));
     });
 
   this.deleteTodo = async (itemId) =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      await Todo.deleteTodo(userId, itemId);
+      await Team.deleteTodo(teamId, userId, itemId);
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos = [] } = await Team.getTodos(teamId, userId));
     });
 
   this.deleteAllTodos = async () =>
     this.toggleIsLoading(async () => {
       const { _id: userId } = this.user;
-      await Todo.deleteAllTodos(userId);
+      await Team.deleteAllTodos(teamId, userId);
 
-      this.todos = await Todo.getTodos(userId);
+      ({ todoList: this.todos = [] } = await Team.getTodos(teamId, userId));
     });
 
   this.setFilter = (filter = null) => {
