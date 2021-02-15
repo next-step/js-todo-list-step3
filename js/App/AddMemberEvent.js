@@ -68,12 +68,13 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
       todoApp.querySelector(".count-container"),
       ulTag.childElementCount
     );
-    clickEraseButton(memberName, teamId, memberId, x._id);
+    clickEraseButton(todoApp, memberName, teamId, memberId, x._id);
     clickCheckboxButton(todoApp, teamId, memberId, x._id);
     clickLabel(todoApp, teamId, memberId, x._id);
   });
   clickInput(todoApp, ulTag, teamId, memberId);
   initFilterEventListeners(
+    todoApp,
     todoApp.querySelector(".count-container > .filters"),
     todoApp.querySelector(".count-container > .clear-completed"),
     ulTag,

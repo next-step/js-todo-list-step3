@@ -5,6 +5,7 @@ import {
   memberRender,
 } from "../App/AddMemberEvent.js";
 import { baseUrl, $kanbanHeader } from "../content/shape.js";
+import { todoCountMinus } from "../App/todoAppCountContainer.js";
 
 let $domTodoAppListContainer;
 
@@ -39,13 +40,13 @@ function addMember(teamName, teamId) {
 }
 
 // 삭제버튼 클릭시 해당 TODOLIST의 item삭제하는 DELETE_TODOLIST함수 실행
-function getUserIdAndDeleteTodolist(teamId, memberId, itemId) {
+function getUserIdAndDeleteTodolist(todoApp, teamId, memberId, itemId) {
   fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items/${itemId}`, {
     method: "DELETE",
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      todoCountMinus(todoApp);
     });
 }
 
@@ -79,12 +80,12 @@ function addMemberItem(value, teamId, memberId) {
     });
 }
 
-function eraseMemberTodoList(teamId, memberId) {
+function eraseMemberTodoList(todoApp, teamId, memberId) {
   fetch(`${baseUrl}api/teams/${teamId}/members/${memberId}/items`, {
     method: "DELETE",
   })
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => todoCountMinus(todoApp))
     .catch((data) => console.log(data));
 }
 

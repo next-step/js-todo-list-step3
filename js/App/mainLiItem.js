@@ -5,21 +5,22 @@ import {
   contentsModify,
 } from "../server/AppServer.js";
 import { $label } from "../content/shape.js";
+import { countContainer } from "./todoAppCountContainer.js";
 
-function clickEraseButton(name, teamId, memberId, itemId) {
-  document.querySelectorAll(".destroy").forEach(($el) =>
-    $el.addEventListener("click", (e) => {
-      clickEraseHanlder(e, teamId, memberId, itemId);
-    })
+function clickEraseButton(todoApp, name, teamId, memberId, itemId) {
+  const liAll = todoApp.querySelectorAll(
+    ".main > .todo-list > .todo-list-item"
   );
+  const realLiTag = liAll[liAll.length - 1];
+  const realDestory = realLiTag.querySelector(".view > .destroy");
+  realDestory.addEventListener("click", (e) => {
+    clickEraseHanlder(todoApp, e, teamId, memberId, itemId);
+  });
 }
 
-function clickEraseHanlder(event, teamId, memberId, itemId) {
+function clickEraseHanlder(todoApp, event, teamId, memberId, itemId) {
   event.target.closest("li").remove();
-  document.querySelector(
-    ".todo-count > strong"
-  ).innerText = document.querySelector(".todo-list").childElementCount;
-  getUserIdAndDeleteTodolist(teamId, memberId, itemId);
+  getUserIdAndDeleteTodolist(todoApp, teamId, memberId, itemId);
 }
 
 function clickCheckboxButton(todoApp, teamId, memberId, itemId) {
@@ -49,11 +50,11 @@ function clickCheckboxHandler({ target }, teamId, memberId, itemId) {
 function clickInput(todoApp, ulTag, teamId, memberId) {
   let newTodo = todoApp.querySelector(".input-container > .new-todo");
   newTodo.addEventListener("keyup", (e) =>
-    clickEnter(e, newTodo, ulTag, teamId, memberId, todoApp)
+    clickEnter(e, newTodo, ulTag, teamId, memberId)
   );
 }
 
-function clickEnter(event, newTodo, ulTag, teamId, memberId, todoApp) {
+function clickEnter(event, newTodo, ulTag, teamId, memberId) {
   if (event.key === "Enter" && /[\S]/gi.test(newTodo.value) !== true) {
     alert("공백을 입력했습니다.");
   } else if (event.key === "Enter" && /[\S]/gi.test(newTodo.value) == true) {

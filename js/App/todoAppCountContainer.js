@@ -5,6 +5,7 @@ function countContainer(countContainer, count) {
 }
 
 function initFilterEventListeners(
+  todoApp,
   filters,
   eraseButton,
   ulTag,
@@ -24,7 +25,7 @@ function initFilterEventListeners(
       onCompletedFilterHandler(ulTag, todoCount)
     );
   eraseButton.addEventListener("click", () =>
-    onEraseButtonHandler(eraseButton, teamId, memberId, ulTag)
+    onEraseButtonHandler(todoApp, eraseButton, teamId, memberId, ulTag)
   );
 }
 
@@ -63,10 +64,10 @@ function onCompletedFilterHandler(ulTag, todoCount) {
   todoCount.innerHTML = count;
 }
 
-function onEraseButtonHandler(eraseButton, teamId, memberId, ulTag) {
+function onEraseButtonHandler(todoApp, eraseButton, teamId, memberId, ulTag) {
   if (confirm("지우시겠습니까?")) {
     eraseAllLiTag(ulTag);
-    eraseMemberTodoList(teamId, memberId);
+    eraseMemberTodoList(todoApp, teamId, memberId);
   } else {
     alert("멤버 지우기 취소");
   }
@@ -77,4 +78,10 @@ function eraseAllLiTag(ulTag) {
   allLi.forEach((li) => li.remove());
 }
 
-export { countContainer, initFilterEventListeners };
+function todoCountMinus(todoApp) {
+  todoApp.querySelector(
+    ".count-container>.todo-count > strong"
+  ).innerText = todoApp.querySelector(".main > .todo-list").childElementCount;
+}
+
+export { countContainer, initFilterEventListeners, todoCountMinus };
