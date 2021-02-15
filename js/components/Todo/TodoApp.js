@@ -100,13 +100,21 @@ export default function TodoApp(appEl, { teamId, user }) {
   };
 
   this.render = () => {
-    const filteredTodos = this.todos.filter(
-      ({ isCompleted }) => this.filter === null || isCompleted === this.filter
-    );
+    const renderingTodos = this.todos
+      .filter(
+        ({ isCompleted }) => this.filter === null || isCompleted === this.filter
+      )
+      .sort(({ priority: pA }, { priority: pB }) => {
+        pA =
+          Team.priorities.findIndex((p) => p === pA) || Number.MAX_SAFE_INTEGER;
+        pB =
+          Team.priorities.findIndex((p) => p === pB) || Number.MAX_SAFE_INTEGER;
+        return pA - pB;
+      });
 
     this.todoInput.render();
-    this.todoList.render(filteredTodos);
-    this.todoCountContainer.render(filteredTodos);
+    this.todoList.render(renderingTodos);
+    this.todoCountContainer.render(renderingTodos);
   };
 
   this.init();
