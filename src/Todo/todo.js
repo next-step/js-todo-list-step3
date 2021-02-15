@@ -1,7 +1,7 @@
 import { $todoApps } from '../dom.js';
 import { todoInput } from './todoInput.js';
 import { loadTodo } from './loadTodo.js';
-import { removeTodo } from './removeTodo.js';
+import { removeTodo, removeAllTodo } from './removeTodo.js';
 import { addMember } from './addMember.js';
 import { completeTodo } from './completeTodo.js';
 import { editTodo } from './editTodo.js';
@@ -14,6 +14,7 @@ export const todo = async () => {
 
   $todoApps.addEventListener('keyup', todoInput);
   $todoApps.addEventListener('click', removeTodo);
+  $todoApps.addEventListener('click', removeAllTodo);
   $todoApps.addEventListener('click', addMember);
   $todoApps.addEventListener('click', completeTodo);
   $todoApps.addEventListener('click', setPriority);

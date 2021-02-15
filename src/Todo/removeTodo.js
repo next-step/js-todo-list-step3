@@ -14,3 +14,25 @@ export const removeTodo = async ({ target }) => {
 
   resetCount(memberId);
 };
+
+export const removeAllTodo = async ({ target }) => {
+  if (!target.classList.contains('clear-completed')) return;
+  if (!confirm('정말 투두리스트를 전부 삭제하시겠습니까?')) {
+    return;
+  }
+
+  const $todoApp = target.closest('.todoapp');
+  const $todoList = $todoApp.querySelector('.todo-list');
+  const memberId = getMemberId($todoList);
+
+  while ($todoList.firstChild) {
+    const $Item = $todoList.lastChild;
+
+    if ($Item !== null) {
+      const itemId = $Item.dataset.itemid;
+
+      await api.deleteTodo(teamId, memberId, itemId);
+      $Item.remove();
+    }
+  }
+};
