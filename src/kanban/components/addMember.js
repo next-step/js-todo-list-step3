@@ -1,7 +1,8 @@
 import { api } from '../../api/api.js';
 import { ERR_MSG, MSG, TODO } from '../../utils/constant.js';
+import { loadMembers } from './loadMembers.js';
 
-export const addMember = async () => {
+export const addMember = async (currentTeam) => {
   const memberNameInput = window.prompt(MSG.ENTER_NEW_MEMBER_NAME);
 
   if (!memberNameInput) {
@@ -15,7 +16,8 @@ export const addMember = async () => {
   }
 
   try {
-    await api.addTeam(memberName);
+    await api.addMember(currentTeam.id, memberName);
+    loadMembers();
   } catch (err) {
     throw new Error(err);
   }
