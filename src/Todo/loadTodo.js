@@ -1,9 +1,9 @@
-import { api } from '../api.js';
-import { $todoApps, $todoApp } from '../dom.js';
-import { template } from '../template.js';
+import { api } from '../etc/api.js';
+import { $todoApps, $todoApp } from '../etc/dom.js';
 import { teamId } from './todo.js';
-import { completeCheck } from './completeTodo.js';
-import { todoCount } from './todoCount.js';
+import { completeCheck } from './feature/completeTodo.js';
+import { todoCount } from './feature/todoCount.js';
+import { render } from './todoRender.js';
 
 export const loadTodo = async () => {
   const team = await api.getTeam(teamId);
@@ -16,30 +16,20 @@ export const loadTodo = async () => {
     }
   };
 
-  const renderTeamName = (teamName) => {
-    $todoApp.insertAdjacentHTML('afterbegin', template.teamTitle(teamName));
+  const clearTeamName = () => {
+    $todoApp.firstChild.remove();
   };
 
-  const renderTodoContainer = (memberId, memberName) => {
-    $todoApps.insertAdjacentHTML('beforeend', template.todoAppContainer(memberId, memberName));
-  };
-
-  const renderButton = () => {
-    $todoApps.insertAdjacentHTML('beforeend', template.addUserButton());
-  };
-
-  const renderItem = ($todoList, contents, id, priority) => {
-    $todoList.insertAdjacentHTML('beforeend', template.todoItem(contents, id, priority));
-  };
-
-  renderTeamName(teamName);
+  clearTeamName();
   clearAllList();
 
+  render.teamName(teamName);
+
   members.map((member) => {
-    renderTodoContainer(member._id, member.name);
+    render.todoContainer(member._id, member.name);
   });
 
-  renderButton();
+  render.button();
 
   const addTodoItem = () => {
     const teamElements = $todoApps.getElementsByClassName('todoapp-container');
@@ -50,7 +40,7 @@ export const loadTodo = async () => {
 
       if (todoArr !== null) {
         todoArr.map((item) => {
-          renderItem($todoList, item.contents, item._id, item.priority);
+          render.item($todoList, item.contents, item._id, item.priority);
 
           if (item.isCompleted) {
             const $todoItem = $todoList.lastChild;
@@ -61,7 +51,6 @@ export const loadTodo = async () => {
         });
       }
 
-      //여기서 작업하는게 불안한데
       todoCount($todoList, 'all');
     }
   };

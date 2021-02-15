@@ -1,11 +1,11 @@
-import { $todoApps } from '../dom.js';
-import { todoInput } from './todoInput.js';
+import { $todoApps } from '../etc/dom.js';
+import { todoInput } from './feature/todoInput.js';
 import { loadTodo } from './loadTodo.js';
-import { removeTodo, removeAllTodo } from './removeTodo.js';
-import { addMember } from './addMember.js';
-import { completeTodo } from './completeTodo.js';
-import { editTodo } from './editTodo.js';
-import { setPriority } from './setPriority.js';
+import { removeTodo, removeAllTodo } from './feature/removeTodo.js';
+import { addMember } from './feature/addMember.js';
+import { completeTodo } from './feature/completeTodo.js';
+import { editTodo } from './feature/editTodo.js';
+import { setPriority } from './feature/setPriority.js';
 
 export const teamId = location.hash.substr(1, 9);
 

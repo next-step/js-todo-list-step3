@@ -1,5 +1,5 @@
-import { api } from '../api.js';
-import { teamId, getItemId, getMemberId, getTodoItem } from './todo.js';
+import { api } from '../../etc/api.js';
+import { teamId, getItemId, getMemberId, getTodoItem } from '../todo.js';
 
 export const completeTodo = async (target) => {
   const $todoItem = getTodoItem(target);

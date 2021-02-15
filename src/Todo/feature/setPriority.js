@@ -1,6 +1,6 @@
-import { api } from '../api.js';
-import { template } from '../template.js';
-import { getItemId, getMemberId, teamId } from './todo.js';
+import { api } from '../../etc/api.js';
+import { template } from '../../etc/template.js';
+import { getItemId, getMemberId, teamId } from '../todo.js';
 
 export const setPriority = async (target) => {
   const memberId = getMemberId(target);

@@ -1,6 +1,7 @@
-import { api } from '../api.js';
-import { teamId, getItemId, getMemberId } from './todo.js';
+import { api } from '../../etc/api.js';
+import { teamId, getItemId, getMemberId } from '../todo.js';
 import { resetCount } from './todoCount.js';
+import { showMessage } from '../../etc/validator.js';
 
 export const removeTodo = async (target) => {
   const itemId = getItemId(target);
@@ -13,10 +14,8 @@ export const removeTodo = async (target) => {
   resetCount(memberId);
 };
 
-export const removeAllTodo = async ({ target }) => {
-  if (!confirm('정말 투두리스트를 전부 삭제하시겠습니까?')) {
-    return;
-  }
+export const removeAllTodo = async (target) => {
+  showMessage('정말 모든 투두리스트를 삭제하시겠습니까?');
 
   const $todoApp = target.closest('.todoapp');
   const $todoList = $todoApp.querySelector('.todo-list');

@@ -1,6 +1,6 @@
-import { template } from '../template.js';
-import { api } from '../api.js';
-import { teamId, getItemId, getMemberId, getTodoItem } from './todo.js';
+import { template } from '../../etc/template.js';
+import { api } from '../../etc/api.js';
+import { teamId, getItemId, getMemberId, getTodoItem } from '../todo.js';
 
 export const editTodo = ({ target }) => {
   if (!target.classList.contains('label')) return;

@@ -1,4 +1,4 @@
-import { template } from '../template.js';
+import { template } from '../../etc/template.js';
 
 export const todoCount = ($todoList, status) => {
   const countNum = countFilter($todoList, status);
