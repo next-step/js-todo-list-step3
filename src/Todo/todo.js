@@ -13,15 +13,29 @@ export const todo = async () => {
   await loadTodo();
 
   $todoApps.addEventListener('keyup', todoInput);
-  $todoApps.addEventListener('click', removeTodo);
-  $todoApps.addEventListener('click', removeAllTodo);
-  $todoApps.addEventListener('click', addMember);
-  $todoApps.addEventListener('click', completeTodo);
-  $todoApps.addEventListener('click', setPriority);
+  $todoApps.addEventListener('click', clickEventHandler);
   $todoApps.addEventListener('dblclick', editTodo);
 };
 
 todo();
+
+const clickEventHandler = ({ target }) => {
+  const targetClass = target.classList.item(0);
+
+  if (targetClass === 'toggle') {
+    completeTodo(target);
+  } else if (targetClass === 'chip') {
+    setPriority(target);
+  } else if (targetClass === 'destroy') {
+    removeTodo(target);
+  } else if (targetClass === 'clear-completed') {
+    removeAllTodo(target);
+  } else if (targetClass === 'ripple') {
+    addMember(target);
+  } else {
+    return;
+  }
+};
 
 export const getItemId = (target) => {
   return target.closest('li').dataset.itemid;

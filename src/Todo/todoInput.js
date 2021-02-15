@@ -1,6 +1,6 @@
 import { api } from '../api.js';
 import { template } from '../template.js';
-import { teamId, getItemId, getMemberId } from './todo.js';
+import { teamId, getMemberId } from './todo.js';
 
 export const todoInput = ({ target, key }) => {
   if (!target.classList.contains('new-todo')) return;

@@ -2,9 +2,7 @@ import { api } from '../api.js';
 import { template } from '../template.js';
 import { getItemId, getMemberId, teamId } from './todo.js';
 
-export const setPriority = async ({ target }) => {
-  if (!target.classList.contains('chip')) return;
-
+export const setPriority = async (target) => {
   const memberId = getMemberId(target);
   const itemId = getItemId(target);
   const contents = {

@@ -2,9 +2,7 @@ import { api } from '../api.js';
 import { teamId, getItemId, getMemberId } from './todo.js';
 import { resetCount } from './todoCount.js';
 
-export const removeTodo = async ({ target }) => {
-  if (!target.classList.contains('destroy')) return;
-
+export const removeTodo = async (target) => {
   const itemId = getItemId(target);
   const memberId = getMemberId(target);
 
@@ -16,7 +14,6 @@ export const removeTodo = async ({ target }) => {
 };
 
 export const removeAllTodo = async ({ target }) => {
-  if (!target.classList.contains('clear-completed')) return;
   if (!confirm('정말 투두리스트를 전부 삭제하시겠습니까?')) {
     return;
   }

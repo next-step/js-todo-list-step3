@@ -1,9 +1,7 @@
 import { api } from '../api.js';
 import { teamId, getItemId, getMemberId, getTodoItem } from './todo.js';
 
-export const completeTodo = async ({ target }) => {
-  if (!target.classList.contains('toggle')) return;
-
+export const completeTodo = async (target) => {
   const $todoItem = getTodoItem(target);
   const itemId = getItemId(target);
   const memberId = getMemberId(target);
