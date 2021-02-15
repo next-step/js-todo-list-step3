@@ -13,9 +13,7 @@ export const onFilterTodo = (target) => {
     const teamId = getTeamId();
     const memberId = target.closest('ul').id;
     const option = target.id;
-    
+
     selectOption(memberId, option);
     loadTodos(teamId, memberId, option);
 };
-
-

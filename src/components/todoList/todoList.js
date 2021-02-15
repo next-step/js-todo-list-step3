@@ -12,7 +12,7 @@ export const todoList = () => {
 const eventListener = () => {
     const $todoList = document.getElementById('todoapp-list');
 
-    $todoList.addEventListener('keyup', onAddTodo);  
+    $todoList.addEventListener('keyup', onAddTodo);
     $todoList.addEventListener('click', oneClickEvent);
     $todoList.addEventListener('change', onEditPriority);
     $todoList.addEventListener('dblclick', onEditTodo);
@@ -20,10 +20,9 @@ const eventListener = () => {
 
 const oneClickEvent = ({target}) => {
     const classList = ['destroy', 'toggle'];
-    const filters = ['all', 'priority','active', 'completed'];
+    const filters = ['all', 'priority', 'active', 'completed'];
 
-    if(classList.includes(target.className)) return onControlTodo(target, classList);
-    if(target.classList.contains('clear-completed')) return onDeleteAllTodos(target);
-    if(filters.includes(target.id)) return onFilterTodo(target);
-
+    if (classList.includes(target.className)) return onControlTodo(target, classList);
+    if (target.classList.contains('clear-completed')) return onDeleteAllTodos(target);
+    if (filters.includes(target.id)) return onFilterTodo(target);
 };

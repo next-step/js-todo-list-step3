@@ -1,9 +1,9 @@
 export const priorityTemplate = (priority) => {
     const priorityList = {
-        FIRST : 'primary',
-        SECOND : 'secondary',
-        NONE : '',
-    }
+        FIRST: 'primary',
+        SECOND: 'secondary',
+        NONE: '',
+    };
     return `<select class="chip select ${priorityList[priority]}">
                 <option value="0" ${priority === 'NONE' ? 'selected' : ''}>순위</option>
                 <option value="1" ${priority === 'FIRST' ? 'selected' : ''}>1순위</option>
@@ -11,7 +11,7 @@ export const priorityTemplate = (priority) => {
             </select>`;
 };
 
-export const todoListTemplate =(todo, memberId) => {
+export const todoListTemplate = (todo, memberId) => {
     return `<li id='${todo._id}' class='${todo.contents} ${todo.isCompleted ? 'completed' : ''}'>
                 <div class="view">
                 <input id="${memberId}" class="toggle" type="checkbox" ${todo.isCompleted ? 'checked' : ''}/>
@@ -25,8 +25,7 @@ export const todoListTemplate =(todo, memberId) => {
             </li>`;
 };
 
-
-export const todoAppContainerTemplate = (memberId,memberName) => {
+export const todoAppContainerTemplate = (memberId, memberName) => {
     return `<li id="${memberId}" class="todoapp-container">
                 <h2>
                 <span><strong>${memberName}</strong>'s Todo List</span>

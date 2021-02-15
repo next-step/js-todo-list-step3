@@ -4,4 +4,4 @@ export const addUserButtonTemplate = () => {
                 <span class="material-icons">add</span>
                 </button>
             </li>`;
-}
+};

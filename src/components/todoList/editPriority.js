@@ -4,12 +4,12 @@ import {getTeamId} from '../../utils/localStorage.js';
 import {getItemId} from '../../utils/collection.js';
 
 export const onEditPriority = async ({target}) => {
-    if(!target.classList.contains('chip')) return;
+    if (!target.classList.contains('chip')) return;
 
     const priorityList = {
-        0 : 'NONE',
-        1 : 'FIRST',
-        2 : 'SECOND',
+        0: 'NONE',
+        1: 'FIRST',
+        2: 'SECOND',
     };
 
     const teamId = getTeamId();

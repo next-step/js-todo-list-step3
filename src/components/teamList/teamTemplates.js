@@ -15,4 +15,3 @@ export const addTeamButtonTemplate = () => {
                 </button>
             </div>`;
 };
-
