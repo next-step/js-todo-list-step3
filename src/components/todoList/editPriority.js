@@ -1,13 +1,9 @@
 import {API} from '../../api/api.js';
 import {loadTodos} from '../todoList/loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
+import {getItemId} from '../../utils/collection.js';
 
-export const initEditPriority = () => {
-    const $todoAppList = document.querySelector('#todoapp-list');
-    $todoAppList.addEventListener('change', onEditPriority);
-};
-
-const onEditPriority = async ({target}) => {
+export const onEditPriority = async ({target}) => {
     if(!target.classList.contains('chip')) return;
 
     const priorityList = {
@@ -18,7 +14,7 @@ const onEditPriority = async ({target}) => {
 
     const teamId = getTeamId();
     const memberId = target.closest('div').querySelector('input').id;
-    const itemId = target.closest('li').id;
+    const itemId = getItemId(target);
     const priority = target.value;
 
     await API.editPriority(teamId, memberId, itemId, priorityList[priority]);

@@ -1,14 +1,9 @@
 import {API} from '../../api/api.js';
 import {getTeamId} from '../../utils/localStorage.js';
 import {loadMembers} from './loadMembers.js';
-const MIN_MEMBER_NAME = 2;
+export const MIN_MEMBER_NAME = 2;
 
-export const initAddMember = () => {
-    const $addButton = document.getElementById('todoapp-list');
-    $addButton.addEventListener('click', onAddMember);
-};
-
-const onAddMember = async({target}) => {
+export const onAddMember = async({target}) => {
     if(!target.classList.contains('material-icons')) return;
     
     const memberName= prompt('이름을 입력해주세요');
@@ -17,4 +12,5 @@ const onAddMember = async({target}) => {
 
     await API.addMemer(getTeamId(), memberName);
     loadMembers();
-};
+
+}

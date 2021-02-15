@@ -1,5 +1,10 @@
-import {initAddMember} from './addMember.js';
+import {onAddMember} from './addMember.js';
 
 export const memberList = () => {
-    initAddMember();
+    eventListener();
+};
+
+const eventListener = () => {
+    const $addButton = document.getElementById('todoapp-list');
+    $addButton.addEventListener('click', onAddMember);
 };

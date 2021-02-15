@@ -3,12 +3,7 @@ import {loadTodos} from './loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
 export const MIN_TODO_LENGTH = 2;
 
-export const initAddTodo = () => {
-    const $todoList = document.getElementById('todoapp-list');
-    $todoList.addEventListener('keyup', onAddTodo);
-};
-
-const onAddTodo = async ({target, key}) => {
+export const onAddTodo = async ({target, key}) => {
     if(!target.classList.contains('new-todo')) return;
     if(key !== 'Enter') return;
     const todoTitle = target.value;
@@ -19,5 +14,6 @@ const onAddTodo = async ({target, key}) => {
 
     await API.addTodo(teamId, memberId, todoTitle);
     loadTodos(teamId, memberId);
+    
     target.value = '';
 };

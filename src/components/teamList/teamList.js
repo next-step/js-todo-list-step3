@@ -1,6 +1,15 @@
-import {initAddTeam} from './addTeam.js';
-import {initControlTitle} from './controlTitle.js';
+import {onAddTeam} from './addTeam.js';
+import {onControlTitle} from './controlTitle.js';
+
 export const teamList = () => {
-    initAddTeam();
-    initControlTitle();
+    eventListener();
+}
+
+const eventListener =() =>{
+    const $addButton = document.getElementById(`add-team-button`);
+    const $teamCard = document.querySelector('.team-list-container');
+
+    $addButton.addEventListener(`click`, onAddTeam);
+    $teamCard.addEventListener('mouseover', onControlTitle);
+
 }
