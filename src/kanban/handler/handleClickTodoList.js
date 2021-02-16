@@ -1,10 +1,13 @@
-import { addMember } from '../components/addMember.js';
+import { addMember } from '../components/member/addMember.js';
+import { deleteTodo } from '../components/deleteTodo.js';
+
+const isContain = (target, className) => target.classList.contains(className);
 
 export const handleClickTodoList = ({ target }, currentTeam) => {
-  const event = {
-    ripple: addMember,
-    'material-icons': addMember,
-  };
-
-  return event[target.className] && event[target.className](currentTeam);
+  if (isContain(target, 'ripple') || isContain(target, 'material-icons')) {
+    return addMember(currentTeam);
+  }
+  if (isContain(target, 'destroy')) {
+    return deleteTodo(target, currentTeam);
+  }
 };

@@ -1,5 +1,5 @@
-import { api } from '../../api/api.js';
-import { ERR_MSG, MSG, TODO } from '../../utils/constant.js';
+import { api } from '../../../api/api.js';
+import { ERR_MSG, MSG, TODO } from '../../../utils/constant.js';
 import { loadMembers } from './loadMembers.js';
 
 export const addMember = async (currentTeam) => {

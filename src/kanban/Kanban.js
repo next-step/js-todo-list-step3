@@ -1,5 +1,5 @@
 import localStorage from '../utils/localStorage.js';
-import { loadMembers } from './components/loadMembers.js';
+import { loadMembers } from './components/member/loadMembers.js';
 import { handleClickTodoList } from './handler/handleClickTodoList.js';
 import { handleInputTodoList } from './handler/handleInputTodoList.js';
 

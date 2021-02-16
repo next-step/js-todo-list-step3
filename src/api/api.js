@@ -55,7 +55,7 @@ export const api = {
     return request(`/api/teams/${teamId}/members/${memberId}`);
   },
 
-  addMemberTodo: (teamId, memberId, contents) => {
+  addTodo: (teamId, memberId, contents) => {
     return request(
       `/api/teams/${teamId}/members/${memberId}/items`,
       option.post({ contents }),
@@ -70,8 +70,9 @@ export const api = {
   },
 
   deleteMemberTodos: (teamId, memberId) => {
-    return (
-      request(`/api/teams/${teamId}/members/${memberId}/items`), option.delete()
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items`,
+      option.delete(),
     );
   },
 

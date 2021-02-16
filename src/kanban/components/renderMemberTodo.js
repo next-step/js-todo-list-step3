@@ -1,5 +1,3 @@
-import { api } from '../../api/api.js';
-
 const priorityTemplate = (priority) => {
   const priorityClassList = {
     FIRST: 'primary',
@@ -35,13 +33,17 @@ const todoItemTemplate = (todo) => {
 };
 
 export const renderMemberTodo = async (memberId, todos) => {
-  const $todoList = document.querySelector(
-    `#${memberId} > .todoapp > .main > .todo-list`,
-  );
-
   if (!todos) {
     return;
   }
+
+  // console.log(memberId);
+
+  // console.log(document.querySelector(`#${memberId}`));
+
+  const $todoList = document.querySelector(
+    `#${memberId} > .todoapp > .main > .todo-list`,
+  );
 
   $todoList.innerHTML = todos.map((todo) => todoItemTemplate(todo)).join('');
 };

@@ -1,5 +1,5 @@
-import { api } from '../../api/api.js';
-import localStorage from '../../utils/localStorage.js';
+import { api } from '../../../api/api.js';
+import localStorage from '../../../utils/localStorage.js';
 import { renderMember } from './renderMember.js';
 
 export const loadMembers = async () => {

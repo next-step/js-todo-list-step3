@@ -1,4 +1,4 @@
-import { renderMemberTodo } from './renderMemberTodo.js';
+import { renderMemberTodo } from '../renderMemberTodo.js';
 
 const addUserButtonTemplate = () => {
   return `<li class="add-user-button-container">

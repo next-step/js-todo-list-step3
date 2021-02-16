@@ -2,7 +2,7 @@ import { api } from '../../api/api.js';
 import { ERR_MSG } from '../../utils/constant.js';
 import { renderMemberTodo } from './renderMemberTodo.js';
 
-export const addMemberTodo = async (target, key, currentTeam) => {
+export const addTodo = async (target, key, currentTeam) => {
   if (key !== 'Enter' || !target.value) {
     return;
   }
@@ -17,7 +17,7 @@ export const addMemberTodo = async (target, key, currentTeam) => {
   const teamId = currentTeam.id;
 
   try {
-    await api.addMemberTodo(teamId, memberId, newTodo);
+    await api.addTodo(teamId, memberId, newTodo);
     const member = await api.getMember(teamId, memberId);
     renderMemberTodo(memberId, member.todoList);
   } catch (err) {
