@@ -18,8 +18,7 @@ class App extends Reilly.Component {
 
   unsub;
   render() {
-    const { teams, selectedTeam, error } = useSelector(state => state.team);
-    const { editingId } = useSelector(state => state.todo);
+    const { selectedTeam, editingId, error } = useSelector(state => state.team);
 
     if (this.unsub) this.unsub();
     this.unsub = store.subscribe(() => {
@@ -48,7 +47,7 @@ class App extends Reilly.Component {
     return (
       <div id="app">
         <Title id="user-title" name={selectedTeam?.name} />
-        {selectedTeam ? <Main team={selectedTeam} /> : <TeamList />}
+        {!selectedTeam ? <TeamList /> : <Main />}
       </div>
     );
   }
