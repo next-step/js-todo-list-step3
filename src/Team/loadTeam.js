@@ -1,6 +1,6 @@
-import { template } from '../template.js';
+import { template } from '../etc/template.js';
 import { render } from './team.js';
-import { api } from '../api.js';
+import { api } from '../etc/api.js';
 
 export const loadTeamList = async () => {
   const teamList = await api.getTeamList();

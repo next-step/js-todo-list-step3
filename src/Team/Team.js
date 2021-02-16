@@ -1,4 +1,4 @@
-import { $teamListContainer } from '../dom.js';
+import { $teamListContainer } from '../etc/dom.js';
 import { loadTeamList } from './loadTeam.js';
 import { createTeam } from './createTeam.js';
 import { removeTeam } from './removeTeam.js';
