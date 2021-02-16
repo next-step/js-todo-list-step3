@@ -17,6 +17,7 @@
     "import/extensions": "off",
     "consistent-return": "off",
     "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
     "max-depth": ["error", 2]
     // "max-lines-per-function": ["error", 20]
   }

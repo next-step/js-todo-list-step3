@@ -1,3 +1,5 @@
+import { renderMemberTodo } from './renderMemberTodo.js';
+
 const addUserButtonTemplate = () => {
   return `<li class="add-user-button-container">
             <button id="add-user-button" class="ripple">
@@ -44,7 +46,7 @@ const todoContainerTemplate = ({ _id, name }) => {
           </li>`;
 };
 
-export const renderMembersTodo = (members) => {
+export const renderMember = (teamId, members) => {
   const $todoListContainer = document.querySelector('.todoapp-list-container');
 
   if (!members.length) {
@@ -55,4 +57,8 @@ export const renderMembersTodo = (members) => {
   $todoListContainer.innerHTML =
     members.map((member) => todoContainerTemplate(member)).join('') +
     addUserButtonTemplate();
+
+  members.forEach((member) =>
+    renderMemberTodo(teamId, member._id, member.todoList),
+  );
 };
