@@ -19,7 +19,9 @@
     "url": "https://github.com/domuk-k/js-todo-list-step2/issues"
   },
   "homepage": "https://github.com/domuk-k/js-todo-list-step2#readme",
-  "dependencies": {},
+  "dependencies": {
+    "immer": "^8.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",

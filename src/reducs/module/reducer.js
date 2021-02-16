@@ -1,7 +1,6 @@
 import { combineReducers } from '../../lib/reducs';
-import todo from './todo';
-import user from './user';
+import team from './team';
 
-const rootReducer = combineReducers({ todo, user });
+const rootReducer = combineReducers({ team });
 
 export default rootReducer;

@@ -1,3 +1,4 @@
+import { store } from '..';
 import hermes from './';
 
 /**
@@ -9,8 +10,7 @@ const errorHandler = async (method, ...params) => {
     const { data } = await method.apply(hermes, params);
     return data;
   } catch (error) {
-    // do not throw, dispatch(error)
-    return new Error(error);
+    store.dispatch(createAction('ERROR', error));
   }
 };
 
