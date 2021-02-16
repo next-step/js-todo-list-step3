@@ -67,7 +67,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
       "beforeend",
       $todoListItem(x.contents, x.isCompleted)
     );
-    checkPriority(ulTag, x.priority);
+    checkPriority(ulTag, x.priority, teamId, memberId, x._id);
     countContainer(
       todoApp.querySelector(".count-container"),
       ulTag.childElementCount

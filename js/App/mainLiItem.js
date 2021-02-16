@@ -3,8 +3,11 @@ import {
   putServerIsCompleted,
   addMemberItem,
   contentsModify,
+  priorityNoneModify,
+  priorityFirstModify,
+  prioritySecondModify,
 } from "../server/AppServer.js";
-import { $label } from "../content/shape.js";
+import { $label, baseUrl } from "../content/shape.js";
 
 //핸들러를 추가할 진짜 liTag(realLiTag)에 핸들러를 추가해준다. (다른 아래 내용도 마찬가지)
 function clickEraseButton(todoApp, name, teamId, memberId, itemId) {
@@ -99,7 +102,7 @@ function keydownCheck(e, event, realEdit, liClass, teamId, memberId, itemId) {
   }
 }
 
-function checkPriority(ulTag, isPriority) {
+function checkPriority(ulTag, isPriority, teamId, memberId, itemId) {
   const chipAll = ulTag.querySelectorAll(
     ".todo-list-item > .view >.label >.chip-container >.chip"
   );
@@ -108,6 +111,19 @@ function checkPriority(ulTag, isPriority) {
     realChipTag.children[1].setAttribute("selected", "");
   } else if (isPriority === "SECOND") {
     realChipTag.children[2].setAttribute("selected", "");
+  }
+  realChipTag.addEventListener("click", () =>
+    clickChipTag(realChipTag, teamId, memberId, itemId)
+  );
+}
+function clickChipTag(realChipTag, teamId, memberId, itemId) {
+  let selectValue = realChipTag.options[realChipTag.selectedIndex].value;
+  if (selectValue == 0) {
+    priorityNoneModify(teamId, memberId, itemId);
+  } else if (selectValue == 1) {
+    priorityFirstModify(teamId, memberId, itemId);
+  } else if (selectValue == 2) {
+    prioritySecondModify(teamId, memberId, itemId);
   }
 }
 

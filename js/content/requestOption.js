@@ -41,4 +41,31 @@ export const requestOption = {
       }),
     };
   },
+  priorityNone: () => {
+    return {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        priority: "NONE",
+      }),
+    };
+  },
+  priorityFirst: () => {
+    return {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        priority: "FIRST",
+      }),
+    };
+  },
+  prioritySecond: () => {
+    return {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        priority: "SECOND",
+      }),
+    };
+  },
 };

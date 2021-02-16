@@ -83,6 +83,34 @@ function contentsModify(value, teamId, memberId, itemId) {
     .then((data) => console.log(data))
     .catch((data) => console.log(data));
 }
+
+function priorityNoneModify(teamId, memberId, itemId) {
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}/priority`,
+    requestOption.priorityNone()
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+
+function priorityFirstModify(teamId, memberId, itemId) {
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}/priority`,
+    requestOption.priorityFirst()
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+
+function prioritySecondModify(teamId, memberId, itemId) {
+  fetch(
+    `${baseUrl}${teamId}/members/${memberId}/items/${itemId}/priority`,
+    requestOption.prioritySecond()
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+
 export {
   addMember,
   responseMemberApi,
@@ -91,4 +119,7 @@ export {
   addMemberItem,
   eraseMemberTodoList,
   contentsModify,
+  priorityNoneModify,
+  priorityFirstModify,
+  prioritySecondModify,
 };
