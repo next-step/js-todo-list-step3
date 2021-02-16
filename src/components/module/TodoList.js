@@ -17,7 +17,7 @@ function TodoList(props) {
   return (
     <section class="main">
       <ul className="todo-list">
-        {todoList?.map(todo => (
+        {todoList.map(todo => (
           <TodoItem
             todo={todo}
             editingId={editingId}

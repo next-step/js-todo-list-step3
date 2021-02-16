@@ -4,54 +4,60 @@ import { TodoFooter, TodoList, TodoForm } from 'components';
 import { useSelector } from '../../lib/reducs';
 import { Interactions, PRIORITY_ENUM, FILTER_STATUS, keyCode } from 'utils';
 import { store } from '../..';
-import { addTodoAsync } from '../../reducs/module/todo';
+import {
+  addTodoAsync,
+  deleteTodoAsync,
+  toggleTodoAsync,
+  deleteAllTodoAsync,
+  setPriorityTodoAsync,
+  startEdit,
+  cancelEdit,
+  confirmEdit,
+} from '../../reducs/module/todo';
 
 function TodoApp({ member }) {
+  const { mode, editingId, selectedTeam } = useSelector(state => state.team);
+  const { _id: teamId } = selectedTeam;
+  const { _id: memberId, todoList } = member;
+
   const onAddTodo = (() => {
     let isSubmitting = false;
 
     return async function onAddTodo(e) {
       e.preventDefault();
+
       if (isSubmitting) return;
       isSubmitting = true;
 
-      const content = e.target.elements['new-todo'].value.trim();
+      const contents = e.target.elements['new-todo'].value.trim();
 
-      if (!content) {
+      if (contents.length < 2) {
+        Interactions.warnTodo(contents);
         isSubmitting = false;
         return;
       }
 
-      if (content.length < 2) {
-        Interactions.warnTodo(content);
-        isSubmitting = false;
-        return;
-      }
-
-      store.dispatch(addTodoAsync(content));
+      store.dispatch(addTodoAsync(teamId, memberId, { contents }));
 
       isSubmitting = false;
     };
   })();
 
   const onToggleTodo = e => {
-    e.stopPropagation();
     if (!e.target.matches('.toggle')) return;
 
-    const { id } = e.target.closest('li');
-    const toggledTodoList = todoList.map(toggledBy(id));
+    const { id: todoId } = e.target.closest('li');
 
-    store.dispatch(toggleTodoAsync(id, toggledTodoList));
+    store.dispatch(toggleTodoAsync(teamId, memberId, todoId));
   };
 
   const onDeleteTodo = e => {
     if (!e.target.matches('.destroy')) return;
     if (!Interactions.confirmDelete()) return;
 
-    const { id } = e.target.closest('li');
-    const deletedTodoList = todoList.filter(todo => todo._id !== id);
-
-    store.dispatch(deleteTodoAsync(id, deletedTodoList));
+    const { id: todoId } = e.target.closest('li');
+    console.warn(todoId);
+    store.dispatch(deleteTodoAsync(teamId, memberId, todoId));
   };
 
   const onDeleteAllTodos = async () => {
@@ -59,22 +65,23 @@ function TodoApp({ member }) {
       Interactions.noTodos();
       return;
     }
+
     const answer = Interactions.confirmDeleteAll();
     if (!answer) return;
 
-    store.dispatch(deleteAllTodoAsync());
+    store.dispatch(deleteAllTodoAsync(teamId, memberId));
   };
 
   const onSetPriority = async e => {
-    const { id } = e.target.closest('li');
+    const { id: todoId } = e.target.closest('li');
     const priority = PRIORITY_ENUM.get(e.target.selectedIndex); // select node
 
-    store.dispatch(setPriorityTodoAsync(id, priority));
+    store.dispatch(
+      setPriorityTodoAsync(teamId, memberId, todoId, { priority })
+    );
   };
 
   const onStartEditTodo = async e => {
-    if (!e.target.matches('label')) return;
-
     const { id: editingId } = e.target.closest('li');
 
     store.dispatch(startEdit(editingId));
@@ -88,7 +95,7 @@ function TodoApp({ member }) {
       return;
     }
 
-    const { id } = e.target.closest('li');
+    const { id: todoId } = e.target.closest('li');
     const contents = e.target.value;
 
     if (!contents) {
@@ -96,10 +103,9 @@ function TodoApp({ member }) {
       return;
     }
 
-    store.dispatch(confirmEdit(id, contents));
+    store.dispatch(confirmEdit(teamId, memberId, todoId, { contents }));
   };
-  const { todoList } = member;
-  const { mode, editingId } = useSelector(state => state.todo);
+
   const filteredTodos = todoList?.filter(by(mode)) || [];
 
   return (
@@ -109,7 +115,6 @@ function TodoApp({ member }) {
           <strong>{member.name}</strong>'s Todo List
         </span>
       </h2>
-
       <div class="todoapp">
         <TodoForm onsubmit={onAddTodo} />
         <TodoList
@@ -140,16 +145,6 @@ const by = mode => todo => {
     case FILTER_STATUS.COMPLETED:
       return todo.isCompleted;
   }
-};
-
-const toggledBy = targetId => todo => {
-  const newTodo = {
-    ...todo,
-    isCompleted: !todo.isCompleted,
-    _updatedAt: new Date().toISOString(),
-  };
-
-  return todo._id !== targetId ? todo : newTodo;
 };
 
 export default TodoApp;

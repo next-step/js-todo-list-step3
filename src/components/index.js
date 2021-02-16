@@ -11,6 +11,7 @@ export {
   ToggleAll,
   UserButton,
   UserMgmtButton,
+  AddMemberButton,
 } from './atom';
 
 export { TodoList, TodoFooter, FilterList, UserList, TeamList } from './module';

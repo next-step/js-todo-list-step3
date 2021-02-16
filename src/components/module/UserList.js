@@ -7,19 +7,19 @@ import { Interactions } from 'utils';
 import { USERLIST as FOLDED } from '../../utils/constants';
 import {
   fetchUserAsync,
-  createUserAsync,
+  addUserAsync,
   deleteUserAsync,
 } from '../../reducs/module/user';
 import { useSelector } from '../../lib/reducs';
 
 function UserList() {
-  const { users, isUsersLoading, user } = useSelector(state => state.user);
+  const { users, isUsersLoading, user } = useSelector(state => state.team);
 
-  const onCreateUser = async () => {
+  const onAddUser = async () => {
     const name = Interactions.askName();
     if (!name) return;
 
-    store.dispatch(createUserAsync(name));
+    store.dispatch(addUserAsync(name));
   };
 
   const onDeleteUser = async () => {
@@ -41,7 +41,7 @@ function UserList() {
 
   return (
     <section>
-      <UserMgmtButton type="create" onclick={onCreateUser} />
+      <UserMgmtButton type="create" onclick={onAddUser} />
       <UserMgmtButton type="delete" onclick={onDeleteUser} />
       {isUsersLoading ? (
         <Skeleton />

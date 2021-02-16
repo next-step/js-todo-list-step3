@@ -8,7 +8,7 @@ import { changeFilterMode } from '../../reducs/module/todo';
 import { useSelector } from '../../lib/reducs';
 
 function FilterList() {
-  const { mode } = useSelector(state => state.todo);
+  const { mode } = useSelector(state => state.team);
 
   const onModeChange = e => {
     const mode = e.target.classList[0];

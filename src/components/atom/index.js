@@ -10,3 +10,4 @@ export { default as TodoForm } from './TodoForm';
 export { default as ToggleAll } from './ToggleAll';
 export { default as UserButton } from './UserButton';
 export { default as UserMgmtButton } from './UserMgmtButton';
+export { default as AddMemberButton } from './AddMemberButton';
