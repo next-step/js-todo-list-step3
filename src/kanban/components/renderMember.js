@@ -58,7 +58,5 @@ export const renderMember = (teamId, members) => {
     members.map((member) => todoContainerTemplate(member)).join('') +
     addUserButtonTemplate();
 
-  members.forEach((member) =>
-    renderMemberTodo(teamId, member._id, member.todoList),
-  );
+  members.forEach((member) => renderMemberTodo(member._id, member.todoList));
 };

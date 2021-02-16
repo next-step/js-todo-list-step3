@@ -51,7 +51,7 @@ export const api = {
     return request(`/api/teams/${teamId}/members`, option.post({ name }));
   },
 
-  getMemberTodo: (teamId, memberId) => {
+  getMember: (teamId, memberId) => {
     return request(`/api/teams/${teamId}/members/${memberId}`);
   },
 
