@@ -14,6 +14,7 @@ import {
   clickInput,
   clickCheckboxButton,
   clickLabel,
+  checkPriority,
 } from "./mainLiItem.js";
 
 //member add  관련
@@ -66,6 +67,7 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
       "beforeend",
       $todoListItem(x.contents, x.isCompleted)
     );
+    checkPriority(ulTag, x.priority);
     countContainer(
       todoApp.querySelector(".count-container"),
       ulTag.childElementCount

@@ -99,4 +99,22 @@ function keydownCheck(e, event, realEdit, liClass, teamId, memberId, itemId) {
   }
 }
 
-export { clickEraseButton, clickInput, clickCheckboxButton, clickLabel };
+function checkPriority(ulTag, isPriority) {
+  const chipAll = ulTag.querySelectorAll(
+    ".todo-list-item > .view >.label >.chip-container >.chip"
+  );
+  const realChipTag = chipAll[chipAll.length - 1];
+  if (isPriority === "FIRST") {
+    realChipTag.children[1].setAttribute("selected", "");
+  } else if (isPriority === "SECOND") {
+    realChipTag.children[2].setAttribute("selected", "");
+  }
+}
+
+export {
+  clickEraseButton,
+  clickInput,
+  clickCheckboxButton,
+  clickLabel,
+  checkPriority,
+};
