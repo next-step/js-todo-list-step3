@@ -1,7 +1,6 @@
 import { createAction } from '../../lib/reducs';
 import { TeamService } from '../../services';
 import { FILTER_STATUS } from 'utils';
-import { Todo } from '../../types';
 
 export const FETCH_TODOS = 'FETCH_TODOS';
 export const ADD_TODO = 'ADD_TODO';
