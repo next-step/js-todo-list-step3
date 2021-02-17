@@ -14,7 +14,7 @@ export {
   AddMemberButton,
 } from './atom';
 
-export { TodoList, TodoFooter, FilterList, UserList, TeamList } from './module';
+export { TodoList, TodoFooter, FilterList, TeamList } from './module';
 export { TodoApp } from './organism';
 
 export { default as Main } from './Main';

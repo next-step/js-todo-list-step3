@@ -15,10 +15,11 @@ function TodoList(props) {
   } = props;
 
   return (
-    <section class="main">
+    <section className="main">
       <ul className="todo-list">
         {todoList.map(todo => (
           <TodoItem
+            key={todo._id}
             todo={todo}
             editingId={editingId}
             onDelete={onDelete}

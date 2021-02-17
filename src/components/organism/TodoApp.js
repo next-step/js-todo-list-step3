@@ -115,7 +115,7 @@ function TodoApp({ member }) {
           <strong>{member.name}</strong>'s Todo List
         </span>
       </h2>
-      <div class="todoapp">
+      <div className="todoapp">
         <TodoForm onsubmit={onAddTodo} />
         <TodoList
           todoList={filteredTodos}

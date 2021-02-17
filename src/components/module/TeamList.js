@@ -39,7 +39,7 @@ function TeamList() {
 
   if (isTeamsLoading) return <Skeleton />;
   return (
-    <div class="team-list-container">
+    <div className="team-list-container">
       {teams.map(team => (
         <TeamCard team={team} onSelect={onSelectTeam} onDelete={onDeleteTeam} />
       ))}

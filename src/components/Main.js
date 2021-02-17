@@ -9,18 +9,16 @@ import { store } from '..';
 function Main() {
   const { selectedTeam, isTeamLoading } = useSelector(state => state.team);
   const { _id: teamId } = selectedTeam;
-
   if (isTeamLoading) return <Skeleton />;
 
   const onAddMember = e => {
     const name = Interactions.askName();
     if (!name) return;
-
     store.dispatch(addMemberAsync(teamId, { name }));
   };
 
   return (
-    <ul class="todoapp-list-container flex-column-container">
+    <ul className="todoapp-list-container flex-column-container">
       {selectedTeam.members?.map(member => (
         <TodoApp key={member._id} member={member} />
       ))}
