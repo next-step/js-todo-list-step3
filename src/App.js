@@ -9,6 +9,7 @@ import { fetchTeamsAsync } from './reducs/module/team';
 class App extends Reilly.Component {
   constructor(props) {
     super(props);
+    this.unsubsribe;
     this.fetchTeams();
   }
 
@@ -16,12 +17,11 @@ class App extends Reilly.Component {
     store.dispatch(fetchTeamsAsync());
   }
 
-  unsub;
   render() {
     const { selectedTeam, editingId, error } = useSelector(state => state.team);
 
-    if (this.unsub) this.unsub();
-    this.unsub = store.subscribe(() => {
+    if (this.unsubsribe) this.unsubsribe();
+    this.unsubsribe = store.subscribe(() => {
       ReillyDOM.render(this.render(), document.getElementById('root'));
     });
 
