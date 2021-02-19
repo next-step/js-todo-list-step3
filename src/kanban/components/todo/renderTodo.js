@@ -40,6 +40,10 @@ export const renderTodo = async (memberId, todos = []) => {
   const $todoList = document.querySelector(
     `#${memberId} > .todoapp > .main > .todo-list`,
   );
+  const $todoCount = document.querySelector(
+    `#${memberId} > .todoapp > .count-container > .todo-count > strong`,
+  );
 
   $todoList.innerHTML = todos.map((todo) => todoItemTemplate(todo)).join('');
+  $todoCount.innerText = todos.length;
 };
