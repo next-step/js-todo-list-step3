@@ -1,5 +1,5 @@
 import { api } from '../../../api/api.js';
-import { renderTodo } from './renderTodo.js';
+import { renderTodo } from '../render/renderTodo.js';
 
 export const toggleTodo = async (target, currentTeam) => {
   const teamId = currentTeam.id;

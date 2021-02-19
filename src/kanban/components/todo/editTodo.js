@@ -1,6 +1,6 @@
 import { api } from '../../../api/api.js';
 import { ERR_MSG, TODO } from '../../../utils/constant.js';
-import { renderTodo } from './renderTodo.js';
+import { renderTodo } from '../render/renderTodo.js';
 
 const editTodoItem = async (target, currentTeam) => {
   const teamId = currentTeam.id;

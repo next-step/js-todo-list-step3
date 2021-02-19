@@ -1,4 +1,4 @@
-import { renderTodo } from '../todo/renderTodo.js';
+import { renderTodo } from './renderTodo.js';
 
 const addUserButtonTemplate = () => {
   return `<li class="add-user-button-container">
@@ -28,16 +28,16 @@ const todoContainerTemplate = ({ _id, name }) => {
                 <span class="todo-count">총 <strong>0</strong> 개</span>
                 <ul class="filters">
                   <li>
-                    <a href="#all" class="selected">전체보기</a>
+                    <a href="#all" class="filter selected">전체보기</a>
                   </li>
                   <li>
-                    <a href="#priority">우선 순위</a>
+                    <a href="#priority" class="filter">우선 순위</a>
                   </li>
                   <li>
-                    <a href="#active">해야할 일</a>
+                    <a href="#active" class="filter">해야할 일</a>
                   </li>
                   <li>
-                    <a href="#completed">완료한 일</a>
+                    <a href="#completed" class="filter">완료한 일</a>
                   </li>
                 </ul>
                 <button class="clear-completed">모두 삭제</button>

@@ -1,6 +1,6 @@
 import { api } from '../../../api/api.js';
 import { ERR_MSG } from '../../../utils/constant.js';
-import { renderTodo } from './renderTodo.js';
+import { renderTodo } from '../render/renderTodo.js';
 
 export const addTodo = async (target, key, currentTeam) => {
   if (key !== 'Enter' || !target.value) {
