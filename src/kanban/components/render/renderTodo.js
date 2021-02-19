@@ -44,6 +44,15 @@ export const renderTodo = async (memberId, todos = []) => {
     `#${memberId} > .todoapp > .count-container > .todo-count > strong`,
   );
 
-  $todoList.innerHTML = todos.map((todo) => todoItemTemplate(todo)).join('');
+  const priorityWeight = {
+    FIRST: 2,
+    SECOND: 1,
+    NONE: 0,
+  };
+
+  $todoList.innerHTML = todos
+    .sort((a, b) => priorityWeight[b.priority] - priorityWeight[a.priority])
+    .map((todo) => todoItemTemplate(todo))
+    .join('');
   $todoCount.innerText = todos.length;
 };
