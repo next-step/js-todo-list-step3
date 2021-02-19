@@ -10,6 +10,10 @@ export const handleClickTodoList = ({ target }, currentTeam) => {
     addMember(currentTeam);
     return;
   }
+  if (isContain(target, 'filter')) {
+    filterTodo(target, currentTeam);
+    return;
+  }
   if (isContain(target, 'destroy')) {
     deleteTodo(target, currentTeam);
     return;
@@ -20,9 +24,5 @@ export const handleClickTodoList = ({ target }, currentTeam) => {
   }
   if (isContain(target, 'clear-completed')) {
     deleteTodos(target, currentTeam);
-    return;
-  }
-  if (isContain(target, 'filter')) {
-    filterTodo(target, currentTeam);
   }
 };

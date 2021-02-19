@@ -28,16 +28,13 @@ const todoContainerTemplate = ({ _id, name }) => {
                 <span class="todo-count">총 <strong>0</strong> 개</span>
                 <ul class="filters">
                   <li>
-                    <a href="#all" class="filter selected">전체보기</a>
+                    <a href="#all" class="all filter selected">전체보기</a>
                   </li>
                   <li>
-                    <a href="#priority" class="filter">우선 순위</a>
+                    <a href="#active" class="active filter">해야할 일</a>
                   </li>
                   <li>
-                    <a href="#active" class="filter">해야할 일</a>
-                  </li>
-                  <li>
-                    <a href="#completed" class="filter">완료한 일</a>
+                    <a href="#completed" class="completed filter">완료한 일</a>
                   </li>
                 </ul>
                 <button class="clear-completed">모두 삭제</button>

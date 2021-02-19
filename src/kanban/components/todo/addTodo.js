@@ -23,6 +23,5 @@ export const addTodo = async (target, key, currentTeam) => {
   } catch (err) {
     throw new Error(err);
   }
-
   target.value = '';
 };
