@@ -17,9 +17,13 @@ const priorityTemplate = (priority) => {
 };
 
 const todoItemTemplate = (todo) => {
-  return `<li id=${todo._id} class="todo-list-item">
+  return `<li id=${todo._id} class="todo-list-item ${
+    todo.isCompleted ? 'completed' : ''
+  }">
             <div class="view">
-              <input class="toggle" type="checkbox" />
+              <input class="toggle" type="checkbox" ${
+                todo.isCompleted ? 'checked' : ''
+              } />
               <label class="label">
                 <div class="chip-container">
                   ${priorityTemplate(todo.priority)}
@@ -29,7 +33,7 @@ const todoItemTemplate = (todo) => {
               <button class="destroy"></button>
             </div>
             <input class="edit" value="${todo.contents}" />
-            </li>`;
+          </li>`;
 };
 
 export const renderTodo = async (memberId, todos = []) => {
