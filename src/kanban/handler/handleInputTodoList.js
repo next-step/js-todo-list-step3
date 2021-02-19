@@ -1,4 +1,4 @@
-import { addTodo } from '../components/addTodo.js';
+import { addTodo } from '../components/todo/addTodo.js';
 
 export const handleInputTodoList = ({ target, key }, currentTeam) => {
   const event = {

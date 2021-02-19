@@ -1,6 +1,6 @@
-import { api } from '../../api/api.js';
-import { ERR_MSG } from '../../utils/constant.js';
-import { renderMemberTodo } from './renderMemberTodo.js';
+import { api } from '../../../api/api.js';
+import { ERR_MSG } from '../../../utils/constant.js';
+import { renderTodo } from './renderTodo.js';
 
 export const addTodo = async (target, key, currentTeam) => {
   if (key !== 'Enter' || !target.value) {
@@ -19,7 +19,7 @@ export const addTodo = async (target, key, currentTeam) => {
   try {
     await api.addTodo(teamId, memberId, newTodo);
     const member = await api.getMember(teamId, memberId);
-    renderMemberTodo(memberId, member.todoList);
+    renderTodo(memberId, member.todoList);
   } catch (err) {
     throw new Error(err);
   }

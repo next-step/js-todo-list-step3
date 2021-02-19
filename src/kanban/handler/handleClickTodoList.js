@@ -1,5 +1,5 @@
 import { addMember } from '../components/member/addMember.js';
-import { deleteTodo } from '../components/deleteTodo.js';
+import { deleteTodo } from '../components/todo/deleteTodo.js';
 
 const isContain = (target, className) => target.classList.contains(className);
 

@@ -32,7 +32,7 @@ const todoItemTemplate = (todo) => {
             </li>`;
 };
 
-export const renderMemberTodo = async (memberId, todos) => {
+export const renderTodo = async (memberId, todos) => {
   if (!todos) {
     return;
   }

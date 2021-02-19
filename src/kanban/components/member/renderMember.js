@@ -1,4 +1,4 @@
-import { renderMemberTodo } from '../renderMemberTodo.js';
+import { renderTodo } from '../todo/renderTodo.js';
 
 const addUserButtonTemplate = () => {
   return `<li class="add-user-button-container">
@@ -58,5 +58,5 @@ export const renderMember = (teamId, members) => {
     members.map((member) => todoContainerTemplate(member)).join('') +
     addUserButtonTemplate();
 
-  members.forEach((member) => renderMemberTodo(member._id, member.todoList));
+  members.forEach((member) => renderTodo(member._id, member.todoList));
 };
