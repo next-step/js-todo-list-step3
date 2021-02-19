@@ -32,15 +32,7 @@ const todoItemTemplate = (todo) => {
             </li>`;
 };
 
-export const renderTodo = async (memberId, todos) => {
-  if (!todos) {
-    return;
-  }
-
-  // console.log(memberId);
-
-  // console.log(document.querySelector(`#${memberId}`));
-
+export const renderTodo = async (memberId, todos = []) => {
   const $todoList = document.querySelector(
     `#${memberId} > .todoapp > .main > .todo-list`,
   );
