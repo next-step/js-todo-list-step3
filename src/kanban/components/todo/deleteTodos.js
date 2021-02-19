@@ -15,7 +15,7 @@ export const deleteTodos = async (target, currentTeam) => {
   try {
     await api.deleteMemberTodos(teamId, memberId);
     const member = await api.getMember(teamId, memberId);
-    await renderTodo(memberId, member.todoList);
+    renderTodo(memberId, member.todoList);
   } catch (err) {
     throw new Error(err);
   }
