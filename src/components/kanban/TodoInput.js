@@ -13,10 +13,10 @@ export default function TodoInput({ memberId }) {
   const dom = createElement(template);
 
   const init = () => {
-    dom.addEventListener("keypress", onAddTodo);
+    dom.addEventListener("keypress", addTodo);
   };
 
-  const onAddTodo = async ({ target, key }) => {
+  const addTodo = async ({ target, key }) => {
     if (key !== "Enter") {
       return;
     }

@@ -15,14 +15,14 @@ export default function TeamCard({ team }) {
 
   const init = () => {
     render();
-    dom.addEventListener("click", onLinkToTeam);
+    dom.addEventListener("click", linkToTeam);
   };
 
   const render = () => {
     title.innerText = `${team.name} team`;
   };
 
-  const onLinkToTeam = () => {
+  const linkToTeam = () => {
     $router.route("/kanban", { teamId: team._id });
   };
 
