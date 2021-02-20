@@ -53,8 +53,12 @@ export default function Main() {
       return;
     }
 
-    await $api.team.create(name);
-    await render();
+    try {
+      await $api.team.create(name);
+      await render();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   init();

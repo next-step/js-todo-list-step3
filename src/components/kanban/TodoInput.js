@@ -26,8 +26,12 @@ export default function TodoInput({ memberId }) {
       return;
     }
 
-    target.value = "";
-    await $store.todo.create(memberId, contents);
+    try {
+      await $store.todo.create(memberId, contents);
+      target.value = "";
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   init();

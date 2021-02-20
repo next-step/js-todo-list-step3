@@ -22,11 +22,15 @@ export default function TodoFilterItem({ memberId, filter }) {
   };
 
   const selectFilter = ({ target }) => {
-    const previous = target.closest(".filters").querySelector(".selected");
-    previous.classList.remove("selected");
-    dom.classList.add("selected");
+    try {
+      $store.todo.setFilter(memberId, filter);
 
-    $store.todo.setFilter(memberId, filter);
+      const previous = target.closest(".filters").querySelector(".selected");
+      previous.classList.remove("selected");
+      dom.classList.add("selected");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   init();

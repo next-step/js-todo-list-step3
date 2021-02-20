@@ -64,13 +64,21 @@ export default function TodoListItem({ memberId, todo }) {
   `;
 
   const deleteTodo = async () => {
-    dom.remove();
-    await $store.todo.delete(memberId, todo._id);
+    try {
+      await $store.todo.delete(memberId, todo._id);
+      dom.remove();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const toggleTodo = async () => {
-    dom.classList.toggle("completed");
-    await $store.todo.toggle(memberId, todo._id);
+    try {
+      await $store.todo.toggle(memberId, todo._id);
+      dom.classList.toggle("completed");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const toggleEditingTodo = () => {
@@ -91,10 +99,14 @@ export default function TodoListItem({ memberId, todo }) {
       return;
     }
 
-    label.innerText = contents;
-    dom.classList.remove("editing");
+    try {
+      await $store.todo.edit(memberId, todo._id, contents);
 
-    await $store.todo.edit(memberId, todo._id, contents);
+      label.innerText = contents;
+      dom.classList.remove("editing");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const cancelEditingTodo = () => {
@@ -106,8 +118,11 @@ export default function TodoListItem({ memberId, todo }) {
     const selected = Object.values(PRIORITY).find(
       ({ value }) => value === prioritySelector.value
     );
-
-    await $store.todo.setPriority(memberId, todo._id, selected.value);
+    try {
+      await $store.todo.setPriority(memberId, todo._id, selected.value);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   init();

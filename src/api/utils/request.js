@@ -10,22 +10,20 @@ const request = (() => {
   };
 
   const getRequest = (uri) =>
-    fetch(config.baseURI + uri)
-      .then((response) => response.json())
-      .catch(console.error);
+    fetch(config.baseURI + uri).then((response) => response.json());
 
   const postRequest = (uri, data) =>
-    fetch(config.baseURI + uri, HTTP_METHOD.POST(data))
-      .then((response) => response.json())
-      .catch(console.error);
+    fetch(config.baseURI + uri, HTTP_METHOD.POST(data)).then((response) =>
+      response.json()
+    );
 
   const putRequest = (uri, data) =>
-    fetch(config.baseURI + uri, HTTP_METHOD.PUT(data))
-      .then((response) => response.json())
-      .catch(console.error);
+    fetch(config.baseURI + uri, HTTP_METHOD.PUT(data)).then((response) =>
+      response.json()
+    );
 
   const deleteRequest = (uri) =>
-    fetch(config.baseURI + uri, HTTP_METHOD.DELETE()).catch(console.error);
+    fetch(config.baseURI + uri, HTTP_METHOD.DELETE());
 
   return {
     init,

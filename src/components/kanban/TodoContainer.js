@@ -52,7 +52,11 @@ export default function TodoContainer({ member }) {
   };
 
   const deleteAllTodo = async () => {
-    await $store.todo.deleteAll(member._id);
+    try {
+      await $store.todo.deleteAll(member._id);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   init();
