@@ -61,35 +61,16 @@ const $kanbanHeader = (teamName) =>
     </div>`;
 
 const $todoListItem = (item, isCompleted) => {
-  if (isCompleted)
-    return `
-        <li class="todo-list-item completed">
+  return `
+         <li class="todo-list-item ${isCompleted ? "completed" : "active"}">
                   <div class="view">
-                    <input class="toggle" type="checkbox" checked="true" />
+                    <input class="toggle" type="checkbox"  ${
+                      isCompleted ? "checked" : ""
+                    } />
                     <label class="label">
                       <div class="chip-container">
                         <select class="chip select">
                           <option value="0" >순위</option>
-                          <option value="1">1순위</option>
-                          <option value="2">2순위</option>
-                        </select>
-                      </div>
-                      ${item}
-                    </label>
-                    <button class="destroy"></button>
-                  </div>
-                  <input class="edit" value="완료된 타이틀" />
-         </li>
-`;
-  else
-    return `
-        <li class="todo-list-item active">
-                  <div class="view">
-                    <input class="toggle" type="checkbox" />
-                    <label class="label">
-                      <div class="chip-container">
-                        <select class="chip select">
-                          <option value="0">순위</option>
                           <option value="1">1순위</option>
                           <option value="2">2순위</option>
                         </select>

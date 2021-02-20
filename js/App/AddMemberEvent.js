@@ -34,23 +34,13 @@ async function addMemberEventHandler(teamId) {
   } else alert("공백 혹은 정상적이지 않은 팀 이름 입력");
 }
 
-function memberRender() {
-  const $domTeamListContainer = document.querySelector(
-    ".todoapp-list-container"
-  );
-  const length = $domTeamListContainer.children.length;
-  for (let i = 0; i < length; i++) {
-    $domTeamListContainer.children[0].remove();
-  }
-}
-
 //member별 item
 function loadMemberList(teamMember, button, todoList, teamId, memberId) {
   button.insertAdjacentHTML("beforebegin", $todoAppContainer(teamMember));
-  let memberNameArr = document.querySelectorAll(
+  const memberNameArr = document.querySelectorAll(
     ".todoapp-container > h2 > span > strong"
   );
-  let ulTodolist = document.querySelectorAll(".todo-list");
+  const ulTodolist = document.querySelectorAll(".todo-list");
   //각각의 '~'의 todoList의 '~'와 서버에서 가져온 '~'가 같으면 실행
   memberNameArr.forEach((memberName, index) => {
     if (memberName.innerHTML === teamMember) {
@@ -62,19 +52,25 @@ function loadMemberList(teamMember, button, todoList, teamId, memberId) {
 function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   let todoApp = ulTag.closest("div");
   //멤버당 할일 갯수만큼 반복
-  todoList.forEach((x) => {
+  todoList.forEach((todoListArray) => {
     ulTag.insertAdjacentHTML(
       "beforeend",
-      $todoListItem(x.contents, x.isCompleted)
+      $todoListItem(todoListArray.contents, todoListArray.isCompleted)
     );
-    checkPriority(ulTag, x.priority, teamId, memberId, x._id);
+    checkPriority(
+      ulTag,
+      todoListArray.priority,
+      teamId,
+      memberId,
+      todoListArray._id
+    );
     countContainer(
       todoApp.querySelector(".count-container"),
       ulTag.childElementCount
     );
-    clickEraseButton(todoApp, memberName, teamId, memberId, x._id);
-    clickCheckboxButton(todoApp, teamId, memberId, x._id);
-    clickLabel(todoApp, teamId, memberId, x._id);
+    clickEraseButton(todoApp, memberName, teamId, memberId, todoListArray._id);
+    clickCheckboxButton(todoApp, teamId, memberId, todoListArray._id);
+    clickLabel(todoApp, teamId, memberId, todoListArray._id);
   });
   //멤버당 한번씩 반복
   clickInput(todoApp, ulTag, teamId, memberId);
@@ -89,4 +85,4 @@ function loadItem(todoList, ulTag, memberName, teamId, memberId) {
   );
 }
 
-export { loadMemberList, loadItem, addMemberEvent, makeAddList, memberRender };
+export { loadMemberList, loadItem, addMemberEvent, makeAddList };

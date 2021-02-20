@@ -2,7 +2,6 @@ import {
   loadMemberList,
   makeAddList,
   addMemberEvent,
-  memberRender,
 } from "../App/AddMemberEvent.js";
 import { baseUrl, $kanbanHeader } from "../content/shape.js";
 import { todoCountMinus } from "../App/todoAppCountContainer.js";
@@ -14,7 +13,7 @@ function responseMemberApi(teamId) {
   fetch(`${baseUrl}${teamId}`)
     .then((response) => response.json())
     .then((data) => {
-      document.body.innerHTML += $kanbanHeader(data.name);
+      document.body.innerHTML = $kanbanHeader(data.name);
       $domTodoAppListContainer = document.querySelector(
         ".todoapp-list-container"
       );
@@ -29,7 +28,6 @@ function responseMemberApi(teamId) {
 
 function addMember(teamName, teamId) {
   fetch(`${baseUrl}${teamId}/members`, requestOption.addMember(teamName))
-    .then(() => memberRender())
     .then(() => responseMemberApi(teamId))
     .catch(() => "오류 발생");
 }
