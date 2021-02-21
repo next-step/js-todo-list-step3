@@ -36,14 +36,17 @@ async function addMemberEventHandler(teamId) {
 
 //member별 item
 function loadMemberList(teamMember, button, todoList, teamId, memberId) {
-  button.insertAdjacentHTML("beforebegin", $todoAppContainer(teamMember));
+  button.insertAdjacentHTML(
+    "beforebegin",
+    $todoAppContainer(teamMember, memberId)
+  );
   const memberNameArr = document.querySelectorAll(
     ".todoapp-container > h2 > span > strong"
   );
   const ulTodolist = document.querySelectorAll(".todo-list");
   //각각의 '~'의 todoList의 '~'와 서버에서 가져온 '~'가 같으면 실행
   memberNameArr.forEach((memberName, index) => {
-    if (memberName.innerHTML === teamMember) {
+    if (memberName.id === memberId) {
       loadItem(todoList, ulTodolist[index], memberName, teamId, memberId);
     }
   });
