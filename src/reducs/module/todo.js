@@ -8,54 +8,11 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const DELETE_ALL_TOODS_AND_MEMBER = 'DELETE_ALL_TOODS_AND_MEMBER';
 export const TODO_ERROR = 'TODO_ERROR';
-export const CHANGE_MODE = 'CHANGE_MODE';
 export const SET_PRIORITY = 'SET_PRIORITY';
 export const START_EDIT_TODO = 'START_EDIT_TODO';
 export const CANCEL_EDIT = 'CANCEL_EDIT';
 export const CONFIRM_EDIT = 'CONFIRM_EDIT';
-
-const initialState = {
-  editingId: null,
-  mode: FILTER_STATUS.ALL,
-};
-
-// const todoReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case SET_PRIORITY:
-//       return {
-//         ...state,
-//         todoList: action.payload,
-//       };
-//     case START_EDIT_TODO:
-//       return {
-//         ...state,
-//         editingId: action.payload,
-//       };
-//     case CANCEL_EDIT:
-//       return {
-//         ...state,
-//         editingId: null,
-//       };
-//     case CONFIRM_EDIT:
-//       return {
-//         ...state,
-//         todoList: action.payload,
-//         editingId: null,
-//       };
-//     case CHANGE_MODE:
-//       return {
-//         ...state,
-//         mode: action.payload,
-//       };
-//     case TODO_ERROR:
-//       return {
-//         ...state,
-//         error: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// };
+export const CHANGE_MODE = 'CHANGE_MODE';
 
 export const addTodoAsync = (teamId, memberId, payload) => async (
   dispatch,
@@ -132,9 +89,6 @@ export const confirmEdit = (teamId, memberId, itemId, payload) => async (
   );
 };
 
-export const changeFilterMode = mode => {
-  return createAction(CHANGE_MODE, mode);
-};
 export const startEdit = editingId => {
   return createAction(START_EDIT_TODO, editingId);
 };
@@ -142,6 +96,6 @@ export const cancelEdit = () => {
   return createAction(CANCEL_EDIT);
 };
 
-function confirmedBy(id, contents) {
-  return todo => (todo._id !== id ? todo : { ...todo, contents });
-}
+export const changeFilterMode = (memberId, mode) => {
+  return createAction(CHANGE_MODE, { id: memberId, mode });
+};

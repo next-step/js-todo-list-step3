@@ -7,6 +7,6 @@ export {
   FILTER_STATUS,
   PRIORITY_ENUM,
   PRIORITY_CLASS,
-  PRORITY_TYPE,
+  PRIORITY_SORT,
   MESSAGES,
 } from './constants';

@@ -4,7 +4,7 @@ import Reilly from 'reilly';
 function TodoForm({ onsubmit }) {
   return (
     <section className="input-container">
-      <form onsubmit={onsubmit}>
+      <form onSubmit={onsubmit}>
         <input
           name="new-todo"
           className="new-todo"
