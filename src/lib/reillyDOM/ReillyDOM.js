@@ -46,6 +46,9 @@ class ReillyDOM {
       } else {
         $element.setAttribute(key, value);
       }
+      if (key.startsWith('on')) {
+        $element[key.toLowerCase()] = value;
+      }
     }
 
     (reillyNode.children || reillyNode)
