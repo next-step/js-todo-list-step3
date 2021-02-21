@@ -1,6 +1,5 @@
 /*@jsx Reilly.createElement */
 import Reilly from 'reilly';
-
 import { TodoItem } from 'components';
 
 function TodoList(props) {
@@ -15,11 +14,12 @@ function TodoList(props) {
   } = props;
 
   return (
-    <section class="main">
+    <section className="main">
       <ul className="todo-list">
-        {todoList.map(todo => (
+        {todoList.map((todo, i) => (
           <TodoItem
             todo={todo}
+            key={i}
             editingId={editingId}
             onDelete={onDelete}
             onStartEdit={onStartEdit}

@@ -10,6 +10,7 @@ import {
   START_EDIT_TODO,
   CANCEL_EDIT,
   CONFIRM_EDIT,
+  CHANGE_MODE,
 } from './todo';
 import { ADD_MEMBER, DELETE_MEMBER } from './user';
 import { FILTER_STATUS } from 'utils';
@@ -31,7 +32,6 @@ const initialState = {
   isTeamsLoading: false,
   teams: [],
   selectedTeam: null,
-  mode: FILTER_STATUS.ALL,
   editingId: null,
   error: null,
 };
@@ -149,6 +149,15 @@ const teamReducer = (state = initialState, action) => {
         draft.editingId = null;
       });
 
+    case CHANGE_MODE:
+      return produce(state, draft => {
+        const { id, mode } = action.payload;
+        const members = draft.selectedTeam.members;
+        const index = members.findIndex(({ _id }) => _id === id);
+
+        members[index].mode = mode;
+      });
+
     case ERROR:
       return { ...state, error: state.payload };
 
@@ -171,6 +180,7 @@ export const fetchTeamAsync = id => async (dispatch, getState) => {
   dispatch(createAction(START_LOAD_TEAM));
   try {
     const selectedTeam = await TeamService.fetchTeam(id);
+    selectedTeam.members?.forEach(member => (member.mode = FILTER_STATUS.ALL));
     dispatch(createAction(LOAD_TEAM, selectedTeam));
   } catch (error) {
     dispatch(createAction(FAIL_LOAD_TEAM, error));
@@ -182,7 +192,7 @@ export const addTeamAsync = name => async (dispatch, getState) => {
     const newTeam = await TeamService.add({ name });
     dispatch(createAction(ADD_TEAM, newTeam));
   } catch (error) {
-    dispatch(createAction(TEAM_ERROR, error));
+    dispatch(createAction(ERROR, error));
   }
 };
 
@@ -191,7 +201,7 @@ export const deleteTeamsAsync = id => async (dispatch, getState) => {
     await TeamService.delete(id);
     dispatch(createAction(DELETE_TEAM));
   } catch (error) {
-    dispatch(createAction(TEAM_ERROR, error));
+    dispatch(createAction(ERROR, error));
   }
 };
 

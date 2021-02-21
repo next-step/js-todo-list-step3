@@ -24,16 +24,16 @@ function TodoItem(props) {
         <input
           type="checkbox"
           className={`toggle ${isCompleted ? 'checked' : ''}`}
-          onclick={onToggle}
+          onClick={onToggle}
         />
         <label className="label" ondblclick={onStartEdit}>
           <div className="chip-container">
             <select
               className={`chip select ${PRIORITY_CLASS.get(priority)}`}
-              onchange={onSetPriority}
+              onChange={onSetPriority}
             >
               {[0, 1, 2].map((_, count) => (
-                <option {...optionConfig(count, priority)}>
+                <option key={count} {...optionConfig(count, priority)}>
                   {count && count}순위
                 </option>
               ))}
@@ -41,9 +41,9 @@ function TodoItem(props) {
           </div>
           {contents}
         </label>
-        <button className="destroy" onclick={onDelete} />
+        <button className="destroy" onClick={onDelete} />
       </div>
-      <input className="edit" value={contents} onkeyup={onConfirmEdit} />
+      <input className="edit" value={contents} onKeyUp={onConfirmEdit} />
     </li>
   );
 }

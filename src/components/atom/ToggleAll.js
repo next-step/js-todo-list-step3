@@ -6,7 +6,7 @@ function ToggleAll() {
     <div>
       <input id="toggle-all" className="toggle-all" type="checkbox" />
       <label>
-        <button onclick={e => console.warn('plz implement toggle-all!')}>
+        <button onClick={_ => console.warn('plz implement toggle-all!')}>
           🎊
         </button>
       </label>

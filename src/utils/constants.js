@@ -6,31 +6,33 @@ const FILTER_NAMES = new Map([
   ['all', '전체보기'],
   ['active', '남은 투두'],
   ['completed', '완료한 투두'],
+  ['priority', '우선 순위 정렬'],
 ]);
 
 /**
  * @readonly
- * @enum {"all" | "active" | "completed"}
+ * @enum {"all" | "active" | "completed" | "priority"}
  */
 const FILTER_STATUS = {
   ALL: 'all',
   ACTIVE: 'active',
   COMPLETED: 'completed',
-};
-
-const PRORITY_TYPE = {
-  NONE: 'NONE',
-  FIRST: 'FIRST',
-  SECOND: 'SECOND',
+  PRIORITY: 'priority',
 };
 
 const PRIORITY_ENUM = new Map([
-  ['NONE', 0],
   ['FIRST', 1],
   ['SECOND', 2],
-  [0, 'NONE'],
+  ['NONE', 0],
   [1, 'FIRST'],
   [2, 'SECOND'],
+  [0, 'NONE'],
+]);
+
+const PRIORITY_SORT = new Map([
+  ['FIRST', 2],
+  ['SECOND', 1],
+  ['NONE', 0],
 ]);
 
 const PRIORITY_CLASS = new Map([
@@ -57,7 +59,7 @@ export {
   FILTER_STATUS,
   PRIORITY_CLASS,
   PRIORITY_ENUM,
-  PRORITY_TYPE,
+  PRIORITY_SORT,
   MESSAGES,
   USERLIST,
 };
