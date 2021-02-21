@@ -2,7 +2,13 @@
 import Reilly from 'reilly';
 import { TodoFooter, TodoList, TodoForm } from 'components';
 import { useSelector } from '../../lib/reducs';
-import { Interactions, PRIORITY_ENUM, FILTER_STATUS, keyCode } from 'utils';
+import {
+  Interactions,
+  PRIORITY_ENUM,
+  PRIORITY_SORT,
+  FILTER_STATUS,
+  keyCode,
+} from 'utils';
 import { store } from '../..';
 import {
   addTodoAsync,
@@ -13,12 +19,13 @@ import {
   startEdit,
   cancelEdit,
   confirmEdit,
+  changeFilterMode,
 } from '../../reducs/module/todo';
 
 function TodoApp({ member }) {
-  const { mode, editingId, selectedTeam } = useSelector(state => state.team);
+  const { editingId, selectedTeam } = useSelector(state => state.team);
   const { _id: teamId } = selectedTeam;
-  const { _id: memberId, todoList } = member;
+  const { _id: memberId, todoList, mode } = member;
 
   const onAddTodo = (() => {
     let isSubmitting = false;
@@ -106,19 +113,31 @@ function TodoApp({ member }) {
     store.dispatch(confirmEdit(teamId, memberId, todoId, { contents }));
   };
 
-  const filteredTodos = todoList?.filter(by(mode)) || [];
+  const onChangMode = async e => {
+    const targetMode = e.target.classList[0];
+    store.dispatch(changeFilterMode(memberId, targetMode));
+  };
+
+  const todosTobeRendered =
+    mode !== 'priority'
+      ? todoList?.filter(by(mode)) || []
+      : [...todoList].sort(
+          (todoA, todoB) =>
+            PRIORITY_SORT.get(todoB.priority) -
+            PRIORITY_SORT.get(todoA.priority)
+        );
 
   return (
     <li className="todoapp-container">
       <h2>
         <span>
-          <strong>{member.name}</strong>'s Todo List
+          <strong>{member.name}</strong>&apos;s Todo List
         </span>
       </h2>
-      <div class="todoapp">
+      <div className="todoapp">
         <TodoForm onsubmit={onAddTodo} />
         <TodoList
-          todoList={filteredTodos}
+          todoList={todosTobeRendered}
           editingId={editingId}
           onToggle={onToggleTodo}
           onDelete={onDeleteTodo}
@@ -129,6 +148,7 @@ function TodoApp({ member }) {
         <TodoFooter
           mode={mode}
           length={todoList?.length}
+          onChangMode={onChangMode}
           onDeleteAll={onDeleteAllTodos}
         />
       </div>
