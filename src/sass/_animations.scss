@@ -1,0 +1,12 @@
+@keyframes placeHolderShimmer {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    background-position: -418px 0;
+  }
+  to {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    background-position: 418px 0;
+  }
+}
