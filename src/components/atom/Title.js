@@ -7,7 +7,7 @@ function Title(props) {
   const { id, name } = props;
 
   return (
-    <h1 id={id} onclick={() => (location.href = '')}>
+    <h1 id={id} onClick={() => (location.href = '')}>
       <span>
         {name ? (
           <span>

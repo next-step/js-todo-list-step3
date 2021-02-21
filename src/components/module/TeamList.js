@@ -39,9 +39,14 @@ function TeamList() {
 
   if (isTeamsLoading) return <Skeleton />;
   return (
-    <div class="team-list-container">
-      {teams.map(team => (
-        <TeamCard team={team} onSelect={onSelectTeam} onDelete={onDeleteTeam} />
+    <div className="team-list-container">
+      {teams.map((team, i) => (
+        <TeamCard
+          key={i}
+          team={team}
+          onSelect={onSelectTeam}
+          onDelete={onDeleteTeam}
+        />
       ))}
       <AddTeamButton onclick={onAddTeam} />
     </div>

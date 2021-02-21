@@ -1,12 +1,12 @@
 /*@jsx Reilly.createElement*/
 import Reilly from 'reilly';
 
-function FilterButton({ name, mode, onModeChange, content }) {
+function FilterButton({ name, mode, onChangMode, content }) {
   return (
     <a
       href={'#' + name}
       className={`${name} ${mode === name ? 'selected' : ''}`}
-      onclick={onModeChange}
+      onClick={onChangMode}
     >
       {content}
     </a>

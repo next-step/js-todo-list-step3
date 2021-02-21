@@ -20,7 +20,7 @@ function Main() {
   };
 
   return (
-    <ul class="todoapp-list-container flex-column-container">
+    <ul className="todoapp-list-container flex-column-container">
       {selectedTeam.members?.map(member => (
         <TodoApp key={member._id} member={member} />
       ))}
