@@ -12,7 +12,7 @@ export const filterByPriority = async (teamId, memberId) => {
     const user = await API.getTodos(teamId, memberId);
     const todos = user.todoList;
 
-    todos.sort(function (a, b) {
+    todos.sort((a, b) => {
         return priorityList[a.priority] - priorityList[b.priority];
     });
 
