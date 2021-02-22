@@ -19,7 +19,7 @@ export const loadMembers = async (option = 'all') => {
     setTeamName(team.name);
 
     $todoAppList.innerHTML = '';
-    await members.map(async (member) => {
+    members.map((member) => {
         $todoAppList.insertAdjacentHTML('beforeend', todoAppContainerTemplate(member._id, member.name));
         loadTodos(teamId, member._id);
     });
