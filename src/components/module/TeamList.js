@@ -37,7 +37,7 @@ function TeamList() {
     console.warn('plz implement team removal');
   };
 
-  if (isTeamsLoading) return <Skeleton />;
+  if (isTeamsLoading || !teams) return <Skeleton />;
   return (
     <div className="team-list-container">
       {teams.map((team, i) => (
