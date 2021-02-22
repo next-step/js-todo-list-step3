@@ -1,7 +1,7 @@
 import {API} from '../../api/api.js';
 import {getTeamId} from '../../utils/localStorage.js';
 import {loadMembers} from './loadMembers.js';
-export const MIN_MEMBER_NAME = 2;
+import {MIN_MEMBER_NAME} from '../../utils/constant.js';
 
 export const onAddMember = async ({target}) => {
     if (!target.classList.contains('material-icons')) return;

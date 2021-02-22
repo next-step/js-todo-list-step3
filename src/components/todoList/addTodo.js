@@ -1,7 +1,7 @@
 import {API} from '../../api/api.js';
 import {loadTodos} from './loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
-export const MIN_TODO_LENGTH = 2;
+import {MIN_TODO_LENGTH} from '../../utils/constant.js';
 
 export const onAddTodo = async ({target, key}) => {
     if (!target.classList.contains('new-todo')) return;

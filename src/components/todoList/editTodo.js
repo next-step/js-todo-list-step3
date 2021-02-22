@@ -1,7 +1,7 @@
 import {API} from '../../api/api.js';
 import {loadTodos} from '../todoList/loadTodos.js';
 import {getTeamId} from '../../utils/localStorage.js';
-import {MIN_TODO_LENGTH} from './addTodo.js';
+import {MIN_TODO_LENGTH} from '../../utils/constant.js';
 import {getItemId} from '../../utils/collection.js';
 var $li;
 
