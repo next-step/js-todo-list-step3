@@ -33,20 +33,11 @@ function TeamList() {
     store.dispatch(addTeamAsync(teamName));
   };
 
-  const onDeleteTeam = e => {
-    console.warn('plz implement team removal');
-  };
-
   if (isTeamsLoading || !teams) return <Skeleton />;
   return (
     <div className="team-list-container">
       {teams.map((team, i) => (
-        <TeamCard
-          key={i}
-          team={team}
-          onSelect={onSelectTeam}
-          onDelete={onDeleteTeam}
-        />
+        <TeamCard key={i} team={team} onSelect={onSelectTeam} />
       ))}
       <AddTeamButton onclick={onAddTeam} />
     </div>
