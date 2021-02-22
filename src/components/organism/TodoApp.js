@@ -63,7 +63,6 @@ function TodoApp({ member }) {
     if (!Interactions.confirmDelete()) return;
 
     const { id: todoId } = e.target.closest('li');
-    console.warn(todoId);
     store.dispatch(deleteTodoAsync(teamId, memberId, todoId));
   };
 
