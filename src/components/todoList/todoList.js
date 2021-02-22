@@ -6,10 +6,6 @@ import {onFilterTodo} from './filterTodo.js';
 import {onEditTodo} from './editTodo.js';
 
 export const todoList = () => {
-    eventListener();
-};
-
-const eventListener = () => {
     const $todoList = document.getElementById('todoapp-list');
 
     $todoList.addEventListener('keyup', onAddTodo);
