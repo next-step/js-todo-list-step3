@@ -11,5 +11,5 @@ export const onDeleteAllTodos = async (target) => {
 
     loadTodos(teamId, memberId);
 
-    currentTodoList(memberId).querySelector('.todo-count strong').innerHTML = 0;
+    currentTodoList(memberId).querySelector('.todo-count strong').innerText = 0;
 };
