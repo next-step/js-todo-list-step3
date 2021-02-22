@@ -1,6 +1,5 @@
 import { MESSAGES } from './constants';
 import { isValid } from './validation/input';
-import WordService from './validation/Word';
 
 /**
  * @description native interaction API abstraction
