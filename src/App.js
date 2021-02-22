@@ -47,7 +47,7 @@ class App extends Reilly.Component {
     return (
       <div id="app">
         <Title id="user-title" name={selectedTeam?.name} />
-        {!selectedTeam ? <TeamList /> : <Main />}
+        {selectedTeam ? <Main /> : <TeamList />}
       </div>
     );
   }
