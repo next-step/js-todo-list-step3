@@ -19,7 +19,7 @@ function Main() {
 
   return (
     <ul className="todoapp-list-container flex-column-container">
-      {selectedTeam.members?.map(member => (
+      {selectedTeam.members.map(member => (
         <TodoApp key={member._id} member={member} />
       ))}
       <AddMemberButton onAddMember={onAddMember} />
