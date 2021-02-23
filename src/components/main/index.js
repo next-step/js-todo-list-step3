@@ -40,7 +40,7 @@ export default function Main() {
   };
 
   const renderEachTeam = (team) => {
-    const teamCard = new TeamCard({ team });
+    const teamCard = TeamCard({ team });
     teamList.appendChild(teamCard);
   };
 

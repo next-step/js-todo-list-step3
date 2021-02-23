@@ -45,10 +45,10 @@ export default function TodoContainer({ member }) {
     const { _id: memberId } = member;
 
     memberName.innerText = member.name;
-    input.appendChild(new TodoInput({ memberId }));
-    todoList.appendChild(new TodoList({ memberId }));
-    filter.appendChild(new TodoFilter({ memberId }));
-    counter.appendChild(new TodoCount({ memberId }));
+    input.appendChild(TodoInput({ memberId }));
+    todoList.appendChild(TodoList({ memberId }));
+    filter.appendChild(TodoFilter({ memberId }));
+    counter.appendChild(TodoCount({ memberId }));
   };
 
   const deleteAllTodo = async () => {

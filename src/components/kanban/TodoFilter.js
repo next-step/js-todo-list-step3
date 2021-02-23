@@ -25,7 +25,7 @@ export default function TodoFilter({ memberId }) {
   };
 
   const renderEachFilter = (filter) => {
-    const todoFilterItem = new TodoFilterItem({ memberId, filter });
+    const todoFilterItem = TodoFilterItem({ memberId, filter });
     dom.appendChild(todoFilterItem);
   };
 
