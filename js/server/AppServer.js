@@ -21,7 +21,13 @@ function responseMemberApi(teamId) {
       addMemberEvent(teamId);
       let but = document.querySelector(".add-user-button-container");
       data.members.forEach((arr) => {
-        loadMemberList(arr.name, but, arr.todoList, teamId, arr._id);
+        loadMemberList({
+          teamMember: arr.name,
+          button: but,
+          todoList: arr.todoList,
+          teamId: teamId,
+          memberId: arr._id,
+        });
       });
     });
 }

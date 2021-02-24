@@ -2,6 +2,7 @@ import {
   $todoAppContainer,
   $todoListItem,
   $appMemberAdd,
+  testIsVaccum,
 } from "../content/shape.js";
 import { addMember, responseMemberApi } from "../server/AppServer.js";
 import {
@@ -15,7 +16,7 @@ import {
   clickCheckboxButton,
   clickLabel,
   checkPriority,
-} from "./mainLiItem.js";
+} from "./membersLiItemEvent.js";
 
 //member add  관련
 function makeAddList(value) {
@@ -29,13 +30,13 @@ function addMemberEvent(teamId) {
 
 async function addMemberEventHandler(teamId) {
   const result = prompt("팀 이름을 입력해주세요");
-  if (/[\S]/gi.test(result) && result !== null) {
+  if (testIsVaccum(result) && result !== null) {
     addMember(result, teamId);
   } else alert("공백 혹은 정상적이지 않은 팀 이름 입력");
 }
 
 //member별 item
-function loadMemberList(teamMember, button, todoList, teamId, memberId) {
+function loadMemberList({ teamMember, button, todoList, teamId, memberId }) {
   button.insertAdjacentHTML(
     "beforebegin",
     $todoAppContainer(teamMember, memberId)

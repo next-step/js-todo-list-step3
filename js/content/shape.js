@@ -103,6 +103,10 @@ const $label = (item) => `
                       ${item}
 
 `;
+
+const testIsVaccum = function (result) {
+  return /[\S]/gi.test(result);
+};
 export {
   $todoAppContainer,
   $todoListItem,
@@ -112,4 +116,5 @@ export {
   $kanbanHeader,
   $appMemberAdd,
   $label,
+  testIsVaccum,
 };
