@@ -9,6 +9,7 @@ import { store } from '..';
 function Main() {
   const { selectedTeam, isTeamLoading } = useSelector(state => state.team);
   const { _id: teamId } = selectedTeam;
+
   if (isTeamLoading) return <Skeleton />;
 
   const onAddMember = e => {
