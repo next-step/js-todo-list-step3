@@ -11,7 +11,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'public'),
   },
   resolve: {
     alias: {
@@ -45,7 +45,8 @@ module.exports = {
       filename: '[contenthash].css',
     }),
     new HTMLWebpackPlugin({
-      template: 'public/index.html',
+      template: 'src/index.html',
+      favicon: 'src/assets/favicon.ico',
       minify: IS_PRODUCTION
         ? {
             collapseWhitespace: true,
