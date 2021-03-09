@@ -10,16 +10,16 @@ const TeamService = {
     return await errorHandler(hermes.get, TEAM_QUERY);
   },
 
-  async fetchTeam(id) {
-    return await errorHandler(hermes.get, TEAM_QUERY + id);
+  async fetchTeam(teamId) {
+    return await errorHandler(hermes.get, TEAM_QUERY + teamId);
   },
 
   async add(payload) {
     return await errorHandler(hermes.post, TEAM_QUERY, payload);
   },
 
-  async delete(id) {
-    return await errorHandler(hermes.delete, TEAM_QUERY + id);
+  async delete(teamId) {
+    return await errorHandler(hermes.delete, TEAM_QUERY + teamId);
   },
 
   async addMember(teamId, payload) {

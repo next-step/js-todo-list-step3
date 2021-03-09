@@ -28,7 +28,6 @@ const Interactions = {
   },
   warnTodo(content) {
     if (content.length < 2) return alert('too short name!');
-    if (!WordService.isValid(content)) return alert('no swearing');
   },
   noTodos() {
     alert('No todos to delete!');
