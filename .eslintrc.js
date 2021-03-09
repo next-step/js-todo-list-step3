@@ -17,9 +17,11 @@ module.exports = {
     sourceType: 'module',
   },
   parser: '@babel/eslint-parser',
-  plugins: ['react'],
+  plugins: ['react', 'html'],
   rules: {
+    'no-var': 'warn',
+    'no-undef': 0,
+    'no-console': 'warn',
     'react/prop-types': 0,
-    'no-unused-vars': 0,
   },
 };
