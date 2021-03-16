@@ -2,8 +2,12 @@
 
 이번 미션은 팀을 위한 TodoList를 작성하는 미션입니다. 여러개의 컴포넌트의 상태값을 관리해야하는데요. TodoList가 1개 존재할 때보다 훨씬 더 고려할 것이 많습니다 😀
 
-# 💻 데모 페이지
+<br/>
+
+## 💻 데모 페이지
 [https://next-step.github.io/js-todo-list-step3/](https://next-step.github.io/js-todo-list-step3/)
+
+<br/>
 
 ## 🎯 index.html 팀 페이지 요구사항
 
