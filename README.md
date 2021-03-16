@@ -1,6 +1,19 @@
+
 # 🚀 세번째 미션 - Todo List for Team!
 
 이번 미션은 팀을 위한 TodoList를 작성하는 미션입니다. 여러개의 컴포넌트의 상태값을 관리해야하는데요. TodoList가 1개 존재할 때보다 훨씬 더 고려할 것이 많습니다 😀
+
+<br/>
+
+## `domuk-k`의 구현 방향
+
+- [ ] '아하 모먼트' 또는 재치있는 인터렉션 없을까
+- [ ] 드래그 앤 드롭 적용해보기 - 아마도 삭제기능 또는 순서 바꾸기
+- [ ] `/lib/reducs` 및 라이브러리 구현 개선
+- [ ] 현재 SPA향 에서의 `kanban.html` 라우팅 방안 필요 -> 역시 컴포넌트기반이니까,,`useLocation`인가,,
+- [ ] webpack merge - 배포용 빌드 최적화 ? `esbuild` : `snowpack` ???
+
+<br/>
 
 ## 🎯 index.html 팀 페이지 요구사항
 
@@ -23,216 +36,7 @@
 - [ ] 1. todoItem의 우선 순위에 따라 정렬하기
 
 
-<br/><br/>
 
-## 📝 API
-### 팀 추가
-
-| method | uri |
-|---|---|
-|POST|/api/teams|
-
-```javascript
-{
- requestBody: {
-   "name": "string"
- },
- response: {
-   "_id": "string",
-   "name": "string",
-   "members": [...]
-  }
-}
-```
-
-### 팀 불러오기
-
-| method | uri |
-|---|---|
-|GET|/api/teams/${teamId}|
-
-```javascript
-{
- response: {
-   "_id": "string",
-   "name": "string",
-   "members": [...]
-  }
-}
-```
-
-### 팀 리스트 불러오기
-
-| method | uri |
-|---|---|
-|GET|/api/teams|
-```javascript
-{
- response: [
-  {
-   "_id": "string",
-   "name": "string",
-   "members": [...]
-  }
-  ...
- ]
-}
-```
-
-### 팀 삭제
-
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}|
-
-```javascript
-{
- response: {}
-}
-```
-
-### 팀에 멤버 추가
-
-| method | uri |
-|---|---|
-|POST|/api/teams/${teamId}/members|
-
-```javascript
-{
- requestBody: {
-   "name": "string"
- },
- response: {
-   "_id": "string",
-   "name": "string",
-   "members": [...]
-  }
-}
-```
-
-### 팀원별 TodoList 불러오기
-
-| method | uri |
-|---|---|
-|GET|/api/teams/${teamId}/members/${memberId}|
-
-```javascript
-{
- response: [
-  {
-    "_id": "string",
-   "name": "string",
-   "todoList": []
-  }
- ]
-}
-```
-
-### 팀원의 TodoItem 추가하기
-
-| method | uri |
-|---|---|
-|POST|/api/teams/${teamId}/members/${memberId}/items|
-
-```javascript
-{
- requestBody: {
-   "contents": "string"
- },
- response: [
-   {
-   "_id": "string",
-   "contents": "string",
-   "priority": "string",
-   "isCompleted": "boolean",
-   }
-   ...
- ]
-}
-```
-
-### 팀원의 TodoItem 삭제하기
-
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}/members/${memberId}/items/${itemId}|
-
-```javascript
-{
- response: {}
-}
-```
-
-### 팀원의 TodoItem toggle하기
-
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle|
-
-
-```javascript
-{
- response: {
-   "_id": "string",
-   "contents": "string",
-   "priority": "string",
-   "isCompleted": "boolean",
-   }
-}
-```
-
-### 팀원의 TodoItem contents 수정하기
-
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}|
-
-```javascript
-{
- requestBody: {
-   "contents": "string"
- },
- response:    {
-   "_id": "string",
-   "contents": "string",
-   "priority": "string",
-   "isCompleted": "boolean",
-   }
-}
-```
-
-### 팀원의 TodoItem 우선순위 수정하기
-
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority|
-
-```javascript
-{
- requestBody: {
-   "priority": "FIRST"
- },
- response: {
-   "_id": "string",
-   "contents": "string",
-   "priority": "string",
-   "isCompleted": "boolean",
- }
-}
-```
-
-### 팀원의 TodoItem 전부 삭제
-
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}/members/${memberId}/items/|
-
-
-```javascript
-{
- response: {}
-}
-```
 
 <br/><br/>
 
