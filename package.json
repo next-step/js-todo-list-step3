@@ -1,0 +1,29 @@
+{
+  "name": "js-todo-list-step3",
+  "version": "1.0.0",
+  "description": "blackcoffee Level01 Mission03",
+  "main": "src/team/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YUJO42/js-todo-list-step3.git"
+  },
+  "keywords": [],
+  "author": "yujo42",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YUJO42/js-todo-list-step3/issues"
+  },
+  "homepage": "https://github.com/YUJO42/js-todo-list-step3#readme",
+  "devDependencies": {
+    "cypress": "^6.4.0",
+    "eslint": "7.2.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}
