@@ -218,6 +218,7 @@ body {
   border: none;
   -webkit-appearance: none;
   appearance: none;
+  cursor: pointer;
 }
 
 .todo-list li .toggle {
@@ -260,6 +261,7 @@ body {
   color: #cc9a9a;
   margin-bottom: 11px;
   transition: color 0.2s ease-out;
+  cursor: pointer;
 }
 
 .todo-list li .destroy:hover {
@@ -560,6 +562,7 @@ select.chip {
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .team-list-container .team-card-container {
@@ -570,6 +573,47 @@ select.chip {
   font-size: 20px;
   font-weight: bold;
 }
+
+/*destroy button*/
+
+.team-list-container .destroy {
+  display: none;
+  position: absolute;
+  left: 200px;
+  bottom: 60px;
+  width : 40px;
+  height: 40px;
+  font-size: 24px;
+  color: #bfbfbf;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+}
+
+.team-list-container .destroy:hover {
+  color:  #c98787
+}
+
+.team-list-container .destroy::after {
+  content: 'x';
+}
+.team-list-container .team-card-container:hover .destroy {
+  display: block;
+}
+
+@media only screen and (min-width:1080px){
+  .team-list-container .destroy {
+    left: 210px;
+  }
+}
+
+@media only screen and (min-width:1240px){
+  .team-list-container .destroy {
+    left: 240px;
+  }
+}
+
+
+/*add team button*/
 
 .add-team-button-container {
   padding: 0 5px;
