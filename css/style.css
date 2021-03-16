@@ -478,10 +478,12 @@ button.ripple {
 
 .chip.primary {
   background-color: #d63a49;
+  color: #fff;
 }
 
 .chip.secondary {
   background-color: #26c6da;
+  color: #fff;
 }
 
 select.chip {
@@ -563,6 +565,7 @@ select.chip {
 }
 
 .team-list-container .team-card-container {
+  position: relative;
   padding: 0 5px;
 }
 
@@ -585,4 +588,29 @@ select.chip {
 }
 
 .add-team-button-container #add-team-button.ripple {
+}
+
+.team-list-container .team-card-container .destroy {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  font-size: 30px;
+  color: #cc9a9a;
+  margin-bottom: 11px;
+  transition: color 0.2s ease-out;
+}
+
+.team-list-container .team-card-container .destroy:hover {
+  color: #af5b5e;
+}
+
+.team-list-container .team-card-container .destroy:after {
+  content: '×';
+}
+.team-list-container .team-card-container:hover .destroy {
+  display: block;
 }
