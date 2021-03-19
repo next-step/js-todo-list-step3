@@ -1,7 +1,10 @@
 'use strict';
 
 import { $ } from '../utils/dom.js';
-import { teamBtnTemplate, teamAddBtnTemplate } from '../layout/templates.js';
+import {
+  teamBtnTemplate,
+  teamAddBtnTemplate,
+} from '../layout/teamTemplates.js';
 
 class TeamView {
   constructor() {

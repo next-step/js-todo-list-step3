@@ -21,6 +21,18 @@ class TeamStore {
   getCurrentTeam() {
     return this.currentTeam;
   }
+
+  saveCurrentTeam(currentTeam) {
+    localStorage.setItem('crruentTeam', JSON.stringify(currentTeam));
+  }
+
+  loadCurrentTeam() {
+    const loadedData = localStorage.getItem('crruentTeam');
+    const crruentTeam = JSON.parse(loadedData);
+    if (!crruentTeam) return;
+    this.setCurrentTeam(crruentTeam);
+    return crruentTeam;
+  }
 }
 
 export const teamStore = new TeamStore();

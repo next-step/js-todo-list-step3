@@ -1,21 +1,47 @@
 'use strict';
 
 import KanbanView from '../view/kanbanView.js';
+import teamApi from '../api/teamApi.js';
 import { teamStore } from '../store/teamStore.js';
+import { kanbanStore } from '../store/kanbanStore.js';
+
 class KanbanController {
   constructor() {
-    this.kanvanView = new KanbanView();
+    this.kanbanView = new KanbanView();
+    console.log(this.kanbanView.$userAddBtn);
+    this.kanbanView.$todoappListContainer.addEventListener(
+      'click',
+      this.onClickTodoappListContainer
+    );
   }
 
-  init() {
-    console.log('KanbanController-init');
-    console.log(teamStore.getTeams());
-    // this.kanvanView.renderTitle(teamStore.getCurrentTeam());
+  onClickTodoappListContainer = ({ target }) => {
+    console.log(target);
+    if (target.matches('#add-user-button, .material-icons')) {
+      this.addMember();
+    }
+  };
+
+  async loadMemberTodo() {
+    const currentTeamId = teamStore.loadCurrentTeam()._id;
+    const currentTeam = await teamApi.getTeam(currentTeamId);
+    this.kanbanView.renderTitle(currentTeam.name);
+    teamStore.setCurrentTeam(currentTeam);
+    kanbanStore.setMembers(currentTeam.members);
+    this.kanbanView.renderKanban(kanbanStore.getMembers());
   }
 
-  test() {
-    return teamStore.getTeams();
+  async addMember() {
+    // 멤버이름 입력
+    const memberName = prompt('추가할 멤버 이름을 작성해주세요.');
+    const currentTeam = teamStore.getCurrentTeam();
+    if (!memberName) return;
+    // api, member 추가 요청
+    await teamApi.addMember(currentTeam._id, memberName);
+    this.loadMemberTodo();
   }
+
+  loadTodoListsOfUsers() {}
 }
 
 export default KanbanController;

@@ -30,7 +30,7 @@ class TeamController {
     }
   };
 
-  async loadTeamBtns() {
+  async loadBtnsOfTeams() {
     const teams = await teamApi.getTeams();
     teamStore.setTeams(teams);
     this.teamView.renderTeamBtns(teams);
@@ -40,22 +40,25 @@ class TeamController {
     const teamName = prompt('팀 이름을 작성해주세요');
     if (!teamName) return;
     await teamApi.addTeam(teamName);
-    this.loadTeamBtns();
+    this.loadBtnsOfTeams();
   }
 
   async deleteTeam(target) {
     if (!confirm('해당 팀을 삭제하시겠습니까?')) return;
     const teamId = target.closest('.team-card-container').dataset.id;
     await teamApi.deleteTeam(teamId);
-    this.loadTeamBtns();
+    this.loadBtnsOfTeams();
   }
 
   renderKanban(target) {
     const teamId = target.closest('.team-card-container').dataset.id;
     const currentTeam = teamStore.getTeams().find(({ _id }) => _id === teamId);
-    teamStore.setCurrentTeam(currentTeam);
-    // console.log(teamStore.getCurrentTeam());
+    teamStore.saveCurrentTeam(currentTeam);
     location.href = '/kanban.html';
+  }
+
+  init() {
+    this.loadBtnsOfTeams();
   }
 }
 
