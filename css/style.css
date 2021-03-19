@@ -576,6 +576,11 @@ select.chip {
   font-weight: bold;
 }
 
+.card,
+.card-title {
+  cursor: pointer;
+}
+
 .add-team-button-container {
   padding: 0 5px;
 }

@@ -3,7 +3,7 @@
 class TeamStore {
   constructor() {
     this.teams = [];
-    this.currentTeamId = '';
+    this.currentTeam = null;
   }
 
   setTeams(teams) {
@@ -14,8 +14,12 @@ class TeamStore {
     return this.teams;
   }
 
-  setCurrentTeamId(teamId) {
-    this.currentTeamId = teamId;
+  setCurrentTeam(team) {
+    this.currentTeam = team;
+  }
+
+  getCurrentTeam() {
+    return this.currentTeam;
   }
 }
 

@@ -84,3 +84,7 @@ export const teamAddBtnTemplate = () => {
   </div>
   `;
 };
+
+export const kanbanTitleTemplate = teamName => {
+  return `<span><strong>${teamName}</strong>'s Todo List</span>`;
+};

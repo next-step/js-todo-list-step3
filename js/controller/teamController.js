@@ -8,7 +8,7 @@ import { teamStore } from '../store/teamStore.js';
 class TeamController {
   constructor() {
     this.teamView = new TeamView();
-    this.teamService = new TeamService();
+    // this.teamService = new TeamService();
     this.teamView.$teamListContainer.addEventListener(
       'click',
       this.onClickTeamListContainer
@@ -16,7 +16,7 @@ class TeamController {
   }
 
   onClickTeamListContainer = ({ target }) => {
-    if (target.matches('#add-team-button')) {
+    if (target.matches('#add-team-button, .material-icons')) {
       this.addTeam();
       return;
     }
@@ -24,8 +24,8 @@ class TeamController {
       this.deleteTeam(target);
       return;
     }
-    if (target.matches('.card')) {
-      this.renderKanban();
+    if (target.matches('.card, .card-title')) {
+      this.renderKanban(target);
       return;
     }
   };
@@ -52,7 +52,9 @@ class TeamController {
 
   renderKanban(target) {
     const teamId = target.closest('.team-card-container').dataset.id;
-    teamStore.setCurrentTeamId(teamId);
+    const currentTeam = teamStore.getTeams().find(({ _id }) => _id === teamId);
+    teamStore.setCurrentTeam(currentTeam);
+    // console.log(teamStore.getCurrentTeam());
     location.href = '/kanban.html';
   }
 }
