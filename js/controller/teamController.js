@@ -3,12 +3,10 @@
 import teamApi from '../api/teamApi.js';
 import TeamView from '../view/teamView.js';
 import { teamStore } from '../store/teamStore.js';
-// import TeamService from '../service/teamService.js';
 
 class TeamController {
   constructor() {
     this.teamView = new TeamView();
-    // this.teamService = new TeamService();
     this.teamView.$teamListContainer.addEventListener(
       'click',
       this.onClickTeamListContainer
