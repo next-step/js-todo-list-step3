@@ -25,6 +25,10 @@ const teamApi = {
   addMember: (teamId, name) => {
     return request(`/api/teams/${teamId}/members`, option.post({ name }));
   },
+
+  getMember: (teamId, memberId) => {
+    return request(`/api/teams/${teamId}/members/${memberId}`);
+  },
 };
 
 export default teamApi;

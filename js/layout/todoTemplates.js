@@ -65,8 +65,7 @@ export const todoAppTemplate = member => {
 	<div class="todoapp">
 		${todoInputTeamplate()}
 		<section class="main">
-			<ul class="todo-list">
-			</ul>
+			<ul class="todo-list"></ul>
 		</section>
 		${countContainerTeamplate(member.todoList.length)}
 	</div>
@@ -76,14 +75,16 @@ export const todoAppTemplate = member => {
 
 export const todoItemTemplate = item => {
   return `
-	<li data-id=${item._id} class="todo-item ${
+	<li data-id=${item._id} class="todo-list-item  ${
     item.isCompleted ? 'completed' : ''
   }">
 	  <div class="view">
 		<input class="toggle" type="checkbox" ${item.isCompleted ? 'checked' : ''}/>
 		<label class="label">
-		  ${priorityTemplate(item.priority)}
-		  <span class="todo-item__contents">${item.contents}</span>
+			<div class="chip-container">
+				${priorityTemplate(item.priority)}
+			</div>
+		  	${item.contents}
 		</label>
 		<button class="destroy"></button>
 	  </div>

@@ -6,4 +6,4 @@ import TodoInputController from './controller/todoInputController.js';
 const kanbanController = new KanbanController();
 const todoInputController = new TodoInputController();
 
-kanbanController.loadMemberTodo();
+kanbanController.loadMemberTodoLists();

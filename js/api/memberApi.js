@@ -2,7 +2,7 @@
 
 import { option, request } from './api.js';
 
-const userApi = {
+const memberApi = {
   getUser: userId => {
     return request(`api/user/${userId}`);
   },
@@ -23,4 +23,4 @@ const userApi = {
   },
 };
 
-export default userApi;
+export default memberApi;

@@ -1,14 +1,13 @@
 'use strict';
 
-import KanbanView from '../view/kanbanView.js';
+import { todoAppView } from '../view/todoAppView.js';
 import teamApi from '../api/teamApi.js';
 import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
 
 class KanbanController {
   constructor() {
-    this.kanbanView = new KanbanView();
-    this.kanbanView.$todoappListContainer.addEventListener(
+    todoAppView.$todoappListContainer.addEventListener(
       'click',
       this.onClickTodoappListContainer
     );
@@ -21,13 +20,13 @@ class KanbanController {
     }
   };
 
-  async loadMemberTodo() {
+  async loadMemberTodoLists() {
     const currentTeamId = teamStore.loadCurrentTeam()._id;
     const currentTeam = await teamApi.getTeam(currentTeamId);
     teamStore.setCurrentTeam(currentTeam);
     memberStore.setMembers(currentTeam.members);
-    this.kanbanView.renderTitle(currentTeam.name);
-    this.kanbanView.renderKanban(memberStore.getMembers());
+    todoAppView.renderTitle(currentTeam.name);
+    todoAppView.renderKanban(memberStore.getMembers());
   }
 
   async addMember() {
@@ -37,7 +36,7 @@ class KanbanController {
     if (!memberName) return;
     // api, member 추가 요청
     await teamApi.addMember(currentTeam._id, memberName);
-    this.loadMemberTodo();
+    this.loadMemberTodoLists();
   }
 }
 
