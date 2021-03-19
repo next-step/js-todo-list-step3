@@ -23,10 +23,7 @@ export default class TodoInputController {
     ) {
       return;
     }
-    this.addNewItem(
-      this.getCurrentMeber(event.target)._id,
-      event.target.value.trim()
-    );
+    this.addNewItem(event.target);
   };
 
   getCurrentMeber(target) {
@@ -34,9 +31,11 @@ export default class TodoInputController {
     return memberStore.findMember(currentMemberId);
   }
 
-  async addNewItem(memberId, text) {
+  async addNewItem(target) {
     const TemaId = teamStore.getCurrentTeam()._id;
-    await todoApi.addTodoItem(TemaId, memberId, text);
+    const memberId = this.getCurrentMeber(target)._id;
+    const contents = target.value.trim();
+    await todoApi.addTodoItem(TemaId, memberId, contents);
     this.todoInputView.clear(memberId);
   }
 }
