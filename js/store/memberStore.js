@@ -21,6 +21,10 @@ class MemberStore {
   setCurrentMember() {
     return this.currentMember;
   }
+
+  findMember(id) {
+    return this.members.find(({ _id }) => _id === id);
+  }
 }
 
 export const memberStore = new MemberStore();

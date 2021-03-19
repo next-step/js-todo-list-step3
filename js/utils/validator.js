@@ -1,13 +1,13 @@
 'use strict';
 
-export const KeyValidator = {
+export const keyValidator = {
   isEnter: keyCode => keyCode === 'Enter',
   isNotEnter: keyCode => keyCode !== 'Enter',
   isEsc: keyCode => keyCode === 'Escape',
   isNotEsc: keyCode => keyCode !== 'Escape',
 };
 
-export const ElementValidator = {
+export const elementValidator = {
   isEmpty: element => element.value.trim() === '',
   isToggleBtn: target => target.matches('.toggle'),
   isNotToggleBtn: target => !target.matches('.toggle'),

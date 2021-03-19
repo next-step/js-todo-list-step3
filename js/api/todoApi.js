@@ -7,11 +7,11 @@ const todoApi = {
     return request(`/api/users/${userId}/items`);
   },
 
-  addTodoItem: (userId, text) => {
-    const content = {
-      contents: text,
-    };
-    return request(`/api/users/${userId}/items`, option.post(content));
+  addTodoItem: (teamId, memberId, contents) => {
+    return request(
+      `/api/teams/${teamId}/members/${memberId}/items`,
+      option.post({ contents })
+    );
   },
 
   toggleTodoItem: (userId, itemId) => {
