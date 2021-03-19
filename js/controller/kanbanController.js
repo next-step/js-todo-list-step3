@@ -3,7 +3,7 @@
 import KanbanView from '../view/kanbanView.js';
 import teamApi from '../api/teamApi.js';
 import { teamStore } from '../store/teamStore.js';
-import { kanbanStore } from '../store/kanbanStore.js';
+import { memberStore } from '../store/memberStore.js';
 
 class KanbanController {
   constructor() {
@@ -24,10 +24,10 @@ class KanbanController {
   async loadMemberTodo() {
     const currentTeamId = teamStore.loadCurrentTeam()._id;
     const currentTeam = await teamApi.getTeam(currentTeamId);
-    this.kanbanView.renderTitle(currentTeam.name);
     teamStore.setCurrentTeam(currentTeam);
-    kanbanStore.setMembers(currentTeam.members);
-    this.kanbanView.renderKanban(kanbanStore.getMembers());
+    memberStore.setMembers(currentTeam.members);
+    this.kanbanView.renderTitle(currentTeam.name);
+    this.kanbanView.renderKanban(memberStore.getMembers());
   }
 
   async addMember() {

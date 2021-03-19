@@ -1,6 +1,6 @@
 'use strict';
 
-class KanbanStore {
+class MemberStore {
   constructor() {
     this.members = [];
     this.currentMember = null;
@@ -23,4 +23,4 @@ class KanbanStore {
   }
 }
 
-export const kanbanStore = new KanbanStore();
+export const memberStore = new MemberStore();
