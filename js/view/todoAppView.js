@@ -39,7 +39,9 @@ class TodoAppView {
     $todoList.innerHTML = todos.map(todo => todoItemTemplate(todo)).join('');
   }
 
-  renderCount() {}
+  activateEditMode() {}
+
+  deactivateEditMode() {}
 }
 
 export const todoAppView = new TodoAppView();

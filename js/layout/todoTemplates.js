@@ -41,16 +41,16 @@ export const countContainerTeamplate = number => {
 		${todoCountTeamplate(number)}
 		<ul class="filters">
 			<li>
-				<a href="#all" class="selected">전체보기</a>
+				<a href="#all" class="filters__btn all selected">전체보기</a>
 			</li>
 			<li>
-				<a href="#priority">우선 순위</a>
+				<a href="#priority" class="filters__btn priority">우선 순위</a>
 			</li>
 			<li>
-				<a href="#active">해야할 일</a>
+				<a href="#active" class="filters__btn active">해야할 일</a>
 			</li>
 			<li>
-				<a href="#completed">완료한 일</a>
+				<a href="#completed" class="filters__btn completed">완료한 일</a>
 			</li>
 		</ul>
 		<button class="clear-completed">모두 삭제</button>
