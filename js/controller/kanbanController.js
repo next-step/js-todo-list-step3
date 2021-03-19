@@ -8,7 +8,6 @@ import { kanbanStore } from '../store/kanbanStore.js';
 class KanbanController {
   constructor() {
     this.kanbanView = new KanbanView();
-    console.log(this.kanbanView.$userAddBtn);
     this.kanbanView.$todoappListContainer.addEventListener(
       'click',
       this.onClickTodoappListContainer
@@ -16,9 +15,9 @@ class KanbanController {
   }
 
   onClickTodoappListContainer = ({ target }) => {
-    console.log(target);
     if (target.matches('#add-user-button, .material-icons')) {
       this.addMember();
+      return;
     }
   };
 
@@ -40,8 +39,6 @@ class KanbanController {
     await teamApi.addMember(currentTeam._id, memberName);
     this.loadMemberTodo();
   }
-
-  loadTodoListsOfUsers() {}
 }
 
 export default KanbanController;

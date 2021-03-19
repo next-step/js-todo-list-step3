@@ -6,7 +6,6 @@ const todoTitleTempalte = name => {
   return `
 	<h2>
 		<span><strong>${name}</strong>'s Todo List</span>
-		<button class="ripple user-delete-button"> 유저삭제 </button>
 	</h2>
   `;
 };
@@ -61,7 +60,7 @@ export const countContainerTeamplate = number => {
 
 export const todoAppTemplate = member => {
   return `
-  <li class="todoapp-container">
+  <li data-id="${member._id}" class="todoapp-container">
 	${todoTitleTempalte(member.name)}
 	<div class="todoapp">
 		${todoInputTeamplate()}
