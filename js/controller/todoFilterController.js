@@ -1,5 +1,6 @@
 'use strcit';
 
+import { api } from '../api/api.js';
 import { todoAppView } from '../view/todoAppView.js';
 import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
@@ -47,10 +48,16 @@ export default class TodoFilterController {
     todoAppView.renderTodoList(member, todos);
   }
 
-  clearAllItems(target) {
+  async clearAllItems(target) {
     console.log('TodoFilterController - clearAllItems');
     if (!confirm('정말 모든 항목을 삭제하시겠습니까?')) return;
     console.log(target);
+    const teamId = teamStore.getCurrentTeam()._id;
+    const memberId = this.getMemberId(target);
+    await api.deleteTodoItems(teamId, memberId);
+    const team = await api.getTeam(teamId);
+    memberStore.setMembers(team.members);
+    todoAppView.renderKanban(memberStore.getMembers());
   }
 
   filterTodoList(todoList, currentOption) {
