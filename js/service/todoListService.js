@@ -48,18 +48,25 @@ export default class TodoListService {
     todoAppView.renderKanban(memberStore.getMembers());
   }
 
-  async updateItem(target) {
+  async editItem(target) {
     console.log('TodoListService - updateItem');
     console.log(target);
+    const teamId = teamStore.getCurrentTeam()._id;
+    const memberId = this.getMemberId(target);
+    const itemId = this.getItemId(target);
+    // const contents = target.
+    await api.editTodoItem(teamId, memberId, itemId, contents);
   }
 
   activateEditMode(target) {
     console.log('TodoListService - activateEditMode');
     console.log(target);
+    todoAppView.activateEditMode(target);
   }
 
   deactivateEditMode(target) {
     console.log('TodoListService - exitEditMode');
+    todoAppView.deactivateEditMode(target);
   }
 
   changePriority(target) {

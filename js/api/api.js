@@ -85,7 +85,7 @@ export const api = {
     );
   },
 
-  editTodoItems: (teamId, memberId, itemId, contents) => {
+  editTodoItem: (teamId, memberId, itemId, contents) => {
     return request(
       `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
       option.put({ contents })

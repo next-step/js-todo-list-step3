@@ -40,9 +40,18 @@ class TodoAppView {
     $todoList.innerHTML = todos.map(todo => todoItemTemplate(todo)).join('');
   }
 
-  activateEditMode() {}
+  activateEditMode(target) {
+    const $todoItem = target.closest('.todo-list-item');
+    $todoItem.classList.add('editing');
+  }
 
-  deactivateEditMode() {}
+  deactivateEditMode(target) {
+    const $todoItem = target.closest('.todo-list-item');
+    const $editInput = target.closest('.edit');
+    const text = $('.todo-list-item__contents', $todoItem).innerText;
+    $editInput.value = text;
+    $todoItem.classList.remove('editing');
+  }
 }
 
 export const todoAppView = new TodoAppView();

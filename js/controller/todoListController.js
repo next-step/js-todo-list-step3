@@ -56,7 +56,7 @@ export default class TodoListController {
       return;
     }
     if (keyValidator.isEnter(event.key)) {
-      this.todoListService.updateItem(event.target);
+      this.todoListService.editItem(event.target);
       return;
     }
     if (keyValidator.isEsc(event.key)) {

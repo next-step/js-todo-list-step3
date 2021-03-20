@@ -75,7 +75,7 @@ export const todoAppTemplate = member => {
 
 export const todoItemTemplate = item => {
   return `
-	<li data-id=${item._id} class="todo-list-item  ${
+	<li data-id=${item._id} class="todo-list-item ${
     item.isCompleted ? 'completed' : ''
   }">
 	  <div class="view">
@@ -84,7 +84,7 @@ export const todoItemTemplate = item => {
 			<div class="chip-container">
 				${priorityTemplate(item.priority)}
 			</div>
-		  	${item.contents}
+			<span class="todo-list-item__contents">${item.contents}</span>
 		</label>
 		<button class="destroy"></button>
 	  </div>
