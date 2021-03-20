@@ -39,35 +39,14 @@ export default class TodoFilterController {
     return memberStore.findMember(memberId);
   }
 
-  changeByFilter(target) {
-    console.log('TodoFilterController - changeByFilter');
-    const member = this.getMember(target);
-    const currentOption = this.getCurrentOption(target);
-    const todos = this.filterTodoList(member.todoList, currentOption);
-    todoAppView.changeFilterBtn(target);
-    todoAppView.renderTodoList(member, todos);
-  }
-
   async clearAllItems(target) {
-    console.log('TodoFilterController - clearAllItems');
     if (!confirm('정말 모든 항목을 삭제하시겠습니까?')) return;
-    console.log(target);
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     await api.deleteTodoItems(teamId, memberId);
     const team = await api.getTeam(teamId);
     memberStore.setMembers(team.members);
     todoAppView.renderKanban(memberStore.getMembers());
-  }
-
-  filterTodoList(todoList, currentOption) {
-    const option = {
-      all: () => true,
-      priority: () => true,
-      active: item => item.isCompleted === false,
-      completed: item => item.isCompleted === true,
-    };
-    return todoList.filter(item => option[currentOption](item));
   }
 
   getCurrentOption(target) {
@@ -84,5 +63,40 @@ export default class TodoFilterController {
     if (classList.contains('completed')) {
       return 'completed';
     }
+  }
+
+  changeByFilter(target) {
+    const member = this.getMember(target);
+    const currentOption = this.getCurrentOption(target);
+    todoAppView.changeFilterBtn(target);
+    if (currentOption === 'priority') {
+      const tmpTodoList = JSON.parse(JSON.stringify(member.todoList));
+      const todoList = this.filterByPriority(tmpTodoList);
+      todoAppView.renderTodoList(member, todoList);
+      return;
+    }
+    const todoList = this.filterTodoList(member.todoList, currentOption);
+    todoAppView.renderTodoList(member, todoList);
+  }
+
+  filterByPriority(todoList) {
+    const priorityOption = {
+      FIRST: 1,
+      SECOND: 2,
+      NONE: 3,
+    };
+    return todoList.sort(
+      (a, b) => priorityOption[a.priority] - priorityOption[b.priority]
+    );
+  }
+
+  filterTodoList(todoList, currentOption) {
+    const option = {
+      all: () => true,
+      // priority: () => true,
+      active: item => item.isCompleted === false,
+      completed: item => item.isCompleted === true,
+    };
+    return todoList.filter(item => option[currentOption](item));
   }
 }

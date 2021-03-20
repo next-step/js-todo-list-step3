@@ -15,7 +15,6 @@ export default class TodoInputController {
   }
 
   onKeyUpTodoInput = event => {
-    console.log(event.target);
     if (
       keyValidator.isNotEnter(event.key) ||
       !event.target.matches('.new-todo') ||

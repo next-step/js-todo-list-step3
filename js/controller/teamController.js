@@ -23,40 +23,40 @@ class TeamController {
       return;
     }
     if (target.matches('.card, .card-title')) {
-      this.renderKanban(target);
+      this.moveToKanban(target);
       return;
     }
   };
 
-  async loadBtnsOfTeams() {
+  async load() {
     const teams = await api.getTeams();
     teamStore.setTeams(teams);
-    this.teamView.renderTeamBtns(teams);
+    this.teamView.render(teams);
   }
 
   async addTeam() {
     const teamName = prompt('팀 이름을 작성해주세요');
     if (!teamName) return;
     await api.addTeam(teamName);
-    this.loadBtnsOfTeams();
+    this.load();
   }
 
   async deleteTeam(target) {
     if (!confirm('해당 팀을 삭제하시겠습니까?')) return;
     const teamId = target.closest('.team-card-container').dataset.id;
     await api.deleteTeam(teamId);
-    this.loadBtnsOfTeams();
+    this.load();
   }
 
-  renderKanban(target) {
+  moveToKanban(target) {
     const teamId = target.closest('.team-card-container').dataset.id;
-    const currentTeam = teamStore.getTeams().find(({ _id }) => _id === teamId);
+    const currentTeam = teamStore.findTeam(teamId);
     teamStore.saveCurrentTeam(currentTeam);
     location.href = '/kanban.html';
   }
 
   init() {
-    this.loadBtnsOfTeams();
+    this.load();
   }
 }
 

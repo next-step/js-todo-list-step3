@@ -25,7 +25,6 @@ class TodoAppView {
   }
 
   renderKanban(members) {
-    console.log('TodoAppView - renderKanban');
     this.$todoappListContainer.innerHTML = members
       .map(todoAppTemplate)
       .join('');

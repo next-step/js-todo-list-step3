@@ -22,6 +22,10 @@ class TeamStore {
     return this.currentTeam;
   }
 
+  findTeam(id) {
+    return this.teams.find(({ _id }) => _id === id);
+  }
+
   saveCurrentTeam(currentTeam) {
     localStorage.setItem('crruentTeam', JSON.stringify(currentTeam));
   }

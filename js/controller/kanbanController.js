@@ -1,7 +1,7 @@
 'use strict';
 
-import { todoAppView } from '../view/todoAppView.js';
 import { api } from '../api/api.js';
+import { todoAppView } from '../view/todoAppView.js';
 import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
 
@@ -31,9 +31,9 @@ class KanbanController {
 
   async addMember() {
     const memberName = prompt('추가할 멤버 이름을 작성해주세요.');
-    const currentTeam = teamStore.getCurrentTeam();
     if (!memberName) return;
-    await api.addMember(currentTeam._id, memberName);
+    const teamId = teamStore.getCurrentTeam()._id;
+    await api.addMember(teamId, memberName);
     this.loadMemberTodoLists();
   }
 }

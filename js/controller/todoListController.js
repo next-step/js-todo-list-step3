@@ -48,7 +48,6 @@ export default class TodoListController {
   };
 
   onKeyUpTodoList = event => {
-    // 포커스 혹은 에딧모드일때만 활성화되도록 수정 필요.
     if (
       keyValidator.isNotEnter(event.key) &&
       keyValidator.isNotEsc(event.key)

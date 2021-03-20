@@ -11,7 +11,7 @@ class TeamView {
     this.$teamListContainer = $('.team-list-container');
   }
 
-  renderTeamBtns(teams) {
+  render(teams) {
     this.$teamListContainer.innerHTML = teams
       .map(team => teamBtnTemplate(team))
       .join('');
