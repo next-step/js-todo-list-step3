@@ -55,7 +55,7 @@ export default class TodoListController {
     ) {
       return;
     }
-    if (keyValidator.isEnter(event.key)) {
+    if (keyValidator.isEnter(event.key) && event.target.matches('.edit')) {
       this.todoListService.editItem(event.target);
       return;
     }

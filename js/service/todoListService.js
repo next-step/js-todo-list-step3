@@ -54,8 +54,10 @@ export default class TodoListService {
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     const itemId = this.getItemId(target);
-    // const contents = target.
-    await api.editTodoItem(teamId, memberId, itemId, contents);
+    const text = target.value;
+    await api.editTodoItem(teamId, memberId, itemId, text);
+    await this.updateMeberStore();
+    todoAppView.renderKanban(memberStore.getMembers());
   }
 
   activateEditMode(target) {
