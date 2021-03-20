@@ -22,7 +22,6 @@ export default class TodoListService {
   }
 
   async updateMeberStore() {
-    // 멤버 요청
     const teamId = teamStore.getCurrentTeam()._id;
     const team = await api.getTeam(teamId);
     memberStore.setMembers(team.members);
@@ -41,7 +40,12 @@ export default class TodoListService {
 
   async toggleItem(target) {
     console.log('TodoListService - toggleItem');
-    console.log(target);
+    const teamId = teamStore.getCurrentTeam()._id;
+    const memberId = this.getMemberId(target);
+    const itemId = this.getItemId(target);
+    await api.toggleTodoItem(teamId, memberId, itemId);
+    await this.updateMeberStore();
+    todoAppView.renderKanban(memberStore.getMembers());
   }
 
   async updateItem(target) {
