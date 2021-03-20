@@ -33,9 +33,8 @@ class TodoAppView {
     this.$todoappListContainer.innerHTML += userAddButtonTemplate();
   }
 
-  renderTodoList(member) {
+  renderTodoList(member, todos = member.todoList) {
     const memberId = member._id;
-    const todos = member.todoList;
     const $todoList = $(`li[data-id="${memberId}"] .todo-list`);
     $todoList.innerHTML = todos.map(todo => todoItemTemplate(todo)).join('');
   }
@@ -51,6 +50,13 @@ class TodoAppView {
     const text = $('.todo-list-item__contents', $todoItem).innerText;
     $editInput.value = text;
     $todoItem.classList.remove('editing');
+  }
+
+  changeFilterBtn(target) {
+    const currentFilter = target.closest('.filters');
+    const currentBtn = $('.selected', currentFilter);
+    currentBtn.classList.remove('selected');
+    target.classList.add('selected');
   }
 }
 

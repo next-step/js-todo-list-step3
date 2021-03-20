@@ -30,11 +30,9 @@ class KanbanController {
   }
 
   async addMember() {
-    // 멤버이름 입력
     const memberName = prompt('추가할 멤버 이름을 작성해주세요.');
     const currentTeam = teamStore.getCurrentTeam();
     if (!memberName) return;
-    // api, member 추가 요청
     await api.addMember(currentTeam._id, memberName);
     this.loadMemberTodoLists();
   }
