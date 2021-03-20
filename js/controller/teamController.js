@@ -1,6 +1,6 @@
 'use strict';
 
-import teamApi from '../api/teamApi.js';
+import { api } from '../api/api.js';
 import TeamView from '../view/teamView.js';
 import { teamStore } from '../store/teamStore.js';
 
@@ -29,7 +29,7 @@ class TeamController {
   };
 
   async loadBtnsOfTeams() {
-    const teams = await teamApi.getTeams();
+    const teams = await api.getTeams();
     teamStore.setTeams(teams);
     this.teamView.renderTeamBtns(teams);
   }
@@ -37,14 +37,14 @@ class TeamController {
   async addTeam() {
     const teamName = prompt('팀 이름을 작성해주세요');
     if (!teamName) return;
-    await teamApi.addTeam(teamName);
+    await api.addTeam(teamName);
     this.loadBtnsOfTeams();
   }
 
   async deleteTeam(target) {
     if (!confirm('해당 팀을 삭제하시겠습니까?')) return;
     const teamId = target.closest('.team-card-container').dataset.id;
-    await teamApi.deleteTeam(teamId);
+    await api.deleteTeam(teamId);
     this.loadBtnsOfTeams();
   }
 

@@ -44,7 +44,7 @@ export default class TodoListController {
 
   onDoubleClickTodoList = ({ target }) => {
     if (elementValidator.isNotLabel(target)) return;
-    this.todoListService.activateEditMode();
+    this.todoListService.activateEditMode(target);
   };
 
   onKeyUpTodoList = event => {
