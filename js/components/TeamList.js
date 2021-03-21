@@ -1,4 +1,4 @@
-export default function TeamList($el, state, {createTeam}) {
+export default function TeamList($el, state, {createTeam, deleteTeam}) {
 
 	function makeTeamListItemTemplate (team) {
 
@@ -6,7 +6,7 @@ export default function TeamList($el, state, {createTeam}) {
 
 		return `
 			<div class="team-card-container">
-				<a href="/kanban.html?teamId=${teamId}" class="card">
+				<a href="/kanban.html?teamId=${teamId}" class="card" data-action="removeTeam" data-team-id="${teamId}">
 					<div class="card-title">
 						${teamName}
 					</div>
@@ -23,6 +23,14 @@ export default function TeamList($el, state, {createTeam}) {
 		createTeam(teamName);
 	}
 
+	function removeTeam ({teamId, teamName}) {
+
+		if (!confirm(`${teamName} 팀을 삭제하시겠습니까?`)) {
+			return;
+		}
+		deleteTeam(teamId);
+	}
+
 	const bindEvents = () => {
 
 		this.$el.addEventListener('click', event => {
@@ -30,7 +38,17 @@ export default function TeamList($el, state, {createTeam}) {
 			if (event.target.closest('[data-action="addTeam"]')) {
 				addTeam();
 			}
-		})
+		});
+
+		this.$el.addEventListener('contextmenu', event => {
+
+			const $teamListItem = event.target.closest('[data-action="removeTeam"]');
+			if ($teamListItem) {
+				event.preventDefault();
+				const team = this.state.teams.find(team => team.teamId === $teamListItem.dataset.teamId);
+				removeTeam({teamId: team.teamId, teamName: team.teamName});
+			}
+		});
 	}
 
 	const render = () => {

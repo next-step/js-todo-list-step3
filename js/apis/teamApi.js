@@ -13,4 +13,10 @@ export default {
 			},
 		})
 	},
+
+	deleteTeam: async function (teamId) {
+		return await defaultApi.delete({
+			path: `/api/teams/${teamId}`,
+		});
+	}
 }

@@ -21,6 +21,12 @@ export default function Team($el) {
 		await fetchTeams();
 	}
 
+	const deleteTeam = async (teamId) => {
+
+		await teamApi.deleteTeam(teamId);
+		await fetchTeams();
+	}
+
 	const render = () => {
 
 		this.$el.innerHTML = `
@@ -30,7 +36,7 @@ export default function Team($el) {
 			<div class="team-list-container" data-component="team-list"></div>
 		`;
 
-		this.components.teamList = new TeamList(this.$el.querySelector('[data-component="team-list"]'), {teams: this.state.teams}, {createTeam});
+		this.components.teamList = new TeamList(this.$el.querySelector('[data-component="team-list"]'), {teams: this.state.teams}, {createTeam, deleteTeam});
 	};
 
 	this.setState = (nextState) => {
