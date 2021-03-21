@@ -1,19 +1,21 @@
 import TeamList from './TeamList.js';
-
-const MOCK_TEAMS = [
-	{
-		teamId: 123,
-		name: 'teamA',
-	},
-	{
-		teamId: 456,
-		name: 'teamB',
-	}
-]
+import teamApi from '../apis/teamApi.js';
 
 export default function Team($el) {
 
-	this.render = function () {
+	const fetchTeams = async () => {
+
+		const teams = await teamApi.getTeams();
+
+		this.setState({
+			teams: teams.map(({_id, name}) => ({
+				teamId: _id,
+				teamName: name,
+			})),
+		});
+	}
+
+	const render = () => {
 
 		this.$el.innerHTML = `
 			<h1 id="team-list-title">
@@ -25,16 +27,25 @@ export default function Team($el) {
 		this.components.teamList = new TeamList(this.$el.querySelector('[data-component="team-list"]'), {teams: this.state.teams});
 	};
 
-	this.init = function () {
+	this.setState = (nextState) => {
+		this.state = {
+			...this.state,
+			...nextState,
+		};
+
+		render();
+	};
+
+	const init = () => {
 
 		this.$el = $el;
 		this.state = {
-			teams: MOCK_TEAMS,
+			teams: [],
 		};
 		this.components = {};
 
-		this.render();
+		fetchTeams();
 	};
 
-	this.init();
+	init();
 }
