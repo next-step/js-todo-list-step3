@@ -1,44 +1,45 @@
-import defaultApi from './defaultApi.js'
+import defaultApi from './defaultApi.js';
 
 export default {
-  getTodoItems: async function (userId) {
-    return defaultApi.get({ path: `/api/users/${userId}/items` })
-  },
 
-  createTodoItem: async function (userId, contents) {
-    return defaultApi.post({
-      path: `/api/users/${userId}/items`,
-      data: { contents },
-    })
-  },
+	getTodoItems: async function ({teamId, userId}) {
+		return defaultApi.get({path: `/api/teams/${teamId}/members/${userId}/items`});
+	},
 
-  toggleTodoItem: async function (userId, todoItemId) {
-    return defaultApi.put({
-      path: `/api/users/${userId}/items/${todoItemId}/toggle`,
-    })
-  },
+	createTodoItem: async function ({teamId, userId, contents}) {
+		return defaultApi.post({
+			path: `/api/teams/${teamId}/members/${userId}/items`,
+			data: {contents},
+		});
+	},
 
-  deleteTodoItem: async function (userId, todoItemId) {
-    return defaultApi.delete({
-      path: `/api/users/${userId}/items/${todoItemId}`,
-    })
-  },
+	toggleTodoItem: async function ({teamId, userId, todoItemId}) {
+		return defaultApi.put({
+			path: `/api/teams/${teamId}/members/${userId}/items/${todoItemId}/toggle`,
+		});
+	},
 
-  editTodoItemContents: async function (userId, todoItemId, contents) {
-    return defaultApi.put({
-      path: `/api/users/${userId}/items/${todoItemId}`,
-      data: {
-        contents,
-      },
-    })
-  },
+	deleteTodoItem: async function ({teamId, userId, todoItemId}) {
+		return defaultApi.delete({
+			path: `/api/teams/${teamId}/members/${userId}/items/${todoItemId}`,
+		});
+	},
 
-  editTodoItemPriority: async function (userId, todoItemId, priority) {
-    return defaultApi.put({
-      path: `/api/users/${userId}/items/${todoItemId}/priority`,
-      data: {
-        priority,
-      },
-    })
-  },
-}
+	editTodoItemContents: async function ({teamId, userId, todoItemId, contents}) {
+		return defaultApi.put({
+			path: `/api/teams/${teamId}/members/${userId}/items/${todoItemId}`,
+			data: {
+				contents,
+			},
+		});
+	},
+
+	editTodoItemPriority: async function ({teamId, userId, todoItemId, priority}) {
+		return defaultApi.put({
+			path: `/api/teams/${teamId}/members/${userId}/items/${todoItemId}/priority`,
+			data: {
+				priority,
+			},
+		});
+	},
+};

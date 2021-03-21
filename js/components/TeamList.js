@@ -1,6 +1,6 @@
-export default function TeamList($el, state, {createTeam, deleteTeam}) {
+export default function TeamList($el, props, {createTeam, deleteTeam}) {
 
-	function makeTeamListItemTemplate (team) {
+	function makeTeamListItemTemplate(team) {
 
 		const {teamId, teamName} = team;
 
@@ -15,7 +15,7 @@ export default function TeamList($el, state, {createTeam, deleteTeam}) {
 		`;
 	}
 
-	function addTeam () {
+	function addTeam() {
 		const teamName = prompt('팀 이름을 입력해주세요');
 		if (!teamName || teamName.trim() === '') {
 			return;
@@ -23,7 +23,7 @@ export default function TeamList($el, state, {createTeam, deleteTeam}) {
 		createTeam(teamName);
 	}
 
-	function removeTeam ({teamId, teamName}) {
+	function removeTeam({teamId, teamName}) {
 
 		if (!confirm(`${teamName} 팀을 삭제하시겠습니까?`)) {
 			return;
@@ -49,7 +49,7 @@ export default function TeamList($el, state, {createTeam, deleteTeam}) {
 				removeTeam({teamId: team.teamId, teamName: team.teamName});
 			}
 		});
-	}
+	};
 
 	const render = () => {
 
@@ -65,13 +65,13 @@ export default function TeamList($el, state, {createTeam, deleteTeam}) {
 		`;
 
 		bindEvents();
-	}
+	};
 
 	const init = () => {
 
 		this.$el = $el;
 		this.state = {
-			teams: state.teams,
+			teams: props.teams,
 		};
 
 		render();

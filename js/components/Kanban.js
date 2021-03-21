@@ -1,5 +1,6 @@
 import {getQuery} from '../utils/urlUtils.js';
 import teamApi from '../apis/teamApi.js';
+import TodoApp from './TodoApp.js';
 
 export default function Kanban($el) {
 
@@ -9,7 +10,10 @@ export default function Kanban($el) {
 		this.setState({
 			teamId: _id,
 			teamName: name,
-			members: members,
+			users: members.map(member => ({
+				userId: member._id,
+				userName: member.name,
+			})),
 		});
 	};
 
@@ -42,6 +46,23 @@ export default function Kanban($el) {
 		});
 	};
 
+	const makeTodoAppListComponent = () => {
+
+		return this.state.users.map(user => {
+
+			const $todoApp = document.createElement('li');
+			$todoApp.classList.add('todoapp-container');
+
+			return new TodoApp(
+				$todoApp,
+				{
+					teamId: this.state.teamId,
+					user,
+				},
+			);
+		});
+	};
+
 	const render = () => {
 
 		const {teamName} = this.state;
@@ -50,21 +71,22 @@ export default function Kanban($el) {
 			<h1 id="team-title" data-teamname="${teamName}">
 				<span><strong>${teamName}</strong>'s Todo List</span>
 		    </h1>
-			<ul class="todoapp-list-container flex-column-container">
-				<li class="todoapp-container">
-					<h2><span><strong>eastjun</strong>'s Todo List</span></h2>
-					<div class="todoapp"></div>
-				</li>
-				<li class="add-user-button-container">
-					<button id="add-user-button" class="ripple" data-action="addUser">
-						<span class="material-icons">add</span>
-					</button>
-				</li>
-			</ul>
+			<ul class="todoapp-list-container flex-column-container" data-component="todo-app-list"></ul>
+		`;
+
+		this.components.todoAppList = makeTodoAppListComponent();
+		const $todoAppList = this.$el.querySelector('[data-component="todo-app-list"]');
+		$todoAppList.innerHTML = `
+			${this.components.todoAppList.map(todoApp => todoApp.$el.outerHTML).join('')}
+			<li class="add-user-button-container">
+				<button id="add-user-button" class="ripple" data-action="addUser">
+					<span class="material-icons">add</span>
+				</button>
+			</li>
 		`;
 
 		bindEvents();
-	}
+	};
 
 	this.setState = (nextState) => {
 
@@ -74,14 +96,15 @@ export default function Kanban($el) {
 		};
 
 		render();
-	}
+	};
 
 	const init = () => {
 
 		this.$el = $el;
 		this.state = {
 			teamId: getQuery('teamId'),
-		}
+		};
+		this.components = {};
 
 		if (!this.state.teamId) {
 			alert('teamId 가 잘못되었습니다.');
@@ -89,7 +112,7 @@ export default function Kanban($el) {
 		}
 
 		fetchTeam();
-	}
+	};
 
 	init();
 }
