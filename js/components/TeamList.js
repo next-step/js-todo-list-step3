@@ -6,7 +6,7 @@ export default function TeamList($el, state, {createTeam, deleteTeam}) {
 
 		return `
 			<div class="team-card-container">
-				<a href="/kanban.html?teamId=${teamId}" class="card" data-action="removeTeam" data-team-id="${teamId}">
+				<a href="./kanban.html?teamId=${teamId}" class="card" data-action="removeTeam" data-team-id="${teamId}">
 					<div class="card-title">
 						${teamName}
 					</div>

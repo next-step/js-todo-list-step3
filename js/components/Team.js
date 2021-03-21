@@ -5,7 +5,7 @@ export default function Team($el) {
 
 	const fetchTeams = async () => {
 
-		const teams = await teamApi.findTeams();
+		const teams = await teamApi.findAllTeam();
 
 		this.setState({
 			teams: teams.map(({_id, name}) => ({
