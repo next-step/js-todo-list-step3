@@ -1,4 +1,4 @@
-export default function TeamList($el, state) {
+export default function TeamList($el, state, {createTeam}) {
 
 	function makeTeamListItemTemplate (team) {
 
@@ -15,6 +15,24 @@ export default function TeamList($el, state) {
 		`;
 	}
 
+	function addTeam () {
+		const teamName = prompt('팀 이름을 입력해주세요');
+		if (!teamName || teamName.trim() === '') {
+			return;
+		}
+		createTeam(teamName);
+	}
+
+	const bindEvents = () => {
+
+		this.$el.addEventListener('click', event => {
+
+			if (event.target.closest('[data-action="addTeam"]')) {
+				addTeam();
+			}
+		})
+	}
+
 	const render = () => {
 
 		this.$el.innerHTML = `
@@ -22,11 +40,13 @@ export default function TeamList($el, state) {
 			${this.state.teams.map(team => makeTeamListItemTemplate(team)).join('')}
 			
 			<div class="add-team-button-container">
-				<button id="add-team-button" class="ripple">
+				<button id="add-team-button" class="ripple" data-action="addTeam">
 					<span class="material-icons">add</span>
 				</button>
 			</div>
 		`;
+
+		bindEvents();
 	}
 
 	const init = () => {

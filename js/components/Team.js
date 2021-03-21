@@ -5,7 +5,7 @@ export default function Team($el) {
 
 	const fetchTeams = async () => {
 
-		const teams = await teamApi.getTeams();
+		const teams = await teamApi.findTeams();
 
 		this.setState({
 			teams: teams.map(({_id, name}) => ({
@@ -13,6 +13,12 @@ export default function Team($el) {
 				teamName: name,
 			})),
 		});
+	}
+
+	const createTeam = async (teamName) => {
+
+		await teamApi.saveTeam(teamName);
+		await fetchTeams();
 	}
 
 	const render = () => {
@@ -24,7 +30,7 @@ export default function Team($el) {
 			<div class="team-list-container" data-component="team-list"></div>
 		`;
 
-		this.components.teamList = new TeamList(this.$el.querySelector('[data-component="team-list"]'), {teams: this.state.teams});
+		this.components.teamList = new TeamList(this.$el.querySelector('[data-component="team-list"]'), {teams: this.state.teams}, {createTeam});
 	};
 
 	this.setState = (nextState) => {
