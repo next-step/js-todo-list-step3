@@ -86,6 +86,23 @@ export default function TodoList($el, props,
 		});
 	};
 
+	const makeTodoItemLoadingTemplate = function () {
+
+		return `
+			<li>
+				<div class="view">
+				<label class="label">
+					<div class="animated-background">
+					<div class="skel-mask-container">
+						<div class="skel-mask"></div>
+					</div>
+					</div>
+				</label>
+				</div>
+			</li>
+		`;
+	};
+
 	const makeTodoItemTemplate = function (todoItem) {
 
 		const {_id, contents, priority, isCompleted, onEditingPriority} = todoItem;
@@ -102,6 +119,22 @@ export default function TodoList($el, props,
 				<input class="edit" data-action="edit" value="${contents}" />
 			</li>
 		`;
+	};
+
+	const sortByPriority = (todoItemA, todoItemB) => {
+
+		const {priority: priorityA} = todoItemA;
+		const {priority: priorityB} = todoItemB;
+
+		if (PRIORITY_TYPE[priorityA].order > PRIORITY_TYPE[priorityB].order) {
+			return 1;
+		}
+
+		if (PRIORITY_TYPE[priorityA].order < PRIORITY_TYPE[priorityB].order) {
+			return -1;
+		}
+
+		return 0;
 	};
 
 	const makePriorityTemplate = function (priority, onEditingPriority) {
@@ -137,28 +170,13 @@ export default function TodoList($el, props,
 	const render = () => {
 
 		const {todoItems, isLoading} = this.state;
+		const sortedTodoItems = todoItems.sort(sortByPriority);
 
 		this.$el.innerHTML = `
         <section class="main">
           <ul class="todo-list">
-            ${
-			isLoading
-				? `
-                    <li>
-                        <div class="view">
-                        <label class="label">
-                            <div class="animated-background">
-                            <div class="skel-mask-container">
-                                <div class="skel-mask"></div>
-                            </div>
-                            </div>
-                        </label>
-                        </div>
-                    </li>
-                `
-				: todoItems.map(makeTodoItemTemplate).join('')
-		}
-            </ul>
+            ${isLoading ? makeTodoItemLoadingTemplate() : sortedTodoItems.map(makeTodoItemTemplate).join('')}
+          </ul>
         </section>
         `;
 	};
