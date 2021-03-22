@@ -7,7 +7,7 @@ export default function TodoApp($el, props) {
 	const fetchTodoItems = async () => {
 
 		this.setState({isLoading: true});
-		const todoItems = await todoApi.getTodoItems({
+		const {todoList: todoItems = []} = await todoApi.getTodoItems({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
 		});
@@ -18,7 +18,7 @@ export default function TodoApp($el, props) {
 
 		const addedTodoItem = await todoApi.createTodoItem({
 			teamId: this.state.teamId,
-			userId: this.user.userId,
+			userId: this.state.user.userId,
 			contents,
 		});
 
@@ -31,7 +31,7 @@ export default function TodoApp($el, props) {
 
 		const changedTodoItem = await todoApi.toggleTodoItem({
 			teamId: this.state.teamId,
-			userId: this.user.userId,
+			userId: this.state.user.userId,
 			todoItemId,
 		});
 		const changedTodoItemIndex = this.state.todoItems.findIndex(
@@ -48,7 +48,7 @@ export default function TodoApp($el, props) {
 
 		await todoApi.deleteTodoItem({
 			teamId: this.state.teamId,
-			userId: this.user.userId,
+			userId: this.state.user.userId,
 			todoItemId,
 		});
 		await fetchTodoItems();
@@ -58,7 +58,7 @@ export default function TodoApp($el, props) {
 
 		const editedTodoItem = await todoApi.editTodoItemContents({
 			teamId: this.state.teamId,
-			userId: this.user.userId,
+			userId: this.state.user.userId,
 			todoItemId,
 			contents,
 		});
@@ -76,7 +76,7 @@ export default function TodoApp($el, props) {
 
 		const editedTodoItem = await todoApi.editTodoItemPriority({
 			teamId: this.state.teamId,
-			userId: this.user.userId,
+			userId: this.state.user.userId,
 			todoItemId,
 			priority,
 		});
@@ -90,7 +90,7 @@ export default function TodoApp($el, props) {
 		});
 	};
 
-	this.setState = function (nextState) {
+	this.setState = (nextState) => {
 
 		this.state = {
 			...this.state,
@@ -100,7 +100,7 @@ export default function TodoApp($el, props) {
 		const {todoItems, isLoading} = this.state;
 		this.components.todoList.setState({todoItems, isLoading});
 
-		this.render();
+		render();
 	};
 
 	const render = () => {
@@ -168,6 +168,7 @@ export default function TodoApp($el, props) {
 		this.components = {};
 
 		render();
+		fetchTodoItems();
 	};
 
 	init();

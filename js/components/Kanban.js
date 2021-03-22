@@ -74,13 +74,13 @@ export default function Kanban($el) {
 			<ul class="todoapp-list-container flex-column-container" data-component="todo-app-list"></ul>
 		`;
 
-		this.components.todoAppList = makeTodoAppListComponent();
 		const $todoAppList = this.$el.querySelector('[data-component="todo-app-list"]');
-		$todoAppList.innerHTML = `
-			${this.components.todoAppList.map(todoApp => todoApp.$el.outerHTML).join('')}
-			<li class="add-user-button-container">
-				<button id="add-user-button" class="ripple" data-action="addUser">
-					<span class="material-icons">add</span>
+		this.components.todoAppList = makeTodoAppListComponent();
+		this.components.todoAppList.forEach(todoApp => $todoAppList.appendChild(todoApp.$el));
+		this.components.todoAppList.innerHTML += `
+			<li className="add-user-button-container">
+				<button id="add-user-button" className="ripple" data-action="addUser">
+					<span className="material-icons">add</span>
 				</button>
 			</li>
 		`;
