@@ -6,12 +6,9 @@ import { todoStatus } from './todoStatus.js';
 import { MEMBER_EVENTS, ITEM_EVENTS } from './appEvents.js';
 
 //TODOs
-// 2. 삭제 기능
+// 삭제 기능
 
-const $container = document.querySelector('.todoapp-list-container');
-const $userTitle = document.getElementById('user-title');
-
-const createTodoAppContainer = (name) => {
+function createTodoAppContainer(name) {
   const $todoAppContainer = document.createElement('li');
   $todoAppContainer.classList.add('todoapp-container');
 
@@ -25,9 +22,28 @@ const createTodoAppContainer = (name) => {
   $todoAppContainer.appendChild($todoApp);
 
   return $todoAppContainer;
-};
+}
 
-function createAddUserButton() {
+function todoAppComponent(teamId, member) {
+  const $container = createTodoAppContainer(member.name);
+  const store = itemStore($container, teamId, member._id);
+
+  const inputComponent = todoInput($container, store).init();
+  const listComponent = todoList($container, store);
+  const statusComponent = todoStatus($container, store);
+
+  $container.addEventListener(ITEM_EVENTS.RENDER, (e) => {
+    const items = e.detail;
+    listComponent.refresh(items);
+    statusComponent.updateCount(items.length);
+  });
+
+  store.fetchItems();
+
+  return $container;
+}
+
+function createAddMemberButton() {
   const $container = document.createElement('li');
   $container.classList.add('add-user-button-container');
 
@@ -41,70 +57,28 @@ function createAddUserButton() {
   return $container;
 }
 
-function App(teamId) {
+function memberComponent(teamId) {
+  const $container = document.querySelector('.todoapp-list-container');
+  const $userTitle = document.getElementById('user-title');
+  const $addUserButton = createAddMemberButton();
   const store = memberStore($container, teamId);
-  const $addUserButton = createAddUserButton();
-
-  function todoApp(member) {
-    const $todoAppContainer = createTodoAppContainer(member.name);
-    const inputComponent = todoInput($todoAppContainer).init();
-    const listComponent = todoList($todoAppContainer);
-    const statusComponent = todoStatus($todoAppContainer);
-
-    const store = itemStore($todoAppContainer, teamId, member._id);
-    store.fetchItems();
-
-    // Add event listeners to todoApp container
-    //TODO events from DOM
-    $todoAppContainer.addEventListener(ITEM_EVENTS.CREATE, (e) => {
-      store.createItem(e.detail);
-    });
-
-    $todoAppContainer.addEventListener(ITEM_EVENTS.REMOVE, (e) => {
-      store.deleteItem(e.detail);
-    });
-
-    $todoAppContainer.addEventListener(ITEM_EVENTS.TOGGLE, (e) => {
-      store.toggleItem(e.detail);
-    });
-
-    $todoAppContainer.addEventListener(ITEM_EVENTS.UPDATE, (e) => {
-      store.updateItem(e.detail);
-    });
-
-    $todoAppContainer.addEventListener(ITEM_EVENTS.FILTER, (e) => {
-      const items = store.setFilter(e.detail);
-      render(items);
-    });
-
-    //event from store
-    $todoAppContainer.addEventListener(ITEM_EVENTS.RENDER, (e) => {
-      render(e.detail);
-    });
-
-    function render(items) {
-      listComponent.loading();
-      listComponent.refresh(items);
-      statusComponent.updateCount(items.length);
-    }
-
-    return $todoAppContainer;
-  }
-
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요');
-
-    store.addMember(result); //TODO as event
-  });
 
   function render(members) {
     $container.innerHTML = '';
     $container.appendChild($addUserButton);
-    $addUserButton.before(...members.map((member) => todoApp(member)));
+    $addUserButton.before(
+      ...members.map((member) => todoAppComponent(teamId, member))
+    );
   }
 
   $container.addEventListener(MEMBER_EVENTS.RENDER, (e) => {
     render(e.detail);
+  });
+
+  $addUserButton.addEventListener('click', () => {
+    const result = prompt('새로운 팀원 이름을 입력해주세요');
+
+    store.addMember(result);
   });
 
   async function init() {
@@ -118,4 +92,4 @@ function App(teamId) {
 }
 
 const para = new URLSearchParams(window.location.search);
-new App(para.get('team')).init();
+new memberComponent(para.get('team')).init();

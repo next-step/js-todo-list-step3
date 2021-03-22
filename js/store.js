@@ -10,14 +10,14 @@ function appEvent(eventName, payload) {
   return new CustomEvent(eventName, { detail: payload });
 }
 
-const store = (rootComponent) => {
+function teamStore(rootComponent) {
   const teamMap = new Map();
 
-  const getTeamList = () => {
+  function getTeamList() {
     return Array.from([...teamMap.values()]);
-  };
+  }
 
-  const fetchTeamList = async () => {
+  async function fetchTeamList() {
     const teams = await fetchData(BASE_URL + '/api/teams');
     teams
       .map((team) => {
@@ -29,9 +29,9 @@ const store = (rootComponent) => {
       }, teamMap);
 
     rootComponent.dispatchEvent(appEvent(TEAM_EVENTS.RENDER, getTeamList()));
-  };
+  }
 
-  const createTeam = async (name) => {
+  async function createTeam(name) {
     const team = await fetchData(BASE_URL + '/api/teams', 'POST', {
       name,
     }).then((team) => new Team(team));
@@ -39,15 +39,15 @@ const store = (rootComponent) => {
     teamMap.set(team._id, team);
 
     rootComponent.dispatchEvent(appEvent(TEAM_EVENTS.RENDER, getTeamList()));
-  };
+  }
 
   return {
     fetchTeamList,
     createTeam,
   };
-};
+}
 
-const memberStore = (rootComponent, teamId) => {
+function memberStore(rootComponent, teamId) {
   const currentTeamId = teamId;
   const memberMap = new Map();
 
@@ -92,7 +92,7 @@ const memberStore = (rootComponent, teamId) => {
     getMembers,
     addMember,
   };
-};
+}
 
 const filterStatusPredicate = {
   //TODO sync with todoStatus.js/filters
@@ -101,7 +101,7 @@ const filterStatusPredicate = {
   active: ({ isCompleted }) => !isCompleted,
 };
 
-const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
+function itemStore(rootComponent, teamId, memberId, filter = 'all') {
   const currentTeamId = teamId;
   const currentMemberId = memberId;
   let currentFilter = filter;
@@ -131,7 +131,7 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
 
   function setFilter(filter) {
     currentFilter = filter;
-    return getItems();
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   async function createItem(contents) {
@@ -187,7 +187,6 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
     updateItem,
     setFilter,
   };
-};
+}
 
-export default store;
-export { memberStore, itemStore };
+export { teamStore, memberStore, itemStore };

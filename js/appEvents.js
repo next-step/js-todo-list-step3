@@ -1,9 +1,9 @@
 const ITEM_EVENTS = {
-  CREATE: 'createItem',
-  REMOVE: 'removeItem',
-  TOGGLE: 'toggleItem',
-  UPDATE: 'updateItem',
-  FILTER: 'filterItems',
+  // CREATE: 'createItem',
+  // REMOVE: 'removeItem',
+  // TOGGLE: 'toggleItem',
+  // UPDATE: 'updateItem',
+  // FILTER: 'filterItems',
   RENDER: 'renderItems',
 };
 

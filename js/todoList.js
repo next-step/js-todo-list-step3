@@ -1,5 +1,3 @@
-import { ITEM_EVENTS } from './appEvents.js';
-
 const CLASS_COMPLETED = 'completed';
 const CLASS_EDITING = 'editing';
 const ATTRIBUTE_CHECKED = 'checked';
@@ -12,8 +10,48 @@ const extractState = ($li) => {
   };
 };
 
-const eventHandler = (rootComponent) => {
-  const _toggleCompleteStatus = ({ target }) => {
+function createContainer() {
+  const $listContainer = document.createElement('section');
+  $listContainer.classList.add('main');
+
+  const $ul = document.createElement('ul');
+  $ul.classList.add('todo-list');
+  $listContainer.appendChild($ul);
+
+  return $listContainer;
+}
+
+function createListItemTemplate() {
+  const $liTemplate = document.createElement('li');
+
+  const $innerDiv = document.createElement('div');
+  $innerDiv.classList.add('view');
+
+  const $innerInput = document.createElement('input');
+  $innerInput.type = 'checkbox';
+  $innerInput.classList.add('toggle');
+
+  const $innerLabel = document.createElement('label');
+  $innerLabel.classList.add('label');
+
+  const $innerButton = document.createElement('button');
+  $innerButton.classList.add('destroy');
+
+  $innerDiv.appendChild($innerInput);
+  $innerDiv.appendChild($innerLabel);
+  $innerDiv.appendChild($innerButton);
+
+  const $listInput = document.createElement('input');
+  $listInput.classList.add('edit');
+
+  $liTemplate.appendChild($innerDiv);
+  $liTemplate.appendChild($listInput);
+
+  return $liTemplate;
+}
+
+const eventHandler = (store) => {
+  function toggleCompleteStatus({ target }) {
     if (!target.classList.contains('toggle')) {
       return;
     }
@@ -26,12 +64,10 @@ const eventHandler = (rootComponent) => {
       $li.classList.remove(CLASS_COMPLETED);
     }
 
-    rootComponent.dispatchEvent(
-      new CustomEvent(ITEM_EVENTS.TOGGLE, { detail: extractState($li)._id }) //TODO
-    );
-  };
+    store.toggleItem(extractState($li)._id); //TODO
+  }
 
-  const _changeToEditMode = ({ target }) => {
+  function changeToEditMode({ target }) {
     if (!target.classList.contains('label')) {
       return;
     }
@@ -39,20 +75,20 @@ const eventHandler = (rootComponent) => {
     const $li = target.closest('li');
     $li.classList.add(CLASS_EDITING);
     $li.querySelector('.edit').focus();
-  };
+  }
 
-  const _changeToViewModeOnFocusout = ({ target }) => {
-    _changeToViewMode(target);
-  };
+  function changeToViewModeOnFocusout({ target }) {
+    changeToViewMode(target);
+  }
 
-  const _changeToViewModeOnEnter = ({ target, key }) => {
+  function changeToViewModeOnEnter({ target, key }) {
     if (key !== 'Enter') {
       return;
     }
-    _changeToViewMode(target);
-  };
+    changeToViewMode(target);
+  }
 
-  const _changeToViewMode = (target) => {
+  function changeToViewMode(target) {
     if (!target.classList.contains('edit')) {
       return;
     }
@@ -63,12 +99,10 @@ const eventHandler = (rootComponent) => {
     const updatedContent = target.value.trim();
     $labelContent.textContent = updatedContent;
 
-    rootComponent.dispatchEvent(
-      new CustomEvent(ITEM_EVENTS.UPDATE, { detail: extractState($li) }) //TODO
-    );
-  };
+    store.updateItem(extractState($li)); //TODO
+  }
 
-  const _escapeToViewMode = ({ target, key }) => {
+  function escapeToViewMode({ target, key }) {
     if (!target.classList.contains('edit')) {
       return;
     }
@@ -85,9 +119,9 @@ const eventHandler = (rootComponent) => {
     target.value = oldContent;
 
     return;
-  };
+  }
 
-  const _removeTodoItem = ({ target }) => {
+  function removeTodoItem({ target }) {
     if (!target.classList.contains('destroy')) {
       return;
     }
@@ -99,82 +133,39 @@ const eventHandler = (rootComponent) => {
     const $li = target.closest('li');
     $li.remove();
 
-    rootComponent.dispatchEvent(
-      new CustomEvent(ITEM_EVENTS.REMOVE, { detail: extractState($li)._id }) //TODO
-    );
-  };
+    store.deleteItem(extractState($li)._id); //TODO
+  }
 
-  const addEventListener = ($liTemplate) => {
-    $liTemplate.addEventListener('click', _toggleCompleteStatus);
-    $liTemplate.addEventListener('dblclick', _changeToEditMode);
-    $liTemplate.addEventListener('keyup', _changeToViewModeOnEnter);
-    $liTemplate.addEventListener('focusout', _changeToViewModeOnFocusout);
-    $liTemplate.addEventListener('keyup', _escapeToViewMode);
-    $liTemplate.addEventListener('click', _removeTodoItem);
+  function addEventListener($liTemplate) {
+    $liTemplate.addEventListener('click', toggleCompleteStatus);
+    $liTemplate.addEventListener('dblclick', changeToEditMode);
+    $liTemplate.addEventListener('keyup', changeToViewModeOnEnter);
+    $liTemplate.addEventListener('focusout', changeToViewModeOnFocusout);
+    $liTemplate.addEventListener('keyup', escapeToViewMode);
+    $liTemplate.addEventListener('click', removeTodoItem);
 
     return $liTemplate;
-  };
+  }
 
   return {
     addEventListener,
   };
 };
 
-const todoList = ($rootComponent) => {
+const todoList = ($rootComponent, store) => {
   const $todoApp = $rootComponent.querySelector('.todoapp');
-  const _eventHandler = eventHandler($rootComponent);
-
   const $container = createContainer();
-  const $ulist = $container.querySelector('.todo-list');
-
   $todoApp.appendChild($container);
 
-  function createContainer() {
-    const $listContainer = document.createElement('section');
-    $listContainer.classList.add('main');
+  const $ulist = $container.querySelector('.todo-list');
+  const _eventHandler = eventHandler(store);
 
-    const $ul = document.createElement('ul');
-    $ul.classList.add('todo-list');
-    $listContainer.appendChild($ul);
-
-    return $listContainer;
-  }
-
-  const _createListItemTemplate = () => {
-    const $liTemplate = document.createElement('li');
-
-    const $innerDiv = document.createElement('div');
-    $innerDiv.classList.add('view');
-
-    const $innerInput = document.createElement('input');
-    $innerInput.type = 'checkbox';
-    $innerInput.classList.add('toggle');
-
-    const $innerLabel = document.createElement('label');
-    $innerLabel.classList.add('label');
-
-    const $innerButton = document.createElement('button');
-    $innerButton.classList.add('destroy');
-
-    $innerDiv.appendChild($innerInput);
-    $innerDiv.appendChild($innerLabel);
-    $innerDiv.appendChild($innerButton);
-
-    const $listInput = document.createElement('input');
-    $listInput.classList.add('edit');
-
-    $liTemplate.appendChild($innerDiv);
-    $liTemplate.appendChild($listInput);
-
-    return $liTemplate;
-  };
-
-  const _createListItem = (todoItem) => {
+  function createListItem(todoItem) {
     const index = todoItem._id;
     const content = todoItem.contents;
     const isCompleted = todoItem.isCompleted;
 
-    const $todoItem = _eventHandler.addEventListener(_createListItemTemplate());
+    const $todoItem = _eventHandler.addEventListener(createListItemTemplate());
     const $todoLabel = $todoItem.querySelector('label.label');
 
     const $labelSpan = document.createElement('span');
@@ -193,36 +184,13 @@ const todoList = ($rootComponent) => {
     $todoItem.dataset.id = index;
 
     return $todoItem;
-  };
-
-  const loading = () => {
-    $ulist.innerHTML = `<li>
-    <div class="view">
-      <label class="label">
-        <div class="animated-background">
-          <div class="skel-mask-container">
-            <div class="skel-mask"></div>
-          </div>
-        </div>
-      </label>
-    </div>
-  </li>`;
-  };
-
-  const _empty = () => {
-    $ulist.innerHTML = '';
-  };
-
-  const _render = ($listItem) => {
-    $ulist.appendChild($listItem);
-  };
+  }
 
   return {
     refresh(todoItems) {
-      _empty();
-      todoItems.map(_createListItem).forEach(_render);
+      $ulist.innerHTML = '';
+      $ulist.append(...todoItems.map(createListItem));
     },
-    loading,
   };
 };
 
