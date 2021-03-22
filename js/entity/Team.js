@@ -5,11 +5,11 @@ class Team {
     this.members = [...members];
   }
 
-  addMember(member) {
-    // TODO check typeOf User?
-    // changing value
-    this.members.push(member);
-  }
+  // addMember(member) {
+  //   // TODO check typeOf User?
+  //   // changing value
+  //   this.members.push(member);
+  // }
 }
 
 export default Team;

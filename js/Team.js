@@ -18,7 +18,9 @@ function teamComponent() {
 
     const $a = document.createElement('a');
     $a.classList.add('card');
-    $a.href = '/kanban.html'; //TODO
+    const searchParams = new URLSearchParams(); //TODO
+    searchParams.append('team', team._id);
+    $a.href = '/kanban.html?' + searchParams.toString();
 
     const $innerDiv = document.createElement('div');
     $innerDiv.classList.add('card-title');
