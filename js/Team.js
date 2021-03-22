@@ -1,4 +1,5 @@
 import store from './store.js';
+import { TEAM_EVENTS } from './appEvents.js';
 
 function teamComponent() {
   const $container = document.querySelector('.team-list-container');
@@ -8,7 +9,7 @@ function teamComponent() {
   function onClickAddTeamButtonEvent({ target }) {
     const result = prompt('팀 이름을 입력해주세요');
 
-    _store.createTeam(result);
+    _store.createTeam(result); //TODO as event
   }
 
   function createTeamCardElement(team) {
@@ -58,7 +59,7 @@ function teamComponent() {
     $container.appendChild($addTeamButton);
   }
 
-  $container.addEventListener('render', (e) => render(e.detail));
+  $container.addEventListener(TEAM_EVENTS.RENDER, (e) => render(e.detail)); //TODO
   $addTeamButton.addEventListener('click', onClickAddTeamButtonEvent);
 
   async function init() {

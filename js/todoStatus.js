@@ -1,3 +1,5 @@
+import { ITEM_EVENTS } from './appEvents.js';
+
 const filters = ['all', 'active', 'completed'];
 
 const todoStatus = ($rootComponent) => {
@@ -49,7 +51,7 @@ const todoStatus = ($rootComponent) => {
     target.classList.add('selected');
 
     $rootComponent.dispatchEvent(
-      new CustomEvent('filter', { detail: filterType })
+      new CustomEvent(ITEM_EVENTS.FILTER, { detail: filterType }) //TODO
     );
   };
 

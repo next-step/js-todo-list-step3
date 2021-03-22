@@ -3,8 +3,9 @@ import { todoInput } from './todoInput.js';
 import { todoList } from './todoList.js';
 import { todoStatus } from './todoStatus.js';
 
+import { MEMBER_EVENTS, ITEM_EVENTS } from './appEvents.js';
+
 //TODOs
-// 1. CustomEvent 상수화
 // 2. 삭제 기능
 
 const $container = document.querySelector('.todoapp-list-container');
@@ -55,29 +56,29 @@ function App(teamId) {
 
     // Add event listeners to todoApp container
     //TODO events from DOM
-    $todoAppContainer.addEventListener('create', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.CREATE, (e) => {
       store.createItem(e.detail);
     });
 
-    $todoAppContainer.addEventListener('remove', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.REMOVE, (e) => {
       store.deleteItem(e.detail);
     });
 
-    $todoAppContainer.addEventListener('toggle', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.TOGGLE, (e) => {
       store.toggleItem(e.detail);
     });
 
-    $todoAppContainer.addEventListener('update', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.UPDATE, (e) => {
       store.updateItem(e.detail);
     });
 
-    $todoAppContainer.addEventListener('filter', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.FILTER, (e) => {
       const items = store.setFilter(e.detail);
       render(items);
     });
 
     //event from store
-    $todoAppContainer.addEventListener('render', (e) => {
+    $todoAppContainer.addEventListener(ITEM_EVENTS.RENDER, (e) => {
       render(e.detail);
     });
 
@@ -93,7 +94,7 @@ function App(teamId) {
   $addUserButton.addEventListener('click', () => {
     const result = prompt('새로운 팀원 이름을 입력해주세요');
 
-    store.addMember(result);
+    store.addMember(result); //TODO as event
   });
 
   function render(members) {
@@ -102,15 +103,13 @@ function App(teamId) {
     $addUserButton.before(...members.map((member) => todoApp(member)));
   }
 
-  $container.addEventListener('render', (e) => {
+  $container.addEventListener(MEMBER_EVENTS.RENDER, (e) => {
     render(e.detail);
   });
 
   async function init() {
-    //TODO
-    const name = await store.fetchTeam();
+    const name = await store.fetchTeam(); //TODO
     $userTitle.innerHTML = `<span><strong>${name}</strong>'s Todo List</span>`;
-    render(store.getMembers());
   }
 
   return {

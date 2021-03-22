@@ -1,3 +1,5 @@
+import { ITEM_EVENTS } from './appEvents.js';
+
 const INPUT_CLASS = 'new-todo';
 
 const todoInput = ($container) => {
@@ -10,7 +12,7 @@ const todoInput = ($container) => {
     $inputContainer.classList.add('input-container');
 
     const $input = document.createElement('input');
-    $input.classList.add('new-todo');
+    $input.classList.add(INPUT_CLASS);
     $input.placeholder = '할 일을 입력해주세요';
 
     $inputContainer.appendChild($input);
@@ -27,7 +29,7 @@ const todoInput = ($container) => {
     }
 
     $container.dispatchEvent(
-      new CustomEvent('create', { detail: target.value })
+      new CustomEvent(ITEM_EVENTS.CREATE, { detail: target.value }) //TODO
     );
 
     target.value = '';
@@ -38,9 +40,6 @@ const todoInput = ($container) => {
   return {
     init() {
       $todoApp.appendChild($inputContainer);
-    },
-    focus() {
-      $input.focus();
     },
   };
 };

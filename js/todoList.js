@@ -1,3 +1,5 @@
+import { ITEM_EVENTS } from './appEvents.js';
+
 const CLASS_COMPLETED = 'completed';
 const CLASS_EDITING = 'editing';
 const ATTRIBUTE_CHECKED = 'checked';
@@ -25,7 +27,7 @@ const eventHandler = (rootComponent) => {
     }
 
     rootComponent.dispatchEvent(
-      new CustomEvent('toggle', { detail: extractState($li)._id }) //TODO
+      new CustomEvent(ITEM_EVENTS.TOGGLE, { detail: extractState($li)._id }) //TODO
     );
   };
 
@@ -62,9 +64,8 @@ const eventHandler = (rootComponent) => {
     $labelContent.textContent = updatedContent;
 
     rootComponent.dispatchEvent(
-      new CustomEvent('update', { detail: extractState($li) }) //TODO
+      new CustomEvent(ITEM_EVENTS.UPDATE, { detail: extractState($li) }) //TODO
     );
-    // updateTodoContents(extractState($li));
   };
 
   const _escapeToViewMode = ({ target, key }) => {
@@ -99,7 +100,7 @@ const eventHandler = (rootComponent) => {
     $li.remove();
 
     rootComponent.dispatchEvent(
-      new CustomEvent('remove', { detail: extractState($li)._id }) //TODO
+      new CustomEvent(ITEM_EVENTS.REMOVE, { detail: extractState($li)._id }) //TODO
     );
   };
 
@@ -122,9 +123,6 @@ const eventHandler = (rootComponent) => {
 const todoList = ($rootComponent) => {
   const $todoApp = $rootComponent.querySelector('.todoapp');
   const _eventHandler = eventHandler($rootComponent);
-  // updateTodoContents,
-  // updateToggle,
-  // removeTodoItem
 
   const $container = createContainer();
   const $ulist = $container.querySelector('.todo-list');
@@ -220,9 +218,6 @@ const todoList = ($rootComponent) => {
   };
 
   return {
-    addItem(todoItem) {
-      _render(_createListItem(todoItem));
-    },
     refresh(todoItems) {
       _empty();
       todoItems.map(_createListItem).forEach(_render);

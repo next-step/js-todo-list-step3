@@ -2,8 +2,13 @@ import Item from './entity/Item.js';
 import Team from './entity/Team.js';
 import Member from './entity/Member.js';
 import { fetchData } from './util.js';
+import { ITEM_EVENTS, MEMBER_EVENTS, TEAM_EVENTS } from './appEvents.js';
 
 const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com';
+
+function appEvent(eventName, payload) {
+  return new CustomEvent(eventName, { detail: payload });
+}
 
 const store = (rootComponent) => {
   const teamMap = new Map();
@@ -23,9 +28,7 @@ const store = (rootComponent) => {
         return map;
       }, teamMap);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getTeamList() })
-    );
+    rootComponent.dispatchEvent(appEvent(TEAM_EVENTS.RENDER, getTeamList()));
   };
 
   const createTeam = async (name) => {
@@ -35,15 +38,12 @@ const store = (rootComponent) => {
 
     teamMap.set(team._id, team);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getTeamList() })
-    );
+    rootComponent.dispatchEvent(appEvent(TEAM_EVENTS.RENDER, getTeamList()));
   };
 
   return {
     fetchTeamList,
     createTeam,
-    getTeamList,
   };
 };
 
@@ -61,6 +61,7 @@ const memberStore = (rootComponent, teamId) => {
         return map;
       }, memberMap);
 
+    rootComponent.dispatchEvent(appEvent(MEMBER_EVENTS.RENDER, getMembers()));
     return team.name; //TODO yame
   }
 
@@ -83,9 +84,7 @@ const memberStore = (rootComponent, teamId) => {
       memberMap.set(member._id, new Member(member));
     });
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getMembers() }) //TODO 그냥 api에서 members를 리턴할까 ..
-    );
+    rootComponent.dispatchEvent(appEvent(MEMBER_EVENTS.RENDER, getMembers()));
   }
 
   return {
@@ -121,9 +120,7 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
         return map;
       }, itemMap);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getItems() })
-    );
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   function getItems() {
@@ -146,9 +143,7 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
 
     itemMap.set(item._id, item);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getItems() })
-    );
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   async function deleteItem(itemId) {
@@ -159,9 +154,7 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
 
     itemMap.delete(itemId);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getItems() })
-    );
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   async function toggleItem(itemId) {
@@ -172,27 +165,22 @@ const itemStore = (rootComponent, teamId, memberId, filter = 'all') => {
 
     itemMap.set(item._id, item);
 
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getItems() })
-    );
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   async function updateItem({ _id, contents }) {
     const item = await fetchData(
-      `${BASE_URL}/api/teams/${currentTeamId}/members/${currentMemberId}/items/${_id}`, //TODO
+      `${BASE_URL}/api/teams/${currentTeamId}/members/${currentMemberId}/items/${_id}`, //TODO _id vs itemId
       'PUT',
       { contents }
     ).then((item) => new Item(item));
 
     itemMap.set(item._id, item);
-    rootComponent.dispatchEvent(
-      new CustomEvent('render', { detail: getItems() })
-    );
+    rootComponent.dispatchEvent(appEvent(ITEM_EVENTS.RENDER, getItems()));
   }
 
   return {
     fetchItems,
-    getItems,
     createItem,
     deleteItem,
     toggleItem,
