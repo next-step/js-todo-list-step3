@@ -70,8 +70,7 @@ export default class TodoFilterController {
     const currentOption = this.getCurrentOption(target);
     todoAppView.changeFilterBtn(target);
     if (currentOption === 'priority') {
-      const tmpTodoList = [...member.todoList];
-      const todoList = this.filterByPriority(tmpTodoList);
+      const todoList = this.filterByPriority([...member.todoList]);
       todoAppView.renderTodoList(member, todoList);
       return;
     }
