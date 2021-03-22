@@ -1,6 +1,6 @@
 import TodoList from './TodoList.js';
-import todoApi from '../apis/todoApi.js';
 import TodoInput from './TodoInput.js';
+import todoApi from '../apis/todoApi.js';
 
 export default function TodoApp($el, props) {
 
@@ -54,6 +54,15 @@ export default function TodoApp($el, props) {
 		await fetchTodoItems();
 	};
 
+	const clearTodoItems = async () => {
+
+		await todoApi.deleteAllTodoItems({
+			teamId: this.state.teamId,
+			userId: this.state.user.userId,
+		});
+		await fetchTodoItems();
+	};
+
 	const editTodoItemContents = async (todoItemId, contents) => {
 
 		const editedTodoItem = await todoApi.editTodoItemContents({
@@ -87,6 +96,19 @@ export default function TodoApp($el, props) {
 		this.state.todoItems.splice(editedTodoItemIndex, 1, editedTodoItem);
 		this.setState({
 			todoItem: this.state.todoItems,
+		});
+	};
+
+	const bindEvents = () => {
+
+		this.$el.addEventListener('click', async event => {
+
+			if (event.target.dataset.action === 'clearTodoItems') {
+				if (!confirm(`팀원 ${this.state.user.userName}의 할 일을 모두 삭제하시겠습니까?`)) {
+					return;
+				}
+				await clearTodoItems();
+			}
 		});
 	};
 
@@ -125,7 +147,7 @@ export default function TodoApp($el, props) {
 							<li><a href="#active" class="active">해야할 일</a></li>
 							<li><a href="#completed" class="completed">완료한 일</a></li>
 						</ul>
-						<button class="clear-completed">모두 삭제</button>
+						<button class="clear-completed" data-action="clearTodoItems">모두 삭제</button>
 					</div>
 			    </section>			
 			</div>
@@ -156,7 +178,7 @@ export default function TodoApp($el, props) {
 		};
 	};
 
-	const init = () => {
+	const init = async () => {
 
 		this.$el = $el;
 		this.state = {
@@ -168,7 +190,9 @@ export default function TodoApp($el, props) {
 		this.components = {};
 
 		render();
-		fetchTodoItems();
+		bindEvents();
+
+		await fetchTodoItems();
 	};
 
 	init();

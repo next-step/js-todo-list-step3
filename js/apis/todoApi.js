@@ -25,6 +25,12 @@ export default {
 		});
 	},
 
+	deleteAllTodoItems: async function ({teamId, userId}) {
+		return defaultApi.delete({
+			path: `/api/teams/${teamId}/members/${userId}/items`,
+		});
+	},
+
 	editTodoItemContents: async function ({teamId, userId, todoItemId, contents}) {
 		return defaultApi.put({
 			path: `/api/teams/${teamId}/members/${userId}/items/${todoItemId}`,

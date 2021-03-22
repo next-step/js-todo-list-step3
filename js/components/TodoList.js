@@ -161,8 +161,6 @@ export default function TodoList($el, props,
             </ul>
         </section>
         `;
-
-		bindEvents();
 	};
 
 	const init = () => {
@@ -174,6 +172,7 @@ export default function TodoList($el, props,
 		};
 
 		render();
+		bindEvents();
 	};
 
 	init();

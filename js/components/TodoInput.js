@@ -23,18 +23,6 @@ export default function TodoInput($el, props, {createTodoItem}) {
                 />
             </section> 
         `;
-
-		bindEvents();
-	};
-
-	this.setState = (nextState) => {
-
-		this.state = {
-			...this.state,
-			...nextState,
-		};
-
-		render();
 	};
 
 	const init = () => {
@@ -42,7 +30,8 @@ export default function TodoInput($el, props, {createTodoItem}) {
 		this.$el = $el;
 		this.state = {};
 
-		this.setState();
+		render();
+		bindEvents();
 	};
 
 	init();

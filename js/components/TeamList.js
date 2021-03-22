@@ -64,7 +64,6 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 			</div>
 		`;
 
-		bindEvents();
 	};
 
 	const init = () => {
@@ -75,6 +74,7 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 		};
 
 		render();
+		bindEvents();
 	};
 
 	init();

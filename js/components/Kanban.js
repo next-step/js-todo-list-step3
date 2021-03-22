@@ -84,8 +84,6 @@ export default function Kanban($el) {
 				</button>
 			</li>
 		`;
-
-		bindEvents();
 	};
 
 	this.setState = (nextState) => {
@@ -98,7 +96,7 @@ export default function Kanban($el) {
 		render();
 	};
 
-	const init = () => {
+	const init = async () => {
 
 		this.$el = $el;
 		this.state = {
@@ -111,7 +109,8 @@ export default function Kanban($el) {
 			document.location.href = './index.html';
 		}
 
-		fetchTeam();
+		await fetchTeam();
+		bindEvents();
 	};
 
 	init();
