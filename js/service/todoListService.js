@@ -43,7 +43,7 @@ export default class TodoListService {
   }
 
   async deleteItem(target) {
-    if (!confirm(MESSAGE.DELETE_ITEM_MESSAGE)) return;
+    if (!confirm(MESSAGE.DELETE_ITEM)) return;
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     const itemId = this.getItemId(target);

@@ -42,7 +42,7 @@ export default class TodoFilterController {
   }
 
   async clearAllItems(target) {
-    if (!confirm(MESSAGE.DELETE_ALL_ITEM_MESSAGE)) return;
+    if (!confirm(MESSAGE.DELETE_ALL_ITEM)) return;
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     await api.deleteTodoItems(teamId, memberId);
