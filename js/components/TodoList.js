@@ -111,7 +111,9 @@ export default function TodoList($el, props,
 				<div class="view">
 					<input class="toggle" type="checkbox" data-action="toggle" ${isCompleted ? 'checked' : ''} />
 					<label class="label" data-action="onEditingContents">
-						${makePriorityTemplate(priority, onEditingPriority)}
+						<div class="chip-container">
+							${makePriorityTemplate(priority, onEditingPriority)}
+						</div>
 						${contents}
 					</label>
 					<button class="destroy" data-action="delete"></button>
@@ -139,21 +141,18 @@ export default function TodoList($el, props,
 
 	const makePriorityTemplate = function (priority, onEditingPriority) {
 
-		if (onEditingPriority || priority === 'NONE') {
-			return `
-				<select class="chip select" data-action="changePriority">
-					<option value="NONE" ${priority === 'NONE' ? 'selected' : ''}>순위</option>
-					<option value="FIRST" ${priority === 'FIRST' ? 'selected' : ''}>1순위</option>
-					<option value="SECOND" ${priority === 'SECOND' ? 'selected' : ''}>2순위</option>
-                </select> 
-            `;
-		}
+		const isEditing = onEditingPriority || priority === 'NONE';
 
 		return `
-			<span class="chip ${PRIORITY_TYPE[priority].className}" data-action="onEditingPriority">
+			<select class="chip select ${isEditing ? '' : 'hidden'}" data-action="changePriority">
+				<option value="NONE" ${priority === 'NONE' ? 'selected' : ''}>순위</option>
+				<option value="FIRST" ${priority === 'FIRST' ? 'selected' : ''}>1순위</option>
+				<option value="SECOND" ${priority === 'SECOND' ? 'selected' : ''}>2순위</option>
+            </select> 
+            <span class="chip ${PRIORITY_TYPE[priority].className} ${isEditing ? 'hidden' : ''}"" data-action="onEditingPriority">
 				${PRIORITY_TYPE[priority].text}
 			</span>
-	    `;
+        `;
 	};
 
 	this.setState = ({todoItems, isLoading}) => {
