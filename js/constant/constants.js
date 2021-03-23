@@ -2,6 +2,7 @@
 
 export const FILTER_TYPE = Object.freeze({
   ALL: 'all',
+  PRIORITY: 'priority',
   ACTIVE: 'active',
   COMPLETED: 'completed',
 });

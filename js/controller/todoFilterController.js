@@ -6,6 +6,7 @@ import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
 import { elementValidator } from '../utils/validator.js';
 import { MESSAGE } from '../constant/message.js';
+import { FILTER_TYPE } from '../constant/constants.js';
 
 export default class TodoFilterController {
   constructor() {
@@ -52,17 +53,17 @@ export default class TodoFilterController {
 
   getCurrentOption(target) {
     const classList = target.classList;
-    if (classList.contains('all')) {
-      return 'all';
+    if (classList.contains(FILTER_TYPE.ALL)) {
+      return FILTER_TYPE.ALL;
     }
-    if (classList.contains('active')) {
-      return 'active';
+    if (classList.contains(FILTER_TYPE.ACTIVE)) {
+      return FILTER_TYPE.ACTIVE;
     }
-    if (classList.contains('priority')) {
-      return 'priority';
+    if (classList.contains(FILTER_TYPE.PRIORITY)) {
+      return FILTER_TYPE.PRIORITY;
     }
-    if (classList.contains('completed')) {
-      return 'completed';
+    if (classList.contains(FILTER_TYPE.COMPLETED)) {
+      return FILTER_TYPE.COMPLETED;
     }
   }
 
