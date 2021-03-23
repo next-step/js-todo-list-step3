@@ -5,6 +5,7 @@ import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
 import { todoAppView } from '../view/todoAppView.js';
 import { PRIORITY_TYPE } from '../constant/constants.js';
+import { MESSAGE } from '../constant/message.js';
 
 export default class TodoListService {
   constructor() {}
@@ -42,7 +43,7 @@ export default class TodoListService {
   }
 
   async deleteItem(target) {
-    if (!confirm('정말 삭제 하시겠습니까?')) return;
+    if (!confirm(MESSAGE.DELETE_ITEM_MESSAGE)) return;
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     const itemId = this.getItemId(target);

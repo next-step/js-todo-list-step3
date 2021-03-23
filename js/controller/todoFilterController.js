@@ -5,6 +5,7 @@ import { todoAppView } from '../view/todoAppView.js';
 import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
 import { elementValidator } from '../utils/validator.js';
+import { MESSAGE } from '../constant/message.js';
 
 export default class TodoFilterController {
   constructor() {
@@ -40,7 +41,7 @@ export default class TodoFilterController {
   }
 
   async clearAllItems(target) {
-    if (!confirm('정말 모든 항목을 삭제하시겠습니까?')) return;
+    if (!confirm(MESSAGE.DELETE_ALL_ITEM_MESSAGE)) return;
     const teamId = teamStore.getCurrentTeam()._id;
     const memberId = this.getMemberId(target);
     await api.deleteTodoItems(teamId, memberId);
@@ -92,7 +93,6 @@ export default class TodoFilterController {
   filterTodoList(todoList, currentOption) {
     const option = {
       all: () => true,
-      // priority: () => true,
       active: item => item.isCompleted === false,
       completed: item => item.isCompleted === true,
     };

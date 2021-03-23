@@ -3,6 +3,7 @@
 import { api } from '../api/api.js';
 import TeamView from '../view/teamView.js';
 import { teamStore } from '../store/teamStore.js';
+import { MESSAGE } from '../constant/message.js';
 
 class TeamController {
   constructor() {
@@ -35,14 +36,14 @@ class TeamController {
   }
 
   async addTeam() {
-    const teamName = prompt('팀 이름을 작성해주세요');
+    const teamName = prompt(MESSAGE.ADD_TEAM);
     if (!teamName) return;
     await api.addTeam(teamName);
     this.load();
   }
 
   async deleteTeam(target) {
-    if (!confirm('해당 팀을 삭제하시겠습니까?')) return;
+    if (!confirm(MESSAGE.DELETE_TEAM)) return;
     const teamId = target.closest('.team-card-container').dataset.id;
     await api.deleteTeam(teamId);
     this.load();

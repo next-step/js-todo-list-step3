@@ -11,14 +11,14 @@ class MemberStore {
   }
 
   getMembers() {
-    return this.members;
+    return [...this.members];
   }
 
   setCurrentMember(currentMember) {
     this.currentMember = currentMember;
   }
 
-  setCurrentMember() {
+  getCurrentMember() {
     return this.currentMember;
   }
 

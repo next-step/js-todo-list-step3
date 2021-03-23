@@ -11,7 +11,7 @@ class TeamStore {
   }
 
   getTeams() {
-    return this.teams;
+    return [...this.teams];
   }
 
   setCurrentTeam(team) {

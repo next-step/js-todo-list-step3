@@ -4,6 +4,7 @@ import { api } from '../api/api.js';
 import { todoAppView } from '../view/todoAppView.js';
 import { teamStore } from '../store/teamStore.js';
 import { memberStore } from '../store/memberStore.js';
+import { MESSAGE } from '../constant/message.js';
 
 class KanbanController {
   constructor() {
@@ -30,7 +31,7 @@ class KanbanController {
   }
 
   async addMember() {
-    const memberName = prompt('추가할 멤버 이름을 작성해주세요.');
+    const memberName = prompt(MESSAGE.ADD_USER);
     if (!memberName) return;
     const teamId = teamStore.getCurrentTeam()._id;
     await api.addMember(teamId, memberName);
