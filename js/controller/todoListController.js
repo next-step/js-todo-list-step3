@@ -47,19 +47,16 @@ export default class TodoListController {
     this.todoListService.activateEditMode(target);
   };
 
-  onKeyUpTodoList = event => {
-    if (
-      keyValidator.isNotEnter(event.key) &&
-      keyValidator.isNotEsc(event.key)
-    ) {
+  onKeyUpTodoList = ({ target, key }) => {
+    if (keyValidator.isNotEnter(key) && keyValidator.isNotEsc(key)) {
       return;
     }
-    if (keyValidator.isEnter(event.key) && event.target.matches('.edit')) {
-      this.todoListService.editItem(event.target);
+    if (keyValidator.isEnter(key) && target.matches('.edit')) {
+      this.todoListService.editItem(target);
       return;
     }
-    if (keyValidator.isEsc(event.key)) {
-      this.todoListService.deactivateEditMode(event.target);
+    if (keyValidator.isEsc(key)) {
+      this.todoListService.deactivateEditMode(target);
       return;
     }
   };
