@@ -1,6 +1,8 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
+import TodoFooter from './TodoFooter.js';
 import todoApi from '../apis/todoApi.js';
+import {FILTER_TYPE} from '../consts/filterType.js';
 
 export default function TodoApp($el, props) {
 
@@ -56,11 +58,22 @@ export default function TodoApp($el, props) {
 
 	const clearTodoItems = async () => {
 
+		if (!confirm(`팀원 ${this.state.user.userName}의 할 일을 모두 삭제하시겠습니까?`)) {
+			return;
+		}
+
 		await todoApi.deleteAllTodoItems({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
 		});
 		await fetchTodoItems();
+	};
+
+	const changeFilter = (filterType) => {
+
+		this.setState({
+			filterType,
+		});
 	};
 
 	const editTodoItemContents = async (todoItemId, contents) => {
@@ -99,19 +112,6 @@ export default function TodoApp($el, props) {
 		});
 	};
 
-	const bindEvents = () => {
-
-		this.$el.addEventListener('click', async event => {
-
-			if (event.target.dataset.action === 'clearTodoItems') {
-				if (!confirm(`팀원 ${this.state.user.userName}의 할 일을 모두 삭제하시겠습니까?`)) {
-					return;
-				}
-				await clearTodoItems();
-			}
-		});
-	};
-
 	this.setState = (nextState) => {
 
 		this.state = {
@@ -127,7 +127,6 @@ export default function TodoApp($el, props) {
 
 	const render = () => {
 		const {userName} = this.state.user || {userName: ''};
-		const todoItemsCount = this.state.todoItems.length;
 
 		this.$el.innerHTML = `
 			<h2>
@@ -141,24 +140,31 @@ export default function TodoApp($el, props) {
 		        <section class="todoapp">
 					<div id="todo-input"></div>
 					<div id="todo-list"></div> 
-					<div class="count-container">
-						<span class="todo-count">총 <strong>${todoItemsCount}</strong> 개</span>
-						<ul class="filters">
-							<li><a href="/#" class="all selected" >전체보기</a></li>
-							<li><a href="#active" class="active">해야할 일</a></li>
-							<li><a href="#completed" class="completed">완료한 일</a></li>
-						</ul>
-						<button class="clear-completed" data-action="clearTodoItems">모두 삭제</button>
-					</div>
+					<div id="todo-footer"></div>
 			    </section>			
 			</div>
         `;
+
+		const filterType = this.state.filterType;
+		const filteredTodoItems = filterType === FILTER_TYPE.ALL
+			? this.state.todoItems
+			: this.state.todoItems.filter(({isCompleted}) => {
+
+				if (filterType === FILTER_TYPE.ACTIVE) {
+					return !isCompleted;
+				}
+
+				if (filterType === FILTER_TYPE.COMPLETED) {
+					return isCompleted;
+				}
+			});
+		const todoItemsCount = filteredTodoItems.length;
 
 		this.components = {
 			todoList: new TodoList(
 				this.$el.querySelector('#todo-list'),
 				{
-					todoItems: this.state.todoItems,
+					todoItems: filteredTodoItems,
 					isLoading: this.state.isLoading,
 				},
 				{
@@ -176,6 +182,17 @@ export default function TodoApp($el, props) {
 					createTodoItem,
 				},
 			),
+			todoFooter: new TodoFooter(
+				this.$el.querySelector('#todo-footer'),
+				{
+					todoItemsCount,
+					filterType: this.state.filterType,
+				},
+				{
+					clearTodoItems,
+					changeFilter,
+				},
+			),
 		};
 	};
 
@@ -186,12 +203,12 @@ export default function TodoApp($el, props) {
 			teamId: props.teamId,
 			user: props.user,
 			todoItems: [],
+			filterType: FILTER_TYPE.ALL,
 			isLoading: true,
 		};
 		this.components = {};
 
 		render();
-		bindEvents();
 
 		await fetchTodoItems();
 	};
