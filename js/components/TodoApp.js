@@ -5,9 +5,7 @@ import todoApi from '../apis/todoApi.js';
 import {FILTER_TYPE} from '../consts/filterType.js';
 
 export default function TodoApp($el, props) {
-
 	const fetchTodoItems = async () => {
-
 		this.setState({isLoading: true});
 		const {todoList: todoItems = []} = await todoApi.getTodoItems({
 			teamId: this.state.teamId,
@@ -16,8 +14,7 @@ export default function TodoApp($el, props) {
 		this.setState({todoItems, isLoading: false});
 	};
 
-	const createTodoItem = async (contents) => {
-
+	const createTodoItem = async contents => {
 		const addedTodoItem = await todoApi.createTodoItem({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
@@ -29,16 +26,13 @@ export default function TodoApp($el, props) {
 		});
 	};
 
-	const toggleTodoItem = async (todoItemId) => {
-
+	const toggleTodoItem = async todoItemId => {
 		const changedTodoItem = await todoApi.toggleTodoItem({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
 			todoItemId,
 		});
-		const changedTodoItemIndex = this.state.todoItems.findIndex(
-			(todoItem) => todoItem._id === changedTodoItem._id,
-		);
+		const changedTodoItemIndex = this.state.todoItems.findIndex(todoItem => todoItem._id === changedTodoItem._id);
 
 		this.state.todoItems.splice(changedTodoItemIndex, 1, changedTodoItem);
 		this.setState({
@@ -46,8 +40,7 @@ export default function TodoApp($el, props) {
 		});
 	};
 
-	const deleteTodoItem = async (todoItemId) => {
-
+	const deleteTodoItem = async todoItemId => {
 		await todoApi.deleteTodoItem({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
@@ -57,7 +50,6 @@ export default function TodoApp($el, props) {
 	};
 
 	const clearTodoItems = async () => {
-
 		if (!confirm(`팀원 ${this.state.user.userName}의 할 일을 모두 삭제하시겠습니까?`)) {
 			return;
 		}
@@ -69,24 +61,20 @@ export default function TodoApp($el, props) {
 		await fetchTodoItems();
 	};
 
-	const changeFilter = (filterType) => {
-
+	const changeFilter = filterType => {
 		this.setState({
 			filterType,
 		});
 	};
 
 	const editTodoItemContents = async (todoItemId, contents) => {
-
 		const editedTodoItem = await todoApi.editTodoItemContents({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
 			todoItemId,
 			contents,
 		});
-		const editedTodoItemIndex = this.state.todoItems.findIndex(
-			(todoItem) => todoItem._id === todoItemId,
-		);
+		const editedTodoItemIndex = this.state.todoItems.findIndex(todoItem => todoItem._id === todoItemId);
 
 		this.state.todoItems.splice(editedTodoItemIndex, 1, editedTodoItem);
 		this.setState({
@@ -95,16 +83,13 @@ export default function TodoApp($el, props) {
 	};
 
 	const editTodoItemPriority = async (todoItemId, priority) => {
-
 		const editedTodoItem = await todoApi.editTodoItemPriority({
 			teamId: this.state.teamId,
 			userId: this.state.user.userId,
 			todoItemId,
 			priority,
 		});
-		const editedTodoItemIndex = this.state.todoItems.findIndex(
-			(todoItem) => todoItem._id === todoItemId,
-		);
+		const editedTodoItemIndex = this.state.todoItems.findIndex(todoItem => todoItem._id === todoItemId);
 
 		this.state.todoItems.splice(editedTodoItemIndex, 1, editedTodoItem);
 		this.setState({
@@ -112,8 +97,7 @@ export default function TodoApp($el, props) {
 		});
 	};
 
-	this.setState = (nextState) => {
-
+	this.setState = nextState => {
 		this.state = {
 			...this.state,
 			...nextState,
@@ -146,18 +130,18 @@ export default function TodoApp($el, props) {
         `;
 
 		const filterType = this.state.filterType;
-		const filteredTodoItems = filterType === FILTER_TYPE.ALL
-			? this.state.todoItems
-			: this.state.todoItems.filter(({isCompleted}) => {
+		const filteredTodoItems =
+			filterType === FILTER_TYPE.ALL
+				? this.state.todoItems
+				: this.state.todoItems.filter(({isCompleted}) => {
+						if (filterType === FILTER_TYPE.ACTIVE) {
+							return !isCompleted;
+						}
 
-				if (filterType === FILTER_TYPE.ACTIVE) {
-					return !isCompleted;
-				}
-
-				if (filterType === FILTER_TYPE.COMPLETED) {
-					return isCompleted;
-				}
-			});
+						if (filterType === FILTER_TYPE.COMPLETED) {
+							return isCompleted;
+						}
+				  });
 		const todoItemsCount = filteredTodoItems.length;
 
 		this.components = {
@@ -197,7 +181,6 @@ export default function TodoApp($el, props) {
 	};
 
 	const init = async () => {
-
 		this.$el = $el;
 		this.state = {
 			teamId: props.teamId,

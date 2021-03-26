@@ -1,7 +1,6 @@
 import defaultApi from './defaultApi.js';
 
 export default {
-
 	getTodoItems: async function ({teamId, userId}) {
 		return defaultApi.get({path: `/api/teams/${teamId}/members/${userId}`});
 	},

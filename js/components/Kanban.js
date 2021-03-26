@@ -3,9 +3,7 @@ import teamApi from '../apis/teamApi.js';
 import TodoApp from './TodoApp.js';
 
 export default function Kanban($el) {
-
 	const fetchTeam = async () => {
-
 		const {_id, name, members} = await teamApi.findTeam(this.state.teamId);
 		this.setState({
 			teamId: _id,
@@ -18,7 +16,6 @@ export default function Kanban($el) {
 	};
 
 	const addUser = async (defaultName = '') => {
-
 		const userName = prompt('새로운 팀원 이름을 입력해주세요', defaultName);
 		if (!userName || userName.trim() === '') {
 			return;
@@ -37,9 +34,7 @@ export default function Kanban($el) {
 	};
 
 	const bindEvents = () => {
-
 		this.$el.addEventListener('click', async event => {
-
 			if (event.target.closest('[data-action="addUser"]')) {
 				await addUser();
 			}
@@ -47,24 +42,18 @@ export default function Kanban($el) {
 	};
 
 	const makeTodoAppListComponent = () => {
-
 		return this.state.users.map(user => {
-
 			const $todoApp = document.createElement('li');
 			$todoApp.classList.add('todoapp-container');
 
-			return new TodoApp(
-				$todoApp,
-				{
-					teamId: this.state.teamId,
-					user,
-				},
-			);
+			return new TodoApp($todoApp, {
+				teamId: this.state.teamId,
+				user,
+			});
 		});
 	};
 
 	const render = () => {
-
 		const {teamName} = this.state;
 
 		this.$el.innerHTML = `
@@ -86,8 +75,7 @@ export default function Kanban($el) {
 		`;
 	};
 
-	this.setState = (nextState) => {
-
+	this.setState = nextState => {
 		this.state = {
 			...this.state,
 			...nextState,
@@ -97,7 +85,6 @@ export default function Kanban($el) {
 	};
 
 	const init = async () => {
-
 		this.$el = $el;
 		this.state = {
 			teamId: getQuery('teamId'),

@@ -1,11 +1,8 @@
 import {FILTER_TYPE} from '../consts/filterType.js';
 
 export default function TodoFooter($el, props, {clearTodoItems, changeFilter}) {
-
 	const bindEvents = () => {
-
 		this.$el.addEventListener('click', async event => {
-
 			if (event.target.dataset.action === 'clearTodoItems') {
 				await clearTodoItems();
 			}
@@ -17,18 +14,19 @@ export default function TodoFooter($el, props, {clearTodoItems, changeFilter}) {
 	};
 
 	const makeFilterListTemplate = () => {
-
-		return Object.keys(FILTER_TYPE).map(key => {
-
-			const filterType = FILTER_TYPE[key];
-			return `
-				<li><a href="#" data-filter="${key}" class="${filterType.value} ${filterType === this.state.filterType ? 'selected' : ''}">${filterType.text}</a></li>	
+		return Object.keys(FILTER_TYPE)
+			.map(key => {
+				const filterType = FILTER_TYPE[key];
+				return `
+				<li><a href="#" data-filter="${key}" class="${filterType.value} ${filterType === this.state.filterType ? 'selected' : ''}">${
+					filterType.text
+				}</a></li>	
 			`;
-		}).join('');
+			})
+			.join('');
 	};
 
 	const render = () => {
-
 		this.$el.innerHTML = `
 			<div class="count-container">
 				<span class="todo-count">총 <strong>${this.state.todoItemsCount}</strong>개</span>
@@ -40,8 +38,7 @@ export default function TodoFooter($el, props, {clearTodoItems, changeFilter}) {
 		`;
 	};
 
-	this.setState = (nextState) => {
-
+	this.setState = nextState => {
 		this.state = {
 			...this.state,
 			...nextState,
@@ -51,7 +48,6 @@ export default function TodoFooter($el, props, {clearTodoItems, changeFilter}) {
 	};
 
 	const init = () => {
-
 		this.$el = $el;
 		this.state = {
 			todoItemsCount: props.todoItemsCount,

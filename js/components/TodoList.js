@@ -1,12 +1,8 @@
 import {PRIORITY_TYPE} from '../consts/priorityType.js';
 
-export default function TodoList($el, props,
-                                 {toggleTodoItem, deleteTodoItem, editTodoItemContents, editTodoItemPriority}) {
-
+export default function TodoList($el, props, {toggleTodoItem, deleteTodoItem, editTodoItemContents, editTodoItemPriority}) {
 	const bindEvents = () => {
-
-		this.$el.addEventListener('click', (event) => {
-
+		this.$el.addEventListener('click', event => {
 			const {action} = event.target.dataset;
 
 			if (action === 'toggle') {
@@ -26,8 +22,7 @@ export default function TodoList($el, props,
 			}
 		});
 
-		this.$el.addEventListener('dblclick', (event) => {
-
+		this.$el.addEventListener('dblclick', event => {
 			const {action} = event.target.dataset;
 
 			if (action === 'onEditingContents') {
@@ -40,15 +35,13 @@ export default function TodoList($el, props,
 				event.stopPropagation();
 				const $todoItem = event.target.closest('li');
 				const todoItemId = $todoItem.dataset.todoItemId;
-				this.state.todoItems.find(
-					(todoItem) => todoItem._id === todoItemId,
-				).onEditingPriority = true;
+				this.state.todoItems.find(todoItem => todoItem._id === todoItemId).onEditingPriority = true;
 
 				this.setState({todoItems: this.state.todoItems});
 			}
 		});
 
-		this.$el.addEventListener('keypress', (event) => {
+		this.$el.addEventListener('keypress', event => {
 			if (event.key !== 'Enter' && event.key !== 'Escape') {
 				return;
 			}
@@ -63,17 +56,14 @@ export default function TodoList($el, props,
 					return;
 				}
 				if (event.key === 'Escape') {
-					event.target.value = this.state.todoItems.find(
-						(todoItem) => todoItem._id === todoItemId,
-					).contents;
+					event.target.value = this.state.todoItems.find(todoItem => todoItem._id === todoItemId).contents;
 					$todoItem.classList.remove('editing');
 					return;
 				}
 			}
 		});
 
-		this.$el.addEventListener('change', (event) => {
-
+		this.$el.addEventListener('change', event => {
 			const {action} = event.target.dataset;
 
 			if (action === 'changePriority') {
@@ -87,7 +77,6 @@ export default function TodoList($el, props,
 	};
 
 	const makeTodoItemLoadingTemplate = function () {
-
 		return `
 			<li>
 				<div class="view">
@@ -104,7 +93,6 @@ export default function TodoList($el, props,
 	};
 
 	const makeTodoItemTemplate = function (todoItem) {
-
 		const {_id, contents, priority, isCompleted, onEditingPriority} = todoItem;
 		return `
 			<li class="${isCompleted ? 'completed' : ''}" data-todo-item-id="${_id}">
@@ -124,7 +112,6 @@ export default function TodoList($el, props,
 	};
 
 	const sortByPriority = (todoItemA, todoItemB) => {
-
 		const {priority: priorityA} = todoItemA;
 		const {priority: priorityB} = todoItemB;
 
@@ -140,7 +127,6 @@ export default function TodoList($el, props,
 	};
 
 	const makePriorityTemplate = function (priority, onEditingPriority) {
-
 		const isEditing = onEditingPriority || priority === 'NONE';
 
 		return `
@@ -156,7 +142,6 @@ export default function TodoList($el, props,
 	};
 
 	this.setState = ({todoItems, isLoading}) => {
-
 		this.state = {
 			...this.state,
 			todoItems,
@@ -167,7 +152,6 @@ export default function TodoList($el, props,
 	};
 
 	const render = () => {
-
 		const {todoItems, isLoading} = this.state;
 		const sortedTodoItems = todoItems.sort(sortByPriority);
 
@@ -181,7 +165,6 @@ export default function TodoList($el, props,
 	};
 
 	const init = () => {
-
 		this.$el = $el;
 		this.state = {
 			todoItems: props.todoItems,

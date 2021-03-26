@@ -1,7 +1,5 @@
 export default function TeamList($el, props, {createTeam, deleteTeam}) {
-
 	function makeTeamListItemTemplate(team) {
-
 		const {teamId, teamName} = team;
 
 		return `
@@ -24,7 +22,6 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 	}
 
 	function removeTeam({teamId, teamName}) {
-
 		if (!confirm(`${teamName} 팀을 삭제하시겠습니까?`)) {
 			return;
 		}
@@ -32,16 +29,13 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 	}
 
 	const bindEvents = () => {
-
 		this.$el.addEventListener('click', event => {
-
 			if (event.target.closest('[data-action="addTeam"]')) {
 				addTeam();
 			}
 		});
 
 		this.$el.addEventListener('contextmenu', event => {
-
 			const $teamListItem = event.target.closest('[data-action="removeTeam"]');
 			if ($teamListItem) {
 				event.preventDefault();
@@ -52,7 +46,6 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 	};
 
 	const render = () => {
-
 		this.$el.innerHTML = `
 
 			${this.state.teams.map(team => makeTeamListItemTemplate(team)).join('')}
@@ -63,11 +56,9 @@ export default function TeamList($el, props, {createTeam, deleteTeam}) {
 				</button>
 			</div>
 		`;
-
 	};
 
 	const init = () => {
-
 		this.$el = $el;
 		this.state = {
 			teams: props.teams,

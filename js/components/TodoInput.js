@@ -1,9 +1,6 @@
 export default function TodoInput($el, props, {createTodoItem}) {
-
 	const bindEvents = () => {
-
-		this.$el.addEventListener('keypress', (event) => {
-
+		this.$el.addEventListener('keypress', event => {
 			if (event.key === 'Enter') {
 				event.stopPropagation();
 				createTodoItem(event.target.value);
@@ -13,7 +10,6 @@ export default function TodoInput($el, props, {createTodoItem}) {
 	};
 
 	const render = () => {
-
 		this.$el.innerHTML = `
             <section class="input-container">
                 <input
@@ -26,7 +22,6 @@ export default function TodoInput($el, props, {createTodoItem}) {
 	};
 
 	const init = () => {
-
 		this.$el = $el;
 		this.state = {};
 

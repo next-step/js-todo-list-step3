@@ -15,7 +15,7 @@ export default {
 			data: {
 				name: teamName,
 			},
-		})
+		});
 	},
 
 	deleteTeam: async function (teamId) {
@@ -25,6 +25,6 @@ export default {
 	},
 
 	saveUser: function ({teamId, userName}) {
-		return defaultApi.post({ path: `/api/teams/${teamId}/members`, data: { name: userName } });
+		return defaultApi.post({path: `/api/teams/${teamId}/members`, data: {name: userName}});
 	},
-}
+};
