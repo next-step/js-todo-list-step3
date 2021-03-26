@@ -41,22 +41,22 @@ export default function TodoList($el, props, {toggleTodoItem, deleteTodoItem, ed
 			}
 		});
 
-		this.$el.addEventListener('keypress', event => {
-			if (event.key !== 'Enter' && event.key !== 'Escape') {
+		this.$el.addEventListener('keypress', ({target, key}) => {
+			if (key !== 'Enter' && key !== 'Escape') {
 				return;
 			}
 
-			const {action} = event.target.dataset;
-			const $todoItem = event.target.closest('li');
+			const {action} = target.dataset;
+			const $todoItem = target.closest('li');
 			const todoItemId = $todoItem.dataset.todoItemId;
 
 			if (action === 'edit') {
-				if (event.key === 'Enter') {
-					editTodoItemContents(todoItemId, event.target.value);
+				if (key === 'Enter') {
+					editTodoItemContents(todoItemId, target.value);
 					return;
 				}
-				if (event.key === 'Escape') {
-					event.target.value = this.state.todoItems.find(todoItem => todoItem._id === todoItemId).contents;
+				if (key === 'Escape') {
+					target.value = this.state.todoItems.find(todoItem => todoItem._id === todoItemId).contents;
 					$todoItem.classList.remove('editing');
 					return;
 				}
