@@ -19,35 +19,30 @@ class TodoApp {
   }
 
   async init() {
-    const { data: _users } = await getUsers();
-    const [selectedUser] = _users;
+    console.log("TEST");
+    // const { data: _users } = await getUsers();
+    // const [selectedUser] = _users;
 
-    this.store.on(["selectedUser", "selectedUser.todoList", "filter"], this.updateTodoListViewPipe.bind(this));
-    this.store.on(["selectedUser", "users"], this.updateUserListViewPipe.bind(this));
-    this.store.set({
-      selectedUser: { ...selectedUser },
-      users: [..._users],
-      filter: FILTER_TYPE.ALL,
-    });
+    // this.store.on(["selectedUser", "selectedUser.todoList", "filter"], this.updateTodoListViewPipe.bind(this));
+    // this.store.on(["selectedUser", "users"], this.updateUserListViewPipe.bind(this));
+    // this.store.set({
+    //   selectedUser: { ...selectedUser },
+    //   users: [..._users],
+    //   filter: FILTER_TYPE.ALL,
+    // });
 
-    new TodoUserList(this.store);
-    new TodoInput(this.store);
-    new TodoItemList(this.store);
-    new TodoFilters(this.store);
+    // new TodoUserList(this.store);
+    // new TodoInput(this.store);
+    // new TodoItemList(this.store);
+    // new TodoFilters(this.store);
   }
 
   updateTodoListViewPipe() {
-    pipe(
-      this._getTodoListData.bind(this),
-      this._renderTodoList.bind(this)
-    )();
+    pipe(this._getTodoListData.bind(this), this._renderTodoList.bind(this))();
   }
 
   updateUserListViewPipe() {
-    pipe(
-      this._getUserListData.bind(this),
-      this._renderUserList.bind(this)
-    )();
+    pipe(this._getUserListData.bind(this), this._renderUserList.bind(this))();
   }
 
   _getTodoListData() {
@@ -62,7 +57,7 @@ class TodoApp {
 
   _getUserListData() {
     const { selectedUser, users } = this.store.get();
-    return { selectedUser, users }
+    return { selectedUser, users };
   }
 
   _renderTodoList({ onFilteringTodoList }) {

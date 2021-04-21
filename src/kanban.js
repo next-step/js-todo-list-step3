@@ -1,4 +1,6 @@
-import { getTeams } from "@lib/api";
-import './css/style.css';
+import Team from "@components/Team";
+import "./css/style.css";
 
-console.log("kanban 페이지");
+(function () {
+  new Team();
+})();

@@ -52,7 +52,7 @@ export const userListActionButtonTemplate = () => {
 export const teamTemplate = (teamId, teamName) => {
   return `
     <div class="team-card-container">
-      <a href="/kanban.html?id=${teamId}" class="card">
+      <a href="/kanban.html?id=${teamId}&name=${teamName}" class="card">
         <div class="card-title">
           ${teamName}
         </div>
