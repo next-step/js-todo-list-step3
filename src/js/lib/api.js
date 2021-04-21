@@ -2,20 +2,21 @@ import axios from "axios";
 import { API } from "@constants/url";
 
 const METHOD = {
-    GET: "get",
-    POST: "post",
-    DELETE: "delete",
-    PUT: "put",
+  GET: "get",
+  POST: "post",
+  DELETE: "delete",
+  PUT: "put",
 };
 
 const request = async (url, method = METHOD.GET, params = {}) => {
-    try {
-        return await axios[method](url, params);
-    } catch (e) {
-        alert(e);
-    }
+  try {
+    return await axios[method](url, params);
+  } catch (e) {
+    alert(e);
+  }
 };
 
+const getTeams = () => request(API.GET_TEAMS);
 const getUsers = () => request(API.GET_USERS);
 const getUser = (userId) => request(API.GET_USER(userId));
 const createUser = (name) => request(API.CREATE_USER, METHOD.POST, { name });
@@ -28,14 +29,15 @@ const modifyTodoItem = ({ userId, todoId, contents }) => request(API.MODIFY_TODO
 const priorityTodoItem = ({ userId, todoId, priority }) => request(API.PRIORITY_TODO_ITEM({ userId, todoId }), METHOD.PUT, { priority });
 
 export {
-    getUsers,
-    getUser,
-    createUser,
-    deleteUser,
-    addTodoItem,
-    toggleTodoItem,
-    deleteTodoItem,
-    allDeleteTodoItem,
-    modifyTodoItem,
-    priorityTodoItem,
-}
+  getTeams,
+  getUsers,
+  getUser,
+  createUser,
+  deleteUser,
+  addTodoItem,
+  toggleTodoItem,
+  deleteTodoItem,
+  allDeleteTodoItem,
+  modifyTodoItem,
+  priorityTodoItem,
+};

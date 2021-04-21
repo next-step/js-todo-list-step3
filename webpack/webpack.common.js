@@ -4,7 +4,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: ["@babel/polyfill", "./index.html", "./kanban.html"],
+  entry: {
+    index: "./src/index.js",
+    kanban: "./src/kanban.js",
+    style: "./src/css/style.css",
+  },
 
   module: {
     rules: [
@@ -16,21 +20,18 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
-      {
-        test: /\.html$/i,
-        loader: 'html-loader',
-      },
     ],
   },
 
   resolve: {
+    modules: ["node_modules"],
     extensions: [".js"],
     alias: {
       "@": path.resolve(__dirname, "../src/"),
-      "@js": path.resolve(__dirname, "../src/js"),
-      "@components": path.resolve(__dirname, "../src/js/components"),
-      "@constants": path.resolve(__dirname, "../src/js/constants"),
-      "@lib": path.resolve(__dirname, "../src/js/lib"),
+      "@js": path.resolve(__dirname, "../src/js/"),
+      "@components": path.resolve(__dirname, "../src/js/components/"),
+      "@constants": path.resolve(__dirname, "../src/js/constants/"),
+      "@lib": path.resolve(__dirname, "../src/js/lib/"),
     },
   },
 
@@ -39,7 +40,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "./index.html",
+      chunks: ["index", "style"],
     }),
-    new MiniCssExtractPlugin({ filename: "bundle.css" }),
+    new HtmlWebpackPlugin({
+      filename: "kanban.html",
+      template: "./kanban.html",
+      chunks: ["kanban", "style"],
+    }),
+    new MiniCssExtractPlugin({ filename: "[name].[fullhash].css" }),
   ],
 };

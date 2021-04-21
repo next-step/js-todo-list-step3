@@ -8,3 +8,7 @@ export const TODO_STORE = {
   users: [],
   filter: "",
 };
+
+export const TEAM_STORE = {
+  teams: [],
+};
