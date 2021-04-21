@@ -7,7 +7,6 @@ module.exports = {
   entry: {
     index: "./src/index.js",
     kanban: "./src/kanban.js",
-    style: "./src/css/style.css",
   },
 
   module: {
@@ -40,12 +39,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "./index.html",
-      chunks: ["index", "style"],
+      chunks: ["index"],
     }),
     new HtmlWebpackPlugin({
       filename: "kanban.html",
       template: "./kanban.html",
-      chunks: ["kanban", "style"],
+      chunks: ["kanban"],
     }),
     new MiniCssExtractPlugin({ filename: "[name].[fullhash].css" }),
   ],
