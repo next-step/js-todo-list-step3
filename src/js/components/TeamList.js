@@ -11,11 +11,11 @@ class TeamList {
 
   async init() {
     this.store.on("teamList", this.render.bind(this));
-    this.setTeams();
+    this.setTeamList();
     this.container.addEventListener("click", this.clickDelegationHandler.bind(this));
   }
 
-  async setTeams() {
+  async setTeamList() {
     const { data: teamList } = await getTeams();
     this.store.set({
       teamList: [...teamList],
@@ -30,12 +30,12 @@ class TeamList {
     const name = prompt("팀 이름을 입력해주세요.");
     if (name === null) return;
     await addTeam(name);
-    this.setTeams();
+    this.setTeamList();
   }
 
   render() {
-    const { teams } = this.store.get();
-    const template = teams.map(({ _id, name }) => teamTemplate(_id, name)).join("");
+    const { teamList } = this.store.get();
+    const template = teamList.map(({ _id, name }) => teamTemplate(_id, name)).join("");
     this.container.innerHTML = template + teamAddBtnTemplate();
   }
 }
