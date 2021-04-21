@@ -1,10 +1,10 @@
-import { getEl } from "@js/util.js";
+import { getEl, containsClass } from "@js/util.js";
 import { FILTER_TYPE, UI_CLASS } from "@constants/constant.js";
 
 class TodoFilters {
-  constructor(store) {
+  constructor({ todoId, store }) {
     this.store = store;
-    this.filtersEl = getEl("ul.filters");
+    this.filtersEl = getEl(`li[data-_id="${todoId}"] ul.filters`);
     this.init();
   }
 
@@ -13,12 +13,12 @@ class TodoFilters {
   }
 
   filtersHandler({ target }) {
-    if (!target.classList.contains(UI_CLASS.FILTER)) return;
+    if (!containsClass(target, UI_CLASS.FILTER)) return;
     const [type] = target.classList;
 
     this.filtersEl.querySelectorAll(`.${UI_CLASS.FILTER}`).forEach((el) => {
       el.classList.remove(UI_CLASS.SELECTED);
-      if (el.classList.contains(type)) el.classList.add(UI_CLASS.SELECTED);
+      if (containsClass(el, type)) el.classList.add(UI_CLASS.SELECTED);
     });
 
     this.store.set({

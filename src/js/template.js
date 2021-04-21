@@ -1,6 +1,6 @@
 export const todoAppTemplate = (todoId, name, count) => {
   return `
-    <li id=${todoId} class="todoapp-container">
+    <li data-_id=${todoId} id=${todoId} class="todoapp-container">
       <h2>
         <span><strong>${name}</strong>'s Todo List</span>
       </h2>
@@ -23,16 +23,16 @@ export const todoFilterTemplate = (count) => {
       <span class="todo-count">총 <strong>${count}</strong> 개</span>
       <ul class="filters">
         <li>
-          <a href="#all" class="selected">전체보기</a>
+          <a href="#all" class="all todo-filter selected">전체보기</a>
         </li>
         <li>
-          <a href="#priority">우선 순위</a>
+          <a href="#priority" class="todo-filter">우선 순위</a>
         </li>
         <li>
-          <a href="#active">해야할 일</a>
+          <a href="#active" class="active todo-filter">해야할 일</a>
         </li>
         <li>
-          <a href="#completed">완료한 일</a>
+          <a href="#completed" class="completed todo-filter">완료한 일</a>
         </li>
       </ul>
       <button class="clear-completed">모두 삭제</button>

@@ -8,7 +8,7 @@ export const API = {
   GET_USER: (userId) => `${BASE_URL}/api/users/${userId}`,
   CREATE_USER: `${BASE_URL}/api/users`,
   DELETE_USER: (userId) => `${BASE_URL}/api/users/${userId}`,
-  ADD_TODO_ITEM: (userId) => `${BASE_URL}/api/users/${userId}/items`,
+  ADD_TODO_ITEM: (teamId, todoId) => `${BASE_URL}/api/teams/${teamId}/members/${todoId}/items`,
   TOGGLE_TODO_ITEM: ({ userId, todoId }) => `${BASE_URL}/api/users/${userId}/items/${todoId}/toggle`,
   DELETE_TODO_ITEM: ({ userId, todoId }) => `${BASE_URL}/api/users/${userId}/items/${todoId}`,
   ALL_DELETE_TODO_ITEM: ({ userId }) => `${BASE_URL}/api/users/${userId}/items/`,

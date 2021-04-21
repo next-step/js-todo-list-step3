@@ -22,7 +22,7 @@ class Team {
 
     members.forEach((member) => {
       const todoStore = new Store(TODO_STORE);
-      new TodoApp({ ...member, container: this.container, store: todoStore });
+      new TodoApp({ ...member, teamId: this.teamId, container: this.container, store: todoStore });
     });
     this.container.innerHTML += addUserButtonTemplate();
   }
