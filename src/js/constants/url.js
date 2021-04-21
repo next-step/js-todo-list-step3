@@ -2,6 +2,7 @@ const BASE_URL = "https://js-todo-list-9ca3a.df.r.appspot.com";
 
 export const API = {
   GET_TEAMS: `${BASE_URL}/api/teams`,
+  ADD_TEAM: `${BASE_URL}/api/teams`,
   GET_USERS: `${BASE_URL}/api/users`,
   GET_USER: (userId) => `${BASE_URL}/api/users/${userId}`,
   CREATE_USER: `${BASE_URL}/api/users`,

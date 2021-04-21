@@ -9,6 +9,6 @@ export const TODO_STORE = {
   filter: "",
 };
 
-export const TEAM_STORE = {
+export const TEAM_LIST_STORE = {
   teams: [],
 };

@@ -15,8 +15,8 @@ export const todoTemplate = ({ contents, _id, isCompleted, priority }) => {
 };
 
 export const todoPriorityTemplate = (priority) => {
-  if (priority === 'FIRST') return '<span class="chip primary">1순위</span>';
-  if (priority === 'SECOND') return '<span class="chip secondary">2순위</span>';
+  if (priority === "FIRST") return '<span class="chip primary">1순위</span>';
+  if (priority === "SECOND") return '<span class="chip secondary">2순위</span>';
   return `
     <select class="chip select">
       <option value="NONE" selected>순위</option>
@@ -44,6 +44,28 @@ export const userListActionButtonTemplate = () => {
       </button>
       <button class="ripple user-delete-button" data-action="deleteUser">
         삭제 -
+      </button>
+    </div>
+    `;
+};
+
+export const teamTemplate = (teamId, teamName) => {
+  return `
+    <div class="team-card-container">
+      <a href="/kanban.html?id=${teamId}" class="card">
+        <div class="card-title">
+          ${teamName}
+        </div>
+      </a>
+    </div>
+  `;
+};
+
+export const teamAddButtonTemplate = () => {
+  return `
+    <div class="add-team-button-container">
+      <button id="add-team-button" class="ripple add-team-button">
+        <span class="material-icons add-team-button">add</span>
       </button>
     </div>
     `;

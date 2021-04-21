@@ -17,6 +17,7 @@ const request = async (url, method = METHOD.GET, params = {}) => {
 };
 
 const getTeams = () => request(API.GET_TEAMS);
+const addTeam = (name) => request(API.ADD_TEAM, METHOD.POST, { name });
 const getUsers = () => request(API.GET_USERS);
 const getUser = (userId) => request(API.GET_USER(userId));
 const createUser = (name) => request(API.CREATE_USER, METHOD.POST, { name });
@@ -30,6 +31,7 @@ const priorityTodoItem = ({ userId, todoId, priority }) => request(API.PRIORITY_
 
 export {
   getTeams,
+  addTeam,
   getUsers,
   getUser,
   createUser,
