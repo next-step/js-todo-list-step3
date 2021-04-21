@@ -1,4 +1,4 @@
-import { todoTemplate, userTemplate, userListActionButtonTemplate } from "@js/template";
+import { todoAppTemplate, todoFilterTemplate, todoTemplate } from "@js/template";
 import { getEl, pipe } from "@js/util";
 import { getUsers } from "@lib/api";
 import { FILTER_TYPE } from "@constants/constant";
@@ -9,17 +9,18 @@ import TodoItemList from "./TodoItemList";
 import TodoFilters from "./TodoFilters";
 
 class TodoApp {
-  constructor(store) {
+  constructor({ _id, name, todoList, container, store }) {
+    this.todoId = _id;
+    this.name = name;
+    this.todoList = todoList;
+    this.container = container;
     this.store = store;
-    this.todoListEl = getEl("ul.todo-list");
-    this.todoCountEl = getEl("span.todo-count strong");
-    this.userNameEl = getEl("#user-title strong");
-    this.userListEl = getEl("#user-list");
     this.init();
   }
 
   async init() {
-    console.log("TEST");
+    this.container.innerHTML += todoAppTemplate(this.todoId, this.name, this.todoList.length);
+    console.log(getEl(`#${this.todoId}`));
     // const { data: _users } = await getUsers();
     // const [selectedUser] = _users;
 
