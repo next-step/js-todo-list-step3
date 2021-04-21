@@ -32,11 +32,11 @@ class TodoApp {
           todoList: [...this.todoList],
           filter: FILTER_TYPE.ALL,
         });
-      }).then(() => {
+
         new TodoInput({ memberId: this.memberId, teamId: this.teamId, store: this.store });
         // new TodoItemList(this.store);
         new TodoFilters({ memberId: this.memberId, store: this.store });
-      });
+      })
   }
 
   _getTodoListData() {

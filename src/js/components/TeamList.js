@@ -28,7 +28,7 @@ class TeamList {
 
   async _addTeamHandler() {
     const name = prompt("팀 이름을 입력해주세요.");
-    if (!name) alert("팀 이름을 정확히 입력해주세요.");
+    if (name === null) return;
     await addTeam(name);
     this.setTeams();
   }

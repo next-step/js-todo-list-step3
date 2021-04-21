@@ -1,6 +1,6 @@
-import { getEl, getUrlParam } from "@js/util";
+import { getEl, getUrlParam, containsClass } from "@js/util";
 import { todoAppTemplate, addMemberBtnTemplate } from "@js/template";
-import { getTeam } from "@lib/api";
+import { getMembers, addMember } from "@lib/api";
 
 import Store from "@lib/store";
 import TodoApp from "@components/TodoApp";
@@ -18,14 +18,26 @@ class Team {
   init() {
     this.store.on('members', this.render.bind(this));
     this.setMembers();
+    this.container.addEventListener('click', this.clickDelegationHandler.bind(this))
     getEl("#user-title strong").innerText = this.teamName;
   }
 
   async setMembers() {
-    const { data: { members } } = await getTeam(this.teamId);
+    const { data: { members } } = await getMembers(this.teamId);
     this.store.set({
       members: [...members],
     });
+  }
+
+  clickDelegationHandler({ target }) {
+    if (containsClass(target, "add-user-button")) return this._addMemberHandler();
+  }
+
+  async _addMemberHandler() {
+    const name = prompt("이름을 입력해주세요.");
+    if (name === null) return;
+    await addMember({ teamId: this.teamId, name });
+    this.setMembers();
   }
 
   render() {

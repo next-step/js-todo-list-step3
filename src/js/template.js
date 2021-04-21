@@ -43,8 +43,8 @@ export const todoFilterTemplate = (count) => {
 export const addMemberBtnTemplate = () => {
   return `
     <li class="add-user-button-container">
-      <button id="add-user-button" class="ripple">
-        <span class="material-icons">add</span>
+      <button id="add-user-button" class="ripple add-user-button">
+        <span class="material-icons add-user-button">add</span>
       </button>
     </li>
   `;
