@@ -1,5 +1,5 @@
 import { getEl } from "@js/util";
-import * as api from "@lib/api";
+// import * as api from "@lib/api";
 import { UI_CLASS, KEY, MESSAGES } from "@constants/constant";
 
 class TodoItemList {

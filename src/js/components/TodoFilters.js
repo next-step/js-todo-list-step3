@@ -2,9 +2,9 @@ import { getEl, containsClass } from "@js/util.js";
 import { FILTER_TYPE, UI_CLASS } from "@constants/constant.js";
 
 class TodoFilters {
-  constructor({ todoId, store }) {
+  constructor({ memberId, store }) {
     this.store = store;
-    this.filtersEl = getEl(`li[data-_id="${todoId}"] ul.filters`);
+    this.filtersEl = getEl(`li[data-_id="${memberId}"] ul.filters`);
     this.init();
   }
 

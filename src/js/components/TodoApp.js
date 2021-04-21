@@ -1,4 +1,4 @@
-import { todoAppTemplate, todoFilterTemplate, todoTemplate } from "@js/template";
+import { todoAppTemplate, todoTemplate } from "@js/template";
 import { getEl, pipe } from "@js/util";
 import { getUsers } from "@lib/api";
 import { FILTER_TYPE } from "@constants/constant";
@@ -8,43 +8,35 @@ import TodoItemList from "./TodoItemList";
 import TodoFilters from "./TodoFilters";
 
 class TodoApp {
-  constructor({ _id, name, todoList, teamId, container, store }) {
-    this.todoId = _id;
+  constructor({ _id, name, todoList, teamId, store }) {
+    this.teamId = teamId;
+    this.memberId = _id;
     this.name = name;
     this.todoList = todoList;
-    this.teamId = teamId;
-    this.container = container;
     this.store = store;
+    this.memberEl = null;
     this.todoListEl = null;
     this.todoCountEl = null;
     this.init();
   }
 
   init() {
-    this.container.innerHTML += todoAppTemplate(this.todoId, this.name, this.todoList.length);
-
     Promise.resolve()
       .then(() => {
-        this.todoListEl = getEl(`li[data-_id="${this.todoId}"] ul.todo-list`);
-        this.todoCountEl = getEl(`li[data-_id="${this.todoId}"] .todo-count strong`);
+        this.memberEl = getEl(`li[data-_id="${this.memberId}`);
+        this.todoListEl = getEl('ul.todo-list', this.memberEl);
+        this.todoCountEl = getEl('.todo-count strong', this.memberEl);
       }).then(() => {
-        this.store.on(["todoList", "filter"], this.updateTodoListViewPipe.bind(this));
+        this.store.on(["todoList", "filter"], this.render.bind(this));
         this.store.set({
           todoList: [...this.todoList],
           filter: FILTER_TYPE.ALL,
         });
       }).then(() => {
-        new TodoInput({ todoId: this.todoId, teamId: this.teamId, store: this.store });
+        new TodoInput({ memberId: this.memberId, teamId: this.teamId, store: this.store });
         // new TodoItemList(this.store);
-        new TodoFilters({ todoId: this.todoId, store: this.store });
+        new TodoFilters({ memberId: this.memberId, store: this.store });
       });
-  }
-
-  updateTodoListViewPipe() {
-    pipe(
-      this._getTodoListData.bind(this),
-      this._renderTodoList.bind(this)
-    )();
   }
 
   _getTodoListData() {
@@ -62,6 +54,13 @@ class TodoApp {
 
     this.todoListEl.innerHTML = todoListTemplate;
     this.todoCountEl.innerText = onFilteringTodoList.length;
+  }
+
+  render() {
+    pipe(
+      this._getTodoListData.bind(this),
+      this._renderTodoList.bind(this)
+    )();
   }
 }
 

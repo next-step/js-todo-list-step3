@@ -40,7 +40,7 @@ export const todoFilterTemplate = (count) => {
   `;
 };
 
-export const addUserButtonTemplate = () => {
+export const addMemberBtnTemplate = () => {
   return `
     <li class="add-user-button-container">
       <button id="add-user-button" class="ripple">
@@ -90,7 +90,7 @@ export const teamTemplate = (teamId, teamName) => {
   `;
 };
 
-export const teamAddButtonTemplate = () => {
+export const teamAddBtnTemplate = () => {
   return `
     <div class="add-team-button-container">
       <button id="add-team-button" class="ripple add-team-button">

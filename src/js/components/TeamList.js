@@ -1,6 +1,6 @@
 import { getTeams, addTeam } from "@lib/api";
 import { getEl, containsClass } from "@js/util";
-import { teamTemplate, teamAddButtonTemplate } from "@js/template";
+import { teamTemplate, teamAddBtnTemplate } from "@js/template";
 
 class TeamList {
   constructor(store) {
@@ -10,22 +10,16 @@ class TeamList {
   }
 
   async init() {
-    this.store.on("teams", this.renderTeamList.bind(this));
+    this.store.on("teamList", this.render.bind(this));
     this.setTeams();
     this.container.addEventListener("click", this.clickDelegationHandler.bind(this));
   }
 
   async setTeams() {
-    const { data: _teams } = await getTeams();
+    const { data: teamList } = await getTeams();
     this.store.set({
-      teams: [..._teams],
+      teamList: [...teamList],
     });
-  }
-
-  renderTeamList() {
-    const { teams } = this.store.get();
-    const template = teams.map(({ _id, name }) => teamTemplate(_id, name)).join("");
-    this.container.innerHTML = template + teamAddButtonTemplate();
   }
 
   clickDelegationHandler({ target }) {
@@ -37,6 +31,12 @@ class TeamList {
     if (!name) alert("팀 이름을 정확히 입력해주세요.");
     await addTeam(name);
     this.setTeams();
+  }
+
+  render() {
+    const { teams } = this.store.get();
+    const template = teams.map(({ _id, name }) => teamTemplate(_id, name)).join("");
+    this.container.innerHTML = template + teamAddBtnTemplate();
   }
 }
 
