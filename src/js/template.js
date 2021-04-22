@@ -56,7 +56,7 @@ export const todoTemplate = ({ contents, _id, isCompleted, priority }) => {
         <div class="view">
             <input class="toggle" type="checkbox" data-_id="${_id}" ${isCompleted && "checked"} />
             <label class="label">
-              ${todoPriorityTemplate(priority)}
+              ${todoPriority(priority)}
               ${contents}
             </label>
             <button class="destroy" data-_id="${_id}"></button>
@@ -66,7 +66,7 @@ export const todoTemplate = ({ contents, _id, isCompleted, priority }) => {
     `;
 };
 
-const todoPriorityTemplate = (priority) => {
+const todoPriority = (priority) => {
   if (priority === "FIRST") return firstPriority();
   if (priority === "SECOND") return secondPriority();
   return `

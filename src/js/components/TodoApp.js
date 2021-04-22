@@ -3,7 +3,7 @@ import { getEl, pipe, getPriorityTodoList } from "@js/util";
 import { FILTER_TYPE } from "@constants/constant";
 
 import TodoInput from "./TodoInput";
-import TodoItemList from "./TodoItemList";
+import TodoList from "./TodoList";
 import TodoFilters from "./TodoFilters";
 
 class TodoApp {
@@ -34,7 +34,7 @@ class TodoApp {
         });
 
         new TodoInput({ memberId: this.memberId, teamId: this.teamId, store: this.store });
-        new TodoItemList({ memberId: this.memberId, teamId: this.teamId, store: this.store, container: this.memberEl });
+        new TodoList({ memberId: this.memberId, teamId: this.teamId, store: this.store, container: this.memberEl });
         new TodoFilters({ memberId: this.memberId, store: this.store });
       });
   }

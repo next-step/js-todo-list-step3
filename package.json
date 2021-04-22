@@ -4,7 +4,7 @@
   "description": "<p align=\"middle\" >   <img width=\"200px;\" src=\"./src/images/check_list.png\"/> </p> <h2 align=\"middle\">JS 투두리스트 스텝3</h2> <p align=\"middle\">팀을 위한 투두리스트</p> <p align=\"middle\">   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>   <a href=\"https://github.com/next-step/js-todo-list-step3/main/LICENSE\" target=\"_blank\">     <img src=\"https://img.shields.io/github/license/next-step/js-todo-list-step3.svg?style=flat-square&label=license&color=08CE5D\"/>   </a> </p>",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack serve",
+    "dev": "webpack serve",
     "build": "rm -rf ./dist && webpack"
   },
   "repository": {

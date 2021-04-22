@@ -2,7 +2,7 @@ import { getEl, containsClass, getPriorityValue } from "@js/util";
 import * as api from "@lib/api";
 import { UI_CLASS, KEY, MESSAGES } from "@constants/constant";
 
-class TodoItemList {
+class TodoList {
   constructor({ memberId, teamId, store, container }) {
     this.memberId = memberId;
     this.teamId = teamId;
@@ -21,7 +21,7 @@ class TodoItemList {
     this.todoAllDeleteButton.addEventListener("click", this.allDeleteTodoItem.bind(this));
   }
 
-  async _setTodoList() {
+  async setTodoList() {
     const {
       data: { todoList },
     } = await api.getTodoItems({ teamId: this.teamId, memberId: this.memberId });
@@ -39,19 +39,19 @@ class TodoItemList {
 
   async _toggleTodoItem({ dataset: { _id: itemId } }) {
     await api.toggleTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId });
-    this._setTodoList();
+    this.setTodoList();
   }
 
   async _delteTodoItem({ dataset: { _id: itemId } }) {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
     await api.deleteTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId });
-    this._setTodoList();
+    this.setTodoList();
   }
 
   async allDeleteTodoItem() {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
     await api.allDeleteTodoItem({ teamId: this.teamId, memberId: this.memberId });
-    this._setTodoList();
+    this.setTodoList();
   }
 
   modifyHandler({ target }) {
@@ -65,7 +65,7 @@ class TodoItemList {
       const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
       if (key === KEY.ESCAPE) return getEl(`li[data-_id="${itemId}"]`).classList.remove(UI_CLASS.EDITING);
       await api.modifyTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId, contents: target.value });
-      this._setTodoList();
+      this.setTodoList();
     }
   }
 
@@ -74,8 +74,8 @@ class TodoItemList {
     const priority = getPriorityValue(target.value);
     const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
     await api.priorityTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId, priority });
-    this._setTodoList();
+    this.setTodoList();
   }
 }
 
-export default TodoItemList;
+export default TodoList;
