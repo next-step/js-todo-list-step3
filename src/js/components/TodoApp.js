@@ -24,9 +24,10 @@ class TodoApp {
     Promise.resolve()
       .then(() => {
         this.memberEl = getEl(`li[data-_id="${this.memberId}`);
-        this.todoListEl = getEl('ul.todo-list', this.memberEl);
-        this.todoCountEl = getEl('.todo-count strong', this.memberEl);
-      }).then(() => {
+        this.todoListEl = getEl("ul.todo-list", this.memberEl);
+        this.todoCountEl = getEl(".todo-count strong", this.memberEl);
+      })
+      .then(() => {
         this.store.on(["todoList", "filter"], this.render.bind(this));
         this.store.set({
           todoList: [...this.todoList],
@@ -34,9 +35,9 @@ class TodoApp {
         });
 
         new TodoInput({ memberId: this.memberId, teamId: this.teamId, store: this.store });
-        // new TodoItemList(this.store);
+        // new TodoItemList({ memberId: this.memberId, teamId: this.teamId, store: this.store });
         new TodoFilters({ memberId: this.memberId, store: this.store });
-      })
+      });
   }
 
   _getTodoListData() {
@@ -57,10 +58,7 @@ class TodoApp {
   }
 
   render() {
-    pipe(
-      this._getTodoListData.bind(this),
-      this._renderTodoList.bind(this)
-    )();
+    pipe(this._getTodoListData.bind(this), this._renderTodoList.bind(this))();
   }
 }
 

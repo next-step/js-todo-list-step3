@@ -16,14 +16,16 @@ class Team {
   }
 
   init() {
-    this.store.on('members', this.render.bind(this));
+    this.store.on("members", this.render.bind(this));
     this.setMembers();
-    this.container.addEventListener('click', this.clickDelegationHandler.bind(this))
+    this.container.addEventListener("click", this.clickDelegationHandler.bind(this));
     getEl("#user-title strong").innerText = this.teamName;
   }
 
   async setMembers() {
-    const { data: { members } } = await getMembers(this.teamId);
+    const {
+      data: { members },
+    } = await getMembers(this.teamId);
     this.store.set({
       members: [...members],
     });
@@ -43,13 +45,14 @@ class Team {
   render() {
     const { members } = this.store.get();
 
-    this.container.innerHTML = members
-      .map((member) => {
-        const todoStore = new Store(TODO_STORE);
-        new TodoApp({ ...member, teamId: this.teamId, store: todoStore });
-        return todoAppTemplate(member._id, member.name, member.todoList.length);
-      })
-      .join("") + addMemberBtnTemplate();
+    this.container.innerHTML =
+      members
+        .map((member) => {
+          const todoStore = new Store(TODO_STORE);
+          new TodoApp({ ...member, teamId: this.teamId, store: todoStore });
+          return todoAppTemplate(member);
+        })
+        .join("") + addMemberBtnTemplate();
   }
 }
 

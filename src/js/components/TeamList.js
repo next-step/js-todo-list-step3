@@ -35,7 +35,7 @@ class TeamList {
 
   render() {
     const { teamList } = this.store.get();
-    const template = teamList.map(({ _id, name }) => teamTemplate(_id, name)).join("");
+    const template = teamList.map((team) => teamTemplate(team)).join("");
     this.container.innerHTML = template + teamAddBtnTemplate();
   }
 }

@@ -1,6 +1,6 @@
-export const todoAppTemplate = (todoId, name, count) => {
+export const todoAppTemplate = ({ _id, name, todoList }) => {
   return `
-    <li data-_id=${todoId} id=${todoId} class="todoapp-container">
+    <li data-_id=${_id} id=${_id} class="todoapp-container">
       <h2>
         <span><strong>${name}</strong>'s Todo List</span>
       </h2>
@@ -11,16 +11,16 @@ export const todoAppTemplate = (todoId, name, count) => {
         <section class="main">
           <ul class="todo-list"></ul>
         </section>
-        ${todoFilterTemplate(count)}
+        ${todoFilterTemplate(todoList)}
       </div>
     </li>
   `;
 };
 
-export const todoFilterTemplate = (count) => {
+export const todoFilterTemplate = (todoList) => {
   return `
     <div class="count-container">
-      <span class="todo-count">총 <strong>${count}</strong> 개</span>
+      <span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
       <ul class="filters">
         <li>
           <a href="#all" class="all todo-filter selected">전체보기</a>
@@ -89,12 +89,12 @@ export const todoPriorityTemplate = (priority) => {
   // `
 };
 
-export const teamTemplate = (teamId, teamName) => {
+export const teamTemplate = ({ _id, name }) => {
   return `
     <div class="team-card-container">
-      <a href="/kanban.html?id=${teamId}&name=${teamName}" class="card">
+      <a href="/kanban.html?id=${_id}&name=${name}" class="card">
         <div class="card-title">
-          ${teamName}
+          ${name}
         </div>
       </a>
     </div>
