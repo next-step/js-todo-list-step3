@@ -50,12 +50,8 @@ class TodoItemList {
 
   async allDeleteTodoItem() {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
-
-    const {
-      selectedUser: { _id: userId },
-    } = this.store.get();
-    // await api.allDeleteTodoItem({ userId });
-    this._setSelectedUser(userId);
+    await api.allDeleteTodoItem({ teamId: this.teamId, memberId: this.memberId });
+    this._setTodoList();
   }
 
   modifyHandler({ target }) {

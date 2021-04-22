@@ -24,7 +24,7 @@ const getTodoItems = ({ teamId, memberId }) => request(API.GET_TODO_ITEMS(teamId
 const addTodoItem = ({ teamId, memberId, contents }) => request(API.ADD_TODO_ITEM(teamId, memberId), METHOD.POST, { contents });
 const toggleTodoItem = ({ teamId, memberId, itemId }) => request(API.TOGGLE_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT);
 const deleteTodoItem = ({ teamId, memberId, itemId }) => request(API.DELETE_TODO_ITEM(teamId, memberId, itemId), METHOD.DELETE);
-const allDeleteTodoItem = ({ userId }) => request(API.ALL_DELETE_TODO_ITEM({ userId }), METHOD.DELETE);
+const allDeleteTodoItem = ({ teamId, memberId }) => request(API.ALL_DELETE_TODO_ITEM(teamId, memberId), METHOD.DELETE);
 const modifyTodoItem = ({ teamId, memberId, itemId, contents }) => request(API.MODIFY_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT, { contents });
 const priorityTodoItem = ({ userId, memberId, priority }) => request(API.PRIORITY_TODO_ITEM({ userId, memberId }), METHOD.PUT, { priority });
 
