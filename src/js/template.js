@@ -105,9 +105,10 @@ const secondPriority = () => {
 };
 
 export const teamTemplate = ({ _id, name }) => {
+  const suffix = process.env.NODE_ENV === "development" ? ".html" : "";
   return `
     <div class="team-card-container">
-      <a href="/kanban.html?id=${_id}&name=${name}" class="card">
+      <a href="/kanban${suffix}?id=${_id}&name=${name}" class="card">
         <div class="card-title">
           ${name}
         </div>
