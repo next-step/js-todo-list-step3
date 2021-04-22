@@ -35,7 +35,7 @@
 - [x] 1. 팀에 멤버 추가하기
 - [x] 2. 팀원별 todoList 불러오기
 - [x] 3. 팀원별 todoItem 추가하기
-- [ ] 4. 팀원별 todoItem 삭제하기
+- [x] 4. 팀원별 todoItem 삭제하기
 - [ ] 5. 팀원별 todoItem complete하기
 - [ ] 6. 팀원별 todoItem contents 내용 수정하기
 - [ ] 7. todoItem의 우선 순위 정하기 (defulat값:0, 1순위:1, 2순위: 2)
