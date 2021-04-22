@@ -67,26 +67,37 @@ export const todoTemplate = ({ contents, _id, isCompleted, priority }) => {
 };
 
 export const todoPriorityTemplate = (priority) => {
-  if (priority === "FIRST") return '<span class="chip primary">1순위</span>';
-  if (priority === "SECOND") return '<span class="chip secondary">2순위</span>';
+  if (priority === "FIRST") {
+    return `
+      <div class="chip-container">    
+        <select class="chip select primary">
+          <option value="1" selected="">1순위</option>
+          <option value="2">2순위</option>
+          <option value="0">미지정</option>
+        </select>
+      </div>  
+    `;
+  }
+  if (priority === "SECOND") {
+    return `
+      <div class="chip-container">     
+        <select class="chip select secondary">
+          <option value="2" selected="">2순위</option>
+          <option value="1">1순위</option>
+          <option value="0">미지정</option>
+        </select>
+      </div>
+    `;
+  }
   return `
     <div class="chip-container">
       <select class="chip select">
-        <option value="NONE" selected>순위</option>
-        <option value="FIRST">1순위</option>
-        <option value="SECOND">2순위</option>
+        <option value="0" selected>순위</option>
+        <option value="1">1순위</option>
+        <option value="2">2순위</option>
       </select>
     </div>
-    `;
-  // `
-  // <div class="chip-container">
-  //   <select class="chip select">
-  //     <option value="0" selected>순위</option>
-  //     <option value="1">1순위</option>
-  //     <option value="2">2순위</option>
-  //   </select>
-  // </div>
-  // `
+  `;
 };
 
 export const teamTemplate = ({ _id, name }) => {

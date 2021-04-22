@@ -9,3 +9,12 @@ export const getUrlParam = (key) => {
   });
   return decodeURI(params[key]);
 };
+
+export const getPriorityValue = (priority) => {
+  const valueObj = {
+    0: "NONE",
+    1: "FIRST",
+    2: "SECOND",
+  };
+  return valueObj[priority];
+};

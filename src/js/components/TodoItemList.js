@@ -1,4 +1,4 @@
-import { getEl, containsClass } from "@js/util";
+import { getEl, containsClass, getPriorityValue } from "@js/util";
 import * as api from "@lib/api";
 import { UI_CLASS, KEY, MESSAGES } from "@constants/constant";
 
@@ -55,7 +55,7 @@ class TodoItemList {
   }
 
   modifyHandler({ target }) {
-    if (!target.classList.contains(UI_CLASS.LABEL)) return;
+    if (!containsClass(target, UI_CLASS.LABEL)) return;
     const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
     getEl(`li[data-_id="${itemId}"]`, this.todoListEl).classList.add(UI_CLASS.EDITING);
   }
@@ -70,14 +70,11 @@ class TodoItemList {
   }
 
   async changePriorityHandler({ target }) {
-    if (!target.classList.contains(UI_CLASS.SELECT)) return;
-
-    const {
-      selectedUser: { _id: userId },
-    } = this.store.get();
-    const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
-    // await api.priorityTodoItem({ userId, todoId, priority: target.value });
-    this._setSelectedUser(userId);
+    if (!containsClass(target, UI_CLASS.SELECT)) return;
+    const priority = getPriorityValue(target.value);
+    const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
+    await api.priorityTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId, priority });
+    this._setTodoList();
   }
 }
 
