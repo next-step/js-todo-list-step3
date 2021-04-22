@@ -3,7 +3,7 @@ export const pipe = (...fns) => (args) => fns.reduce((arg, nextFn) => nextFn(arg
 export const containsClass = (element, className) => element.classList.contains(className);
 
 export const getUrlParam = (key) => {
-  var params = {};
+  const params = {};
   window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, (str, key, value) => {
     params[key] = value;
   });
