@@ -26,7 +26,6 @@ class TodoList {
       data: { todoList },
     } = await api.getTodoItems({ teamId: this.teamId, memberId: this.memberId });
     const _todoList = todoList ? todoList : [];
-
     this.store.set({
       todoList: [..._todoList],
     });
