@@ -11,13 +11,13 @@ export const todoAppTemplate = ({ _id, name, todoList }) => {
         <section class="main">
           <ul class="todo-list"></ul>
         </section>
-        ${todoFilterTemplate(todoList)}
+        ${todoFooter(todoList)}
       </div>
     </li>
   `;
 };
 
-export const todoFilterTemplate = (todoList) => {
+const todoFooter = (todoList) => {
   return `
     <div class="count-container">
       <span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
@@ -66,29 +66,9 @@ export const todoTemplate = ({ contents, _id, isCompleted, priority }) => {
     `;
 };
 
-export const todoPriorityTemplate = (priority) => {
-  if (priority === "FIRST") {
-    return `
-      <div class="chip-container">    
-        <select class="chip select primary">
-          <option value="1" selected="">1순위</option>
-          <option value="2">2순위</option>
-          <option value="0">미지정</option>
-        </select>
-      </div>  
-    `;
-  }
-  if (priority === "SECOND") {
-    return `
-      <div class="chip-container">     
-        <select class="chip select secondary">
-          <option value="2" selected="">2순위</option>
-          <option value="1">1순위</option>
-          <option value="0">미지정</option>
-        </select>
-      </div>
-    `;
-  }
+const todoPriorityTemplate = (priority) => {
+  if (priority === "FIRST") return firstPriority();
+  if (priority === "SECOND") return secondPriority();
   return `
     <div class="chip-container">
       <select class="chip select">
@@ -98,6 +78,30 @@ export const todoPriorityTemplate = (priority) => {
       </select>
     </div>
   `;
+};
+
+const firstPriority = () => {
+  return `
+      <div class="chip-container">    
+        <select class="chip select primary">
+          <option value="1" selected="">1순위</option>
+          <option value="2">2순위</option>
+          <option value="0">미지정</option>
+        </select>
+      </div>  
+    `;
+};
+
+const secondPriority = () => {
+  return `
+      <div class="chip-container">     
+        <select class="chip select secondary">
+          <option value="2" selected="">2순위</option>
+          <option value="1">1순위</option>
+          <option value="0">미지정</option>
+        </select>
+      </div>
+    `;
 };
 
 export const teamTemplate = ({ _id, name }) => {
