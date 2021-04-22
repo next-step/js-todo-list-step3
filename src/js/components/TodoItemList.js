@@ -37,12 +37,9 @@ class TodoItemList {
     if (containsClass(target, UI_CLASS.DESTROY)) return this._delteTodoItem(target);
   }
 
-  async _toggleTodoItem({ dataset: { _id: todoId } }) {
-    const {
-      selectedUser: { _id: userId },
-    } = this.store.get();
-    // await api.toggleTodoItem({ userId, todoId });
-    this._setSelectedUser(userId);
+  async _toggleTodoItem({ dataset: { _id: itemId } }) {
+    await api.toggleTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId });
+    this._setTodoList();
   }
 
   async _delteTodoItem({ dataset: { _id: itemId } }) {

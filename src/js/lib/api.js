@@ -22,7 +22,7 @@ const getMembers = (teamId) => request(API.GET_TEAM(teamId));
 const addMember = ({ teamId, name }) => request(API.ADD_MEMBER(teamId), METHOD.POST, { name });
 const getTodoItems = ({ teamId, memberId }) => request(API.GET_TODO_ITEMS(teamId, memberId));
 const addTodoItem = ({ teamId, memberId, contents }) => request(API.ADD_TODO_ITEM(teamId, memberId), METHOD.POST, { contents });
-const toggleTodoItem = ({ userId, memberId }) => request(API.TOGGLE_TODO_ITEM({ userId, memberId }), METHOD.PUT);
+const toggleTodoItem = ({ teamId, memberId, itemId }) => request(API.TOGGLE_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT);
 const deleteTodoItem = ({ teamId, memberId, itemId }) => request(API.DELETE_TODO_ITEM({ teamId, memberId, itemId }), METHOD.DELETE);
 const allDeleteTodoItem = ({ userId }) => request(API.ALL_DELETE_TODO_ITEM({ userId }), METHOD.DELETE);
 const modifyTodoItem = ({ userId, memberId, contents }) => request(API.MODIFY_TODO_ITEM({ userId, memberId }), METHOD.PUT, { contents });
