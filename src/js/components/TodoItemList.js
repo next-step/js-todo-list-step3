@@ -1,13 +1,15 @@
-import { getEl } from "@js/util";
-// import * as api from "@lib/api";
+import { getEl, containsClass } from "@js/util";
+import * as api from "@lib/api";
 import { UI_CLASS, KEY, MESSAGES } from "@constants/constant";
 
 class TodoItemList {
-  constructor(store) {
+  constructor({ memberId, teamId, store }) {
     this.store = store;
-    this.todoListEl = getEl("ul.todo-list");
-    this.todoAllDeleteButton = getEl("button.clear-completed");
-    this.todoPrioritySelect = getEl("select.chip.select");
+    this.memberId = memberId;
+    this.teamId = teamId;
+    this.todoListEl = getEl(`li[data-_id="${memberId}"] ul.todo-list`);
+    this.todoAllDeleteButton = getEl(`li[data-_id="${memberId}"] button.clear-completed`);
+    this.todoPrioritySelect = getEl(`li[data-_id="${memberId}"] select.chip.select`);
     this.init();
   }
 
@@ -19,38 +21,43 @@ class TodoItemList {
     this.todoAllDeleteButton.addEventListener("click", this.allDeleteTodoItem.bind(this));
   }
 
-  async _setSelectedUser(userId) {
-    const { data } = await api.getUser(userId);
+  async _setTodoList() {
+    const {
+      data: { todoList },
+    } = await api.getTodoItems({ teamId: this.teamId, memberId: this.memberId });
 
     this.store.set({
-      selectedUser: { ...data },
+      todoList: [...todoList],
     });
   }
 
   clickDelegationHandler({ target }) {
-    if (target.classList.contains(UI_CLASS.TOGGLE)) return this._toggleTodoItem(target);
-    if (target.classList.contains(UI_CLASS.DESTROY)) return this._delteTodoItem(target);
+    if (containsClass(target, UI_CLASS.TOGGLE)) return this._toggleTodoItem(target);
+    if (containsClass(target, UI_CLASS.DESTROY)) return this._delteTodoItem(target);
   }
 
   async _toggleTodoItem({ dataset: { _id: todoId } }) {
-    const { selectedUser: { _id: userId } } = this.store.get();
-    await api.toggleTodoItem({ userId, todoId });
+    const {
+      selectedUser: { _id: userId },
+    } = this.store.get();
+    // await api.toggleTodoItem({ userId, todoId });
     this._setSelectedUser(userId);
   }
 
-  async _delteTodoItem({ dataset: { _id: todoId } }) {
+  async _delteTodoItem({ dataset: { _id: itemId } }) {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
 
-    const { selectedUser: { _id: userId } } = this.store.get();
-    await api.deleteTodoItem({ userId, todoId });
-    this._setSelectedUser(userId);
+    await api.deleteTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId });
+    this._setTodoList();
   }
 
   async allDeleteTodoItem() {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
 
-    const { selectedUser: { _id: userId } } = this.store.get();
-    await api.allDeleteTodoItem({ userId });
+    const {
+      selectedUser: { _id: userId },
+    } = this.store.get();
+    // await api.allDeleteTodoItem({ userId });
     this._setSelectedUser(userId);
   }
 
@@ -66,8 +73,10 @@ class TodoItemList {
       const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
       if (key === KEY.ESCAPE) return getEl(`li[data-_id="${todoId}"]`).classList.remove(UI_CLASS.EDITING);
 
-      const { selectedUser: { _id: userId } } = this.store.get();
-      await api.modifyTodoItem({ userId, todoId, contents: target.value });
+      const {
+        selectedUser: { _id: userId },
+      } = this.store.get();
+      // await api.modifyTodoItem({ userId, todoId, contents: target.value });
       this._setSelectedUser(userId);
     }
   }
@@ -75,9 +84,11 @@ class TodoItemList {
   async changePriorityHandler({ target }) {
     if (!target.classList.contains(UI_CLASS.SELECT)) return;
 
-    const { selectedUser: { _id: userId } } = this.store.get();
+    const {
+      selectedUser: { _id: userId },
+    } = this.store.get();
     const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
-    await api.priorityTodoItem({ userId, todoId, priority: target.value });
+    // await api.priorityTodoItem({ userId, todoId, priority: target.value });
     this._setSelectedUser(userId);
   }
 }

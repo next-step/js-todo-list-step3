@@ -20,6 +20,7 @@ const getTeams = () => request(API.GET_TEAMS);
 const addTeam = (name) => request(API.ADD_TEAM, METHOD.POST, { name });
 const getMembers = (teamId) => request(API.GET_TEAM(teamId));
 const addMember = ({ teamId, name }) => request(API.ADD_MEMBER(teamId), METHOD.POST, { name });
+const getTodoItems = ({ teamId, memberId }) => request(API.GET_TODO_ITEMS(teamId, memberId));
 const addTodoItem = ({ teamId, memberId, contents }) => request(API.ADD_TODO_ITEM(teamId, memberId), METHOD.POST, { contents });
 const toggleTodoItem = ({ userId, memberId }) => request(API.TOGGLE_TODO_ITEM({ userId, memberId }), METHOD.PUT);
 const deleteTodoItem = ({ teamId, memberId, itemId }) => request(API.DELETE_TODO_ITEM({ teamId, memberId, itemId }), METHOD.DELETE);
@@ -32,6 +33,7 @@ export {
   addTeam,
   getMembers,
   addMember,
+  getTodoItems,
   addTodoItem,
   toggleTodoItem,
   deleteTodoItem,

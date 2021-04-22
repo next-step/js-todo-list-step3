@@ -5,6 +5,7 @@ export const API = {
   ADD_TEAM: `${BASE_URL}/api/teams`,
   GET_TEAM: (teamId) => `${BASE_URL}/api/teams/${teamId}`,
   ADD_MEMBER: (teamId) => `${BASE_URL}/api/teams/${teamId}/members`,
+  GET_TODO_ITEMS: (teamId, memberId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}`,
   ADD_TODO_ITEM: (teamId, memberId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
   TOGGLE_TODO_ITEM: ({ userId, memberId }) => `${BASE_URL}/api/users/${userId}/items/${memberId}/toggle`,
   DELETE_TODO_ITEM: ({ teamId, memberId, itemId }) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
