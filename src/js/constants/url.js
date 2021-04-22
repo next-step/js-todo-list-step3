@@ -8,8 +8,8 @@ export const API = {
   GET_TODO_ITEMS: (teamId, memberId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}`,
   ADD_TODO_ITEM: (teamId, memberId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
   TOGGLE_TODO_ITEM: (teamId, memberId, itemId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
-  DELETE_TODO_ITEM: ({ teamId, memberId, itemId }) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+  DELETE_TODO_ITEM: (teamId, memberId, itemId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
   ALL_DELETE_TODO_ITEM: ({ userId }) => `${BASE_URL}/api/users/${userId}/items/`,
-  MODIFY_TODO_ITEM: ({ userId, memberId }) => `${BASE_URL}/api/users/${userId}/items/${memberId}`,
+  MODIFY_TODO_ITEM: (teamId, memberId, itemId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
   PRIORITY_TODO_ITEM: ({ userId, memberId }) => `${BASE_URL}/api/users/${userId}/items/${memberId}/priority`,
 };

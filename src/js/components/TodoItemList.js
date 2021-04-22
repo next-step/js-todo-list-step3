@@ -44,7 +44,6 @@ class TodoItemList {
 
   async _delteTodoItem({ dataset: { _id: itemId } }) {
     if (!confirm(MESSAGES.DELETE_TODO)) return;
-
     await api.deleteTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId });
     this._setTodoList();
   }
@@ -61,21 +60,16 @@ class TodoItemList {
 
   modifyHandler({ target }) {
     if (!target.classList.contains(UI_CLASS.LABEL)) return;
-
     const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
     getEl(`li[data-_id="${itemId}"]`, this.todoListEl).classList.add(UI_CLASS.EDITING);
   }
 
   async modifyConfirmHandler({ key, target }) {
     if (key === KEY.ENTER || key === KEY.ESCAPE) {
-      const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
-      if (key === KEY.ESCAPE) return getEl(`li[data-_id="${todoId}"]`).classList.remove(UI_CLASS.EDITING);
-
-      const {
-        selectedUser: { _id: userId },
-      } = this.store.get();
-      // await api.modifyTodoItem({ userId, todoId, contents: target.value });
-      this._setSelectedUser(userId);
+      const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
+      if (key === KEY.ESCAPE) return getEl(`li[data-_id="${itemId}"]`).classList.remove(UI_CLASS.EDITING);
+      await api.modifyTodoItem({ teamId: this.teamId, memberId: this.memberId, itemId, contents: target.value });
+      this._setTodoList();
     }
   }
 
