@@ -35,7 +35,7 @@ class TodoApp {
         });
 
         new TodoInput({ memberId: this.memberId, teamId: this.teamId, store: this.store });
-        new TodoItemList({ memberId: this.memberId, teamId: this.teamId, store: this.store });
+        new TodoItemList({ memberId: this.memberId, teamId: this.teamId, store: this.store, container: this.memberEl });
         new TodoFilters({ memberId: this.memberId, store: this.store });
       });
   }

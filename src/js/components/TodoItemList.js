@@ -3,20 +3,20 @@ import * as api from "@lib/api";
 import { UI_CLASS, KEY, MESSAGES } from "@constants/constant";
 
 class TodoItemList {
-  constructor({ memberId, teamId, store }) {
-    this.store = store;
+  constructor({ memberId, teamId, store, container }) {
     this.memberId = memberId;
     this.teamId = teamId;
-    this.todoListEl = getEl(`li[data-_id="${memberId}"] ul.todo-list`);
-    this.todoAllDeleteButton = getEl(`li[data-_id="${memberId}"] button.clear-completed`);
-    this.todoPrioritySelect = getEl(`li[data-_id="${memberId}"] select.chip.select`);
+    this.store = store;
+    this.todoListEl = getEl("ul.todo-list", container);
+    this.todoAllDeleteButton = getEl("button.clear-completed", container);
+    this.todoPrioritySelect = getEl("select.chip.select", container);
     this.init();
   }
 
   init() {
     this.todoListEl.addEventListener("click", this.clickDelegationHandler.bind(this));
     this.todoListEl.addEventListener("dblclick", this.modifyHandler.bind(this));
-    this.todoListEl.addEventListener("keyup", this.confirmHandler.bind(this));
+    this.todoListEl.addEventListener("keyup", this.modifyConfirmHandler.bind(this));
     this.todoListEl.addEventListener("change", this.changePriorityHandler.bind(this));
     this.todoAllDeleteButton.addEventListener("click", this.allDeleteTodoItem.bind(this));
   }
@@ -62,11 +62,11 @@ class TodoItemList {
   modifyHandler({ target }) {
     if (!target.classList.contains(UI_CLASS.LABEL)) return;
 
-    const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
-    getEl(`li[data-_id="${todoId}"]`).classList.add(UI_CLASS.EDITING);
+    const { _id: itemId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
+    getEl(`li[data-_id="${itemId}"]`, this.todoListEl).classList.add(UI_CLASS.EDITING);
   }
 
-  async confirmHandler({ key, target }) {
+  async modifyConfirmHandler({ key, target }) {
     if (key === KEY.ENTER || key === KEY.ESCAPE) {
       const { _id: todoId } = target.closest(`.${UI_CLASS.TODO_ITEM}`).dataset;
       if (key === KEY.ESCAPE) return getEl(`li[data-_id="${todoId}"]`).classList.remove(UI_CLASS.EDITING);
