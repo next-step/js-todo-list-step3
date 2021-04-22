@@ -1,6 +1,7 @@
 import { getEl, getUrlParam, containsClass } from "@js/util";
 import { todoAppTemplate, addMemberBtnTemplate } from "@js/template";
 import { getMembers, addMember } from "@lib/api";
+import { MESSAGES } from "@constants/constant";
 
 import Store from "@lib/store";
 import TodoApp from "@components/TodoApp";
@@ -36,7 +37,7 @@ class Team {
   }
 
   async _addMemberHandler() {
-    const name = prompt("이름을 입력해주세요.");
+    const name = prompt(MESSAGES.ADD_MEMBER);
     if (name === null) return;
     await addMember({ teamId: this.teamId, name });
     this.setMembers();

@@ -22,6 +22,8 @@ export const KEY = {
 };
 
 export const MESSAGES = {
+  ADD_TEAM: "팀 이름을 입력해주세요.",
+  ADD_MEMBER: "이름을 입력해주세요.",
   DELETE_TODO: "삭제하시겠습니까?",
   INVALID_ADD_TODO: "2글자 이상이어야 합니다.",
 };

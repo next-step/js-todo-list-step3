@@ -1,6 +1,7 @@
 import { getTeams, addTeam } from "@lib/api";
 import { getEl, containsClass } from "@js/util";
 import { teamTemplate, teamAddBtnTemplate } from "@js/template";
+import { MESSAGES } from "@constants/constant";
 
 class TeamList {
   constructor(store) {
@@ -27,7 +28,7 @@ class TeamList {
   }
 
   async _addTeamHandler() {
-    const name = prompt("팀 이름을 입력해주세요.");
+    const name = prompt(MESSAGES.ADD_TEAM);
     if (name === null) return;
     await addTeam(name);
     this.setTeamList();
