@@ -1,6 +1,5 @@
-import { todoAppTemplate, todoTemplate } from "@js/template";
-import { getEl, pipe } from "@js/util";
-import { getUsers } from "@lib/api";
+import { todoTemplate } from "@js/template";
+import { getEl, pipe, getPriorityTodoList } from "@js/util";
 import { FILTER_TYPE } from "@constants/constant";
 
 import TodoInput from "./TodoInput";
@@ -46,6 +45,7 @@ class TodoApp {
     let onFilteringTodoList = todoList;
     if (filter === FILTER_TYPE.ACTIVE) onFilteringTodoList = todoList.filter((item) => !item.isCompleted);
     if (filter === FILTER_TYPE.COMPLETED) onFilteringTodoList = todoList.filter((item) => item.isCompleted);
+    if (filter === FILTER_TYPE.PRIORITY) onFilteringTodoList = getPriorityTodoList(todoList);
 
     return { onFilteringTodoList };
   }

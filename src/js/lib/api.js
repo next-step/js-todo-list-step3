@@ -26,7 +26,8 @@ const toggleTodoItem = ({ teamId, memberId, itemId }) => request(API.TOGGLE_TODO
 const deleteTodoItem = ({ teamId, memberId, itemId }) => request(API.DELETE_TODO_ITEM(teamId, memberId, itemId), METHOD.DELETE);
 const allDeleteTodoItem = ({ teamId, memberId }) => request(API.ALL_DELETE_TODO_ITEM(teamId, memberId), METHOD.DELETE);
 const modifyTodoItem = ({ teamId, memberId, itemId, contents }) => request(API.MODIFY_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT, { contents });
-const priorityTodoItem = ({ teamId, memberId, itemId, priority }) => request(API.PRIORITY_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT, { priority });
+const priorityTodoItem = ({ teamId, memberId, itemId, priority }) =>
+  request(API.PRIORITY_TODO_ITEM(teamId, memberId, itemId), METHOD.PUT, { priority });
 
 export {
   getTeams,

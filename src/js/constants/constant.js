@@ -2,6 +2,7 @@ export const FILTER_TYPE = {
   ALL: "all",
   ACTIVE: "active",
   COMPLETED: "completed",
+  PRIORITY: "priority",
 };
 
 export const UI_CLASS = {
@@ -12,7 +13,7 @@ export const UI_CLASS = {
   FILTER: "todo-filter",
   TODO_ITEM: "todo-item-li",
   EDITING: "editing",
-  SELECT: "select"
+  SELECT: "select",
 };
 
 export const KEY = {
@@ -23,7 +24,7 @@ export const KEY = {
 export const ACTION = {
   CREATE_USER: "createUser",
   DELETE_USER: "deleteUser",
-}
+};
 
 export const MESSAGES = {
   DELETE_TODO: "삭제하시겠습니까?",

@@ -18,3 +18,13 @@ export const getPriorityValue = (priority) => {
   };
   return valueObj[priority];
 };
+
+export const getPriorityTodoList = (todoList) => {
+  const obj = {
+    FIRST: [],
+    SECOND: [],
+    NONE: [],
+  };
+  todoList.forEach((item) => obj[item.priority].push(item));
+  return [...obj.FIRST, ...obj.SECOND, ...obj.NONE];
+};

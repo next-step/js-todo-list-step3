@@ -26,7 +26,7 @@ export const todoFilterTemplate = (todoList) => {
           <a href="#all" class="all todo-filter selected">전체보기</a>
         </li>
         <li>
-          <a href="#priority" class="todo-filter">우선 순위</a>
+          <a href="#priority" class="priority todo-filter">우선 순위</a>
         </li>
         <li>
           <a href="#active" class="active todo-filter">해야할 일</a>
