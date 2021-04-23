@@ -1,0 +1,28 @@
+{
+  "name": "js-todo-list-step3",
+  "version": "1.0.0",
+  "description": "<p align=\"middle\" >   <img width=\"200px;\" src=\"./src/images/check_list.png\"/> </p> <h2 align=\"middle\">JS 투두리스트 스텝3</h2> <p align=\"middle\">팀을 위한 투두리스트</p> <p align=\"middle\">   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>   <a href=\"https://github.com/next-step/js-todo-list-step3/main/LICENSE\" target=\"_blank\">     <img src=\"https://img.shields.io/github/license/next-step/js-todo-list-step3.svg?style=flat-square&label=license&color=08CE5D\"/>   </a> </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kkan9ma/js-todo-list-step3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kkan9ma/js-todo-list-step3/issues"
+  },
+  "homepage": "https://github.com/Kkan9ma/js-todo-list-step3#readme",
+  "keywords": [],
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-html": "^6.1.2",
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "2.2.1"
+  }
+}
