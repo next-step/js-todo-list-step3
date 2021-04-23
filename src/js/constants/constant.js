@@ -26,6 +26,7 @@ export const MESSAGES = {
   ADD_MEMBER: "이름을 입력해주세요.",
   DELETE_TODO: "삭제하시겠습니까?",
   INVALID_ADD_TODO: "2글자 이상이어야 합니다.",
+  HTTP_ERROR: "통신 에러가 발생했습니다.",
 };
 
 export const VALIDATION = {

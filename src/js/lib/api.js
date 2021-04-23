@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API } from "@constants/url";
+import { MESSAGES } from "@constants/constant";
 
 const METHOD = {
   GET: "get",
@@ -12,8 +13,14 @@ const request = async (url, method = METHOD.GET, params = {}) => {
   try {
     return await axios[method](url, params);
   } catch (e) {
-    alert(e);
+    globalHttpErrorHandler(e);
   }
+};
+
+const globalHttpErrorHandler = ({ response }) => {
+  const { message } = response.data;
+  const _message = message ? message : MESSAGES.HTTP_ERROR;
+  alert(_message);
 };
 
 const getTeams = () => request(API.GET_TEAMS);

@@ -1,5 +1,5 @@
-import TeamList from "@components/TeamList";
 import Store from "@lib/store";
+import TeamList from "@components/TeamList";
 import { TEAM_LIST_STORE } from "@constants/model";
 import "./css/style.css";
 
