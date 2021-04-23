@@ -1,4 +1,4 @@
-export const todoAppTemplate = ({ _id, name, todoList }) => {
+export const memberTemplate = ({ _id, name, todoList }) => {
   return `
     <li data-_id=${_id} id=${_id} class="todoapp-container">
       <h2>

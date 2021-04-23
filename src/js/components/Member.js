@@ -6,7 +6,7 @@ import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import TodoFilters from "./TodoFilters";
 
-class TodoApp {
+class Member {
   constructor({ _id, name, todoList, teamId, store }) {
     this.teamId = teamId;
     this.memberId = _id;
@@ -62,4 +62,4 @@ class TodoApp {
   }
 }
 
-export default TodoApp;
+export default Member;

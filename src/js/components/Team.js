@@ -1,10 +1,10 @@
 import { getEl, getUrlParam, containsClass } from "@js/util";
-import { todoAppTemplate, addMemberBtnTemplate } from "@js/template";
+import { memberTemplate, addMemberBtnTemplate } from "@js/template";
 import { getMembers, addMember } from "@lib/api";
 import { MESSAGES } from "@constants/constant";
 
 import Store from "@lib/store";
-import TodoApp from "@components/TodoApp";
+import Member from "@components/Member";
 import { TODO_STORE } from "@constants/model";
 
 class Team {
@@ -50,8 +50,8 @@ class Team {
       members
         .map((member) => {
           const todoStore = new Store(TODO_STORE);
-          new TodoApp({ ...member, teamId: this.teamId, store: todoStore });
-          return todoAppTemplate(member);
+          new Member({ ...member, teamId: this.teamId, store: todoStore });
+          return memberTemplate(member);
         })
         .join("") + addMemberBtnTemplate();
   }
