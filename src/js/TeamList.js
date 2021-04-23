@@ -11,10 +11,10 @@ export default class TeamList {
   async init() {
     await this.render();
     this.addTeamButton = document.querySelector('#add-team-button');
-    // this.addTeamButton.addEventListener(
-    //   'click',
-    //   await this.handleClickAddTeamButton.bind(this)
-    // );
+    this.addTeamButton.addEventListener(
+      'click',
+      await this.handleClickAddTeamButton.bind(this)
+    );
   }
 
   async render() {
@@ -39,5 +39,26 @@ export default class TeamList {
     </button>
     </div>`;
     teamCardContainers.insertAdjacentHTML('beforeend', btnHTML);
+  }
+
+  async handleClickAddTeamButton() {
+    const teamName = prompt('팀 이름을 입력해주세요');
+    if (teamName === null || teamName.length < 1) {
+      alert('팀 이름은 1글자 이상이어야 합니다.');
+      return;
+    }
+    const response = await fetch(
+      'https://js-todo-list-9ca3a.df.r.appspot.com/api/teams',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: teamName })
+      }
+    );
+    const teamCardContainers = document.querySelector('#team-list-container');
+    teamCardContainers.innerHTML = '';
+    this.render();
   }
 }
