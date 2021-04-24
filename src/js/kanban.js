@@ -31,12 +31,6 @@ class Kanban {
     await this.render();
   }
 
-  handleClickListContainer(event) {
-    console.log('handleClickListContainer');
-    const { target } = event;
-    console.log(target);
-  }
-
   async handleKeyupListContainer(event) {
     // TODO
     // 1) dblclick 이후 enter 이벤트 발생 시 오작동 여지
@@ -63,15 +57,34 @@ class Kanban {
     event.target.value = '';
   }
 
+  async handleClickListContainer(event) {
+    const { target } = event;
+    if (target.classList.value !== 'destroy' || target.tagName !== 'BUTTON')
+      return;
+    console.log('handleClickListContainer');
+
+    const todoListItem = target.closest('.todo-list-item');
+    const todoListItemParent = todoListItem.closest('ul');
+    const todoListItemId = todoListItem.id;
+    const todoApp = target.closest('.todoapp-container');
+    const dataMemberId = todoApp.getAttribute('data-member-id');
+
+    await this.API.deleteTeamMemberTodoItem(
+      this.teamId,
+      dataMemberId,
+      todoListItemId
+    );
+    todoListItemParent.removeChild(todoListItem);
+  }
+
   async addEvents() {
     console.log('kanban addEvents');
     const $addUserButton = $('#add-user-button');
     const $flexColumnContainer = $('.flex-column-container');
-    // $flexColumnContainer.addEventListener(
-    //   'click',
-    //   this.handleClickListContainer.bind(this)
-    //   // await this.handleClickListContainer.bind(this)
-    // );
+    $flexColumnContainer.addEventListener(
+      'click',
+      await this.handleClickListContainer.bind(this)
+    );
     $flexColumnContainer.addEventListener(
       'keyup',
       await this.handleKeyupListContainer.bind(this)
