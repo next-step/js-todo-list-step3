@@ -127,24 +127,43 @@ class Kanban {
     );
   }
 
+  async deleteAllTodoItem(target) {
+    console.log(target);
+    const $todoApp = target.closest('.todoapp-container');
+    const dataMemberId = $todoApp.getAttribute('data-member-id');
+    const $todoList = $todoApp.querySelector('.todo-list');
+    const response = await this.API.clearTeamMemberTodoItem(
+      this.teamId,
+      dataMemberId
+    );
+    $todoList.innerHTML = '';
+  }
+
   async handleClickListContainer(event) {
     const { target } = event;
 
     if (
-      target.classList.value !== 'destroy' &&
-      target.tagName !== 'BUTTON' &&
-      target.className !== 'toggle'
+      target.className !== 'destroy' &&
+      target.className !== 'toggle' &&
+      target.tagName !== 'BUTTON'
     )
       return;
     console.log('handleClickListContainer');
-    if (target.tagName === 'BUTTON') {
+    if (target.className === 'destroy') {
       await this.deleteTodoItem(target);
       return;
     }
-    await this.toggleTodoItem(target);
+    if (target.className === 'toggle') {
+      await this.toggleTodoItem(target);
+    }
+    if (target.className === 'clear-completed') {
+      await this.deleteAllTodoItem(target);
+    }
   }
 
   handleDblclick(event) {
+    if (event.target.className !== 'label') return;
+
     const { target } = event;
     const $todoListItem = target.closest('.todo-list-item');
 

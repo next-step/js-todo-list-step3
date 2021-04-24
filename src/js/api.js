@@ -79,6 +79,14 @@ class API {
     return response;
   }
 
+  async clearTeamMemberTodoItem(teamId, memberId) {
+    const response = await this.delete(
+      `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items`,
+      this.createRequestBody('DELETE', {})
+    );
+    return response;
+  }
+
   async toggleTeamMemberTodoItem(teamId, memberId, itemId) {
     const response = await this.put(
       `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}/toggle`,
