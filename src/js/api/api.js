@@ -15,45 +15,51 @@ const request = async (url, method, bodyData) => {
   }
 };
 
+export const teamApi = {
+  get: (teamId) => {
+    return request(`${ENDPOINT}/api/teams/${teamId ? teamId : ""}`, "GET");
+  },
+};
+
 export const userApi = {
-  getUser: (userId) => {
+  get: (userId) => {
     return request(`${ENDPOINT}/api/users/${userId ? userId : ""}`, "GET");
   },
 
-  setUser: (name) => {
+  create: (name) => {
     return request(`${ENDPOINT}/api/users/`, "POST", { name: name });
   },
 
-  deleteUser: (userId) => {
+  delete: (userId) => {
     return request(`${ENDPOINT}/api/users/${userId}`, "DELETE");
   },
 };
 
 export const todoApi = {
-  getItem: (userId) => {
+  get: (userId) => {
     return request(`${ENDPOINT}/api/users/${userId}/items/`, "GET");
   },
 
-  setItem: (userId, contents) => {
+  create: (userId, contents) => {
     return request(`${ENDPOINT}/api/users/${userId}/items/`, "POST", {
       contents: contents,
     });
   },
 
-  putItem: (userId, itemId, contents) => {
+  modify: (userId, itemId, contents) => {
     return request(`${ENDPOINT}/api/users/${userId}/items/${itemId}`, "PUT", {
       contents: contents,
     });
   },
 
-  toggleItem: (userId, itemId) => {
+  toggle: (userId, itemId) => {
     return request(
       `${ENDPOINT}/api/users/${userId}/items/${itemId}/toggle/`,
       "PUT"
     );
   },
 
-  setPriorityItem: (userId, itemId, priority) => {
+  setPriority: (userId, itemId, priority) => {
     return request(
       `${ENDPOINT}/api/users/${userId}/items/${itemId}/priority/`,
       "PUT",
@@ -63,7 +69,7 @@ export const todoApi = {
     );
   },
 
-  deleteItem: (userId, itemId) => {
+  delete: (userId, itemId) => {
     return request(`${ENDPOINT}/api/users/${userId}/items/${itemId}`, "DELETE");
   },
 };

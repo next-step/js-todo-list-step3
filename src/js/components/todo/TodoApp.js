@@ -40,7 +40,7 @@ export default class TodoApp {
 
   getTodoData() {
     this.todoList.isLoading();
-    todoApi.getItem(this.userId).then((data) => {
+    todoApi.get(this.userId).then((data) => {
       this.setState(data);
     });
   }
@@ -61,27 +61,27 @@ export default class TodoApp {
   }
 
   handleCreateItem = async (contents) => {
-    await todoApi.setItem(this.userId, contents);
+    await todoApi.create(this.userId, contents);
     this.getTodoData();
   };
 
   handleCheckItem = async (itemId) => {
-    await todoApi.toggleItem(this.userId, itemId);
+    await todoApi.toggle(this.userId, itemId);
     this.getTodoData();
   };
 
   handleEditItem = async (itemId, contents) => {
-    await todoApi.putItem(this.userId, itemId, contents);
+    await todoApi.modify(this.userId, itemId, contents);
     this.getTodoData();
   };
 
   handleSetPriorityItem = async (itemId, priority) => {
-    await todoApi.setPriorityItem(this.userId, itemId, priority);
+    await todoApi.setPriority(this.userId, itemId, priority);
     this.getTodoData();
   };
 
   handleDeleteItem = async (itemId) => {
-    await todoApi.deleteItem(this.userId, itemId);
+    await todoApi.delete(this.userId, itemId);
     this.getTodoData();
   };
 
