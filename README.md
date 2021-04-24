@@ -14,12 +14,15 @@
 </p>
 
 ## 🔥 Projects!
+flux 구조 적용
+참고자료: https://haruair.github.io/flux/docs/todo-list.html
+
 <br/>
 
 ## 🎯 index.html 팀 페이지 요구사항
 
-- [ ] 1. 팀 추가하기
-- [ ] 2. 팀 리스트 불러와서 화면에 보여주기
+- [X] 1. 팀 추가하기
+- [X] 2. 팀 리스트 불러와서 화면에 보여주기
 
 ## 🎯 kanban.html 팀의 투두리스트 페이지 요구사항
 

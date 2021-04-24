@@ -1,6 +1,9 @@
 import * as Ajax from "../util/ajaxUtil.js";
 const BASE_URL = "https://js-todo-list-9ca3a.df.r.appspot.com";
 const APIs = {
+  getTeams : () => `${BASE_URL}/api/teams/`,
+  addTeam : () => `${BASE_URL}/api/teams/`,
+  
   getUsers : () => `${BASE_URL}/api/users/`,
   getUser : (userId) => `${BASE_URL}/api/users/${userId}`,
   getItems : (userId) => `${BASE_URL}/api/users/${userId}/items/`,
@@ -8,7 +11,14 @@ const APIs = {
   updateItem : (userId,itemId,updateAction) => `${BASE_URL}/api/users/${userId}/items/${itemId}/${updateAction}`
 }
 export class RESTDataBase {
-  
+  static async getTeams() {
+    const url = APIs.getTeams();
+    return await Ajax.get(url,"Team List 로드 실패");
+  }
+  static async addTeam(teamName) {
+    const url = APIs.addTeam();
+    return await Ajax.post(url,{name:teamName},"Team Add 실패");
+  }
   static async getUsers() {
     const url = APIs.getUsers();
     return await Ajax.get(url,"UserList 로드 실패");

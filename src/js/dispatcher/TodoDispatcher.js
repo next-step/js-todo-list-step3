@@ -1,6 +1,6 @@
-import { Dispatcher } from "./Dispatcher";
+import { Dispatcher } from "./Dispatcher.js";
 
-export class TodoDispatcher extends Dispatcher{
+class TodoDispatcher extends Dispatcher{
     
     handleViewAction(action){
         this.dispatch({
@@ -8,12 +8,5 @@ export class TodoDispatcher extends Dispatcher{
             action: action
         });
     }
-    //현 예제에서는 필요 없음. 어떨때 필요한지 고민 필요.
-    handleServerAction(action){
-        this.dispatch({
-            source: 'SERVER_ACTION',
-            action: action
-        });
-    }
-    
 }
+export const todoDispatcher = new TodoDispatcher();
