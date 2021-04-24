@@ -45,6 +45,11 @@ class API {
     );
     return response;
   }
+
+  async getTeamMemberList(teamId) {
+    const response = await this.get(`${BASE_URL}${API_TEAM}/${teamId}`);
+    return response;
+  }
 }
 
 export default API;

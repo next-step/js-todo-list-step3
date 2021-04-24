@@ -3,6 +3,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 import API from './api.js';
+import { $, $$ } from './constants.js';
+import { todoAppContainer, makeAddUserButton } from './template.js';
 
 class Kanban {
   constructor() {
@@ -19,21 +21,41 @@ class Kanban {
       return;
     }
     const response = await this.API.addTeamMember(this.teamId, teamMemberName);
-    // render
+    // TODO: render added user
   }
 
   async addEvents() {
     console.log('kanban addEvents');
-    const $addUserButton = document.querySelector('#add-user-button');
+    const $addUserButton = $('#add-user-button');
     $addUserButton.addEventListener(
       'click',
       await this.handleClickAddUserButton.bind(this)
     );
   }
 
-  render() {
+  async renderTodoAppContainers() {
+    const response = await this.API.getTeamMemberList(this.teamId);
+    const memberList = await response.json();
+    const $todoAppListContainer = $('.todoapp-list-container');
+    const $userTitle = $('#user-title');
+    $userTitle.setAttribute('data-username', memberList.name);
+    $userTitle.querySelector('strong').innerText = `${memberList.name}`;
+
+    $todoAppListContainer.innerHTML = '';
+    $todoAppListContainer.innerHTML = makeAddUserButton;
+    // member 출력을 먼저 추가된 순서부터 하기 위한 reverse
+    for (const member of memberList.members.reverse()) {
+      $todoAppListContainer.insertAdjacentHTML(
+        'afterbegin',
+        todoAppContainer(member)
+      );
+    }
+  }
+
+  async render() {
     console.log('kanban render');
-    this.addEvents();
+    await this.renderTodoAppContainers();
+    await this.addEvents();
   }
 
   init() {
