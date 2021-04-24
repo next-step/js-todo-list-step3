@@ -31,21 +31,61 @@ class Kanban {
     await this.render();
   }
 
+  async changeInputValue(event) {
+    const { target } = event;
+    const $todoListItem = target.closest('.todo-list-item');
+    const dataMemberId = target
+      .closest('.todoapp-container')
+      .getAttribute('data-member-id');
+    const response = await this.API.changeTeamMemberTodoItem(
+      this.teamId,
+      dataMemberId,
+      $todoListItem.id,
+      target.value
+    );
+    const $label = target.closest('.editing').querySelector('.label-value');
+
+    $label.innerText = event.target.value;
+    target.setAttribute('value', event.target.value);
+    $todoListItem.classList.remove('editing');
+  }
+
+  async editInputValue(event) {
+    const { target } = event;
+    const $todoListItem = target.closest('.todo-list-item');
+    const originalValue = target.getAttribute('value');
+
+    if (event.key === 'Enter') {
+      await this.changeInputValue(event);
+      return;
+    }
+    if (event.key === 'Escape') {
+      event.target.value = originalValue;
+      target.setAttribute('value', originalValue);
+      $todoListItem.classList.remove('editing');
+    }
+  }
+
   async handleKeyupListContainer(event) {
     // TODO
     // 1) dblclick 이후 enter 이벤트 발생 시 오작동 여지
     // 2) try catch
 
     console.log('handleKeyUpListContainer');
+    const { target } = event;
+    const { value } = target;
+
+    if (target.className === 'edit') {
+      await this.editInputValue(event);
+      return;
+    }
     if (event.key !== 'Enter') return;
     if (!event.target.value || event.target.value.length < 1) return;
 
-    const { target } = event;
-    const { value } = target;
-    const todoContainer = target.closest('li');
-    const todoApp = target.closest('div');
-    const todoList = todoApp.querySelector('.todo-list');
-    const dataMemberId = todoContainer.getAttribute('data-member-id');
+    const $todoContainer = target.closest('li');
+    const $todoApp = target.closest('div');
+    const $todoList = $todoApp.querySelector('.todo-list');
+    const dataMemberId = $todoContainer.getAttribute('data-member-id');
 
     const response = await this.API.addTeamMemberTodoItem(
       this.teamId,
@@ -54,32 +94,32 @@ class Kanban {
     );
     const todoData = await response.json();
     // TODO: fix? 최초에만 render가 2번?
-    todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
+    $todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
     event.target.value = '';
   }
 
   async deleteTodoItem(target) {
-    const todoListItem = target.closest('.todo-list-item');
-    const todoListItemParent = todoListItem.closest('ul');
-    const todoListItemId = todoListItem.id;
-    const todoApp = target.closest('.todoapp-container');
-    const dataMemberId = todoApp.getAttribute('data-member-id');
+    const $todoListItem = target.closest('.todo-list-item');
+    const $todoListItemParent = $todoListItem.closest('ul');
+    const $todoListItemId = $todoListItem.id;
+    const $todoApp = target.closest('.todoapp-container');
+    const dataMemberId = $todoApp.getAttribute('data-member-id');
 
     await this.API.deleteTeamMemberTodoItem(
       this.teamId,
       dataMemberId,
-      todoListItemId
+      $todoListItemId
     );
-    todoListItemParent.removeChild(todoListItem);
+    $todoListItemParent.removeChild($todoListItem);
   }
 
   async toggleTodoItem(target) {
     console.log('toggleTodoItem');
-    const todoListItem = target.closest('.todo-list-item');
-    const todoListItemId = todoListItem.id;
-    const todoApp = target.closest('.todoapp-container');
-    const dataMemberId = todoApp.getAttribute('data-member-id');
-    todoListItem.classList.toggle('completed');
+    const $todoListItem = target.closest('.todo-list-item');
+    const todoListItemId = $todoListItem.id;
+    const $todoApp = target.closest('.todoapp-container');
+    const dataMemberId = $todoApp.getAttribute('data-member-id');
+    $todoListItem.classList.toggle('completed');
     const response = await this.API.toggleTeamMemberTodoItem(
       this.teamId,
       dataMemberId,
@@ -104,6 +144,13 @@ class Kanban {
     await this.toggleTodoItem(target);
   }
 
+  handleDblclick(event) {
+    const { target } = event;
+    const $todoListItem = target.closest('.todo-list-item');
+
+    $todoListItem.classList.add('editing');
+  }
+
   async addEvents() {
     console.log('kanban addEvents');
     const $addUserButton = $('#add-user-button');
@@ -115,6 +162,10 @@ class Kanban {
     $flexColumnContainer.addEventListener(
       'keyup',
       await this.handleKeyupListContainer.bind(this)
+    );
+    $flexColumnContainer.addEventListener(
+      'dblclick',
+      this.handleDblclick.bind(this)
     );
     $addUserButton.addEventListener(
       'click',

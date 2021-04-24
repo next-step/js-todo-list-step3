@@ -86,6 +86,16 @@ class API {
     );
     return response;
   }
+
+  async changeTeamMemberTodoItem(teamId, memberId, itemId, contents) {
+    const response = await this.put(
+      `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}`,
+      this.createRequestBody('PUT', {
+        body: JSON.stringify({ contents }),
+      })
+    );
+    return response;
+  }
 }
 
 export default API;
