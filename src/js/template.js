@@ -98,4 +98,5 @@ export {
   makeAddUserButton,
   makeTeamCardContainer,
   todoAppContainer,
+  todoListItemTemplate,
 };

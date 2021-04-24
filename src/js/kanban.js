@@ -4,7 +4,11 @@
 /* eslint-disable no-alert */
 import API from './api.js';
 import { $, $$ } from './constants.js';
-import { todoAppContainer, makeAddUserButton } from './template.js';
+import {
+  todoAppContainer,
+  makeAddUserButton,
+  todoListItemTemplate,
+} from './template.js';
 
 class Kanban {
   constructor() {
@@ -34,31 +38,29 @@ class Kanban {
   }
 
   async handleKeyupListContainer(event) {
-    if (event.key !== 'Enter') return;
+    // TODO
+    // 1) dblclick 이후 enter 이벤트 발생 시 오작동 여지
+    // 2) try catch
 
-    // input enter return
-    // 이후 고려할 사항: dblclick 이후 enter 이벤트 발생 시 오작동 여지
+    console.log('handleKeyUpListContainer');
+    if (event.key !== 'Enter') return;
     if (!event.target.value || event.target.value.length < 1) return;
 
-    const li = event.target.closest('li');
-    const memberId = li.getAttribute('data-member-id');
-    const { value } = event.target;
+    const { target } = event;
+    const { value } = target;
+    const todoContainer = target.closest('li');
+    const todoApp = target.closest('div');
+    const todoList = todoApp.querySelector('.todo-list');
+    const dataMemberId = todoContainer.getAttribute('data-member-id');
 
-    event.target.value = '';
     const response = await this.API.addTeamMemberTodoItem(
       this.teamId,
-      memberId,
+      dataMemberId,
       value
     );
-    await console.log(response);
-    // 해야 할 일
-    // 1. li 태그로부터 id 받기
-    // 2. input 값 받기
-    // 3. input 값 비우기
-    // 5. post 요청 보내주기
-
-    // 4. todo 추가하기 (html에만) // todo item id key를 받아와야함함
-    // try catch
+    const todoData = await response.json();
+    todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
+    event.target.value = '';
   }
 
   async addEvents() {
