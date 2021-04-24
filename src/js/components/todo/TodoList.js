@@ -1,4 +1,4 @@
-import { todoItem, loading } from "./todoItem.js";
+import { todoItem, loading } from "../../templete/templete.js";
 export default class TodoList {
   constructor({
     todoData,
@@ -14,7 +14,7 @@ export default class TodoList {
     this.handleEditItem = onEditItem;
     this.handleSetPriorityItem = onSetPriorityItem;
     this.handleDeleteItem = onDeleteItem;
-    console.log(this.todoPrioritySelect);
+
     this.init();
   }
 

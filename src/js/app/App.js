@@ -1,11 +1,13 @@
 import { teamApi, userApi } from "../api/api.js";
 import TeamList from "../components/team/TeamList.js";
+import MemberList from "../components/team/MemberList.js";
 import TodoApp from "../components/todo/TodoApp.js";
 import UserList from "../components/user/UserList.js";
 
 export default class App {
   constructor() {
-    this.containerEl = document.getElementById('container');
+    this.containerEl = document.getElementById("container");
+    this.teamData = [];
     this.appData = [];
     this.selectedUserId = "";
     this.init();
@@ -13,12 +15,12 @@ export default class App {
 
   init() {
     teamApi.get().then((data) => {
-      this.teamData = data;
       this.teamList = new TeamList({
-        containerEl = this.containerEl,
-        teamData = this.teamData
-      })
-    })
+        containerEl: this.containerEl,
+        teamData: data,
+        onGetTeamMembers: this.getTeamMembers.bind(this),
+      });
+    });
   }
 
   init2() {
@@ -28,9 +30,9 @@ export default class App {
       this.userList = new UserList({
         appData: this.appData,
         selectedUserId: this.selectedUserId,
-        onSelectUser: this.handleSelectUser.bind(this),
-        onCreateUser: this.handleCreateUser.bind(this),
-        onDeleteUser: this.handleDeleteUser.bind(this),
+        onSelectUser: this.selectUser.bind(this),
+        onCreateUser: this.createUser.bind(this),
+        onDeleteUser: this.deleteUser.bind(this),
       });
       this.todoApp = new TodoApp({
         userId: this.selectedUserId,
@@ -38,7 +40,16 @@ export default class App {
     });
   }
 
-  handleGetAllUser = async () => {
+  getTeamMembers = async (teamId) => {
+    await teamApi.get(teamId).then((data) => {
+      this.memberList = new MemberList({
+        containerEl: this.containerEl,
+        membersData: data.members,
+      });
+    });
+  };
+
+  getAllUser = async () => {
     await userApi.get().then((data) => {
       this.appData = data;
     });
@@ -46,17 +57,17 @@ export default class App {
     this.render();
   };
 
-  handleCreateUser = async (name) => {
+  createUser = async (name) => {
     await userApi.create(name);
     this.handleGetAllUser();
   };
 
-  handleSelectUser = async (userId) => {
+  selectUser = async (userId) => {
     this.selectedUserId = userId;
     this.render();
   };
 
-  handleDeleteUser = async (userId) => {
+  deleteUser = async (userId) => {
     await userApi.delete(userId);
     this.handleGetAllUser();
   };
