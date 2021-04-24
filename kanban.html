@@ -8,12 +8,10 @@
   </head>
   <body>
     <div id="app">
-      <h1 id="user-title" data-username="eastjun">
-        <span><strong>Team</strong>'s Todo List</span>
+      <h1 id="kanban-title">
+        <span><strong>Team</strong>'s Todo Lists</span>
       </h1>
-      <ul class="todoapp-list-container flex-column-container">
-        <li class="todoapp-container"></li>
-         
+      <ul class="todoapp-list-container flex-column-container" data-teamid='theteamid'>
         <li class="add-user-button-container">
           <button id="add-user-button" class="ripple">
             <span class="material-icons">add</span>
@@ -21,6 +19,6 @@
         </li>
       </ul>
     </div>
-    <script src="./src/js/kanban.js"></script>
+    <script type="module" src="./src/js/kanban.js"></script>
   </body>
 </html>

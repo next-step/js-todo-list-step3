@@ -1,19 +1,11 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
-    }
-  })
+import { KanbanApp } from "./app/KanbanApp.js";
+import { KanbanStore } from "./store/KanbanStore.js";
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
+const _getUrlParams = () => {
+  const params = {};
+  window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+  return params;
 }
-
-new App()
+const kanbanApp = new KanbanApp();
+const kanbanStore = new KanbanStore(_getUrlParams().id,kanbanApp)
+kanbanStore.init();

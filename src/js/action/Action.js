@@ -3,8 +3,10 @@ export const ACTION_TYPES = {
     GET_TEAMS : 'GET_TEAMS',
     ADD_TEAM :'ADD_TEAM',
 
-    GET_USERS : 'GET_USERS',
-    ADD_USER :'ADD_USER',
+    //GET_USERS : 'GET_USERS',
+    GET_TEAM : 'GET_TEAM',
+    ADD_MEMBER :'ADD_MEMBER',
+
 
     GET_ITEMS :'ADD_USER',
     ADD_ITEM :'ADD_USER',
@@ -22,8 +24,20 @@ export class Action{
     static getTeams(){
         action.getTeams();
     }
-
     static addTeam(teamName){
         action.addTeam(teamName);
+    }
+    static getTeam(teamId){
+        action.getTeam(teamId);
+    }
+    static addMember(teamId,memberName){
+        action.addMember(teamId,memberName);
+    }
+
+
+
+
+    static deleteItemAll(teamId,userId){
+        action.deleteItemAll(teamId,userId);
     }
 }

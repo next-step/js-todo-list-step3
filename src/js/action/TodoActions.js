@@ -13,4 +13,28 @@ export class TodoActions{
       teamName:teamName,
     });
    }
+
+   static getTeam(teamId){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.GET_TEAM,
+      teamId:teamId,
+    });
+   }
+
+   static addMember(teamId,memberName){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.ADD_MEMBER,
+      teamId:teamId,
+      memberName:memberName,
+    });
+   }
+
+   static deleteItemAll(teamId,userId){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.DELETE_ITEM_ALL,
+      teamId:teamId,
+      userId:userId,
+    });
+   }
+
   };

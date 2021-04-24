@@ -1,75 +1,28 @@
-import { $,$$ } from "../../util/domSelection.js";
+import { Action } from '../../action/Action.js'
+import { $ } from "../../util/domSelection.js";
 
 export class UserList{
-    static ACTIVE = 'active';
-    constructor(todoApp){
-        this.todoApp = todoApp;
-        const list = $("#user-list");
-        list.addEventListener("click", ({target}) => {
-            if(!target) return;
-            if(target.classList.contains("user-create-button") || target.classList.contains("user-delete-button")) {
-                return true;
-            }
-            if(target.nodeName == "BUTTON") {
-                const selectedButton = target;
-                $$("#user-list button").forEach(button => button.classList.remove(UserList.ACTIVE));
-                selectedButton.classList.toggle(UserList.ACTIVE);
-                todoApp.changeUser(selectedButton.dataset.userid);
-            }
-        });
-        list.addEventListener("click", async ({target}) => {
-            if (!target) return;
-            if (target.classList.contains("user-create-button")) {
-                const userName = prompt("추가하고 싶은 이름을 입력해주세요.");
-                if(userName.trim().length < 2){
-                    alert('유저명은 최소 2자 이상 입력해 주세요.');
-                    return;
-                }
-                await todoApp.addUser(userName);
-            }
-        });
-        list.addEventListener("click", async ({target})=>{
-            if (!target) return;
-            if (target.classList.contains("user-delete-button")) {
-                const deleteUserName =  todoApp.currentUser.name;
-                if(confirm(deleteUserName +"을 삭제하시겠습니까?")){
-                    await todoApp.deleteUser(todoApp.currentUser._id);
-                };
-            }
-        });
+    constructor(){
+        const $todoApps = $('.todoapp-list-container')
+        const $addMemberButton = $('#add-user-button')
+        $addMemberButton.addEventListener('click', () => {
+            const memberName = prompt('새로운 팀원 이름을 입력해주세요');
+            Action.addMember($todoApps.dataset.teamid,memberName);
+        })
     }
 
-    setState(users,currentUser){
-        const list = $("#user-list");
-        const title = $("#user-title strong");
-        list.innerHTML = "";
-        let button;
-        users.forEach((item) => {
-            button = document.createElement("button");
-
-            const idAttribute = document.createAttribute("data-userid");
-            idAttribute.value = item._id;
-
-            button.setAttributeNode(idAttribute);
-            const buttonClass = document.createAttribute("class");
-            const classList = ['ripple'];
-            
-            if (item._id == currentUser._id) {
-                classList.push('active');
-                title.textContent = item.name;
-            }
-            buttonClass.value = classList.join(' ');
-            button.setAttributeNode(buttonClass);
-
-            button.innerHTML = item.name;
-            list.appendChild(button);
+    render(team){
+        //Title 설정
+        $('#kanban-title strong').textContent = team.name;
+        //teamId 세팅
+        $('ul.todoapp-list-container').dataset.teamid=team._id;
+        
+        //멤버별 todoapp Container 생성 -> 이후 처리는 TodoStore에서 할 예정
+        const members = team.members;
+        const addMemberContainer = $('li.add-user-button-container');
+        members.forEach((member) => {
+            const todoAppContainer = `<li class="todoapp-container" data-memberid="${member._id}">${member.name}</li>`
+            addMemberContainer.insertAdjacentHTML('beforebegin',todoAppContainer);
         });
-        list.innerHTML = list.innerHTML + 
-        `<button class="ripple user-create-button" data-action="createUser">
-        + 유저 생성
-        </button>
-        <button class="ripple user-delete-button" data-action="deleteUser">
-        삭제 -
-        </button>`;
     }
 }

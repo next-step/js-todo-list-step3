@@ -2,8 +2,6 @@ import { todoDispatcher } from '../dispatcher/TodoDispatcher.js'
 import { ACTION_TYPES } from '../action/Action.js'
 import { DAO } from "../database/database.js";
 
-
-
 const _getTeams = async () =>{
   return await DAO.getTeams();
 }
@@ -29,7 +27,8 @@ export class TeamStore {
   }
   async init(){
     this._state.teams = await _getTeams();
-    this.setState({});
+    const copiedState = _copyState(this._state);
+    this.teamApp.renderAll(copiedState);
   }
   async setState({action}) {
     //상태 변경
@@ -39,6 +38,9 @@ export class TeamStore {
     }else if(type == ACTION_TYPES.ADD_TEAM){
       await _addTeam(action?.teamName);
       this._state.teams = await _getTeams();
+    }else{
+      //알지 못하는 액션이 왔을때.
+      return true;
     }
 
     //상태 복사 후 전파

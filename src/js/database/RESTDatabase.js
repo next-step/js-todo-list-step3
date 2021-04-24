@@ -2,9 +2,9 @@ import * as Ajax from "../util/ajaxUtil.js";
 const BASE_URL = "https://js-todo-list-9ca3a.df.r.appspot.com";
 const APIs = {
   getTeams : () => `${BASE_URL}/api/teams/`,
-  addTeam : () => `${BASE_URL}/api/teams/`,
-  
-  getUsers : () => `${BASE_URL}/api/users/`,
+  getTeam : (teamId) => `${BASE_URL}/api/teams/${teamId}`,
+  getMembers : (teamId) => `${BASE_URL}/api/teams/${teamId}/members`,
+
   getUser : (userId) => `${BASE_URL}/api/users/${userId}`,
   getItems : (userId) => `${BASE_URL}/api/users/${userId}/items/`,
   getItem : (userId,itemId) => `${BASE_URL}/api/users/${userId}/items/${itemId}`,
@@ -16,24 +16,20 @@ export class RESTDataBase {
     return await Ajax.get(url,"Team List 로드 실패");
   }
   static async addTeam(teamName) {
-    const url = APIs.addTeam();
+    const url = APIs.getTeams();
     return await Ajax.post(url,{name:teamName},"Team Add 실패");
   }
-  static async getUsers() {
-    const url = APIs.getUsers();
-    return await Ajax.get(url,"UserList 로드 실패");
+  static async getTeam(teamId) {
+    const url = APIs.getTeam(teamId);
+    return await Ajax.get(url,"Team 정보 로드 실패");
+  }
+  static async addMember(teamId,memberName) {
+    const url = APIs.getMembers(teamId);
+    return await Ajax.post(url,{name:memberName},"Member Add 실패");
   }
 
-  static async getUser(userId) {
-    const url = APIs.getUser(userId);
-    return await Ajax.get(url,"User 로드 실패");
-  }
 
-  static async addUser(userName) {
-    const url = APIs.getUsers();
-
-    return await Ajax.post(url,{'name':userName},"User Add 실패");
-  }
+  
   static async deleteUser(userId) {
     const url = APIs.getUser(userId);
     return await Ajax.deleteRequest(url,"User delete 실패");
