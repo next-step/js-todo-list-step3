@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 
-import { BASE_URL, API_TEAM, $, $$ } from './constants.js';
+import { $, $$ } from './constants.js';
 import { makeAddTeamButton, makeTeamCardContainer } from './template.js';
 import API from './api.js';
 
@@ -35,7 +35,7 @@ export default class TeamList {
       return;
     }
     const response = await this.API.addTeam(teamName);
-    this.render();
+    await this.render();
   }
 
   handleClickTeamCard(event) {

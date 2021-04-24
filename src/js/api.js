@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { BASE_URL, API_TEAM } from './constants.js';
 
 class API {
@@ -30,6 +31,16 @@ class API {
       this.teamURL,
       this.createRequestBody('POST', {
         body: JSON.stringify({ name: teamName }),
+      })
+    );
+    return response;
+  }
+
+  async addTeamMember(teamId, memberName) {
+    const response = await this.post(
+      `${this.teamURL}/${teamId}/members`,
+      this.createRequestBody('POST', {
+        body: JSON.stringify({ name: memberName }),
       })
     );
     return response;
