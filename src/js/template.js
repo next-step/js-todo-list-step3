@@ -68,8 +68,6 @@ const todoAppContainer = function (member) {
     <section class="main">
       <ul class="todo-list">
 			${appContainer}
-        <!-- <li class="todo-list-item"> -->
-          <!-- todolitsmitem -->
         </li>
       </ul>
     </section>

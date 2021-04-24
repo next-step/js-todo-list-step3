@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { BASE_URL, API_TEAM } from './constants.js';
+import { BASE_URL, API_TEAM, API_MEMBERS } from './constants.js';
 
 class API {
   constructor() {
@@ -38,7 +38,7 @@ class API {
 
   async addTeamMember(teamId, memberName) {
     const response = await this.post(
-      `${this.teamURL}/${teamId}/members`,
+      `${this.teamURL}/${teamId}${API_MEMBERS}`,
       this.createRequestBody('POST', {
         body: JSON.stringify({ name: memberName }),
       })
@@ -47,7 +47,17 @@ class API {
   }
 
   async getTeamMemberList(teamId) {
-    const response = await this.get(`${BASE_URL}${API_TEAM}/${teamId}`);
+    const response = await this.get(`${this.teamURL}/${teamId}`);
+    return response;
+  }
+
+  async addTeamMemberTodoItem(teamId, memberId, contents) {
+    const response = await this.post(
+      `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items`,
+      this.createRequestBody('POST', {
+        body: JSON.stringify({ contents }),
+      })
+    );
     return response;
   }
 }

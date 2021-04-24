@@ -16,17 +16,64 @@ class Kanban {
   async handleClickAddUserButton() {
     console.log('handleClickAddUserButton');
     const teamMemberName = prompt('새로운 팀원 이름을 입력해주세요');
+    // TODO: 빈 문자열, white space만 있는 문자열 분리해서 처리할 것.
     if (teamMemberName === null || teamMemberName.length < 1) {
       alert('팀원 이름은 1글자 이상이어야 합니다.');
       return;
     }
     const response = await this.API.addTeamMember(this.teamId, teamMemberName);
     // TODO: render added user
+    // TODO: try catch
+    await this.render();
+  }
+
+  handleClickListContainer(event) {
+    console.log('handleClickListContainer');
+    const { target } = event;
+    console.log(target);
+  }
+
+  async handleKeyupListContainer(event) {
+    if (event.key !== 'Enter') return;
+
+    // input enter return
+    // 이후 고려할 사항: dblclick 이후 enter 이벤트 발생 시 오작동 여지
+    if (!event.target.value || event.target.value.length < 1) return;
+
+    const li = event.target.closest('li');
+    const memberId = li.getAttribute('data-member-id');
+    const { value } = event.target;
+
+    event.target.value = '';
+    const response = await this.API.addTeamMemberTodoItem(
+      this.teamId,
+      memberId,
+      value
+    );
+    await console.log(response);
+    // 해야 할 일
+    // 1. li 태그로부터 id 받기
+    // 2. input 값 받기
+    // 3. input 값 비우기
+    // 5. post 요청 보내주기
+
+    // 4. todo 추가하기 (html에만) // todo item id key를 받아와야함함
+    // try catch
   }
 
   async addEvents() {
     console.log('kanban addEvents');
     const $addUserButton = $('#add-user-button');
+    const $flexColumnContainer = $('.flex-column-container');
+    // $flexColumnContainer.addEventListener(
+    //   'click',
+    //   this.handleClickListContainer.bind(this)
+    //   // await this.handleClickListContainer.bind(this)
+    // );
+    $flexColumnContainer.addEventListener(
+      'keyup',
+      await this.handleKeyupListContainer.bind(this)
+    );
     $addUserButton.addEventListener(
       'click',
       await this.handleClickAddUserButton.bind(this)
