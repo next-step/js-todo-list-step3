@@ -28,10 +28,12 @@ const makeTeamCardContainer = function (item) {
 
 const todoListItemTemplate = function (todoListItem) {
   // TODO: chip 순위 설정
+  const isCompleted = todoListItem.isCompleted === true ? 'completed' : '';
+  const isChecked = todoListItem.isCompleted === true ? 'checked' : '';
   return `
-					<li class="todo-list-item" id="${todoListItem._id}">
+					<li class="todo-list-item ${isCompleted}" id="${todoListItem._id}">
 					<div class="view">
-						<input class="toggle" type="checkbox" />
+						<input class="toggle" type="checkbox" ${isChecked}/>
 						<label class="label">
 							<div class="chip-container">
 								<!-- <span class="chip secondary">1순위</span> -->

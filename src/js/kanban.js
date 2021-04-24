@@ -53,16 +53,12 @@ class Kanban {
       value
     );
     const todoData = await response.json();
+    // TODO: fix? 최초에만 render가 2번?
     todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
     event.target.value = '';
   }
 
-  async handleClickListContainer(event) {
-    const { target } = event;
-    if (target.classList.value !== 'destroy' || target.tagName !== 'BUTTON')
-      return;
-    console.log('handleClickListContainer');
-
+  async deleteTodoItem(target) {
     const todoListItem = target.closest('.todo-list-item');
     const todoListItemParent = todoListItem.closest('ul');
     const todoListItemId = todoListItem.id;
@@ -75,6 +71,37 @@ class Kanban {
       todoListItemId
     );
     todoListItemParent.removeChild(todoListItem);
+  }
+
+  async toggleTodoItem(target) {
+    console.log('toggleTodoItem');
+    const todoListItem = target.closest('.todo-list-item');
+    const todoListItemId = todoListItem.id;
+    const todoApp = target.closest('.todoapp-container');
+    const dataMemberId = todoApp.getAttribute('data-member-id');
+    todoListItem.classList.toggle('completed');
+    const response = await this.API.toggleTeamMemberTodoItem(
+      this.teamId,
+      dataMemberId,
+      todoListItemId
+    );
+  }
+
+  async handleClickListContainer(event) {
+    const { target } = event;
+
+    if (
+      target.classList.value !== 'destroy' &&
+      target.tagName !== 'BUTTON' &&
+      target.className !== 'toggle'
+    )
+      return;
+    console.log('handleClickListContainer');
+    if (target.tagName === 'BUTTON') {
+      await this.deleteTodoItem(target);
+      return;
+    }
+    await this.toggleTodoItem(target);
   }
 
   async addEvents() {

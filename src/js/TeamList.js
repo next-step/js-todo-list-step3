@@ -51,7 +51,7 @@ export default class TeamList {
 
     teamCardContainerLists.innerHTML = '';
     teamCardContainerLists.innerHTML = makeAddTeamButton;
-    for (const teamInfo of teamInfos) {
+    for (const teamInfo of teamInfos.reverse()) {
       teamCardContainerLists.insertAdjacentHTML(
         'afterbegin',
         makeTeamCardContainer(teamInfo)

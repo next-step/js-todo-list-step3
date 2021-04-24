@@ -31,6 +31,11 @@ class API {
     return response;
   }
 
+  async put(URL, BODY) {
+    const response = await fetch(URL, BODY);
+    return response;
+  }
+
   async addTeam(teamName) {
     const response = await this.post(
       this.teamURL,
@@ -67,17 +72,20 @@ class API {
   }
 
   async deleteTeamMemberTodoItem(teamId, memberId, itemId) {
-    console.log(itemId);
     const response = await this.delete(
       `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}`,
-      this.createRequestBody('DELETE', {
-        // body: JSON.stringify({ contents }),
-      })
+      this.createRequestBody('DELETE', {})
     );
     return response;
   }
-  //
-  //api/teams/:teamId/members/:memberId/items/:itemId
+
+  async toggleTeamMemberTodoItem(teamId, memberId, itemId) {
+    const response = await this.put(
+      `${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}/toggle`,
+      this.createRequestBody('PUT', {})
+    );
+    return response;
+  }
 }
 
 export default API;
