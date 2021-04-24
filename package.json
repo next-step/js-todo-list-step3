@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Kkan9ma/js-todo-list-step3#readme",
   "keywords": [],
   "devDependencies": {
-    "eslint": "^7.24.0",
+    "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.2.0",
     "eslint-plugin-html": "^6.1.2",

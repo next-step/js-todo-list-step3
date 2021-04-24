@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 
-import { BASE_URL, API_TEAM } from './constants.js';
+import { BASE_URL, API_TEAM, $, $$ } from './constants.js';
 import { makeAddTeamButton, makeTeamCardContainer } from './template.js';
 import API from './api.js';
 
@@ -15,11 +15,16 @@ export default class TeamList {
 
   async addEvents() {
     console.log('addEvents');
-    this.addTeamButton = document.querySelector('#add-team-button');
-    this.addTeamButton.addEventListener(
+    $('#add-team-button').addEventListener(
       'click',
       await this.handleClickAddTeamButton.bind(this)
     );
+    $$('.team-card-container').forEach(teamCardContainer => {
+      teamCardContainer.addEventListener(
+        'click',
+        this.handleClickTeamCard.bind(this)
+      );
+    });
   }
 
   async handleClickAddTeamButton() {
@@ -33,15 +38,24 @@ export default class TeamList {
     this.render();
   }
 
+  handleClickTeamCard(event) {
+    console.log('handleClickTeamCard');
+    const { id } = event.target.closest('a');
+
+    localStorage.setItem('teamId', id);
+  }
+
   renderTeamCardContainers(teamInfos) {
     console.log('renderTeamCardContainers');
-    const teamCardContainers = document.querySelector('#team-list-container');
+    const teamCardContainerLists = $('#team-list-container');
 
-    teamCardContainers.innerHTML = '';
-    teamCardContainers.innerHTML = makeAddTeamButton;
+    teamCardContainerLists.innerHTML = '';
+    teamCardContainerLists.innerHTML = makeAddTeamButton;
     for (const teamInfo of teamInfos) {
-      const teamCardContainer = makeTeamCardContainer(teamInfo);
-      teamCardContainers.insertAdjacentHTML('afterbegin', teamCardContainer);
+      teamCardContainerLists.insertAdjacentHTML(
+        'afterbegin',
+        makeTeamCardContainer(teamInfo)
+      );
     }
   }
 

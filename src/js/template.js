@@ -6,9 +6,10 @@ const makeAddTeamButton = `
   </div>
 `;
 
+/* <a id="${item._id}"  class="card"> */
 const makeTeamCardContainer = function (item) {
   return `<div class="team-card-container">
-            <a id="${item.id}" href="/kanban.html" class="card">
+		<a id="${item._id}" href="/kanban.html" class="card">
                 <div class="card-title">
                     ${item.name}
                 </div>
