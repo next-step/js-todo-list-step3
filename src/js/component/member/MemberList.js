@@ -1,7 +1,7 @@
 import { Action } from '../../action/Action.js'
 import { $ } from "../../util/domSelection.js";
 
-export class UserList{
+export class MemberList{
     constructor(){
         const $todoApps = $('.todoapp-list-container')
         const $addMemberButton = $('#add-user-button')
@@ -21,7 +21,12 @@ export class UserList{
         const members = team.members;
         const addMemberContainer = $('li.add-user-button-container');
         members.forEach((member) => {
-            const todoAppContainer = `<li class="todoapp-container" data-memberid="${member._id}">${member.name}</li>`
+            const todoAppContainer = 
+            `<li class="todoapp-container" data-memberid="${member._id}">
+                <h2>
+                    <span><strong>${member.name}</strong>'s Todo List</span>
+                </h2>
+            </li>`
             addMemberContainer.insertAdjacentHTML('beforebegin',todoAppContainer);
         });
     }

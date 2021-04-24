@@ -16,35 +16,35 @@ const _copyState = (teamStoreState) => {
   }
   return copy;
 }
-
+const _state = {};
 export class TeamStore {
   constructor(teamApp){
-    this._state = {
-      teams:[],
-    }
     this.teamApp = teamApp;
     this.dispatcherIndex = todoDispatcher.register(this.setState,this);
   }
   async init(){
-    this._state.teams = await _getTeams();
-    const copiedState = _copyState(this._state);
+    _state.teams = await _getTeams();
+    const copiedState = _copyState(_state);
     this.teamApp.renderAll(copiedState);
   }
   async setState({action}) {
+    if(Object.keys(_state).length == 0) {
+      new Error("Invalid state. May be the store isn't initiated");
+    }
     //상태 변경
     const type = action?.type
     if(type == ACTION_TYPES.GET_TEAMS){
-      this._state.teams = await _getTeams();
+      _state.teams = await _getTeams();
     }else if(type == ACTION_TYPES.ADD_TEAM){
       await _addTeam(action?.teamName);
-      this._state.teams = await _getTeams();
+      _state.teams = await _getTeams();
     }else{
       //알지 못하는 액션이 왔을때.
       return true;
     }
 
     //상태 복사 후 전파
-    const copiedState = _copyState(this._state);
+    const copiedState = _copyState(_state);
     this.teamApp.renderAll(copiedState);
 
     //dispatcher에서 resolve처리

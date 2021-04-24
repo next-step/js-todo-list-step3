@@ -1,6 +1,6 @@
 import { TodoItem } from "./TodoItem";
 
-export class User {
+export class Member {
     constructor({ _id, name, todoList =[]}) {
       this._id = _id;
       this.name = name;
