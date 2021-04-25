@@ -28,6 +28,7 @@ export class TodoActions{
       memberName:memberName,
     });
    }
+
    static addItem(teamId,memberId,data){
     todoDispatcher.handleViewAction({
       type: ACTION_TYPES.ADD_ITEM,
@@ -36,6 +37,7 @@ export class TodoActions{
       data:data,
     });
    }
+
    static deleteItem(teamId,memberId,itemId){
     todoDispatcher.handleViewAction({
       type: ACTION_TYPES.DELETE_ITEM,
@@ -53,4 +55,30 @@ export class TodoActions{
     });
    }
 
-  };
+   static updateItemCompleteToggle(teamId,memberId,itemId){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.UPDATE_ITEM_COMPLETE_TOGGLE,
+      teamId:teamId,
+      memberId:memberId,
+      itemId:itemId,
+    });
+   }
+   static updateItem(teamId,memberId,itemId,data){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.UPDATE_ITEM,
+      teamId:teamId,
+      memberId:memberId,
+      itemId:itemId,
+      data:data,
+    });
+   }
+   static updateItemPriority(teamId,memberId,itemId,priority){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.UPDATE_ITEM_PRIORITY,
+      teamId:teamId,
+      memberId:memberId,
+      itemId:itemId,
+      priority:priority,
+    });
+   }
+};

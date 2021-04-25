@@ -9,11 +9,10 @@ export const ACTION_TYPES = {
     DELETE_ITEM : 'DELETE_ITEM',
     DELETE_ITEM_ALL : 'DELETE_ITEM_ALL',
 
-
-    GET_ITEMS :'ADD_USER',
-    UPDATE_ITEM : 'UPDATE_ITEM',
     UPDATE_ITEM_COMPLETE_TOGGLE : 'UPDATE_ITEM_COMPLETE_TOGGLE',
-    UPDATE_ITEM_PRIORITY : 'UPDATE_ITEM_PRIORITY',
+    UPDATE_ITEM : 'UPDATE_ITEM',
+    UPDATE_ITEM_PRIORITY : 'UPDATE_ITEM_PRIORITY',  
+    
     CHANGE_FILTER : 'CHANGE_FILTER',
 }
 
@@ -39,5 +38,14 @@ export class Action{
     }
     static deleteItemAll(teamId,memberId){
         action.deleteItemAll(teamId,memberId);
+    }
+    static updateItemCompleteToggle(teamId,memberId,itemId){
+        action.updateItemCompleteToggle(teamId,memberId,itemId);
+    }
+    static updateItem(teamId,memberId,itemId,data){
+        action.updateItem(teamId,memberId,itemId,data);
+    }
+    static updateItemPriority(teamId,memberId,itemId,priority){
+        action.updateItemPriority(teamId,memberId,itemId,priority);
     }
 }

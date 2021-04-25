@@ -8,8 +8,7 @@ const APIs = {
   getTodoList : (teamId,memberId) =>  `${BASE_URL}/api/teams/${teamId}/members/${memberId}`,
   getItems : (teamId,memberId) =>  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
   getItem : (teamId,memberId,itemId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-  
-  updateItem : (userId,itemId,updateAction) => `${BASE_URL}/api/users/${userId}/items/${itemId}/${updateAction}`
+  updateItem : (teamId,memberId,itemId,updateAction) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/${updateAction}`
 }
 export class RESTDataBase {
   static async getTeams() {
@@ -45,37 +44,26 @@ export class RESTDataBase {
     return await Ajax.deleteRequest(url,"Delete All Item 실패");
   }
 
-
-
-  static async deleteUser(userId) {
-    const url = APIs.getUser(userId);
-    return await Ajax.deleteRequest(url,"User delete 실패");
-  }
-   static async getUserItems(userId) {
-    const url = APIs.getItems(userId);
-    return await Ajax.get(url,"UserItem 로드 실패");
+  static async updateItemCompleteToggle(teamId,memberId,itemId) {
+    const url = APIs.updateItem(teamId,memberId,itemId,'toggle');
+    const options = {
+      errMsg :"Update Item Complete Toggle 실패"
+    }
+    return await Ajax.put(url,options);
   }
 
- 
-  
-  static async updateItem(userId,itemId,data) {
-    const url = APIs.getItem(userId, itemId);
+  static async updateItem(teamId,memberId,itemId,data) {
+    const url = APIs.getItem(teamId,memberId,itemId);
     const options = {
       'data' :{'contents':data},
       'errMsg' :"Update Item 실패"
     }
     return await Ajax.put(url,options);
   }
-  static async updateItemState(userId,itemId) {
-    const url = APIs.updateItem(userId, itemId,'toggle');
-    const options = {
-      errMsg :"Update Item State 실패"
-    }
-    return await Ajax.put(url,options);
-  }
+  
 
-  static async updateItemPriority(userId,itemId,priority) {
-    const url = APIs.updateItem(userId, itemId,'priority');
+  static async updateItemPriority(teamId,memberId,itemId,priority) {
+    const url = APIs.updateItem(teamId,memberId,itemId,'priority');
     const options = {
       'data' : {'priority':priority},
       'errMsg' :"Update Item Priority 실패"

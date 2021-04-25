@@ -2,6 +2,7 @@ import { todoDispatcher } from '../dispatcher/TodoDispatcher.js'
 import { ACTION_TYPES } from '../action/Action.js'
 import { DAO } from "../database/database.js"
 import { TodoStatusContainer } from '../component/todo/TodoStatusContainer.js'
+import { TodoItem } from '../vo/TodoItem.js'
 
 const _getMemberTodoList = async (teamId,memberId) => {
   return await DAO.getMemberTodoList(teamId,memberId);
@@ -36,7 +37,16 @@ const _deleteItem = async (teamId,memberId,itemId) => {
 const _deleteItemAll = async (teamId,memberId) => {
   return await DAO.deleteItemAll(teamId,memberId);
 }
-
+const _updateItemCompleteToggle = async (teamId,memberId,itemId) => {
+  return await DAO.updateItemCompleteToggle(teamId,memberId,itemId);
+}
+const _updateItem = async (teamId,memberId,itemId,data) => {
+  return await DAO.updateItem(teamId,memberId,itemId,data);
+}
+const _updateItemPriority = async (teamId,memberId,itemId,priority) => {
+  const priorityArray = [TodoItem.PRIORITY_NONE,TodoItem.PRIORITY_FIRST,TodoItem.PRIORITY_SECOND];
+  return await DAO.updateItemPriority(teamId,memberId,itemId,priorityArray[priority]);
+}
 
 /*
 
@@ -97,27 +107,38 @@ export class TodoStore {
     action = action.action;
     const type = action?.type
     const teamId = action?.teamId
-    let memberId = action?.memberId
-    
+    const memberId = action?.memberId
+    const itemId = action?.itemId;
+
     if(type == ACTION_TYPES.ADD_MEMBER){
-      memberId = this.kanbanStore.getLastAddedMember()._id;
-      const {_id,todoList = []} = await _getMemberTodoList(teamId,memberId);
+      addedMemberId = this.kanbanStore.getLastAddedMember()._id;
+      const {_id,todoList = []} = await _getMemberTodoList(teamId,addedMemberId);
       _updateMemberState(_id,{todoList:todoList,filterState:TodoStatusContainer.FILTER_STATE.ALL});  
     }else if(type == ACTION_TYPES.ADD_ITEM){
       const data = action?.data;
       await _addItem(teamId,memberId,data);
       await _refreshMemberTodoList(teamId,memberId);
     }else if(type == ACTION_TYPES.DELETE_ITEM){
-      const itemId = action?.itemId;
       await _deleteItem(teamId,memberId,itemId);
       await _refreshMemberTodoList(teamId,memberId);
     }else if(type == ACTION_TYPES.DELETE_ITEM_ALL){
       await _deleteItemAll(teamId,memberId);
       await _refreshMemberTodoList(teamId,memberId);
+    }else if(type == ACTION_TYPES.UPDATE_ITEM_COMPLETE_TOGGLE){
+      await _updateItemCompleteToggle(teamId,memberId,itemId);
+      await _refreshMemberTodoList(teamId,memberId);
+    }else if(type == ACTION_TYPES.UPDATE_ITEM){
+      const data = action?.data;
+      await _updateItem(teamId,memberId,itemId,data);
+      await _refreshMemberTodoList(teamId,memberId);
+    }else if(type == ACTION_TYPES.UPDATE_ITEM_PRIORITY){
+      const priority = action?.priority;
+      await _updateItemPriority(teamId,memberId,itemId,priority);
+      await _refreshMemberTodoList(teamId,memberId);
     }else{
       return true;
     }
-   
+    
     const copiedState = this.getMemberState(memberId);
     this.todoApp.renderAll(copiedState);
     return true; 

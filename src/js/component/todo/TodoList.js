@@ -1,6 +1,17 @@
 import { TodoItem } from "../../vo/TodoItem.js";
 import { $ ,$$} from "../../util/domSelection.js";
 import { Action } from "../../action/Action.js";
+
+const _getMemberId = (target) =>{
+  const $todoList = target.closest("li.todoapp-container");
+  return $todoList.dataset.memberid;
+}
+
+const _getItemId = (target) =>{
+  const item = target.closest("li.todo-list-item");
+  return item.dataset.itemid;
+}
+
 export class TodoList {
   constructor() {
     const $app = $("ul.todoapp-list-container");
@@ -9,71 +20,63 @@ export class TodoList {
     $app.addEventListener("click", async ({target}) => {
       if (!target) return;
       if (target.className == "destroy") {
-        const $todoList = target.closest("li.todoapp-container");
-        const memberId = $todoList.dataset.memberid;
-        const targetLi = target.closest("li");
-        const itemId =targetLi.dataset.itemid;
-        Action.deleteItem(teamId,memberId,itemId);
+        Action.deleteItem(teamId,_getMemberId(target),_getItemId(target));
       }
     });
 
-    // app.addEventListener("click", async ({target}) => {
-    //   if (!target) return;
-    //   if (target.className == "toggle") {
-    //     const targetLi = target.closest("li");
-    //     await todoApp.updateItemState(targetLi.dataset.itemid);
-    //   }
-    // });
+    $app.addEventListener("click", async ({target}) => {
+      if (!target) return;
+      if (target.classList.contains("toggle")) {
+        Action.updateItemCompleteToggle(teamId,_getMemberId(target),_getItemId(target));
+      }
+    });
 
-    // app.addEventListener("dblclick", ({target}) => {
-    //   if (!target) return;
-    //   if (target.nodeName == "LABEL") {
-    //     const targetLi = target.closest("li");
-    //     targetLi.classList.add("editing");
-    //   }
-    // });
-    // app.addEventListener("keydown", async ({target,key}) => {
-    //   if (!target) return;
-    //   if (target.nodeName == "INPUT") {
-    //     const targetLi = target.closest("li");
-    //     if (key == "Escape") {
-    //       targetLi.classList.remove("editing");
-    //     } else if (key == "Enter") {
-    //       await todoApp.updateItem(targetLi.dataset.itemid, target.value);
-    //       targetLi.classList.remove("editing");
-    //     }
-    //   }
-    // });
-    // app.addEventListener("change", async ({target}) => {
-    //   if (!target) return;
-    //   if (target.nodeName == "SELECT" && target.classList.contains('chip')) {
-    //     const targetLi = target.closest("li");
-    //     const selectedIndex = target.options.selectedIndex;
-    //     const priority = target.options[selectedIndex].value;
-    //     await todoApp.updateItemPriority(targetLi.dataset.itemid,priority);
-    //   }
-    // });
+    $app.addEventListener("dblclick", ({target}) => {
+      if (!target) return;
+      if (target.nodeName == "LABEL" && target.classList.contains('label')) {
+        const item = target.closest("li.todo-list-item");
+        item.classList.add("editing");
+      }
+    });
+    $app.addEventListener("keydown", async ({target,key}) => {
+      if (!target) return;
+      if (target.nodeName == "INPUT" && target.classList.contains('edit')) {
+        const item = target.closest("li.todo-list-item");
+        if (key == "Escape") {
+          item.classList.remove("editing");
+        } else if (key == "Enter") {
+          Action.updateItem(teamId,_getMemberId(target),_getItemId(target), target.value);
+          item.classList.remove("editing");
+        }
+      }
+    });
+    $app.addEventListener("change", async ({target}) => {
+      if (!target) return;
+      if (target.nodeName == "SELECT" && target.classList.contains('chip')) {
+        const selectedIndex = target.options.selectedIndex;
+        const priority = target.options[selectedIndex].value;
+        Action.updateItemPriority(teamId,_getMemberId(target),_getItemId(target),priority);
+      }
+    });
   }
   render(todoList,$todoAppContainer) {
     const [list] = $$("ul.todo-list",$todoAppContainer);
     list.innerHTML = "";
     const priorityDom = {
       'NONE':`<select class="chip select">
-                <option value="0" selected>순위</option>
+                <option value="0" selected>미지정</option>
                 <option value="1">1순위</option>
                 <option value="2">2순위</option>
               </select>`,
-      'FIRST' :`<span class="chip ${TodoItem.PRIORITY_FIRST_CLASSNAME}">1순위</span>
-                <select class="chip select hidden">
-                  <option value="0" selected>순위</option>
-                  <option value="1">1순위</option>
+      'FIRST' :`<select class="chip select ${TodoItem.PRIORITY_FIRST_CLASSNAME}">
+                  <option value="0" >미지정</option>
+                  <option value="1" selected>1순위</option>
                   <option value="2">2순위</option>
                 </select>`,
-      'SECOND':`<span class="chip ${TodoItem.PRIORITY_SECOND_CLASSNAME}">2순위</span>
-                <select class="chip select hidden">
-                  <option value="0" selected>순위</option>
+      'SECOND':`<select class="chip select ${TodoItem.PRIORITY_SECOND_CLASSNAME}">
+                  <option value="0">미지정</option>
                   <option value="1">1순위</option>
-                  <option value="2">2순위</option>
+                  <option value="2" selected >2순위</option>
                 </select>`,
     };
 
@@ -83,8 +86,7 @@ export class TodoList {
         <div class="view">
           <input class="toggle" type="checkbox" ${item.isCompleted ? "checked" : ""} />
           <label class="label">
-            ${
-              item.isCompleted ? "" :  
+            ${  
               item.priority == TodoItem.PRIORITY_NONE ? priorityDom.NONE :
               item.priority == TodoItem.PRIORITY_FIRST ? priorityDom.FIRST: priorityDom.SECOND
             }
