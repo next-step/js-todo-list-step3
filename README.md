@@ -37,7 +37,7 @@ flux 구조 적용
 
 
 ## 🎯🎯 kanban.html 심화 요구사항
-- [ ] 1. todoItem의 우선 순위에 따라 정렬하기
+- [X] 1. todoItem의 우선 순위에 따라 정렬하기
 
 
 <br/>

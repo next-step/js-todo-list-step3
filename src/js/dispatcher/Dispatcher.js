@@ -16,7 +16,11 @@ export class Dispatcher{
                 rejects[i] = reject;
             });
         });
+
+        console.log('do dispatch',action);
+        
         for(let i=0 ; i<_storeCallBacks.length;i++){
+            
             Promise.resolve(await _storeCallBacks[i].bind(_stores[i])(action))
                     .then(() => resolves[i](action))
                     //.catch(() => rejects[i](new Error(`${i}번째 storeCallback 실행 실패`)));

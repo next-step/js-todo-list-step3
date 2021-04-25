@@ -11,6 +11,9 @@ const _getMemberTodoList = async (teamId,memberId) => {
 const _updateMemberTodoList = (_id,todoList) => {
   _stateMap.get(_id).todoList = todoList;
 }
+const _updateMemberFilterState = (_id,filterState) => {
+  _stateMap.get(_id).filterState = filterState;
+}
 const _updateMemberState = (_id,newStateObj) => {
   _stateMap.set(_id,newStateObj);
 }
@@ -48,28 +51,6 @@ const _updateItemPriority = async (teamId,memberId,itemId,priority) => {
   return await DAO.updateItemPriority(teamId,memberId,itemId,priorityArray[priority]);
 }
 
-/*
-
-async updateItem(itemId, data) {
-  await DAO.updateItem(this.currentUser._id, itemId, data);
-}
-async updateItemState(itemId) {
-  await DAO.updateItemState(this.currentUser._id, itemId);
-}
-async updateItemPriority(itemId,priority) {
-  const priorityArray = [TodoItem.PRIORITY_NONE,TodoItem.PRIORITY_FIRST,TodoItem.PRIORITY_SECOND];
-  await DAO.updateItemPriority(this.currentUser._id, itemId,priorityArray[priority]);
-}
-changeFilter(filterState) {
-  if(Object.values(TodoStatusContainer.FILTER_STATE).find(value => value ==filterState)) {
-    
-    this.filterState = filterState;
-    this.setState();
-  }
-}
-*/
-
-
 const _stateMap = new Map();
 
 export class TodoStore {
@@ -89,6 +70,7 @@ export class TodoStore {
     this.todoApp = todoApp;
     this.dispatcherIndex = todoDispatcher.register(this.setState,this);
   }
+
   getMemberState= (memberId) => {
     const memberState = _stateMap.get(memberId);
     const copy = {
@@ -135,6 +117,9 @@ export class TodoStore {
       const priority = action?.priority;
       await _updateItemPriority(teamId,memberId,itemId,priority);
       await _refreshMemberTodoList(teamId,memberId);
+    }else if(type == ACTION_TYPES.CHANGE_FILTER_STATE){
+      const filterState = action?.filterState;
+      await _updateMemberFilterState(memberId,filterState);
     }else{
       return true;
     }

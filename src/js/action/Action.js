@@ -12,8 +12,8 @@ export const ACTION_TYPES = {
     UPDATE_ITEM_COMPLETE_TOGGLE : 'UPDATE_ITEM_COMPLETE_TOGGLE',
     UPDATE_ITEM : 'UPDATE_ITEM',
     UPDATE_ITEM_PRIORITY : 'UPDATE_ITEM_PRIORITY',  
-    
-    CHANGE_FILTER : 'CHANGE_FILTER',
+
+    CHANGE_FILTER_STATE : 'CHANGE_FILTER_STATE',
 }
 
 //interface
@@ -47,5 +47,8 @@ export class Action{
     }
     static updateItemPriority(teamId,memberId,itemId,priority){
         action.updateItemPriority(teamId,memberId,itemId,priority);
+    }
+    static changeFilterState(teamId,memberId,filterState){
+        action.changeFilterState(teamId,memberId,filterState);
     }
 }

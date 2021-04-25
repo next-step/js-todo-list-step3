@@ -32,7 +32,23 @@ export class TodoApp {
     }
 
     this.todoInput.render($todoAppContainer);
-    this.todoList.render(todoList,$todoAppContainer);
+    if(filterState == TodoStatusContainer.FILTER_STATE.PRIORITY ){
+      const sortTodoList = [...todoList];
+      const comparator = (todoA,todoB) => {
+        const priorityValue = {
+          'NONE' : Number.MAX_SAFE_INTEGER,
+          'FIRST' : 1,
+          'SECOND' : 2,
+        }
+        const priorityA = priorityValue[todoA.priority];
+        const priorityB = priorityValue[todoB.priority];
+        return priorityA-priorityB;
+      }
+      sortTodoList.sort(comparator);
+      this.todoList.render(sortTodoList,$todoAppContainer);
+    }else{
+      this.todoList.render(todoList,$todoAppContainer);
+    }
     this.todoStatusContainer.render(filterState,$todoAppContainer);
   }
 }

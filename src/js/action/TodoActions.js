@@ -81,4 +81,13 @@ export class TodoActions{
       priority:priority,
     });
    }
+
+   static changeFilterState(teamId,memberId,filterState){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.CHANGE_FILTER_STATE,
+      teamId:teamId,
+      memberId:memberId,
+      filterState:filterState,
+    });
+  }
 };
