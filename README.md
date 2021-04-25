@@ -17,10 +17,8 @@
 flux 아키텍쳐를 적용하여 작성해 보았습니다.
 출처 : https://haruair.github.io/flux/docs/todo-list.html
 
-<img src="./src/images/dependency.png"/>
-<img src="./src/images/paintArea.png"/>
-
-
+![dependency](./src/images/dependency.png)
+![paintArea](./src/images/paintArea.png)
 <br/>
 
 ## 🎯 index.html 팀 페이지 요구사항
