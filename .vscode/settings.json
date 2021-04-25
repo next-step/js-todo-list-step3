@@ -2,7 +2,8 @@
   "standard.autoFixOnSave": true,
   "standard.options": {
     "globals": [
-      "fetch"
+      "fetch",
+      "prompt"
     ],
     "ignore": [
       "node_modules/**"
