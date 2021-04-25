@@ -222,17 +222,25 @@ class Kanban {
     }
   }
 
-  async handleClickFilters(event) {
-    console.log('handleClickFilters');
+  renderTodoItem($todoList, memberTodoList, option) {
+    $todoList.innerHTML = '';
+    for (const todoItem of memberTodoList.reverse()) {
+      if (
+        (todoItem.priority !== 'NONE' && option === 'priority') ||
+        (todoItem.isCompleted === false && option === 'active') ||
+        (todoItem.isCompleted === true && option === 'completed') ||
+        option === 'all'
+      )
+        $todoList.insertAdjacentHTML(
+          'afterbegin',
+          todoListItemTemplate(todoItem)
+        );
+    }
+  }
+
+  async changeTodosByFilter(event) {
     const { target } = event;
-    const filterList = target.closest('ul');
-    const filters = filterList.querySelectorAll('li');
-    filters.forEach(filter => {
-      filter.querySelector('a').classList.remove('selected');
-    });
-    target.classList.add('selected');
-    const filterAttribute = target.getAttribute('href');
-    const filterAttributeValue = filterAttribute.slice(1);
+    const filterAttributeValue = target.getAttribute('href').slice(1);
     const $todoAppContainer = target.closest('.todoapp-container');
     const $todoList = $todoAppContainer.querySelector('.todo-list');
     const dataMemberId = $todoAppContainer.getAttribute('data-member-id');
@@ -242,54 +250,23 @@ class Kanban {
     );
 
     const memberTodoList = (await response.json()).todoList;
-    await console.log(memberTodoList);
+    this.renderTodoItem($todoList, memberTodoList, filterAttributeValue);
+  }
 
-    if (filterAttributeValue === 'priority') {
-      console.log('priority');
-      $todoList.innerHTML = '';
-      for (const todoItem of memberTodoList.reverse()) {
-        if (todoItem.priority !== 'NONE')
-          $todoList.insertAdjacentHTML(
-            'afterbegin',
-            todoListItemTemplate(todoItem)
-          );
-      }
-      return;
-    }
-    if (filterAttributeValue === 'active') {
-      console.log('active');
-      $todoList.innerHTML = '';
-      for (const todoItem of memberTodoList.reverse()) {
-        if (todoItem.isCompleted === false)
-          $todoList.insertAdjacentHTML(
-            'afterbegin',
-            todoListItemTemplate(todoItem)
-          );
-      }
-      return;
-    }
-    if (filterAttributeValue === 'completed') {
-      console.log('completed');
-      $todoList.innerHTML = '';
-      for (const todoItem of memberTodoList.reverse()) {
-        if (todoItem.isCompleted === true)
-          $todoList.insertAdjacentHTML(
-            'afterbegin',
-            todoListItemTemplate(todoItem)
-          );
-      }
-      return;
-    }
-    if (filterAttributeValue === 'all') {
-      console.log('all');
-      $todoList.innerHTML = '';
-      for (const todoItem of memberTodoList.reverse()) {
-        $todoList.insertAdjacentHTML(
-          'afterbegin',
-          todoListItemTemplate(todoItem)
-        );
-      }
-    }
+  changeFilterUI(event) {
+    const { target } = event;
+    const filterList = target.closest('ul');
+    const filters = filterList.querySelectorAll('li');
+    filters.forEach(filter => {
+      filter.querySelector('a').classList.remove('selected');
+    });
+    target.classList.add('selected');
+  }
+
+  async handleClickFilters(event) {
+    console.log('handleClickFilters');
+    this.changeFilterUI(event);
+    await this.changeTodosByFilter(event);
   }
 
   async addEvents() {
