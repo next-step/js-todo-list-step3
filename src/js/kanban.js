@@ -27,9 +27,8 @@ class Kanban {
       return;
     }
     const response = await this.API.addTeamMember(this.teamId, teamMemberName);
-    // TODO: render added user
+    await this.renderTodoAppContainers();
     // TODO: try catch
-    await this.render();
   }
 
   async changeInputValue(event) {
@@ -82,7 +81,6 @@ class Kanban {
     }
     if (event.key !== 'Enter') return;
     if (!event.target.value || event.target.value.length < 1) return;
-
     const $todoContainer = target.closest('li');
     const $todoApp = target.closest('div');
     const $todoList = $todoApp.querySelector('.todo-list');
@@ -146,16 +144,22 @@ class Kanban {
     if (
       target.className !== 'destroy' &&
       target.className !== 'toggle' &&
+      target.tagName !== 'A' &&
       target.tagName !== 'BUTTON'
     )
       return;
     console.log('handleClickListContainer');
+    if (target.tagName === 'A') {
+      await this.handleClickFilters(event);
+      return;
+    }
     if (target.className === 'destroy') {
       await this.deleteTodoItem(target);
       return;
     }
     if (target.className === 'toggle') {
       await this.toggleTodoItem(target);
+      return;
     }
     if (target.className === 'clear-completed') {
       await this.deleteAllTodoItem(target);
@@ -172,6 +176,8 @@ class Kanban {
   }
 
   async handleSelectChip(event) {
+    if (event.target.tagName !== 'SELECT') return;
+
     const { target } = event;
     const container = target.closest('.chip-container');
     const $todoListItem = target.closest('.todo-list-item');
@@ -187,7 +193,7 @@ class Kanban {
     container.innerHTML = selectOptionTemplate(target.selectedIndex);
     switch (target.selectedIndex) {
       case 0:
-        response = await this.API.chanegeTeamMemberTodoItemPriority(
+        response = await this.API.changeTeamMemberTodoItemPriority(
           this.teamId,
           dataMemberId,
           todoListItemId,
@@ -195,7 +201,7 @@ class Kanban {
         );
         break;
       case 1:
-        response = await this.API.chanegeTeamMemberTodoItemPriority(
+        response = await this.API.changeTeamMemberTodoItemPriority(
           this.teamId,
           dataMemberId,
           todoListItemId,
@@ -203,7 +209,7 @@ class Kanban {
         );
         break;
       case 2:
-        response = await this.API.chanegeTeamMemberTodoItemPriority(
+        response = await this.API.changeTeamMemberTodoItemPriority(
           this.teamId,
           dataMemberId,
           todoListItemId,
@@ -216,6 +222,76 @@ class Kanban {
     }
   }
 
+  async handleClickFilters(event) {
+    console.log('handleClickFilters');
+    const { target } = event;
+    const filterList = target.closest('ul');
+    const filters = filterList.querySelectorAll('li');
+    filters.forEach(filter => {
+      filter.querySelector('a').classList.remove('selected');
+    });
+    target.classList.add('selected');
+    const filterAttribute = target.getAttribute('href');
+    const filterAttributeValue = filterAttribute.slice(1);
+    const $todoAppContainer = target.closest('.todoapp-container');
+    const $todoList = $todoAppContainer.querySelector('.todo-list');
+    const dataMemberId = $todoAppContainer.getAttribute('data-member-id');
+    const response = await this.API.getTeamMemberTodoList(
+      this.teamId,
+      dataMemberId
+    );
+
+    const memberTodoList = (await response.json()).todoList;
+    await console.log(memberTodoList);
+
+    if (filterAttributeValue === 'priority') {
+      console.log('priority');
+      $todoList.innerHTML = '';
+      for (const todoItem of memberTodoList.reverse()) {
+        if (todoItem.priority !== 'NONE')
+          $todoList.insertAdjacentHTML(
+            'afterbegin',
+            todoListItemTemplate(todoItem)
+          );
+      }
+      return;
+    }
+    if (filterAttributeValue === 'active') {
+      console.log('active');
+      $todoList.innerHTML = '';
+      for (const todoItem of memberTodoList.reverse()) {
+        if (todoItem.isCompleted === false)
+          $todoList.insertAdjacentHTML(
+            'afterbegin',
+            todoListItemTemplate(todoItem)
+          );
+      }
+      return;
+    }
+    if (filterAttributeValue === 'completed') {
+      console.log('completed');
+      $todoList.innerHTML = '';
+      for (const todoItem of memberTodoList.reverse()) {
+        if (todoItem.isCompleted === true)
+          $todoList.insertAdjacentHTML(
+            'afterbegin',
+            todoListItemTemplate(todoItem)
+          );
+      }
+      return;
+    }
+    if (filterAttributeValue === 'all') {
+      console.log('all');
+      $todoList.innerHTML = '';
+      for (const todoItem of memberTodoList.reverse()) {
+        $todoList.insertAdjacentHTML(
+          'afterbegin',
+          todoListItemTemplate(todoItem)
+        );
+      }
+    }
+  }
+
   async addEvents() {
     console.log('kanban addEvents');
     const $addUserButton = $('#add-user-button');
@@ -223,6 +299,10 @@ class Kanban {
     $flexColumnContainer.addEventListener(
       'click',
       await this.handleClickListContainer.bind(this)
+    );
+    $flexColumnContainer.addEventListener(
+      'change',
+      await this.handleSelectChip.bind(this)
     );
     $flexColumnContainer.addEventListener(
       'keyup',
@@ -236,9 +316,6 @@ class Kanban {
       'click',
       await this.handleClickAddUserButton.bind(this)
     );
-    $$('select').forEach(element => {
-      element.addEventListener('change', this.handleSelectChip.bind(this));
-    });
   }
 
   async renderTodoAppContainers() {

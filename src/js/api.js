@@ -105,7 +105,7 @@ class API {
     return response;
   }
 
-  async chanegeTeamMemberTodoItemPriority(teamId, memberId, itemId, priority) {
+  async changeTeamMemberTodoItemPriority(teamId, memberId, itemId, priority) {
     const response = await this.put(
       `
 				${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}/priority
@@ -113,6 +113,13 @@ class API {
       this.createRequestBody('PUT', {
         body: JSON.stringify({ priority }),
       })
+    );
+    return response;
+  }
+
+  async getTeamMemberTodoList(teamId, memberId) {
+    const response = await this.get(
+      `${this.teamURL}/${teamId}/members/${memberId}`
     );
     return response;
   }
