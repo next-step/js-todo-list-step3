@@ -36,13 +36,20 @@ export class TodoActions{
       data:data,
     });
    }
+   static deleteItem(teamId,memberId,itemId){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.DELETE_ITEM,
+      teamId:teamId,
+      memberId:memberId,
+      itemId:itemId,
+    });
+   }
 
-
-   static deleteItemAll(teamId,userId){
+   static deleteItemAll(teamId,memberId){
     todoDispatcher.handleViewAction({
       type: ACTION_TYPES.DELETE_ITEM_ALL,
       teamId:teamId,
-      userId:userId,
+      memberId:memberId,
     });
    }
 

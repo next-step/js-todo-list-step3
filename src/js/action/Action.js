@@ -2,23 +2,18 @@ import { TodoActions as action } from './TodoActions.js';
 export const ACTION_TYPES = {
     GET_TEAMS : 'GET_TEAMS',
     ADD_TEAM :'ADD_TEAM',
-
-    //GET_USERS : 'GET_USERS',
     GET_TEAM : 'GET_TEAM',
     ADD_MEMBER :'ADD_MEMBER',
 
     ADD_ITEM :'ADD_ITEM',
-
+    DELETE_ITEM : 'DELETE_ITEM',
+    DELETE_ITEM_ALL : 'DELETE_ITEM_ALL',
 
 
     GET_ITEMS :'ADD_USER',
-   
     UPDATE_ITEM : 'UPDATE_ITEM',
     UPDATE_ITEM_COMPLETE_TOGGLE : 'UPDATE_ITEM_COMPLETE_TOGGLE',
     UPDATE_ITEM_PRIORITY : 'UPDATE_ITEM_PRIORITY',
-    DELETE_ITEM : 'DELETE_ITEM',
-    DELETE_ITEM_ALL : 'DELETE_ITEM_ALL',
-    
     CHANGE_FILTER : 'CHANGE_FILTER',
 }
 
@@ -39,10 +34,10 @@ export class Action{
     static addItem(teamId,memberId,data){
         action.addItem(teamId,memberId,data);
     }
-
-
-
-    static deleteItemAll(teamId,userId){
-        action.deleteItemAll(teamId,userId);
+    static deleteItem(teamId,memberId,itemId){
+        action.deleteItem(teamId,memberId,itemId);
+    }
+    static deleteItemAll(teamId,memberId){
+        action.deleteItemAll(teamId,memberId);
     }
 }

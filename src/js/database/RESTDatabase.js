@@ -7,10 +7,8 @@ const APIs = {
   
   getTodoList : (teamId,memberId) =>  `${BASE_URL}/api/teams/${teamId}/members/${memberId}`,
   getItems : (teamId,memberId) =>  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`,
-
-
-
-  getItem : (userId,itemId) => `${BASE_URL}/api/users/${userId}/items/${itemId}`,
+  getItem : (teamId,memberId,itemId) => `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+  
   updateItem : (userId,itemId,updateAction) => `${BASE_URL}/api/users/${userId}/items/${itemId}/${updateAction}`
 }
 export class RESTDataBase {
@@ -38,7 +36,14 @@ export class RESTDataBase {
     const url = APIs.getItems(teamId,memberId);
     return await Ajax.post(url,{'contents':data},"Add Item 실패");
   }
-  
+  static async deleteItem(teamId,memberId,itemId) {
+    const url = APIs.getItem(teamId,memberId,itemId);
+    return await Ajax.deleteRequest(url,"Delete Item 실패");
+  }
+  static async deleteItemAll(teamId,memberId) {
+    const url = APIs.getItems(teamId,memberId);
+    return await Ajax.deleteRequest(url,"Delete All Item 실패");
+  }
 
 
 
@@ -52,14 +57,7 @@ export class RESTDataBase {
   }
 
  
-  static async deleteItem(userId, itemId) {
-    const url = APIs.getItem(userId, itemId);
-    return await Ajax.deleteRequest(url,"Delete Item 실패");
-  }
-  static async deleteItemAll(userId) {
-    const url = APIs.getItems(userId);
-    return await Ajax.deleteRequest(url,"Delete All Item 실패");
-  }
+  
   static async updateItem(userId,itemId,data) {
     const url = APIs.getItem(userId, itemId);
     const options = {

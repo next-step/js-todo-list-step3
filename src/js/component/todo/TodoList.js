@@ -1,18 +1,22 @@
 import { TodoItem } from "../../vo/TodoItem.js";
 import { $ ,$$} from "../../util/domSelection.js";
+import { Action } from "../../action/Action.js";
 export class TodoList {
   constructor() {
-    const app = $("ul.todoapp-list-container");
-    
-    // app.addEventListener("click", async ({target}) => {
-    //   if (!target) return;
-    //   if (target.className == "destroy") {
-    //     const targetLi = target.closest("li");
-    //     const itemId =targetLi.dataset.itemid;
-    //     await todoApp.deleteItem(itemId);
-    //     targetLi.outerHTML = "";
-    //   }
-    // });
+    const $app = $("ul.todoapp-list-container");
+    const teamId = $app.dataset.teamid;
+
+    $app.addEventListener("click", async ({target}) => {
+      if (!target) return;
+      if (target.className == "destroy") {
+        const $todoList = target.closest("li.todoapp-container");
+        const memberId = $todoList.dataset.memberid;
+        const targetLi = target.closest("li");
+        const itemId =targetLi.dataset.itemid;
+        Action.deleteItem(teamId,memberId,itemId);
+      }
+    });
+
     // app.addEventListener("click", async ({target}) => {
     //   if (!target) return;
     //   if (target.className == "toggle") {

@@ -9,9 +9,18 @@ export class TodoStatusContainer {
     PRIORITY:'priority',
   };
 
-  //유저별로 항목이 있음.
   constructor() {
-    
+    const $app = $("ul.todoapp-list-container");
+    const teamId = $app.dataset.teamid;
+
+    $app.addEventListener("click", async ({target}) => {
+      if (!target) return;
+      if (target.className == "clear-completed") {
+        const $todoList = target.closest("li.todoapp-container");
+        const memberId = $todoList.dataset.memberid;
+        Action.deleteItemAll(teamId,memberId);
+      }
+    });
   }
 
   getItemCount($todoAppContainer){
