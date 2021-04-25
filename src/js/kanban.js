@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/prefer-default-export */
+
 import API from './api.js';
 import { $, $$ } from './constants.js';
 import {
@@ -39,13 +40,13 @@ class Kanban {
     const dataMemberId = target
       .closest('.todoapp-container')
       .getAttribute('data-member-id');
+    const $label = target.closest('.editing').querySelector('.label-value');
     const response = await this.API.changeTeamMemberTodoItem(
       this.teamId,
       dataMemberId,
       $todoListItem.id,
       target.value
     );
-    const $label = target.closest('.editing').querySelector('.label-value');
 
     $label.innerText = event.target.value;
     target.setAttribute('value', event.target.value);
@@ -77,7 +78,8 @@ class Kanban {
       return;
     }
     if (event.key !== 'Enter') return;
-    if (!event.target.value || event.target.value.length < 1) return;
+    if (!value || value.length < 1) return;
+
     const $todoContainer = target.closest('li');
     const $todoApp = target.closest('div');
     const $todoList = $todoApp.querySelector('.todo-list');
@@ -90,7 +92,7 @@ class Kanban {
     );
     const todoData = await response.json();
     $todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
-    event.target.value = '';
+    target.value = '';
   }
 
   async deleteTodoItem(target) {
@@ -100,7 +102,7 @@ class Kanban {
     const $todoApp = target.closest('.todoapp-container');
     const dataMemberId = $todoApp.getAttribute('data-member-id');
 
-    await this.API.deleteTeamMemberTodoItem(
+    const response = await this.API.deleteTeamMemberTodoItem(
       this.teamId,
       dataMemberId,
       $todoListItemId
@@ -113,6 +115,7 @@ class Kanban {
     const todoListItemId = $todoListItem.id;
     const $todoApp = target.closest('.todoapp-container');
     const dataMemberId = $todoApp.getAttribute('data-member-id');
+
     $todoListItem.classList.toggle('completed');
     const response = await this.API.toggleTeamMemberTodoItem(
       this.teamId,
@@ -175,6 +178,36 @@ class Kanban {
     $todoListItem.classList.add('editing');
   }
 
+  async changeTodoItemPriority(dataMemberId, todoListItemId, selectedIndex) {
+    const indexOption = {
+      0: 'FIRST',
+      1: 'SECOND',
+      2: 'NONE',
+    };
+
+    const response = await this.API.changeTeamMemberTodoItemPriority(
+      this.teamId,
+      dataMemberId,
+      todoListItemId,
+      indexOption[selectedIndex]
+    );
+  }
+
+  async renderTodoItemPriority(
+    container,
+    target,
+    dataMemberId,
+    todoListItemId
+  ) {
+    container.innerHTML = '';
+    container.innerHTML = selectOptionTemplate(target.selectedIndex);
+    await this.changeTodoItemPriority(
+      dataMemberId,
+      todoListItemId,
+      target.selectedIndex
+    );
+  }
+
   async handleSelectChip(event) {
     if (event.target.tagName !== 'SELECT') return;
 
@@ -182,41 +215,16 @@ class Kanban {
     const container = target.closest('.chip-container');
     const $todoListItem = target.closest('.todo-list-item');
     const todoListItemId = $todoListItem.id;
-    let response;
 
     const dataMemberId = target
       .closest('.todoapp-container')
       .getAttribute('data-member-id');
-    container.innerHTML = '';
-    container.innerHTML = selectOptionTemplate(target.selectedIndex);
-    switch (target.selectedIndex) {
-      case 0:
-        response = await this.API.changeTeamMemberTodoItemPriority(
-          this.teamId,
-          dataMemberId,
-          todoListItemId,
-          'FIRST'
-        );
-        break;
-      case 1:
-        response = await this.API.changeTeamMemberTodoItemPriority(
-          this.teamId,
-          dataMemberId,
-          todoListItemId,
-          'SECOND'
-        );
-        break;
-      case 2:
-        response = await this.API.changeTeamMemberTodoItemPriority(
-          this.teamId,
-          dataMemberId,
-          todoListItemId,
-          'NONE'
-        );
-        break;
-      default:
-        break;
-    }
+    await this.renderTodoItemPriority(
+      container,
+      target,
+      dataMemberId,
+      todoListItemId
+    );
   }
 
   renderTodoItem($todoList, memberTodoList, option) {
