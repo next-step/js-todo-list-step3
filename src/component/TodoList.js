@@ -1,14 +1,28 @@
 import template from "../util/template.js";
 
-function TodoList({ target, onDeleteButton, onCompleted, onEditing, onEdit, onSettingPriority }) {
+function TodoList({ target, todoList, setMemberTodoList }) {
+	this.todoList = todoList;
+
 	this.setState = (updatedTodoItems) => {
+		this.todoList = updatedTodoItems;
+		setMemberTodoList(updatedTodoItems);
 		this.render(updatedTodoItems);
+	};
+
+	this.attachEvent = ({ onDeleteButton, onCompleted, onEditing, onEdit, onSettingPriority }) => {
+		this.onDeleteButton = onDeleteButton;
+		this.onCompleted = onCompleted;
+		this.onEditing = onEditing;
+		this.onEdit = onEdit;
+		this.onSettingPriority = onSettingPriority;
 	};
 
 	const html = (itemModel) => {
 		const li = template("li", {
-			class: `${itemModel.completed ? "completed" : ""} ${itemModel.editing ? "editing" : ""}`.trim(),
-			onDblClick: onEditing.bind(null, itemModel.id)
+			class: `todo-list-item ${itemModel.completed ? "completed" : ""} ${
+				itemModel.editing ? "editing" : ""
+			}`.trim(),
+			onDblClick: this.onEditing.bind(null, itemModel.id)
 		});
 
 		const div = template("div", { class: "view" });
@@ -20,12 +34,12 @@ function TodoList({ target, onDeleteButton, onCompleted, onEditing, onEdit, onSe
 						class: "toggle",
 						type: "checkbox",
 						checked: true,
-						onChange: onCompleted.bind(null, itemModel.id)
+						onChange: this.onCompleted.bind(null, itemModel.id)
 				  }
 				: {
 						class: "toggle",
 						type: "checkbox",
-						onChange: onCompleted.bind(null, itemModel.id)
+						onChange: this.onCompleted.bind(null, itemModel.id)
 				  }
 		);
 
@@ -35,7 +49,7 @@ function TodoList({ target, onDeleteButton, onCompleted, onEditing, onEdit, onSe
 		if (itemModel.priority === "NONE") {
 			priority = template("select", {
 				class: "chip select",
-				onChange: onSettingPriority.call(null, itemModel.id)
+				onChange: this.onSettingPriority.bind(null, itemModel.id)
 			});
 			const options = [0, 1, 2].reduce((acc, cur, idx) => {
 				let option;
@@ -59,15 +73,21 @@ function TodoList({ target, onDeleteButton, onCompleted, onEditing, onEdit, onSe
 			priority.appendChild(document.createTextNode("2순위"));
 		}
 
-		label.append(priority);
+		const priorityContainer = template("div", { class: "chip-container" });
+		priorityContainer.append(priority);
+
+		label.append(priorityContainer);
 		label.append(document.createTextNode(itemModel.contents));
 
-		const button = template("button", { class: "destroy", onClick: onDeleteButton.bind(null, itemModel.id) });
+		const button = template("button", {
+			class: "destroy",
+			onClick: this.onDeleteButton.bind(null, itemModel.id)
+		});
 
 		const edit = template("input", {
 			class: "edit",
 			value: itemModel.contents,
-			onKeyDown: onEdit.call(null, itemModel.id)
+			onKeyDown: this.onEdit.bind(null, itemModel.id)
 		});
 
 		div.append(input, label, button);
@@ -77,7 +97,7 @@ function TodoList({ target, onDeleteButton, onCompleted, onEditing, onEdit, onSe
 
 	this.render = (items) => {
 		target.innerHTML = "";
-
+		console.log("todolist render", items);
 		items.reduce((acc, cur) => {
 			acc.append(html(cur));
 			return acc;

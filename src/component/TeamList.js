@@ -7,7 +7,7 @@ function TeamList({ target }) {
 
 	const html = (team) => {
 		const container = template("div", { class: "team-card-container" });
-		const link = template("a", { href: `/kanban.html`, id: team.id, class: "card" });
+		const link = template("a", { href: `/kanban.html?id=${team.id}`, id: team.id, class: "card" });
 		const title = template("div", { class: "card-title", text: team.name });
 
 		link.append(title);

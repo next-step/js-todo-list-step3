@@ -1,18 +1,15 @@
 import KEY_CODE from "../constants/KeyCode.js";
 
-function TodoInput({ onAdd }) {
-	const $todoInput = document.querySelector("input.new-todo");
-	$todoInput.addEventListener("keydown", (event) => this.addTodoItem(event));
-
-	this.isValid = (event) => {
+function TodoInput({ target, onAdd }) {
+	const isValid = (event) => {
 		if (event.keyCode === KEY_CODE.ENTER) {
 			return true;
 		}
 	};
 
-	this.addTodoItem = (event) => {
+	const addTodoItem = (event) => {
 		const $newTodoTarget = event.target;
-		if (this.isValid(event, $newTodoTarget.value)) {
+		if (isValid(event, $newTodoTarget.value)) {
 			if (event.target.value.length < 2) {
 				alert("2글자 이상이어야 합니다.");
 				return;
@@ -22,6 +19,8 @@ function TodoInput({ onAdd }) {
 			$newTodoTarget.value = "";
 		}
 	};
+
+	target.addEventListener("keydown", (event) => addTodoItem(event));
 }
 
 export default TodoInput;

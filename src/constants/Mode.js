@@ -1,6 +1,7 @@
 const Mode = {
 	ALL: "all",
-	ACTIVE: "active",
+	TODO: "todo",
+	PRIORITY: "priority",
 	COMPLETED: "completed"
 };
 

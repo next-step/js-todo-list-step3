@@ -1,19 +1,36 @@
 import Mode from "../../constants/Mode.js";
 
 function onChangeMode(mode) {
-	let prevTodoItems;
+	let nextTodoItems;
+
+	const convertPriorityIntoNum = (priority) => {
+		switch (priority) {
+			case "NONE":
+				return 0;
+			case "FIRST":
+				return 2;
+			case "SECOND":
+				return 1;
+		}
+	};
+
 	switch (mode) {
 		case Mode.ALL:
-			prevTodoItems = this.users[this.selectedUserIdx].todoList;
+			nextTodoItems = this.todoList;
 			break;
-		case Mode.ACTIVE:
-			prevTodoItems = this.users[this.selectedUserIdx].todoList.filter((item) => !item.completed);
+		case Mode.TODO:
+			nextTodoItems = this.todoList.filter((item) => !item.completed);
+			break;
+		case Mode.PRIORITY:
+			nextTodoItems = [...this.todoList].sort(
+				(a, b) => convertPriorityIntoNum(b.priority) - convertPriorityIntoNum(a.priority)
+			);
 			break;
 		case Mode.COMPLETED:
-			prevTodoItems = this.users[this.selectedUserIdx].todoList.filter((item) => item.completed);
+			nextTodoItems = this.todoList.filter((item) => item.completed);
 			break;
 	}
-	this.setTodoItems(prevTodoItems);
+	this.render(nextTodoItems);
 }
 
 export default onChangeMode;

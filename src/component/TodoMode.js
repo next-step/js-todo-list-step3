@@ -25,7 +25,7 @@ function TodoMode({ target, onChangeMode }) {
 		} else if (e.target.tagName === "A") {
 			target = e.target.getAttribute("class");
 		}
-
+		console.log(e.target.tagName);
 		const refinedMode = refineMode(target);
 		onChangeMode(refinedMode);
 		selectedMode(refinedMode);
