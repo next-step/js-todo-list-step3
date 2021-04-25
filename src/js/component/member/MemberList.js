@@ -1,33 +1,29 @@
 import { Action } from '../../action/Action.js'
-import { $ } from "../../util/domSelection.js";
+import { $ } from "../../util/domSelection.js"
 
 export class MemberList{
     constructor(){
-        const $todoApps = $('.todoapp-list-container')
-        const $addMemberButton = $('#add-user-button')
-        $addMemberButton.addEventListener('click', () => {
-            const memberName = prompt('새로운 팀원 이름을 입력해주세요');
-            Action.addMember($todoApps.dataset.teamid,memberName);
+        const $todoApps = $('ul.todoapp-list-container')
+        $todoApps.addEventListener('click', ({target}) => {
+            if(!target) return;
+            if(target.classList.contains('add-user-button') ){
+                const memberName = prompt('새로운 팀원 이름을 입력해주세요');
+                if(memberName){
+                    Action.addMember($todoApps.dataset.teamid,memberName);
+                }
+            }
         })
     }
 
-    render(team){
-        //Title 설정
-        $('#kanban-title strong').textContent = team.name;
-        //teamId 세팅
-        $('ul.todoapp-list-container').dataset.teamid=team._id;
-        
+    render(member){
         //멤버별 todoapp Container 생성 -> 이후 처리는 TodoStore에서 할 예정
-        const members = team.members;
         const addMemberContainer = $('li.add-user-button-container');
-        members.forEach((member) => {
-            const todoAppContainer = 
-            `<li class="todoapp-container" data-memberid="${member._id}">
-                <h2>
-                    <span><strong>${member.name}</strong>'s Todo List</span>
-                </h2>
-            </li>`
-            addMemberContainer.insertAdjacentHTML('beforebegin',todoAppContainer);
-        });
+        const todoAppContainer = 
+        `<li class="todoapp-container" data-memberid="${member._id}">
+            <h2>
+                <span><strong>${member.name}</strong>'s Todo List</span>
+            </h2>
+        </li>`
+        addMemberContainer.insertAdjacentHTML('beforebegin',todoAppContainer);
     }
 }
