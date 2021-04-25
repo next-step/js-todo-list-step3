@@ -43,6 +43,7 @@ export default class App {
   getTeamMembers = async (teamId) => {
     await teamApi.get(teamId).then((data) => {
       this.memberList = new MemberList({
+        teamId,
         containerEl: this.containerEl,
         membersData: data.members,
       });
@@ -50,15 +51,15 @@ export default class App {
   };
 
   getAllUser = async () => {
-    await userApi.get().then((data) => {
+    await userApi.get(teamId).then((data) => {
       this.appData = data;
     });
     this.selectedUserId = this.appData[0]._id;
     this.render();
   };
 
-  createUser = async (name) => {
-    await userApi.create(name);
+  createUser = async (teamId, name) => {
+    await userApi.create(teamId, name);
     this.handleGetAllUser();
   };
 
@@ -67,8 +68,8 @@ export default class App {
     this.render();
   };
 
-  deleteUser = async (userId) => {
-    await userApi.delete(userId);
+  deleteUser = async (teamId, userId) => {
+    await userApi.delete(teamId, userId);
     this.handleGetAllUser();
   };
 

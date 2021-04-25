@@ -1,19 +1,23 @@
 import { todoItem, loading } from "../../templete/templete.js";
 export default class TodoList {
   constructor({
+    userId,
     todoData,
     onCheckItem,
     onEditItem,
     onSetPriorityItem,
     onDeleteItem,
   }) {
-    this.todoListUl = document.getElementById("todo-list");
-    this.todoPrioritySelect = document.querySelector("select.chip");
+    this.userId = userId;
     this.todoData = todoData;
     this.handleCheckItem = onCheckItem;
     this.handleEditItem = onEditItem;
     this.handleSetPriorityItem = onSetPriorityItem;
     this.handleDeleteItem = onDeleteItem;
+    this.todoListUl = document
+      .getElementById(this.userId)
+      .querySelector(".todo-list");
+    this.todoPrioritySelect = document.querySelector("select.chip");
 
     this.init();
   }

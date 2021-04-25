@@ -15,11 +15,13 @@ export default class TeamList {
   init() {
     this.containerEl.innerHTML = "";
     this.containerEl.append(this.teamListEl);
-    this.containerEl.addEventListener("click", (e) => {
-      e.preventDefault();
-      const teamId = e.target.id;
-      this.onGetTeamMembers(teamId);
-    });
+    this.teamListEl.addEventListener("click", (e) => this.teamClickHandler(e));
+  }
+
+  teamClickHandler(e) {
+    e.preventDefault();
+    const teamId = e.target.closest(".team-card-container").id;
+    this.onGetTeamMembers(teamId);
   }
 
   render() {

@@ -1,7 +1,7 @@
 export const teamItem = (data) => {
   return `
-    <div class="team-card-container">
-      <a id="${data._id}" href="#" class="card">
+    <div id="${data._id}" class="team-card-container">
+      <a href="#" class="card">
         <div class="card-title">
           ${data.name}
         </div>
@@ -12,16 +12,16 @@ export const teamItem = (data) => {
 
 export const memberItem = (data) => {
   return `
-  <li class="todoapp-container">
+  <li id="${data._id}" class="todoapp-container">
     <h2>
-      <span><strong>eastjun</strong>'s Todo List</span>
+      <span><strong>${data.name}</strong>'s Todo List</span>
     </h2>
     <div class="todoapp">
       <section class="input-container">
         <input id="new-todo-title" class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
       </section>
       <section class="main">
-        <ul id="todo-list" class="todo-list">
+        <ul class="todo-list">
         </ul>
       </section>
       <div class="count-container">

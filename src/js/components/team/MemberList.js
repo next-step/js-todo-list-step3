@@ -2,7 +2,8 @@ import TodoApp from "../todo/TodoApp.js";
 import { memberItem } from "../../templete/templete.js";
 
 export default class MemberList {
-  constructor({ containerEl, membersData }) {
+  constructor({ teamId, containerEl, membersData }) {
+    this.teamId = teamId;
     this.containerEl = containerEl;
     this.memberListEl = document.createElement("ul");
     this.memberListEl.classList.add(
@@ -11,7 +12,6 @@ export default class MemberList {
     );
 
     this.membersData = membersData;
-    console.log(membersData);
 
     this.init();
     this.render();
@@ -29,8 +29,7 @@ export default class MemberList {
       .join("");
 
     this.membersData.map((data) => {
-      console.log(data);
-      new TodoApp({ userId: data._id });
+      new TodoApp({ teamId: this.teamId, userId: data._id });
     });
   }
 }
