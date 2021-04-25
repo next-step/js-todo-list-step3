@@ -1,75 +1,74 @@
-import { Action } from "../../action/Action.js";
-import { $, $$ } from "../../util/domSelection.js";
+import { Action } from '../../action/Action.js';
+import { $, $$ } from '../../util/domSelection.js';
 
-const _getMemberId = (target) =>{
-  const $todoList = target.closest("li.todoapp-container");
+const _getMemberId = (target) => {
+  const $todoList = target.closest('li.todoapp-container');
   return $todoList.dataset.memberid;
-}
+};
 
 export class TodoStatusContainer {
   static FILTER_STATE = {
-    ALL:'all',
-    ACTIVE:'active',
-    COMPLETED:'completed',
-    PRIORITY:'priority',
+    ALL: 'all',
+    ACTIVE: 'active',
+    COMPLETED: 'completed',
+    PRIORITY: 'priority',
   };
 
   constructor() {
-    const $app = $("ul.todoapp-list-container");
+    const $app = $('ul.todoapp-list-container');
     const teamId = $app.dataset.teamid;
 
-    $app.addEventListener("click", async ({target}) => {
+    $app.addEventListener('click', async ({ target }) => {
       if (!target) return;
-      if (target.classList.contains("clear-completed")) {
-        Action.deleteItemAll(teamId,_getMemberId(target));
+      if (target.classList.contains('clear-completed')) {
+        Action.deleteItemAll(teamId, _getMemberId(target));
       }
     });
-    $app.addEventListener("click", async (e) => {
+    $app.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target;
-      
-      if(!target.closest('ul.filters')) return;
-      if(!target.nodeName=='A') return;
-     
+
+      if (!target.closest('ul.filters')) return;
+      if (!target.nodeName == 'A') return;
+
       const memberId = _getMemberId(target);
-      if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ALL)){
-        Action.changeFilterState(teamId,memberId,TodoStatusContainer.FILTER_STATE.ALL);
-      }else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ACTIVE)){
-        Action.changeFilterState(teamId,memberId,TodoStatusContainer.FILTER_STATE.ACTIVE);
-      }else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.COMPLETED)){
-        Action.changeFilterState(teamId,memberId,TodoStatusContainer.FILTER_STATE.COMPLETED);
-      }else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.PRIORITY)){
-        Action.changeFilterState(teamId,memberId,TodoStatusContainer.FILTER_STATE.PRIORITY);
+      if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ALL)) {
+        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.ALL);
+      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ACTIVE)) {
+        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.ACTIVE);
+      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.COMPLETED)) {
+        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.COMPLETED);
+      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.PRIORITY)) {
+        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.PRIORITY);
       }
     });
   }
 
-  getItemCount($todoAppContainer){
+  getItemCount($todoAppContainer) {
     let count = 0;
-    $$(".todo-list li",$todoAppContainer).forEach((li) => {
-      if (li.style.display != "none") count = count + 1;
+    $$('.todo-list li', $todoAppContainer).forEach((li) => {
+      if (li.style.display != 'none') count = count + 1;
     });
     return count;
   }
 
-  render(filterState,$todoAppContainer) {
+  render(filterState, $todoAppContainer) {
     //필터 적용
-    const todos = $$('ul.todo-list li',$todoAppContainer);
-    switch(filterState){
-      case TodoStatusContainer.FILTER_STATE.ACTIVE :
-      case TodoStatusContainer.FILTER_STATE.COMPLETED :
+    const todos = $$('ul.todo-list li', $todoAppContainer);
+    switch (filterState) {
+      case TodoStatusContainer.FILTER_STATE.ACTIVE:
+      case TodoStatusContainer.FILTER_STATE.COMPLETED:
         todos.forEach((todo) => {
-          if(!todo.classList.contains(filterState)){
+          if (!todo.classList.contains(filterState)) {
             todo.style.display = 'none';
           }
         });
         break;
     }
 
-    const [countContainer] = $$('div.count-container',$todoAppContainer);
+    const [countContainer] = $$('div.count-container', $todoAppContainer);
     const count = this.getItemCount($todoAppContainer);
-    const countContainerInnerHTML =
-    `<span class="todo-count">총 <strong>${count}</strong> 개</span>
+    const countContainerInnerHTML = `<span class="todo-count">총 <strong>${count}</strong> 개</span>
         <ul class="filters">
           <li>
             <a href="#all" class="${TodoStatusContainer.FILTER_STATE.ALL} ${filterState == TodoStatusContainer.FILTER_STATE.ALL ? 'selected' : ''}">전체보기</a>
@@ -85,8 +84,7 @@ export class TodoStatusContainer {
           </li>
         </ul>
         <button class="clear-completed">모두 삭제</button>
-      </div>`
-      countContainer.innerHTML=countContainerInnerHTML;
-    
+      </div>`;
+    countContainer.innerHTML = countContainerInnerHTML;
   }
 }

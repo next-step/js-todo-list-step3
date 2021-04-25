@@ -1,11 +1,11 @@
 import { TeamList } from '../component/team/TeamList.js';
 
 export class TeamApp {
-  constructor(){
+  constructor() {
     this.teamList = new TeamList();
   }
 
-  renderAll({teams}) {
+  renderAll({ teams }) {
     this.teamList.render(teams);
   }
 }

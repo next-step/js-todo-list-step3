@@ -1,5 +1,4 @@
-*TEST*
-*backup*
-
-src/js/index_m2.js
-src/js/action/TodoActions_ReadOnly.js
+node_modules
+.vscode
+package-lock.json
+src/css/style.css
