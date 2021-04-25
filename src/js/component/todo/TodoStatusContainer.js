@@ -1,61 +1,50 @@
+import { Action } from "../../action/Action.js";
 import { $, $$ } from "../../util/domSelection.js";
+
 export class TodoStatusContainer {
   static FILTER_STATE = {
     ALL:'all',
     ACTIVE:'active',
     COMPLETED:'completed',
-    //PRIORITY:'priority'
+    PRIORITY:'priority',
   };
 
-  constructor(todoApp) {
-    this.todoApp = todoApp;
-    this.buttons = {
-      all: $(".count-container ." + TodoStatusContainer.FILTER_STATE.ALL),
-      active: $(".count-container ." + TodoStatusContainer.FILTER_STATE.ACTIVE),
-      completed: $(".count-container ." + TodoStatusContainer.FILTER_STATE.COMPLETED),
-    };
-    Object.entries(this.buttons).forEach( ([filterState,button]) => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        todoApp.changeFilter(filterState);
-      });
-    });
-
-    const deleteAllButton =$(".count-container .clear-completed" );
-    deleteAllButton.addEventListener("click", async () => await todoApp.deleteItemAll());
+  //유저별로 항목이 있음.
+  constructor() {
+    
   }
 
-  hideSelectedFilter(){
-    $$(".count-container a").forEach((button) =>
-      button.classList.remove("selected")
-    ); 
-  }
-  showSelectedFilter(filterState){
-    const todoListLi = $$(".todo-list li");
-    this.buttons[filterState].classList.add("selected");
-    if (filterState == TodoStatusContainer.FILTER_STATE.ALL) {
-      todoListLi.forEach((li) => (li.style.display = ""));
-      return;
-    }
-    todoListLi.forEach((li) => {
-      if (!li.classList.contains(filterState))
-        li.style.display = "none";
-      else li.style.display = "";
-    });
-  };
-
-  
-
-  setState(filterState) {
-    
-    this.hideSelectedFilter();
-    this.showSelectedFilter(filterState);
-    
+  getItemCount($todoAppContainer){
     let count = 0;
-    $$(".todo-list li").forEach((li) => {
+    $$(".todo-list li",$todoAppContainer).forEach((li) => {
       if (li.style.display != "none") count = count + 1;
     });
-    $(".todo-count strong").textContent = count;
-
+    return count;
+  }
+  render(filterState,$todoAppContainer) {
+    const [countContainer] = $$('div.count-container',$todoAppContainer);
+    // const [todoCount] = $$(".todo-count strong",countContainer)
+    // todoCount.textContent = this.getItemCount($todoAppContainer);
+    const count = this.getItemCount($todoAppContainer);
+    const countContainerInnerHTML =
+    `<span class="todo-count">총 <strong>${count}</strong> 개</span>
+        <ul class="filters">
+          <li>
+            <a href="#all" ${filterState == TodoStatusContainer.FILTER_STATE.ALL ? 'class="selected"': ''}>전체보기</a>
+          </li>
+          <li>
+            <a href="#priority" ${filterState == TodoStatusContainer.FILTER_STATE.PRIORITY ? 'class="selected"': ''}>우선 순위</a>
+          </li>
+          <li>
+            <a href="#active" ${filterState == TodoStatusContainer.FILTER_STATE.ACTIVE ? 'class="selected"': ''}>해야할 일</a>
+          </li>
+          <li>
+            <a href="#completed" ${filterState == TodoStatusContainer.FILTER_STATE.COMPLETED ? 'class="selected"': ''}>완료한 일</a>
+          </li>
+        </ul>
+        <button class="clear-completed">모두 삭제</button>
+      </div>`
+      countContainer.innerHTML=countContainerInnerHTML;
+    
   }
 }

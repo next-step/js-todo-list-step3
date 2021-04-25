@@ -28,6 +28,15 @@ export class TodoActions{
       memberName:memberName,
     });
    }
+   static addItem(teamId,memberId,data){
+    todoDispatcher.handleViewAction({
+      type: ACTION_TYPES.ADD_ITEM,
+      teamId:teamId,
+      memberId:memberId,
+      data:data,
+    });
+   }
+
 
    static deleteItemAll(teamId,userId){
     todoDispatcher.handleViewAction({

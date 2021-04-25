@@ -1,6 +1,7 @@
-import { DAO } from "../database/database.js";
-import { TodoItem , TodoStatusContainer} from "../component/todo/Todo.js";
-
+import { todoDispatcher } from '../dispatcher/TodoDispatcher.js'
+import { ACTION_TYPES } from '../action/Action.js'
+import { DAO } from "../database/database.js"
+import { TodoStatusContainer } from '../component/todo/TodoStatusContainer.js'
 /* PRIVATE 함수로 상태 변경. => ACTION을 통해서만 가능
 async getUsers(){
   return await DAO.getUsers();
@@ -66,47 +67,66 @@ changeFilter(filterState) {
 }
 */
 
-//팀원 목록을 불러 온 후 팀원 수만큼 인스턴스 생성필요.
+
+const _stateMap = new Map();
+
 export class TodoStore {
-  //addUser시 사용됨.
-  static async addUserTodoStoreFactory(){
-    //Pseudo 
-    //const team = addUserInTeam();
-    //const newUser = newMembers-oldMemebers
-    return new TodoStore(team._id, newUser._id);
-  }
-  //userId 필수
-  async init(userId) {
-    const items = await DAO.getUserItems(userId);
-    this._state.todoItems =  items.map(item => new TodoItem(item));
-    this.filterState = TodoStatusContainer.FILTER_STATE.ALL;
+  async init() {
+    const teamId = this.kanbanStore.getTeamId();
+    const members = this.kanbanStore.getMembers();
+
+    members.forEach(async(member) =>{
+      const {_id,todoList = []} = await DAO.getMemberTodoList(teamId,member._id);
+      _stateMap.set(_id,{todoList:todoList,filterState:TodoStatusContainer.FILTER_STATE.ALL});
+      this.todoApp.renderAll(this.getMemberState(_id));
+    });
   }
 
-  constructor(teamId,userId){
-    //직접 생성 막을 방법? 
-    // private 인스턴스 필드로 만들방법?
-    this.teamId=teamId;
-    this.userId=userId;
-    this._state = {
+  constructor(kanbanStore,todoApp){
+    this.kanbanStore = kanbanStore;
+    this.todoApp = todoApp;
+    this.dispatcherIndex = todoDispatcher.register(this.setState,this);
+  }
+  getMemberState= (memberId) => {
+    const memberState = _stateMap.get(memberId);
+    const copy = {
+      memberId:memberId,
+      todoList : [...memberState.todoList],
+      filterState : memberState.filterState
+    };
+    return copy;
+  }
 
-      todoItems:[],
-      filterState : TodoStatusContainer.FILTER_STATE.ALL
+  async setState(action) {
+    if(_stateMap.keys().length == 0) {
+      new Error("Invalid state. May be the store isn't initiated");
     }
-    this.dispatcherIndex = TodoDispatcher.register(this.setState);
-  }
-
-  setState() {
-    //PSEUDO 
-    /*
-    switch(action){
-      case :
-        DO CHANGE STATE WITH Store's METHOD!
-
-      default :
-        NOT MY ACTION.. 
+    //action에서 명시된 멤버의 상태값만 뷰로 넘기면 된다.
+    //상태 변경
+    action = action.action;
+    const type = action?.type
+    const teamId = action?.teamId
+    let memberId = action?.memberId
+    
+    if(type == ACTION_TYPES.ADD_ITEM){
+      const data = action?.data;
+      await DAO.addItem(teamId,memberId,data);
+      const {_id,todoList = []} = await DAO.getMemberTodoList(teamId,memberId);
+      _stateMap.get(_id).todoList = todoList;
+    }else if(type == ACTION_TYPES.ADD_MEMBER){
+      memberId=this.kanbanStore.getLastAddedMember()._id;
+      const {_id,todoList = []} = await DAO.getMemberTodoList(teamId,memberId);
+      _stateMap.set(_id,{todoList:todoList,filterState:TodoStatusContainer.FILTER_STATE.ALL});
+    }else{
+      //모르는 Action일 경우 넘김.
+      return true;
     }
-    &&
-    todoApp.render(need_state)
-    */
+
+    //상태 복사 후 전파
+    const copiedState = this.getMemberState(memberId);
+    this.todoApp.renderAll(copiedState);
+
+    //dispatcher에서 resolve처리
+    return true; 
   }
 }

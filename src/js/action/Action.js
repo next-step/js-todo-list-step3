@@ -7,9 +7,12 @@ export const ACTION_TYPES = {
     GET_TEAM : 'GET_TEAM',
     ADD_MEMBER :'ADD_MEMBER',
 
+    ADD_ITEM :'ADD_ITEM',
+
+
 
     GET_ITEMS :'ADD_USER',
-    ADD_ITEM :'ADD_USER',
+   
     UPDATE_ITEM : 'UPDATE_ITEM',
     UPDATE_ITEM_COMPLETE_TOGGLE : 'UPDATE_ITEM_COMPLETE_TOGGLE',
     UPDATE_ITEM_PRIORITY : 'UPDATE_ITEM_PRIORITY',
@@ -33,7 +36,9 @@ export class Action{
     static addMember(teamId,memberName){
         action.addMember(teamId,memberName);
     }
-
+    static addItem(teamId,memberId,data){
+        action.addItem(teamId,memberId,data);
+    }
 
 
 
