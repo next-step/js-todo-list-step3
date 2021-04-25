@@ -1,7 +1,5 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
 import API from './api.js';
 import { $, $$ } from './constants.js';
 import {
@@ -19,16 +17,20 @@ class Kanban {
   }
 
   async handleClickAddUserButton() {
-    console.log('handleClickAddUserButton');
     const teamMemberName = prompt('새로운 팀원 이름을 입력해주세요');
-    // TODO: 빈 문자열, white space만 있는 문자열 분리해서 처리할 것.
-    if (teamMemberName === null || teamMemberName.length < 1) {
+    if (teamMemberName === null) {
+      return;
+    }
+    if (teamMemberName.length < 1) {
       alert('팀원 이름은 1글자 이상이어야 합니다.');
+      return;
+    }
+    if (!teamMemberName.replace(/\s/g, '').length) {
+      alert('팀원 이름은 공백으로만 이루어질 순 없습니다.');
       return;
     }
     const response = await this.API.addTeamMember(this.teamId, teamMemberName);
     await this.renderTodoAppContainers();
-    // TODO: try catch
   }
 
   async changeInputValue(event) {
@@ -67,11 +69,6 @@ class Kanban {
   }
 
   async handleKeyupListContainer(event) {
-    // TODO
-    // 1) dblclick 이후 enter 이벤트 발생 시 오작동 여지
-    // 2) try catch
-
-    console.log('handleKeyUpListContainer');
     const { target } = event;
     const { value } = target;
 
@@ -92,7 +89,6 @@ class Kanban {
       value
     );
     const todoData = await response.json();
-    // TODO: fix? 최초에만 render가 2번?
     $todoList.insertAdjacentHTML('beforeend', todoListItemTemplate(todoData));
     event.target.value = '';
   }
@@ -113,7 +109,6 @@ class Kanban {
   }
 
   async toggleTodoItem(target) {
-    console.log('toggleTodoItem');
     const $todoListItem = target.closest('.todo-list-item');
     const todoListItemId = $todoListItem.id;
     const $todoApp = target.closest('.todoapp-container');
@@ -127,7 +122,6 @@ class Kanban {
   }
 
   async deleteAllTodoItem(target) {
-    console.log(target);
     const $todoApp = target.closest('.todoapp-container');
     const dataMemberId = $todoApp.getAttribute('data-member-id');
     const $todoList = $todoApp.querySelector('.todo-list');
@@ -140,16 +134,15 @@ class Kanban {
 
   async handleClickListContainer(event) {
     const { target } = event;
-
     if (
       target.className !== 'destroy' &&
       target.className !== 'toggle' &&
-      target.tagName !== 'A' &&
-      target.tagName !== 'BUTTON'
+      target.className !== 'filter' &&
+      target.className !== 'material-icons' &&
+      target.id !== 'add-user-button'
     )
       return;
-    console.log('handleClickListContainer');
-    if (target.tagName === 'A') {
+    if (target.className === 'filter') {
       await this.handleClickFilters(event);
       return;
     }
@@ -163,6 +156,13 @@ class Kanban {
     }
     if (target.className === 'clear-completed') {
       await this.deleteAllTodoItem(target);
+      return;
+    }
+    if (
+      target.id === 'add-user-button' ||
+      target.className === 'material-icons'
+    ) {
+      await this.handleClickAddUserButton();
     }
   }
 
@@ -187,8 +187,6 @@ class Kanban {
     const dataMemberId = target
       .closest('.todoapp-container')
       .getAttribute('data-member-id');
-    console.log(dataMemberId);
-
     container.innerHTML = '';
     container.innerHTML = selectOptionTemplate(target.selectedIndex);
     switch (target.selectedIndex) {
@@ -217,7 +215,6 @@ class Kanban {
         );
         break;
       default:
-        console.log('error');
         break;
     }
   }
@@ -264,14 +261,11 @@ class Kanban {
   }
 
   async handleClickFilters(event) {
-    console.log('handleClickFilters');
     this.changeFilterUI(event);
     await this.changeTodosByFilter(event);
   }
 
   async addEvents() {
-    console.log('kanban addEvents');
-    const $addUserButton = $('#add-user-button');
     const $flexColumnContainer = $('.flex-column-container');
     $flexColumnContainer.addEventListener(
       'click',
@@ -288,10 +282,6 @@ class Kanban {
     $flexColumnContainer.addEventListener(
       'dblclick',
       this.handleDblclick.bind(this)
-    );
-    $addUserButton.addEventListener(
-      'click',
-      await this.handleClickAddUserButton.bind(this)
     );
   }
 
@@ -315,13 +305,11 @@ class Kanban {
   }
 
   async render() {
-    console.log('kanban render');
     await this.renderTodoAppContainers();
     await this.addEvents();
   }
 
   async init() {
-    console.log('kanban init');
     const search = `id=${this.teamId}`;
     history.pushState('', '', `?${search}`);
     await this.render();
@@ -329,5 +317,3 @@ class Kanban {
 }
 
 new Kanban();
-
-// export default Kanban;
