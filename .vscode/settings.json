@@ -1,6 +1,9 @@
 {
   "standard.autoFixOnSave": true,
   "standard.options": {
+    "globals": [
+      "fetch"
+    ],
     "ignore": [
       "node_modules/**"
     ]
