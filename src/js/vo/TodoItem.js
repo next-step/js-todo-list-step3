@@ -9,7 +9,7 @@ export class TodoItem {
   static COMPLETED = "completed";
 
   constructor({contents, isCompleted, _id, priority = TodoItem.PRIORITY_NONE}) {
-    this.data = contents;
+    this.contents = contents;
     this.isCompleted = isCompleted;
     this._id = _id;
     this.priority = priority;
