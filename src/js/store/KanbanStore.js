@@ -21,7 +21,6 @@ const _copyState = (kanbanStoreState) => {
 const _state = {};
 
 export class KanbanStore {
-  //생성자가 마음에 들지 않음.
   constructor(teamId, kanbanApp) {
     this.teamId = teamId;
     this.kanbanApp = kanbanApp;

@@ -12,7 +12,7 @@ export class TodoStatusContainer {
     ACTIVE: 'active',
     COMPLETED: 'completed',
     PRIORITY: 'priority',
-  };
+  }
 
   constructor() {
     const $app = $('ul.todoapp-list-container');
