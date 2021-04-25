@@ -1,4 +1,5 @@
 import { TEAM_PROPS } from '../../constants/PROPERTIES.js'
+import { teamStore } from '../../utils/Store.js'
 
 const renderTemplate = (team) => {
   return `
@@ -13,10 +14,25 @@ const renderTemplate = (team) => {
 }
 
 const TeamList = () => {
+  const teamListContainerElement = document.getElementById('team-list-container')
+
   const render = (teams) => {
-    return teams.map(team => renderTemplate(team)).join('')
+    const childrenArray = [...teamListContainerElement.children]
+
+    childrenArray.map((child) => {
+      if (child.dataset.type !== 'user') {
+        return null
+      }
+      return child.remove()
+    })
+
+    teamListContainerElement.insertAdjacentHTML(
+      'afterbegin',
+      teams.map(team => renderTemplate(team)).join('')
+    )
   }
-  return { render }
+
+  teamStore.subscribeTeamList(render)
 }
 
 export default TeamList
