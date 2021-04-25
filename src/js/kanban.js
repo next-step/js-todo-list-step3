@@ -8,6 +8,7 @@ import {
   todoAppContainer,
   makeAddUserButton,
   todoListItemTemplate,
+  selectOptionTemplate,
 } from './template.js';
 
 class Kanban {
@@ -170,6 +171,51 @@ class Kanban {
     $todoListItem.classList.add('editing');
   }
 
+  async handleSelectChip(event) {
+    const { target } = event;
+    const container = target.closest('.chip-container');
+    const $todoListItem = target.closest('.todo-list-item');
+    const todoListItemId = $todoListItem.id;
+    let response;
+
+    const dataMemberId = target
+      .closest('.todoapp-container')
+      .getAttribute('data-member-id');
+    console.log(dataMemberId);
+
+    container.innerHTML = '';
+    container.innerHTML = selectOptionTemplate(target.selectedIndex);
+    switch (target.selectedIndex) {
+      case 0:
+        response = await this.API.chanegeTeamMemberTodoItemPriority(
+          this.teamId,
+          dataMemberId,
+          todoListItemId,
+          'FIRST'
+        );
+        break;
+      case 1:
+        response = await this.API.chanegeTeamMemberTodoItemPriority(
+          this.teamId,
+          dataMemberId,
+          todoListItemId,
+          'SECOND'
+        );
+        break;
+      case 2:
+        response = await this.API.chanegeTeamMemberTodoItemPriority(
+          this.teamId,
+          dataMemberId,
+          todoListItemId,
+          'NONE'
+        );
+        break;
+      default:
+        console.log('error');
+        break;
+    }
+  }
+
   async addEvents() {
     console.log('kanban addEvents');
     const $addUserButton = $('#add-user-button');
@@ -190,6 +236,9 @@ class Kanban {
       'click',
       await this.handleClickAddUserButton.bind(this)
     );
+    $$('select').forEach(element => {
+      element.addEventListener('change', this.handleSelectChip.bind(this));
+    });
   }
 
   async renderTodoAppContainers() {
@@ -217,11 +266,11 @@ class Kanban {
     await this.addEvents();
   }
 
-  init() {
+  async init() {
     console.log('kanban init');
     const search = `id=${this.teamId}`;
     history.pushState('', '', `?${search}`);
-    this.render();
+    await this.render();
   }
 }
 

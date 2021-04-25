@@ -104,6 +104,18 @@ class API {
     );
     return response;
   }
+
+  async chanegeTeamMemberTodoItemPriority(teamId, memberId, itemId, priority) {
+    const response = await this.put(
+      `
+				${this.teamURL}/${teamId}${API_MEMBERS}/${memberId}/items/${itemId}/priority
+			`,
+      this.createRequestBody('PUT', {
+        body: JSON.stringify({ priority }),
+      })
+    );
+    return response;
+  }
 }
 
 export default API;

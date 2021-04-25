@@ -26,22 +26,56 @@ const makeTeamCardContainer = function (item) {
 	`;
 };
 
+const selectOptionTemplate = function (priority) {
+  switch (priority) {
+    case 'primary':
+    case 0:
+      return `
+				<select class="chip select primary">
+					<option value="1" selected >1순위</option>
+					<option value="2">2순위</option>
+					<option value="0">미지정</option>
+				</select>
+			`;
+
+    case 'secondary':
+    case 1:
+      return `
+				<select class="chip select secondary">
+				<option value="1">1순위</option>
+				<option value="2" selected>2순위</option>
+				<option value="0">미지정</option>
+				</select>
+			`;
+
+    default:
+      return `
+				<select class="chip select">
+				<option value="1">1순위</option>
+				<option value="2">2순위</option>
+				<option value="0" selected >미지정</option>
+				<select>
+			`;
+  }
+};
+
 const todoListItemTemplate = function (todoListItem) {
   // TODO: chip 순위 설정
   const isCompleted = todoListItem.isCompleted === true ? 'completed' : '';
   const isChecked = todoListItem.isCompleted === true ? 'checked' : '';
+  const priority =
+    todoListItem.priority === 'FIRST'
+      ? 'primary'
+      : todoListItem.priority === 'SECOND'
+      ? 'secondary'
+      : '';
   return `
 					<li class="todo-list-item ${isCompleted}" id="${todoListItem._id}">
 					<div class="view">
 						<input class="toggle" type="checkbox" ${isChecked}/>
 						<label class="label">
-							<div class="chip-container">
-								<!-- <span class="chip secondary">1순위</span> -->
-								<select class="chip select">
-									<option value="0" selected>순위</option>
-									<option value="1">1순위</option>
-									<option value="2">2순위</option>
-								</select>
+							<div class="chip-container ">
+								${selectOptionTemplate(priority)}
 							</div>
 							<span class="label-value">${todoListItem.contents}</span>
 							</label>
@@ -101,4 +135,5 @@ export {
   makeTeamCardContainer,
   todoAppContainer,
   todoListItemTemplate,
+  selectOptionTemplate,
 };
