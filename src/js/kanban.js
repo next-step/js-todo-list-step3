@@ -10,10 +10,13 @@ const _getUrlParams = () => {
   });
   return params;
 };
-const kanbanApp = new KanbanApp();
-const kanbanStore = new KanbanStore(_getUrlParams().id, kanbanApp);
-kanbanStore.init();
+const appStart = async () => {
+  const kanbanApp = new KanbanApp();
+  const kanbanStore = new KanbanStore(_getUrlParams().id, kanbanApp);
+  await kanbanStore.init();
 
-const todoApp = new TodoApp();
-const todoStore = new TodoStore(kanbanStore, todoApp);
-todoStore.init();
+  const todoApp = new TodoApp();
+  const todoStore = new TodoStore(kanbanStore, todoApp);
+  await todoStore.init();
+};
+appStart();

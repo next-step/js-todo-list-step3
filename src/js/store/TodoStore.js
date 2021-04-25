@@ -48,6 +48,7 @@ const _updateItemPriority = async (teamId, memberId, itemId, priority) => {
   return await DAO.updateItemPriority(teamId, memberId, itemId, priorityArray[priority]);
 };
 
+// eslint-disable-next-line no-undef
 const _stateMap = new Map();
 
 export class TodoStore {
@@ -68,7 +69,7 @@ export class TodoStore {
     this.dispatcherIndex = todoDispatcher.register(this.setState, this);
   }
 
-  getMemberState = (memberId) => {
+  getMemberState(memberId) {
     const memberState = _stateMap.get(memberId);
     const copy = {
       memberId: memberId,
@@ -76,7 +77,7 @@ export class TodoStore {
       filterState: memberState.filterState,
     };
     return copy;
-  };
+  }
 
   async setState(action) {
     if (_stateMap.keys().length == 0) {
@@ -90,9 +91,12 @@ export class TodoStore {
     const itemId = action?.itemId;
 
     if (type == ACTION_TYPES.ADD_MEMBER) {
-      addedMemberId = this.kanbanStore.getLastAddedMember()._id;
+      const addedMemberId = this.kanbanStore.getLastAddedMember()._id;
       const { _id, todoList = [] } = await _getMemberTodoList(teamId, addedMemberId);
       _updateMemberState(_id, { todoList: todoList, filterState: TodoStatusContainer.FILTER_STATE.ALL });
+      const copiedState = this.getMemberState(_id);
+      this.todoApp.renderAll(copiedState);
+      return true;
     } else if (type == ACTION_TYPES.ADD_ITEM) {
       const data = action?.data;
       await _addItem(teamId, memberId, data);
