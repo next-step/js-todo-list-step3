@@ -19,6 +19,10 @@ export const teamApi = {
   get: (teamId) => {
     return request(`${ENDPOINT}/api/teams/${teamId ? teamId : ""}`, "GET");
   },
+
+  create: (name) => {
+    return request(`${ENDPOINT}/api/teams/`, "POST", { name: name });
+  },
 };
 
 export const userApi = {

@@ -1,8 +1,6 @@
 import { teamApi, userApi } from "../api/api.js";
 import TeamList from "../components/team/TeamList.js";
 import MemberList from "../components/team/MemberList.js";
-import TodoApp from "../components/todo/TodoApp.js";
-import UserList from "../components/user/UserList.js";
 
 export default class App {
   constructor() {
@@ -19,26 +17,17 @@ export default class App {
         containerEl: this.containerEl,
         teamData: data,
         onGetTeamMembers: this.getTeamMembers.bind(this),
+        onCreateTeam: this.createTeam.bind(this),
       });
     });
   }
 
-  init2() {
-    userApi.get().then((data) => {
-      this.appData = data;
-      this.selectedUserId = this.appData[0]._id;
-      this.userList = new UserList({
-        appData: this.appData,
-        selectedUserId: this.selectedUserId,
-        onSelectUser: this.selectUser.bind(this),
-        onCreateUser: this.createUser.bind(this),
-        onDeleteUser: this.deleteUser.bind(this),
-      });
-      this.todoApp = new TodoApp({
-        userId: this.selectedUserId,
-      });
+  getAllteams = async () => {
+    await teamApi.get().then((data) => {
+      this.teamData = data;
     });
-  }
+    this.render();
+  };
 
   getTeamMembers = async (teamId) => {
     await teamApi.get(teamId).then((data) => {
@@ -50,31 +39,12 @@ export default class App {
     });
   };
 
-  getAllUser = async () => {
-    await userApi.get(teamId).then((data) => {
-      this.appData = data;
-    });
-    this.selectedUserId = this.appData[0]._id;
-    this.render();
-  };
-
-  createUser = async (teamId, name) => {
-    await userApi.create(teamId, name);
-    this.handleGetAllUser();
-  };
-
-  selectUser = async (userId) => {
-    this.selectedUserId = userId;
-    this.render();
-  };
-
-  deleteUser = async (teamId, userId) => {
-    await userApi.delete(teamId, userId);
-    this.handleGetAllUser();
+  createTeam = async (name) => {
+    await teamApi.create(name);
+    this.getAllteams();
   };
 
   render() {
-    this.userList.setState(this.appData, this.selectedUserId);
-    this.todoApp.setUserId(this.selectedUserId);
+    this.teamList.setState(this.teamData);
   }
 }

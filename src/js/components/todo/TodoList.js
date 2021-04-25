@@ -1,4 +1,4 @@
-import { todoItem, loading } from "../../templete/templete.js";
+import { todoItem, loading } from "../../templete/todo.js";
 export default class TodoList {
   constructor({
     userId,

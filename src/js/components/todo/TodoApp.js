@@ -18,6 +18,7 @@ export default class TodoApp {
 
   init() {
     this.todoInput = new TodoInput({
+      userId: this.userId,
       onCreateItem: this.handleCreateItem.bind(this),
     });
 
@@ -94,7 +95,7 @@ export default class TodoApp {
   }
 
   render(todoData) {
-    this.todoCount.innerHTML = todoData.length;
+    this.todoCount.innerHTML = todoData ? todoData.length : "0";
     this.todoList.setState(todoData);
   }
 }
