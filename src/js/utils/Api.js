@@ -19,8 +19,8 @@ const fetchOptions = {
 }
 
 const API = {
-  getTeams: async () => await fetchOptions.GET_DATA(URL.GET_TEAMS),
-  postTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM, { [TEAM_PROPS.NAME]: teamName })
+  getTeams: async () => await fetchOptions.GET_DATA(URL.GET_TEAMS()),
+  postTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName })
 }
 
 export default API
