@@ -21,6 +21,7 @@ const fetchOptions = {
 const API = {
   getTeams: async () => await fetchOptions.GET_DATA(URL.GET_TEAMS()),
   postTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName }),
+  getTeam: async (teamId) => await fetchOptions.GET_DATA(URL.GET_TEAM(teamId)),
   postMember: async (memberName, teamId) => await fetchOptions.POST_DATA(URL.POST_MEMBER(teamId), { [MEMBER_PROPS.NAME]: memberName })
 }
 
