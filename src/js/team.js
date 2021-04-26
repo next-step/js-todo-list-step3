@@ -1,11 +1,16 @@
 import redux from "./redux/index.js";
 import team from "./reducers/team.js";
-import dispatch from "./redux/dispatch.js";
+import TeamMain from "./component/TeamMain.js";
+import { dispatch } from "./redux/functions.js";
+import { LoadTeamReqAction } from "./actions/team/index.js";
 
-redux.createStore(team);
-console.log(redux);
-dispatch({ type: "LOAD_TEAM_REQEUST" });
-console.log(redux);
+const init = () => {
+  redux.createStore("team", team);
+  dispatch(LoadTeamReqAction);
+  new TeamMain();
+};
+
+init();
 
 // const $addTeamButton = document.querySelector('#add-team-button')
 // $addTeamButton.addEventListener('click', () => {
