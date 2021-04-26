@@ -98,4 +98,11 @@ export const todoApi = {
       "DELETE"
     );
   },
+
+  deleteAll: (teamId, memberId) => {
+    return request(
+      `${ENDPOINT}/api/teams/${teamId}/members/${memberId}/items/`,
+      "DELETE"
+    );
+  },
 };

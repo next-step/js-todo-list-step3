@@ -1,25 +1,44 @@
 export class TodoFilter {
-  constructor({ onFilterItem }) {
-    this.todoFilters = document.querySelector('.filters');
+  constructor({ userId, onFilterItem, onDeleteAllItems }) {
+    this.userId = userId;
+    this.todoFilters = document
+      .getElementById(this.userId)
+      .querySelector(".filters");
+    this.deleteAllButton = document
+      .getElementById(this.userId)
+      .querySelector(".clear-completed");
     this.handleFilterItem = onFilterItem;
+    this.handleDeleteAllItems = onDeleteAllItems;
 
     this.init();
   }
 
   init() {
-    this.todoFilters.addEventListener('click', (e) => {
-      const target = e.target;
-      const selectedEls = this.todoFilters.querySelectorAll('a.selected');
-      const filter = target.classList.contains('active')
-        ? 'active'
-        : e.target.classList.contains('completed')
-        ? 'completed'
-        : 'all';
+    this.todoFilters.addEventListener("click", (e) =>
+      this.todoFiltersClickHandler(e)
+    );
 
-      e.preventDefault();
-      this.handleFilterItem(filter);
-      selectedEls.forEach((el) => el.classList.remove('selected'));
-      target.classList.add('selected');
-    });
+    this.deleteAllButton.addEventListener("click", (e) =>
+      this.deleteAllButtonClickHandler(e)
+    );
+  }
+
+  todoFiltersClickHandler(e) {
+    const target = e.target;
+    const selectedEls = this.todoFilters.querySelectorAll("a.selected");
+    const filter = target.classList.contains("active")
+      ? "active"
+      : e.target.classList.contains("completed")
+      ? "completed"
+      : "all";
+
+    e.preventDefault();
+    this.handleFilterItem(filter);
+    selectedEls.forEach((el) => el.classList.remove("selected"));
+    target.classList.add("selected");
+  }
+
+  deleteAllButtonClickHandler(e) {
+    this.handleDeleteAllItems();
   }
 }

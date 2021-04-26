@@ -11,7 +11,6 @@ export default class TodoApp {
     this.todoCount = document
       .getElementById(this.userId)
       .querySelector(".todo-count strong");
-    this.todoFilterButton = document.querySelectorAll(".filters li a");
 
     this.init();
   }
@@ -19,20 +18,22 @@ export default class TodoApp {
   init() {
     this.todoInput = new TodoInput({
       userId: this.userId,
-      onCreateItem: this.handleCreateItem.bind(this),
+      onCreateItem: this.createItem.bind(this),
     });
 
     this.todoList = new TodoList({
       userId: this.userId,
       todoData: this.todoData,
-      onCheckItem: this.handleCheckItem.bind(this),
-      onEditItem: this.handleEditItem.bind(this),
-      onSetPriorityItem: this.handleSetPriorityItem.bind(this),
-      onDeleteItem: this.handleDeleteItem.bind(this),
+      onCheckItem: this.checkItem.bind(this),
+      onEditItem: this.editItem.bind(this),
+      onSetPriorityItem: this.setPriorityItem.bind(this),
+      onDeleteItem: this.deleteItem.bind(this),
     });
 
     this.todoFilter = new TodoFilter({
-      onFilterItem: this.handleFilterItem.bind(this),
+      userId: this.userId,
+      onFilterItem: this.filterItem.bind(this),
+      onDeleteAllItems: this.deleteAllItems.bind(this),
     });
 
     this.getTodoData();
@@ -64,32 +65,37 @@ export default class TodoApp {
     this.render(this.todoData);
   }
 
-  handleCreateItem = async (contents) => {
+  createItem = async (contents) => {
     await todoApi.create(this.teamId, this.userId, contents);
     this.getTodoData();
   };
 
-  handleCheckItem = async (itemId) => {
+  checkItem = async (itemId) => {
     await todoApi.toggle(this.teamId, this.userId, itemId);
     this.getTodoData();
   };
 
-  handleEditItem = async (itemId, contents) => {
+  editItem = async (itemId, contents) => {
     await todoApi.modify(this.teamId, this.userId, itemId, contents);
     this.getTodoData();
   };
 
-  handleSetPriorityItem = async (itemId, priority) => {
+  setPriorityItem = async (itemId, priority) => {
     await todoApi.setPriority(this.teamId, this.userId, itemId, priority);
     this.getTodoData();
   };
 
-  handleDeleteItem = async (itemId) => {
+  deleteItem = async (itemId) => {
     await todoApi.delete(this.teamId, this.userId, itemId);
     this.getTodoData();
   };
 
-  handleFilterItem(filter) {
+  deleteAllItems = async () => {
+    await todoApi.deleteAll(this.teamId, this.userId);
+    this.getTodoData();
+  };
+
+  filterItem(filter) {
     this.filter = filter;
     this.setItem();
   }

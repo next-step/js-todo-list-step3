@@ -1,5 +1,5 @@
 import TodoApp from "../todo/TodoApp.js";
-import { userApi } from "../../api/api.js";
+import { teamApi, userApi } from "../../api/api.js";
 import { memberItem, addMemberButton } from "../../templete/team.js";
 
 export default class MemberList {
@@ -27,15 +27,20 @@ export default class MemberList {
     });
   }
 
+  setState(data) {
+    this.membersData = data;
+    this.render();
+  }
+
   getTeam = async (teamId) => {
     await teamApi.get(teamId).then((data) => {
-      this.memberList.setState(data.members);
+      this.setState(data.members);
     });
   };
 
   createMember = async (name) => {
     await userApi.create(this.teamId, name);
-    this.render();
+    this.getTeam(this.teamId);
   };
 
   render() {
