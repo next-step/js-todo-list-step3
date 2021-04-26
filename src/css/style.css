@@ -514,7 +514,7 @@ select.chip {
   height: calc(100vh - 170px);
 }
 
-.add-user-button-container {
+.add-member-button-container {
   min-width: 550px;
   height: calc(100% - 100px);
   display: flex;
@@ -523,13 +523,13 @@ select.chip {
   padding: 0 5px;
 }
 
-.add-user-button-container #add-user-button {
+.add-member-button-container #add-member-button {
   border-radius: 100%;
   width: 50px;
   height: 50px;
 }
 
-.add-user-button-container #add-user-button .material-icons {
+.add-member-button-container #add-member-button .material-icons {
   position: relative;
   top: 2px;
 }
