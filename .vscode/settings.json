@@ -9,7 +9,8 @@
   "standard.options": {
     "globals": [
       "fetch",
-      "prompt"
+      "prompt",
+      "alert"
     ],
     "ignore": [
       "node_modules/**"

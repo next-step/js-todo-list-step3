@@ -1,21 +1,26 @@
-import { TEAM_PROPS } from '../../constants/PROPERTIES.js'
+import { MEMBER_PROPS, TEAM_PROPS } from '../../constants/PROPERTIES.js'
 import { teamStore } from '../../utils/Store.js'
-import MemberName from './member/MemberName.js'
 
-const renderTemplate = (children) => {
+import MemberName from './member/MemberName.js'
+import MemberTodoApp from './member/MemberTodoApp.js'
+
+const renderTemplate = (member, children) => {
   return `
-    <li class="todoapp-container">${children}</li>
+    <li data-id="${member[MEMBER_PROPS.ID]}" class="todoapp-container">
+      ${children}
+    </li>
   `
 }
 
-const Member = () => {
+const Member = ({ onAddTodo }) => {
   const memberElement = document.getElementById('todoapp-list-container')
   const memberName = MemberName()
+  const memberTodoApp = MemberTodoApp({ onAddTodo })
 
   const render = (team) => {
     const renderResult = team[TEAM_PROPS.MEMBERS].map(member => {
-      const childrenArray = [memberName.render(member)]
-      return renderTemplate(childrenArray.join(''))
+      const childrenArray = [memberName.render(member), memberTodoApp.render(member)]
+      return renderTemplate(member, childrenArray.join(''))
     })
     memberElement.insertAdjacentHTML('afterbegin', renderResult.join(''))
   }
