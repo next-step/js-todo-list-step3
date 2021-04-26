@@ -1,5 +1,5 @@
 import { TEAM_PROPS } from '../../constants/PROPERTIES.js'
-import { teamStore } from '../../utils/Store.js'
+import { teamListStore } from '../../utils/Store.js'
 
 const renderTemplate = (team) => {
   return `
@@ -32,7 +32,7 @@ const TeamList = () => {
     )
   }
 
-  teamStore.subscribeTeamList(render)
+  teamListStore.subscribeTeamList(render)
 }
 
 export default TeamList

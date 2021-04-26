@@ -1,5 +1,5 @@
 import API from '../utils/Api.js'
-import { teamStore } from '../utils/Store.js'
+import { teamListStore } from '../utils/Store.js'
 
 import TeamList from '../components/team/TeamList.js'
 import AddTeam from '../components/team/AddTeam.js'
@@ -7,7 +7,7 @@ import AddTeam from '../components/team/AddTeam.js'
 const Team = () => {
   const updateTeams = async () => {
     const getTeams = await API.getTeams()
-    teamStore.setTeamList(getTeams)
+    teamListStore.setTeamList(getTeams)
   }
 
   const handleAddTeam = async () => {
