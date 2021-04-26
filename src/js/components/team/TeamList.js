@@ -20,7 +20,7 @@ const TeamList = () => {
     const childrenArray = [...teamListContainerElement.children]
 
     childrenArray.map((child) => {
-      if (child.dataset.type !== 'user') {
+      if (child.dataset.type !== 'team') {
         return null
       }
       return child.remove()
