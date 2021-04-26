@@ -1,5 +1,5 @@
 import URL from '../constants/URL.js'
-import { TEAM_PROPS } from '../constants/PROPERTIES.js'
+import { MEMBER_PROPS, TEAM_PROPS } from '../constants/PROPERTIES.js'
 
 const fetchOptions = {
   GET_DATA: async (url) => {
@@ -20,7 +20,8 @@ const fetchOptions = {
 
 const API = {
   getTeams: async () => await fetchOptions.GET_DATA(URL.GET_TEAMS()),
-  postTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName })
+  postTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName }),
+  postMember: async (memberName, teamId) => await fetchOptions.POST_DATA(URL.POST_MEMBER(teamId), { [MEMBER_PROPS.NAME]: memberName })
 }
 
 export default API
