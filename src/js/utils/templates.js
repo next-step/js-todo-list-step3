@@ -1,4 +1,4 @@
-const temaCardView = (id, name) => `
+const teamCardView = (id, name) => `
 <div class="team-card-container" dataset-id=${id}>
 <a href="/kanban.html" class="card">
   <div class="card-title">
@@ -8,8 +8,14 @@ const temaCardView = (id, name) => `
 </div>
 `;
 
+const teamAddBtnView = `
+<button id="add-team-button" class="ripple">
+<span class="material-icons">add</span>
+</button>`;
+
 export const teamListView = (data = []) => {
-  const list = data.map((element) => temaCardView(element._id, element.name));
+  const list = data.map((element) => teamCardView(element._id, element.name));
+  list.push(teamAddBtnView);
   return list.join("");
 };
 
