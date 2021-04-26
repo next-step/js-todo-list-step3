@@ -86,9 +86,23 @@ const todoListItemTemplate = function (todoListItem) {
 		`;
 };
 
+const sortTodoList = function (member) {
+  const priority = {
+    FIRST: 1,
+    SECOND: 2,
+    NONE: 999
+  }
+  member.todoList.sort(function (a,b) {
+    if (priority[a.priority] > priority[b.priority]) return 1;
+    if (priority[a.priority] < priority[b.priority]) return -1
+  })
+  return (member.todoList);
+}
+
 const todoAppContainer = function (member) {
   let appContainer = '';
-
+  
+  member.todoList = sortTodoList(member);
   member.todoList.forEach(element => {
     appContainer += todoListItemTemplate(element);
   });
