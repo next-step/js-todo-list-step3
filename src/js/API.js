@@ -3,6 +3,9 @@ const BASEURL = "https://js-todo-list-9ca3a.df.r.appspot.com";
 const teamPath = {
 	fetchAddTeam: "/api/teams",
 	fetchTeamList: "/api/teams",
+	fetchLoadTeam(teamId) {
+		return `/api/teams/${teamId}`;
+	},
 };
 
 const kanbanPath = {
@@ -45,6 +48,9 @@ const teamAPI = {
 	},
 	fetchTeamList() {
 		return request(teamPath.fetchTeamList, options.GET);
+	},
+	fetchLoadTeam(teamId) {
+		return request(teamPath.fetchLoadTeam(teamId), options.GET);
 	},
 };
 

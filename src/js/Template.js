@@ -1,8 +1,8 @@
 export const template = {
-	teamAddTemplate: (teamName) =>
+	teamAddTemplate: (teamId, teamName) =>
 		`
     <div class="team-card-container">
-        <a href="/kanban.html?name=${teamName}" class="card">
+        <a href="/kanban.html?id=${teamId}" class="card">
             <div class="card-title">${teamName}</div>
         </a>
     </div>

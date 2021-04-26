@@ -5,8 +5,8 @@ import { template } from "./Template.js";
 const $teamList = $(".team-list-container");
 const $addTeamBtn = $("#add-team-button");
 
-const renderNewTeam = (teamName) => {
-	const newTeam = template.teamAddTemplate(teamName);
+const renderNewTeam = (teamId, teamName) => {
+	const newTeam = template.teamAddTemplate(teamId, teamName);
 	$teamList.insertAdjacentHTML("afterbegin", newTeam);
 };
 
@@ -15,13 +15,13 @@ $addTeamBtn.addEventListener("click", async () => {
 	if (teamName.length === 0) {
 		alert("한 글자만이라도 써주세요..!");
 	} else {
-		renderNewTeam(teamName);
-		await teamAPI.fetchAddTeam(teamName);
+		const team = await teamAPI.fetchAddTeam(teamName);
+		renderNewTeam(team._id, team.name);
 	}
 });
 
 const renderTeamList = (teamList) => {
-	teamList.map((team) => renderNewTeam(team.name));
+	teamList.map((team) => renderNewTeam(team._id, team.name));
 };
 
 export const showTeams = async () => {
