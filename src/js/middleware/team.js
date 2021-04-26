@@ -1,7 +1,7 @@
 import { fetcher, options } from "../utils/api.js";
 import { fork } from "./index.js";
 import { dispatch } from "../redux/functions.js";
-import * as types from "../actions/team/index.js";
+import { ACTIONS, TYPES } from "../actions/team/index.js";
 
 const loadTeamAPI = () => {
   return fetcher("/", options.GET);
@@ -10,14 +10,14 @@ const loadTeamAPI = () => {
 const loadTeam = async () => {
   try {
     const result = await loadTeamAPI();
-    dispatch(types.LoadTeamSuccessAction(result));
+    dispatch(ACTIONS.LoadTeamSuccessAction(result));
   } catch (error) {
-    dispatch(types.LoadTeamFailAction(error));
+    dispatch(ACTIONS.LoadTeamFailAction(error));
   }
 };
 
 const watchLoadTeam = () => {
-  fork(types.LOAD_TEAM_REQEUST, loadTeam);
+  fork(TYPES.LOAD_TEAM_REQEUST, loadTeam);
 };
 
 export default () => {

@@ -10,7 +10,7 @@ const teamCardView = (id, name) => `
 
 const teamAddBtnView = `
 <button id="add-team-button" class="ripple">
-<span class="material-icons">add</span>
+  <span class="material-icons">add</span>
 </button>`;
 
 export const teamListView = (data = []) => {
