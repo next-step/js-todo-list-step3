@@ -1,7 +1,9 @@
 import API from '../utils/API.js'
-import AddMember from '../components/kanban/AddMember.js'
 import { teamStore } from '../utils/Store.js'
+
+import AddMember from '../components/kanban/AddMember.js'
 import TeamTitle from '../components/kanban/TeamTitle.js'
+import Member from '../components/kanban/Member.js'
 
 // function App () {
 //   const $todoApps = document.querySelector('.todoapp-list-container')
@@ -33,6 +35,7 @@ const Kanban = () => {
 
   const init = () => {
     TeamTitle()
+    Member()
     AddMember({ onAdd: handleAddUser })
     return updateTeam()
   }
