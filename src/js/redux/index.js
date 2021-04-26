@@ -1,3 +1,5 @@
+import middleWare from "../middleware/index.js";
+
 class Store {
   constructor(reducer) {
     this.state = {};
@@ -6,8 +8,9 @@ class Store {
   }
 
   dispatch(action) {
-    // TODO : action type 이 middleware에서 listen 등록한 거라면,
-    // 미들웨어 실행해주고, 리듀서 실행
+    if (middleWare.has(action.type)) {
+      return middleWare.run(action);
+    }
     const state = this.reducer(this.state, action);
     if (JSON.stringify(state) !== JSON.stringify(this.state)) {
       this.state = state;
@@ -47,6 +50,7 @@ class Redux {
   }
 }
 
+console.log(middleWare);
 const redux = new Redux();
 
 export default redux;

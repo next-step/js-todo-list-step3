@@ -4,7 +4,7 @@ import dispatch from "./redux/dispatch.js";
 
 redux.createStore(team);
 console.log(redux);
-dispatch("?");
+dispatch({ type: "LOAD_TEAM_REQEUST" });
 console.log(redux);
 
 // const $addTeamButton = document.querySelector('#add-team-button')
