@@ -32,7 +32,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
-  /* overflow-y: hidden; */
+}
+
+body.kanban {
+ overflow-y: hidden;
 }
 
 :focus {
