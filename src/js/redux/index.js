@@ -9,20 +9,21 @@ class Store {
   }
 
   dispatch(action) {
-    if (middleWare.has(action.type)) {
-      return middleWare.run(action);
-    }
+    console.log(action);
     const state = this.reducer(this.state, action);
     if (state !== this.state) {
       this.state = state;
       this.mutate();
+    }
+    if (middleWare.has(action.type)) {
+      return middleWare.run(action);
     }
   }
 
   getState(obj, key) {
     try {
       this.subscribe(obj);
-      return this.state[key];
+      return key ? this.state[key] : this.state;
     } catch (error) {
       throw "존재하지 않는 프로퍼티";
     }
