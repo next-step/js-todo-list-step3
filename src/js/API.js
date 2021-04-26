@@ -5,6 +5,12 @@ const teamPath = {
 	fetchTeamList: "/api/teams",
 };
 
+const kanbanPath = {
+	fetchAddMember(teamId) {
+		return `/api/teams/${teamId}/members`;
+	},
+};
+
 const options = {
 	GET: { method: "GET" },
 	POST(body) {
@@ -42,4 +48,13 @@ const teamAPI = {
 	},
 };
 
-export { teamAPI };
+const kanbanAPI = {
+	fetchAddMember(teamId, name) {
+		return request(
+			kanbanAPI.fetchAddMember(teamId),
+			options.POST({ name })
+		);
+	},
+};
+
+export { teamAPI, kanbanAPI };

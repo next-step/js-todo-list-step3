@@ -32,7 +32,6 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-weight: 300;
-	overflow-y: scroll;
 }
 
 :focus {
@@ -508,8 +507,6 @@ select.chip {
 	width: 100%;
 	display: flex;
 	align-items: start;
-	overflow-y: hidden;
-	overflow-x: auto;
 	height: calc(100vh - 170px);
 }
 

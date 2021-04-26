@@ -1,19 +1,15 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
-    }
-  })
+import { $ } from "./Dom.js";
+import { template } from "./Template.js";
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
-}
+const setTeamName = () => {
+	const $teamTitle = $("#user-title");
+	const teamName = new URLSearchParams(document.location.search).get("name");
+	$teamTitle.innerHTML = template.kanbanTitleTemplate(teamName);
+};
 
-new App()
+// const $addUserButton = $("#add-user-button");
+// $addUserButton.addEventListener("click", () => {
+// 	const memberName = prompt("새로운 팀원 이름을 입력해주세요");
+// });
+
+setTeamName();
