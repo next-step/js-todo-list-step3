@@ -1,4 +1,5 @@
 import teamMiddleWare from "./team.js";
+import todoMiddleWare from "./todo.js";
 
 class MiddleWare {
   constructor() {
@@ -26,5 +27,6 @@ export const fork = (type, cb) => {
 };
 
 teamMiddleWare();
+todoMiddleWare();
 
 export default middleWare;

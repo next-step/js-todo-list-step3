@@ -10,12 +10,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case TYPES.LOAD_TEAM_REQEUST:
+    case TYPES.GET_TEAM_LIST_REQEUST:
       return {
         ...state,
         isLoadingTeamLoad: true,
       };
-    case TYPES.LOAD_TEAM_SUCCESS:
+    case TYPES.GET_TEAM_LIST_SUCCESS:
       return {
         ...state,
         isLoadingTeamLoad: false,
@@ -27,13 +27,12 @@ const reducer = (state = initialState, action) => {
         isLoadingTeamLoad: false,
         teamLoadError: action.error,
       };
-    case TYPES.ADD_TEAM_REQUEST:
+    case TYPES.GET_TEAM_LIST_FAIL:
       return {
         ...state,
         isLoadingAddTeam: true,
       };
     case TYPES.ADD_TEAM_SUCCESS:
-      console.log([...state.teamList, action.data]);
       return {
         ...state,
         isLoadingAddTeam: false,

@@ -1,6 +1,6 @@
 const teamCardView = (id, name) => `
 <div class="team-card-container" dataset-id=${id}>
-<a href="/kanban.html" class="card">
+<a href="/kanban.html?id=${id}" class="card">
   <div class="card-title">
     ${name}
   </div>

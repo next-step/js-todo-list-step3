@@ -6,7 +6,7 @@ import { ACTIONS } from "./actions/team/index.js";
 
 const init = () => {
   redux.createStore("team", team);
-  dispatch(ACTIONS.LoadTeamReqAction);
+  dispatch(ACTIONS.GetTeamListReqAction);
   new TeamMain();
 };
 

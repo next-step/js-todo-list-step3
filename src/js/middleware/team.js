@@ -3,7 +3,7 @@ import { fork } from "./index.js";
 import { dispatch } from "../redux/functions.js";
 import { ACTIONS, TYPES } from "../actions/team/index.js";
 
-const loadTeamAPI = () => {
+const getTeamListAPI = () => {
   return fetcher("/", options.GET);
 };
 
@@ -11,12 +11,12 @@ const addTeamAPI = (name) => {
   return fetcher("/", options.POST({ name }));
 };
 
-const loadTeam = async () => {
+const getTeamList = async () => {
   try {
-    const result = await loadTeamAPI();
-    dispatch(ACTIONS.LoadTeamSuccessAction(result));
+    const result = await getTeamListAPI();
+    dispatch(ACTIONS.GetTeamListSuccessAction(result));
   } catch (error) {
-    dispatch(ACTIONS.LoadTeamFailAction(error));
+    dispatch(ACTIONS.GetTeamListFailAction(error));
   }
 };
 
@@ -29,8 +29,8 @@ const addTeam = async (action) => {
   }
 };
 
-const watchLoadTeam = () => {
-  fork(TYPES.LOAD_TEAM_REQEUST, loadTeam);
+const watchGetTeamList = () => {
+  fork(TYPES.GET_TEAM_LIST_REQEUST, getTeamList);
 };
 
 const watchAddTeam = () => {
@@ -38,6 +38,6 @@ const watchAddTeam = () => {
 };
 
 export default () => {
-  watchLoadTeam();
+  watchGetTeamList();
   watchAddTeam();
 };
