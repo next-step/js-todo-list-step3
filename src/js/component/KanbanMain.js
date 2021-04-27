@@ -19,11 +19,16 @@ class KanbanMain extends Component {
       name: teamInfo ? teamInfo.name : "",
     });
 
-    const memberViews =
+    let memberViews =
       teamInfo && teamInfo.members.map((member) => todoListView(member));
-    memberViews.push(addUserBtnView);
+    if (memberViews) {
+      memberViews.push(addUserBtnView);
+      memberViews = memberViews.join("");
+    } else {
+      memberViews = addUserBtnView;
+    }
 
-    this.container.innerHTML = memberViews.join("");
+    this.container.innerHTML = memberViews;
   }
 }
 

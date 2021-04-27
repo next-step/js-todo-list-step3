@@ -22,9 +22,9 @@ const teamAddBtnView = `
 </button>`;
 
 export const todoListView = (member) => `
-  <li class="todoapp-container" dataset-id=${member._id}>
+  <li class="todoapp-container" dataset-set=${member._id}>
     ${MemberTitleView(member.name)}
-    <div class="todo-list">
+    <div class="todoapp">
     ${todoInputView}
     <section class="main">
       <ul class="todo-list">
@@ -35,7 +35,9 @@ export const todoListView = (member) => `
       </ul>
     </section>
     <div class="count-container">
-        ${todoCountView(member.todoList.length)}
+    ${todoCountView(member.todoList.length)}
+    ${todoFilterView}
+    ${clearBtnView}
     </div>
     </div>
   </li>
@@ -87,9 +89,24 @@ const todoInputView = `
 />
 </section>`;
 
-const todoTabView = `
-
+const todoFilterView = `
+<ul class="filters">
+  <li>
+    <a href="#all" class="selected">전체보기</a>
+  </li>
+  <li>
+    <a href="#priority">우선 순위</a>
+  </li>
+  <li>
+    <a href="#active">해야할 일</a>
+  </li>
+  <li>
+    <a href="#completed">완료한 일</a>
+  </li>
+</ul>
 `;
+
+const clearBtnView = `<button class="clear-completed">모두 삭제</button>`;
 
 export const addUserBtnView = `
 <li class="add-user-button-container">
