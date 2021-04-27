@@ -30,6 +30,8 @@ export class TodoFilter {
       ? "active"
       : e.target.classList.contains("completed")
       ? "completed"
+      : e.target.classList.contains("priority")
+      ? "priority"
       : "all";
 
     e.preventDefault();

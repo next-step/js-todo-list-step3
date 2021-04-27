@@ -1,6 +1,10 @@
 import TodoApp from "../todo/TodoApp.js";
 import { teamApi, userApi } from "../../api/api.js";
-import { memberItem, addMemberButton } from "../../templete/team.js";
+import {
+  memberItem,
+  addMemberButton,
+  goTeamList,
+} from "../../templete/team.js";
 
 export default class MemberList {
   constructor({ teamId, containerEl, membersData }) {
@@ -49,6 +53,7 @@ export default class MemberList {
       .map((data) => memberItem(data))
       .join("");
 
+    this.containerEl.insertAdjacentHTML("afterbegin", goTeamList());
     this.memberListEl.insertAdjacentHTML("beforeend", addMemberButton());
 
     this.membersData.map((data) => {

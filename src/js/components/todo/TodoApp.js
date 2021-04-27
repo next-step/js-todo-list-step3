@@ -61,8 +61,24 @@ export default class TodoApp {
       return this.render(this.todoData.filter((data) => !data.isCompleted));
     if (this.filter === "completed")
       return this.render(this.todoData.filter((data) => data.isCompleted));
-
+    if (this.filter === "priority") {
+      const sortTodoData = this.todoData.slice();
+      return this.render(
+        sortTodoData.sort((a, b) => {
+          return this.getPriorityNum(a) - this.getPriorityNum(b);
+        })
+      );
+    }
     this.render(this.todoData);
+  }
+
+  getPriorityNum(data) {
+    const priorityNum = {
+      FIRST: 1,
+      SECOND: 2,
+      NONE: 3,
+    };
+    return priorityNum[data.priority];
   }
 
   createItem = async (contents) => {
