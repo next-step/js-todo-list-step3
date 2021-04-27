@@ -1,4 +1,4 @@
-import { TYPES } from "../actions/team/index.js";
+import { TYPES } from "../actions/team.js";
 
 const initialState = {
   teamList: [],

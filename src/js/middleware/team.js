@@ -1,7 +1,7 @@
 import { fetcher, options } from "../utils/api.js";
 import { fork } from "./index.js";
 import { dispatch } from "../redux/functions.js";
-import { ACTIONS, TYPES } from "../actions/team/index.js";
+import { ACTIONS, TYPES } from "../actions/team.js";
 
 const getTeamListAPI = () => {
   return fetcher("/", options.GET);

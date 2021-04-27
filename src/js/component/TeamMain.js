@@ -5,7 +5,7 @@ import { isAvailableTeamName } from "../utils/validators.js";
 import { ERROR_HANDLER } from "../utils/errors.js";
 import { getState, dispatch } from "../redux/functions.js";
 import { teamListView, loadingView } from "../utils/templates.js";
-import { ACTIONS } from "../actions/team/index.js";
+import { ACTIONS } from "../actions/team.js";
 
 class TeamMain extends Component {
   constructor() {
