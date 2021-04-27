@@ -8,7 +8,6 @@ class TeamMain extends Component {
   constructor() {
     super();
     this.container = $(SELECTORS.teamList);
-    this.state = getState(this, "team");
     this.bindEvents();
     this.render();
   }
@@ -20,15 +19,11 @@ class TeamMain extends Component {
     });
   }
 
-  update() {
-    this.state = getState(this, "team");
-    this.render();
-    this.bindEvents();
-  }
   render() {
-    this.container.innerHTML = this.state.isLoadingTeamLoad
+    const { isLoadingTeamLoad, teamList } = getState(this, "team");
+    this.container.innerHTML = isLoadingTeamLoad
       ? loadingView
-      : teamListView(this.state.teamList);
+      : teamListView(teamList);
   }
 }
 

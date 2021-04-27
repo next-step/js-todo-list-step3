@@ -5,11 +5,10 @@ class Store {
     this.key = key;
     this.state = {};
     this.reducer = reducer;
-    this.subscribers = [...new Set()];
+    this.subscribers = new Set();
   }
 
   dispatch(action) {
-    console.log(action);
     const state = this.reducer(this.state, action);
     if (state !== this.state) {
       this.state = state;
@@ -30,12 +29,11 @@ class Store {
   }
 
   subscribe(obj) {
-    this.subscribers.push(obj);
+    this.subscribers.add(obj);
   }
 
   mutate() {
-    console.log("안녕");
-    this.subscribers.map((obj) => obj.update());
+    [...this.subscribers].map((obj) => obj.componentDidUpdate());
   }
 }
 
