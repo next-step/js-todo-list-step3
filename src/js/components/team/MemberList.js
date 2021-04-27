@@ -7,28 +7,39 @@ import {
 } from "../../templete/team.js";
 
 export default class MemberList {
-  constructor({ teamId, containerEl, membersData }) {
+  constructor({ teamId, containerEl, membersData, onGetTeamList }) {
     this.teamId = teamId;
     this.containerEl = containerEl;
     this.membersData = membersData;
+    this.handleGetTeamList = onGetTeamList;
     this.memberListEl = document.createElement("ul");
     this.memberListEl.classList.add(
       "todoapp-list-container",
       "flex-column-container"
     );
 
-    this.init();
     this.render();
+    this.init();
   }
 
   init() {
-    this.containerEl.innerHTML = "";
-    this.containerEl.append(this.memberListEl);
-    this.memberListEl.addEventListener("click", ({ target }) => {
-      if (target.id !== "add-user-button") return;
-      const memberId = prompt("새로운 팀원 이름을 입력해주세요");
-      this.createMember(memberId);
+    this.containerEl.addEventListener("click", ({ target }) => {
+      if (target.id === "add-user-button") {
+        this.addUserButtonClickHandler();
+      }
+      if (target.id === "go-team-list-button") {
+        this.handleGetTeamList();
+      }
     });
+  }
+
+  addUserButtonClickHandler() {
+    const memberId = prompt("새로운 팀원 이름을 입력해주세요");
+    if (memberId.trim().length < 1) {
+      alert("팀원의 이름을 입력해주세요.");
+      return;
+    }
+    this.createMember(memberId);
   }
 
   setState(data) {
@@ -49,6 +60,8 @@ export default class MemberList {
 
   render() {
     if (!this.membersData) return;
+    this.containerEl.innerHTML = "";
+    this.containerEl.append(this.memberListEl);
     this.memberListEl.innerHTML = this.membersData
       .map((data) => memberItem(data))
       .join("");

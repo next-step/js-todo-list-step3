@@ -22,7 +22,7 @@ export default class App {
     });
   }
 
-  getAllteams = async () => {
+  getTeamList = async () => {
     await teamApi.get().then((data) => {
       this.teamData = data;
     });
@@ -35,14 +35,19 @@ export default class App {
         teamId,
         containerEl: this.containerEl,
         membersData: data.members,
+        onGetTeamList: this.getTeamList.bind(this),
       });
     });
   };
 
   createTeam = async (name) => {
     await teamApi.create(name);
-    this.getAllteams();
+    this.getTeamList();
   };
+
+  renderTeamList() {
+    this.teamList.render();
+  }
 
   render() {
     this.teamList.setState(this.teamData);

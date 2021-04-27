@@ -10,13 +10,11 @@ export default class TeamList {
     this.handleGetTeamMembers = onGetTeamMembers;
     this.handleCreateTeam = onCreateTeam;
 
-    this.init();
     this.render();
+    this.init();
   }
 
   init() {
-    this.containerEl.innerHTML = "";
-    this.containerEl.append(this.teamListEl);
     this.teamListEl.addEventListener("click", (e) => this.teamClickHandler(e));
   }
 
@@ -39,10 +37,11 @@ export default class TeamList {
 
   render() {
     if (!this.teamData) return;
+    this.containerEl.innerHTML = "";
+    this.containerEl.append(this.teamListEl);
     this.teamListEl.innerHTML = this.teamData
       .map((data) => teamItem(data))
       .join("");
-
     this.teamListEl.insertAdjacentHTML("beforeend", addTeamButton());
   }
 }
