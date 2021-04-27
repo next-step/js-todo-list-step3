@@ -11,6 +11,9 @@ export const getClassLiId = (event) =>
   event.target.closest("li").getAttribute("data-id");
 export const getButtonId = (event) =>
   event.target.closest("button").getAttribute("data-id");
+export const hasCloset = (event, selector) => event.target.closest(selector);
+export const getClosestAttribute = (event, selector, attribute = "id") =>
+  event.target.closest(selector).getAttribute(attribute);
 export const setSelect = (event) => event.target.classList.add("selected");
 export const removeSelect = (event) => event.classList.remove("selected");
 

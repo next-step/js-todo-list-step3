@@ -1,14 +1,20 @@
-import { ADD_USER, DELETE_USER, GET_USERS } from "../../setting/api.js";
+import {
+  ADD_MEMBER,
+  ADD_USER,
+  DELETE_USER,
+  GET_TEAM,
+  GET_USERS,
+} from "../../setting/api.js";
+import { getQueryId, PATH } from "../../utils/dom.js";
+import { parseTeam } from "../team/team.js";
 import { parseUser } from "./user.js";
 import UserEditor from "./UserEditor.js";
 import UserList from "./UserList.js";
 import UserTitle from "./userTitle.js";
 
 export default function UserApp(todoApp) {
-  const userEditor = new UserEditor(this);
-  const userList = new UserList(this);
-  const userTitle = new UserTitle();
   let users = [];
+  let activeTeam;
   let activeUser;
 
   this.render = async () => {
@@ -19,15 +25,13 @@ export default function UserApp(todoApp) {
     activeUser = activeUser ?? users[0];
     users.find((user) => user.matchId(activeUser.getId())).activate();
 
-    userTitle.render(activeUser.getName());
-    userList.render(users);
+    this.userTitle.render(activeUser.getName());
+    this.userList.render(users);
   };
 
   this.add = async (name) => {
-    const user = await ADD_USER(name);
-    activeUser = parseUser(user);
-    changeActive();
-    this.render();
+    const user = await ADD_MEMBER(activeTeam.getId(), name);
+    // this.render();
   };
 
   this.delete = async () => {
@@ -37,20 +41,14 @@ export default function UserApp(todoApp) {
     this.init();
   };
 
-  this.active = (id) => {
-    activeUser = users.find((user) => user.matchId(id));
-    changeActive();
-    this.init();
-  };
-
-  const changeActive = () => {
-    const name = activeUser.getName();
-    userTitle.render(name);
-    userEditor.changeUser(name);
-  };
-
   this.init = async () => {
-    await this.render();
-    todoApp.init(activeUser);
+    if (location.pathname !== PATH.TEAM) return;
+    activeTeam = parseTeam(await GET_TEAM(getQueryId()));
+    console.log(activeTeam);
+    this.userEditor = new UserEditor(this);
+    this.userList = new UserList(this);
+    this.userTitle = new UserTitle();
+    // await this.render();
+    // todoApp.init();
   };
 }

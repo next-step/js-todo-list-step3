@@ -1,9 +1,10 @@
+import { $, MEMBER_SELECTOR } from "../../utils/dom.js";
 import { ASK_MESSAGE, ILLEGAL_MESSAGE } from "../../utils/Message.js";
 import { checkEmpty, checkNull } from "../../utils/stringUtils.js";
 
 export default function UserEditor(app) {
-  const createButton = document.querySelector('[data-action="createUser"]');
-  const deleteButton = document.querySelector('[data-action="deleteUser"]');
+  const createButton = $(MEMBER_SELECTOR.ADD_BUTTON);
+  // const deleteButton = document.querySelector('[data-action="deleteUser"]');
   let selectUserName;
 
   this.changeUser = (name) => (selectUserName = name);
@@ -27,5 +28,5 @@ export default function UserEditor(app) {
   };
 
   createButton.addEventListener("click", onUserCreateHandler);
-  deleteButton.addEventListener("click", onUserDeleteHandler);
+  // deleteButton.addEventListener("click", onUserDeleteHandler);
 }

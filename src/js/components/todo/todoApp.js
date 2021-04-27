@@ -13,8 +13,6 @@ import { parseItem } from "./todoItem.js";
 import TodoList from "./todoList.js";
 
 export default function TodoApp() {
-  const todoList = new TodoList(this);
-  new TodoInput(this);
   let todoItems = [];
   let activeUser;
 
@@ -24,7 +22,7 @@ export default function TodoApp() {
       : await GET_USER_TODOITEMS(activeUser.getId());
     todoItems = userTodoItem.map((item) => parseItem(item));
 
-    todoList.render(todoItems);
+    this.todoList.render(todoItems);
   };
 
   this.add = async (content) => {
@@ -49,7 +47,7 @@ export default function TodoApp() {
 
   this.editing = async (id) => {
     await this.render();
-    todoList.editing(id);
+    this.todoList.editing(id);
   };
 
   this.edit = async (id, content) => {
@@ -63,6 +61,8 @@ export default function TodoApp() {
   };
 
   this.init = (user) => {
+    new TodoInput(this);
+    this.todoList = new TodoList(this);
     activeUser = user;
     this.render();
   };

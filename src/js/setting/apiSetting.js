@@ -15,6 +15,10 @@ export const uri = {
     `/api/users/${userId}/items/${itemId}/priority`,
   UPDATE_USER_TODOITEM_COMPLETE: ({ userId, itemId }) =>
     `/api/users/${userId}/items/${itemId}/toggle`,
-  ADD_TEAM: () => "/api/teams",
-  GET_TEAMS: () => "/api/teams",
+  ADD_TEAM: () => `/api/teams`,
+  GET_TEAMS: () => `/api/teams`,
+  GET_TEAM: (teamId) => `/api/teams/${teamId}`,
+  GET_MEMBER_TODOITEM: ({ teamId, memberId }) =>
+    `/api/teams/${teamId}/members/${memberId}`,
+  ADD_MEMBER: (teamId) => `/api/teams/${teamId}/members`,
 };

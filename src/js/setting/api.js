@@ -77,6 +77,21 @@ export function GET_TEAMS() {
   return GET({ apiUri: "GET_TEAMS" });
 }
 
+export function GET_TEAM(teamId) {
+  return GET({ apiUri: "GET_TEAM", parameter: teamId });
+}
+
+export function GET_MEMBER_TODOITEM(teamId, memberId) {
+  return GET({
+    apiUri: "GET_MEMBER_TODOITEM",
+    parameter: { teamId, memberId },
+  });
+}
+
+export function ADD_MEMBER(teamId, name) {
+  return POST({ apiUri: "ADD_MEMBER", parameter: teamId, data: { name } });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

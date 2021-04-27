@@ -1,3 +1,5 @@
+import { PATH } from "../../utils/dom.js";
+
 export function Team(inputId, inputName, inputMembers = []) {
   const _id = inputId;
   const name = inputName;
@@ -13,7 +15,7 @@ export function Team(inputId, inputName, inputMembers = []) {
 
 export const TeamTemplate = (team) =>
   `<div id="" class="team-card-container">
-      <a id="${team.getId()}" href="/kanban.html" class="card">
+      <a id="${team.getId()}" href="${PATH.TEAM}" class="card">
         <div class="card-title">${team.getName()}</div>
       </a>
 		</div>
