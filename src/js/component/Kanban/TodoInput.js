@@ -7,7 +7,13 @@ class TodoInput {
     this.bindEvent();
   }
 
-  bindEvent() {}
+  bindEvent() {
+    if (this.$target) {
+      this.$target.addEventListener("keydown", (e) => {
+        console.log("아하하");
+      });
+    }
+  }
 }
 
 export default TodoInput;

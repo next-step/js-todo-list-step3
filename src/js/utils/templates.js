@@ -28,10 +28,7 @@ export const todoListView = (member) => `
     ${todoInputView}
     <section class="main">
       <ul class="todo-list">
-        ${member.todoList
-          .filter((todo) => !!todo)
-          .map((todo) => todoItemView(todo))
-          .join("")}
+        ${member.todoList.map((todo) => todoItemView(todo)).join("")}
       </ul>
     </section>
     <div class="count-container">
