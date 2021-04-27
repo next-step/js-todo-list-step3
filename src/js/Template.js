@@ -1,3 +1,27 @@
+const priortyTemplate = {
+	NONE: `
+	<select class="chip select">
+		<option value="NONE" selected="">순위</option>
+		<option value="FIRST">1순위</option>
+		<option value="SECOND">2순위</option>
+  	</select>
+`,
+	FIRST: `
+	<select class="chip primary">
+		<option value="NONE">순위</option>
+		<option value="FIRST" selected="">1순위</option>
+		<option value="SECOND">2순위</option>
+  	</select>
+`,
+	SECOND: `
+	<select class="chip secondary">
+		<option value="NONE">순위</option>
+		<option value="FIRST">1순위</option>
+		<option value="SECOND" selected="">2순위</option>
+  	</select>
+`,
+};
+
 export const template = {
 	teamAddTemplate: (teamId, teamName) =>
 		`
@@ -7,7 +31,7 @@ export const template = {
         </a>
     </div>
     `,
-	kanbanAddTemaplate: (memberName) =>
+	kanbanAddTemplate: (memberName) =>
 		`
     <li class="todoapp-container">
 		<h2>
@@ -43,4 +67,17 @@ export const template = {
     `,
 	kanbanTitleTemplate: (teamName) =>
 		`<span><strong>${teamName}</strong>'s Todo List</span>`,
+	todoItemTemplate: (id, inputText, completed, priority) =>
+		`<li id=${id} class=${completed ? "completed" : "false"}>
+			<div class="view">
+				<input class="toggle" type="checkbox" id=${id} ${completed ? "checked" : ""}>
+				<label class="label">
+					${priortyTemplate[priority]}
+					${inputText}
+				</label>
+			<button class="destroy" id=${id}></button>
+			</div>
+			<input class="edit" value=${inputText}>
+		</li>
+		`,
 };

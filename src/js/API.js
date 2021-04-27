@@ -12,6 +12,24 @@ const kanbanPath = {
 	fetchAddMember(teamId) {
 		return `/api/teams/${teamId}/members`;
 	},
+	fetchAddTodo(teamId, memberId) {
+		return `/api/teams/${teamId}/members/${memberId}/items`;
+	},
+	fetchDeleteTodo(teamId, memberId, itemId) {
+		return `/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
+	},
+	fetchTodoToggle(teamId, memberId, itemId) {
+		return `/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`;
+	},
+	fetchEditTodo(teamId, memberId, itemId) {
+		return `/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
+	},
+	fetchPriorityTodo(teamId, memberId, itemId) {
+		return `/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`;
+	},
+	fetchDeleteAll(teamId, memberId) {
+		return `/api/teams/${teamId}/members/${memberId}/items`;
+	},
 };
 
 const options = {
@@ -57,8 +75,44 @@ const teamAPI = {
 const kanbanAPI = {
 	fetchAddMember(teamId, name) {
 		return request(
-			kanbanAPI.fetchAddMember(teamId),
+			kanbanPath.fetchAddMember(teamId),
 			options.POST({ name })
+		);
+	},
+	fetchAddTodo(teamId, memberId, contents) {
+		return request(
+			kanbanPath.fetchAddTodo(teamId, memberId),
+			options.POST({ contents })
+		);
+	},
+	fetchDeleteTodo(teamId, memberId, itemId) {
+		return request(
+			kanbanPath.fetchDeleteTodo(teamId, memberId, itemId),
+			options.DELETE
+		);
+	},
+	fetchTodoToggle(teamId, memberId, itemId) {
+		return request(
+			kanbanPath.fetchTodoToggle(teamId, memberId, itemId),
+			options.PUT("")
+		);
+	},
+	fetchEditTodo(teamId, memberId, itemId, contents) {
+		return request(
+			kanbanPath.fetchEditTodo(teamId, memberId, itemId),
+			options.PUT({ contents })
+		);
+	},
+	fetchPriorityTodo(teamId, memberId, itemId, priority) {
+		return request(
+			kanbanPath.fetchPriorityTodo(teamId, memberId, itemId),
+			options.PUT({ priority })
+		);
+	},
+	fetchDeleteAll(teamId, memberId) {
+		return request(
+			kanbanPath.fetchDeleteAll(teamId, memberId),
+			options.DELETE
 		);
 	},
 };
