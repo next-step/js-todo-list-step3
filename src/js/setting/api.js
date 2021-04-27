@@ -66,6 +66,13 @@ export function UPDATE_USER_TODOITEM_COMPLETE(userId, itemId) {
   });
 }
 
+export function ADD_TEAM(name) {
+  return POST({
+    apiUri: "ADD_TEAM",
+    data: { name },
+  });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

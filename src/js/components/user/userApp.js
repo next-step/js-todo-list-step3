@@ -1,5 +1,5 @@
 import { ADD_USER, DELETE_USER, GET_USERS } from "../../setting/api.js";
-import { User, parseUser } from "./user.js";
+import { parseUser } from "./user.js";
 import UserEditor from "./UserEditor.js";
 import UserList from "./UserList.js";
 import UserTitle from "./userTitle.js";

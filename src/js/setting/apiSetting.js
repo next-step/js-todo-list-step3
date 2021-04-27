@@ -15,4 +15,5 @@ export const uri = {
     `/api/users/${userId}/items/${itemId}/priority`,
   UPDATE_USER_TODOITEM_COMPLETE: ({ userId, itemId }) =>
     `/api/users/${userId}/items/${itemId}/toggle`,
+  ADD_TEAM: () => "/api/teams",
 };
