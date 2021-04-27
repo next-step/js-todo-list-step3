@@ -15,4 +15,13 @@ export const ACTIONS = {
   LoadTeamFailAction: (error) => {
     return { type: LOAD_TEAM_FAIL, error };
   },
+  AddTeamReqAction: (data) => {
+    return { type: TYPES.ADD_TEAM_REQUEST, data };
+  },
+  AddTeamSuccessActon: (data) => {
+    return { type: TYPES.ADD_TEAM_SUCCESS, data };
+  },
+  AddTeamFailAction: (error) => {
+    return { type: TYPES.ADD_TEAM_FAIL, error };
+  },
 };

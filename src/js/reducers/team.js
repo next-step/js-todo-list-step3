@@ -4,6 +4,8 @@ const initialState = {
   teamList: [],
   isLoadingTeamLoad: false,
   teamLoadError: "",
+  isLoadingAddTeam: false,
+  addTeamError: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,11 +22,27 @@ const reducer = (state = initialState, action) => {
         teamList: action.data,
       };
     case TYPES.LOAD_TEAM_FAIL:
-      const error = action.error;
       return {
         ...state,
         isLoadingTeamLoad: false,
-        teamLoadError: error,
+        teamLoadError: action.error,
+      };
+    case TYPES.ADD_TEAM_REQUEST:
+      return {
+        ...state,
+        isLoadingAddTeam: true,
+      };
+    case TYPES.ADD_TEAM_SUCCESS:
+      console.log([...state.teamList, action.data]);
+      return {
+        ...state,
+        isLoadingAddTeam: false,
+        teamList: [...state.teamList, action.data],
+      };
+    case TYPES.ADD_TEAM_FAIL:
+      return {
+        ...state,
+        addTeamError: action.error,
       };
     default:
       return state;

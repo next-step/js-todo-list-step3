@@ -31,12 +31,13 @@ export const options = {
 };
 
 export const fetcher = async (endPoint, option = {}) => {
+  console.log(option);
   const response = await fetch(baseUrl + endPoint, option);
   console.log(response);
   const data = await response.json();
   if (!response.ok) {
-    // if (response.message === NO_USERLIST_MESSAGE) return [];
-    // throw ERROR_TYPE_BY_MESSAGE[data.message] ?? ERROR_TYPE.SERVER_ERROR;
+    console.error(response.message);
+    throw "에러";
   }
   return data;
 };

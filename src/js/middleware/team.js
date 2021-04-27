@@ -7,6 +7,10 @@ const loadTeamAPI = () => {
   return fetcher("/", options.GET);
 };
 
+const addTeamAPI = (name) => {
+  return fetcher("/", options.POST({ name }));
+};
+
 const loadTeam = async () => {
   try {
     const result = await loadTeamAPI();
@@ -16,10 +20,24 @@ const loadTeam = async () => {
   }
 };
 
+const addTeam = async (action) => {
+  try {
+    const result = await addTeamAPI(action.data);
+    dispatch(ACTIONS.AddTeamSuccessActon(result));
+  } catch (error) {
+    dispatch(ACTIONS.AddTeamFailAction(error));
+  }
+};
+
 const watchLoadTeam = () => {
   fork(TYPES.LOAD_TEAM_REQEUST, loadTeam);
 };
 
+const watchAddTeam = () => {
+  fork(TYPES.ADD_TEAM_REQUEST, addTeam);
+};
+
 export default () => {
   watchLoadTeam();
+  watchAddTeam();
 };
