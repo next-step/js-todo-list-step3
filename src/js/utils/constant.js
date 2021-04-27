@@ -7,6 +7,10 @@ export const SELECTORS = {
   todo: ".todoapp-container",
 };
 
+export const CLASSNAMES = {
+  todo: "todoapp-container",
+};
+
 export const POPUP_MESSAGES = {
   TYPE_TEAM_NAME: "팀 이름을 입력해주세요",
 };

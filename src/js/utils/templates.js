@@ -22,6 +22,19 @@ export const teamListView = (data = []) => {
 export const teamTitleView = (title) =>
   `<span><strong>${title}</strong>'s Todo List</span>`;
 
+export const MemberTitleView = (name) =>
+  `
+<h2>
+  <span><strong>${name}</strong>'s Todo List</span>
+</h2>
+`;
+
+const todoItemView = () => {
+  return ``;
+};
+
+export const todoView = () => {};
+
 export const loadingView = ` <div>로딩중...😎</div>`;
 
 export const EmptyView = `<div>아무것도 ..없어요!</div>`;
