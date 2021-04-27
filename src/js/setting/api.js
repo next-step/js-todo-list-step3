@@ -73,6 +73,10 @@ export function ADD_TEAM(name) {
   });
 }
 
+export function GET_TEAMS() {
+  return GET({ apiUri: "GET_TEAMS" });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

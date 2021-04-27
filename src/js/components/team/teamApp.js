@@ -1,14 +1,25 @@
-import { ADD_TEAM } from "../../setting/api.js";
+import { ADD_TEAM, GET_TEAMS } from "../../setting/api.js";
+import { parseTeam } from "./team.js";
 import TeamEditor from "./teamEditor.js";
 import TeamList from "./teamList.js";
 
 export default function TeamApp(userApp) {
-  new TeamList(this);
+  const teamList = new TeamList(this);
   new TeamEditor(this);
   let teams = [];
 
+  this.render = async () => {
+    const getTeams = await GET_TEAMS();
+    teams = getTeams.map((team) => parseTeam(team));
+    teamList.render(teams);
+  };
+
   this.add = async (name) => {
     const team = await ADD_TEAM(name);
-    console.log(team);
+    this.render();
+  };
+
+  this.init = () => {
+    this.render();
   };
 }

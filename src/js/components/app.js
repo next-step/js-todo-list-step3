@@ -7,4 +7,5 @@ export default function App() {
   // const userApp = new UserApp(todoApp);
   // userApp.init();
   const teamApp = new TeamApp({});
+  teamApp.init();
 }

@@ -18,3 +18,5 @@ export const TeamTemplate = (team) =>
       </a>
 		</div>
     `;
+
+export const parseTeam = (team) => new Team(team._id, team.name, team.members);
