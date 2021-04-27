@@ -4,10 +4,10 @@ import TeamMain from "./component/TeamMain.js";
 import { dispatch } from "./redux/functions.js";
 import { ACTIONS } from "./actions/team/index.js";
 
-const init = () => {
+const App = () => {
   redux.createStore("team", team);
   dispatch(ACTIONS.GetTeamListReqAction);
   new TeamMain();
 };
 
-init();
+App();

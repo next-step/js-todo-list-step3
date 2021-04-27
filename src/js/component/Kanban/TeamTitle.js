@@ -5,7 +5,7 @@ import { teamTitleView, loadingView } from "../../utils/templates.js";
 class TeamTitle {
   constructor(props) {
     this.props = props;
-    this.container = $(SELECTORS.userTitle);
+    this.container = $(SELECTORS.USER_TITLE);
     this.render();
   }
 

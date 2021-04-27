@@ -9,7 +9,7 @@ import TodoInput from "./Kanban/TodoInput.js";
 class KanbanMain extends Component {
   constructor() {
     super();
-    this.container = $(SELECTORS.todoList);
+    this.container = $(SELECTORS.TODO_LIST);
     this.render();
   }
 

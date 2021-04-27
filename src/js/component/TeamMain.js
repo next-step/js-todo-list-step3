@@ -10,13 +10,13 @@ import { ACTIONS } from "../actions/team/index.js";
 class TeamMain extends Component {
   constructor() {
     super();
-    this.container = $(SELECTORS.teamList);
+    this.container = $(SELECTORS.TEAM_LIST);
     this.bindEvents();
     this.render();
   }
 
   bindEvents() {
-    const $addTeamButton = $(SELECTORS.teamAddBtn);
+    const $addTeamButton = $(SELECTORS.TEAM_ADD_BTN);
     $addTeamButton.addEventListener("click", (e) => this.onClickAddButton(e));
   }
 

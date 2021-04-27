@@ -1,4 +1,4 @@
-import { CLASSNAMES, PRIORITY } from "./constant.js";
+import { CLASS_NAMES } from "./constant.js";
 
 export const teamListView = (data = []) => {
   const list = data.map((element) => teamCardView(element._id, element.name));
@@ -59,7 +59,7 @@ const todoCountView = (count) =>
 const todoItemView = (todo) => {
   return `
   <li id=${todo._id} class="todo-list-item ${
-    todo.isCompleted ? CLASSNAMES.completed : ""
+    todo.isCompleted ? CLASS_NAMES.COMPLETED : ""
   }">
     <div class="view">
       <input class="toggle" type="checkbox" ${todo.isCompleted && "checked"}/>

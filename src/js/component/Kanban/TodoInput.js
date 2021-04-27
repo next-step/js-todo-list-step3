@@ -3,7 +3,7 @@ import { SELECTORS } from "../../utils/constant.js";
 
 class TodoInput {
   constructor() {
-    this.$target = $(SELECTORS.input);
+    this.$target = $(SELECTORS.INPUT);
     this.bindEvent();
   }
 

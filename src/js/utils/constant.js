@@ -1,21 +1,21 @@
 export const SELECTORS = {
-  teamList: ".team-list-container",
-  teamAddBtn: "#add-team-button",
-  teamCard: ".team-card-container",
-  userTitle: "#user-title",
-  todoList: ".todoapp-list-container",
-  todo: ".todoapp-container",
-  input: ".new-todo",
+  TEAM_LIST: ".team-list-container",
+  TEAM_ADD_BTN: "#add-team-button",
+  TEAM_CARD: ".team-card-container",
+  USER_TITLE: "#user-title",
+  TODO_LIST: ".todoapp-list-container",
+  TODO: ".todoapp-container",
+  INPUT: ".new-todo",
 };
 
-export const CLASSNAMES = {
-  todo: "todoapp-container",
-  todoApp: "todoapp",
-  inputContainer: "input-container",
-  input: "new-todo",
-  completed: "completed",
-  all: "all",
-  selected: "selected",
+export const CLASS_NAMES = {
+  TODO: "todoapp-container",
+  TODO_APP: "todoapp",
+  INPUT_CONTAINER: "input-container",
+  INPUT: "new-todo",
+  COMPLETED: "completed",
+  ALL: "all",
+  SELECTED: "selected",
 };
 
 export const KEY_NAMES = {
