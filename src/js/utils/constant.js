@@ -5,6 +5,7 @@ export const SELECTORS = {
   userTitle: "#user-title",
   todoList: ".todoapp-list-container",
   todo: ".todoapp-container",
+  input: ".new-todo",
 };
 
 export const CLASSNAMES = {

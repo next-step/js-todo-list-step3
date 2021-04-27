@@ -4,6 +4,7 @@ import { SELECTORS } from "../utils/constant.js";
 import { todoListView, addUserBtnView } from "../utils/templates.js";
 import { getState } from "../redux/functions.js";
 import TeamTitle from "./Kanban/TeamTitle.js";
+import TodoInput from "./Kanban/TodoInput.js";
 
 class KanbanMain extends Component {
   constructor() {
@@ -14,11 +15,8 @@ class KanbanMain extends Component {
 
   render() {
     const { isLoadingGetSingleTeam, teamInfo } = getState(this, "todo");
-    new TeamTitle({
-      isLoading: isLoadingGetSingleTeam,
-      name: teamInfo ? teamInfo.name : "",
-    });
 
+    console.log(teamInfo);
     let memberViews =
       teamInfo && teamInfo.members.map((member) => todoListView(member));
     if (memberViews) {
@@ -27,8 +25,14 @@ class KanbanMain extends Component {
     } else {
       memberViews = addUserBtnView;
     }
-
     this.container.innerHTML = memberViews;
+
+    new TeamTitle({
+      isLoading: isLoadingGetSingleTeam,
+      name: teamInfo ? teamInfo.name : "",
+    });
+
+    new TodoInput();
   }
 }
 

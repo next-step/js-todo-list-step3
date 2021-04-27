@@ -59,18 +59,12 @@ const todoCountView = (count) =>
 const todoItemView = (todo) => {
   return `
   <li id=${todo._id} class="todo-list-item ${
-    todo.isCompleted ? CLASSNAMES.COMPLETED : ""
+    todo.isCompleted ? CLASSNAMES.completed : ""
   }">
     <div class="view">
       <input class="toggle" type="checkbox" ${todo.isCompleted && "checked"}/>
       <label class="label">
-        <div class="chip-container">
-          <select class="chip select">
-            <option value="0" selected>순위</option>
-            <option value="1">1순위</option>
-            <option value="2">2순위</option>
-          </select>
-        </div>
+        ${priorityTemplate[todo.priority] ?? priorityTemplate.NONE}
         ${todo.contents}
       </label>
       <button class="destroy"></button>
@@ -78,6 +72,18 @@ const todoItemView = (todo) => {
     <input class="edit" value="${todo.contents}" />
   </li>
 `;
+};
+
+const priorityTemplate = {
+  NONE: `
+  <select class="chip select" data-action="selectPriority">
+    <option value="NONE">순위</option>
+    <option value="FIRST">1순위</option>
+    <option value="SECOND">2순위</option>
+  </select>
+`,
+  FIRST: `<span class="chip primary">1순위</span>`,
+  SECOND: `<span class="chip secondary">2순위</span>`,
 };
 
 const todoInputView = `
