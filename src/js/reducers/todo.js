@@ -14,7 +14,6 @@ const reducer = (state = initialState, action) => {
         isLoadingGetSingleTeam: true,
       };
     case TYPES.GET_SINGLE_TEAM_SUCCESS:
-      console.log(action.data);
       return {
         ...state,
         isLoadingGetSingleTeam: false,

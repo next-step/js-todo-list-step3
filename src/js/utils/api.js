@@ -31,13 +31,10 @@ export const options = {
 };
 
 export const fetcher = async (endPoint, option = {}) => {
-  console.log(option);
   const response = await fetch(baseUrl + endPoint, option);
-  console.log(response);
   const data = await response.json();
   if (!response.ok) {
-    console.error(response.message);
-    throw "에러";
+    throw response.message;
   }
   return data;
 };

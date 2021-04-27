@@ -16,7 +16,6 @@ class KanbanMain extends Component {
   render() {
     const { isLoadingGetSingleTeam, teamInfo } = getState(this, "todo");
 
-    console.log(teamInfo);
     let memberViews =
       teamInfo && teamInfo.members.map((member) => todoListView(member));
     if (memberViews) {
