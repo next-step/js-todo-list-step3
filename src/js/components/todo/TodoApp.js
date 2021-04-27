@@ -39,11 +39,6 @@ export default class TodoApp {
     this.getTodoData();
   }
 
-  setUserId(userId) {
-    this.userId = userId;
-    this.getTodoData();
-  }
-
   getTodoData() {
     this.todoList.isLoading();
     todoApi.get(this.teamId, this.userId).then((data) => {
