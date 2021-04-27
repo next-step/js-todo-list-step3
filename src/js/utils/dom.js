@@ -9,10 +9,18 @@ export const TEAM_SELECTOR = {
   TEAM_LIST: ".team-list-container",
   TEAM_ADD_BUTTON_CONTAINER: ".add-team-button-container",
   TEAM_ADD_BUTTON: "#add-team-button",
+  TEAM_TITLE: "#team-title",
+  TEAM_TITLE_TAG: "strong",
 };
 
 export const MEMBER_SELECTOR = {
   ADD_BUTTON: "#add-user-button",
+};
+
+export const TODO_SELCTOR = {
+  TODO_LIST_CONTAINER: ".todoapp-list-container",
+  TODO_LIST: ".todo-list",
+  TODO_APP_CONTAINER: (id) => `.todoapp-container[data-member-id="${id}"]`,
 };
 
 export const PATH = {

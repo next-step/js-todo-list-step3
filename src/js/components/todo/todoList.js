@@ -1,3 +1,4 @@
+import { $, TODO_SELCTOR } from "../../utils/dom.js";
 import {
   checkClassName,
   checkKey,
@@ -8,20 +9,30 @@ import {
 } from "../../utils/eventUtils.js";
 import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
 import TodoCount from "./todoCount.js";
-import { todoTemplate } from "./todoItem.js";
+import { todoItemTemplate, todoTemplate } from "./todoItem.js";
 
 export default function TodoList(app) {
-  const todoList = document.querySelector(".todo-list");
-  const todoCount = new TodoCount(app);
+  const todoList = $(TODO_SELCTOR.TODO_LIST_CONTAINER);
+  // const todoCount = new TodoCount(app);
 
-  this.render = (items) => {
-    const hash = document.location.hash;
-    const checkFilter = checkHash[hash];
-    items = items.filter(checkFilter);
+  this.render = (members) => {
+    const templates = members.map((member) => todoTemplate(member));
+    todoList.innerHTML = templates.join("\n");
+    members.forEach((member) => {
+      const todoMember = $(
+        TODO_SELCTOR.TODO_APP_CONTAINER(member.getId()),
+        todoList
+      );
+      const template = member
+        .getTodoList()
+        .map((item) => todoItemTemplate(item));
+      $(TODO_SELCTOR.TODO_LIST, todoMember).innerHTML = template.join("\n");
+    });
+    // const hash = document.location.hash;
+    // const checkFilter = checkHash[hash];
+    // items = items.filter(checkFilter);
 
-    const template = items.map((item) => todoTemplate(item));
-    todoList.innerHTML = template.join("\n");
-    todoCount.render(items);
+    // todoCount.render(items);
   };
 
   this.editing = (id) => {
@@ -68,8 +79,8 @@ export default function TodoList(app) {
     }
   };
 
-  todoList.addEventListener("click", onClickHandler);
-  todoList.addEventListener("dblclick", onDbClickHandler);
-  todoList.addEventListener("keydown", onKeyHandler);
-  todoList.addEventListener("change", onChangeHandler);
+  // todoList.addEventListener("click", onClickHandler);
+  // todoList.addEventListener("dblclick", onDbClickHandler);
+  // todoList.addEventListener("keydown", onKeyHandler);
+  // todoList.addEventListener("change", onChangeHandler);
 }

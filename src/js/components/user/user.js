@@ -1,3 +1,5 @@
+import { parseItem } from "../todo/todoItem.js";
+
 export function User(inputId, inputName, inputTodoList = []) {
   const _id = inputId;
   const name = inputName;
@@ -8,6 +10,8 @@ export function User(inputId, inputName, inputTodoList = []) {
   this.activate = () => (active = true);
   this.inActivate = () => (active = false);
   this.matchId = (id) => _id == id;
+  this.parseItem = () =>
+    todoList.forEach((item, index) => (todoList[index] = parseItem(item)));
 
   this.getName = () => name;
   this.getId = () => _id;
@@ -22,7 +26,9 @@ export const UserTemplate = (user) => {
   }" data-id="${user.getId()}" data-action="selectUser" selectuser="click">
     ${user.getName()}
   </button>
-</user-list-item>`;
+</user-list-item>
+
+`;
 };
 
 export const parseUser = (user) => new User(user._id, user.name, user.todoList);

@@ -30,23 +30,64 @@ const priority = {
   SECOND: `<span class="chip secondary">2순위</span>`,
 };
 
-export const todoTemplate = (item) => {
-  return `<li class="${
+export const todoTemplate = (member) =>
+  `
+<div id="" class="todoapp-container" data-member-id="${member.getId()}">
+<h2 id="" class="">
+  <span><strong>${member.getName()}</strong>'s Todo Lists</span>
+</h2><div class="todoapp"><div id="" class="input-container">
+  <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus="">
+  </div>
+  <div id="" class="main">
+    <ul class="todo-list">
+      
+    </ul>
+  </div>
+  <div id="" class="count-container">
+    <div id="" class="todo-count">
+         총 <strong>0</strong> 개
+    </div>
+    <div id="" class="filters">
+      <li>
+      <a href="#all" data-type="all" class="selected">전체보기</a>
+      </li>
+      <li>
+        <a href="#priority" data-type="priority">우선 순위</a>
+      </li>
+      <li>
+        <a href="#active" data-type="active">해야할 일</a>
+      </li>
+      <li>
+        <a href="#completed" data-type="completed">완료한 일</a>
+      </li>
+    </div>
+    <button id="" class="clear-completed">모두 삭제</button>
+  </div>
+</div>
+</div>
+
+`;
+
+export const todoItemTemplate = (item) =>
+  `
+<li class="todo-list-item ${
     item.isCompleted() ? "completed" : ""
-  }" data-id="${item.getId()}">
-        <div class="view">
-          <input class="toggle" type="checkbox" ${
-            item.isCompleted() ? "checked" : ""
-          } data-action="toggleTodo" toggletodo="click">
-          <label class="label" data-action="toggleEditingTodo" toggleeditingtodo="dblclick">
-          ${priority[item.getPriority()]}
-            ${item.getContent()}
-          </label>
-          <button class="destroy" data-action="deleteTodo" deletetodo="click"></button>
-        </div>
-        <input class="edit" value="${item.getContent()}">
-      </li>`;
-};
+  }" data-key="${item.getId()}">
+  <div class="view">
+    <input class="toggle" type="checkbox">
+    <label class="label">
+      <div class="chip-container">
+      
+      ${priority[item.getPriority()]}
+
+      </div>
+        ${item.getContent()}
+    </label>
+    <button class="destroy"></button>
+  </div>
+  <input class="edit" value="${item.getContent()}">
+</li>
+`;
 
 export const parseItem = (item) =>
   new TodoItem(item._id, item.contents, item.priority, item.isCompleted);
