@@ -10,7 +10,7 @@ class MiddleWare {
   }
 
   has(type) {
-    return this.middlewares[type] ? true : false;
+    return !!this.middlewares[type];
   }
 
   run(action) {

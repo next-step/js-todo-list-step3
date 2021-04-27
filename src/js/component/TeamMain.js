@@ -17,7 +17,7 @@ class TeamMain extends Component {
 
   bindEvents() {
     const $addTeamButton = $(SELECTORS.TEAM_ADD_BTN);
-    $addTeamButton.addEventListener("click", (e) => this.onClickAddButton(e));
+    $addTeamButton.addEventListener("click", this.onClickAddButton);
   }
 
   onClickAddButton() {
