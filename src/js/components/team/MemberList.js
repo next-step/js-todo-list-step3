@@ -3,7 +3,7 @@ import { teamApi, userApi } from "../../api/api.js";
 import {
   memberItem,
   addMemberButton,
-  goTeamList,
+  goTeamListButton,
 } from "../../templete/team.js";
 
 export default class MemberList {
@@ -66,7 +66,7 @@ export default class MemberList {
       .map((data) => memberItem(data))
       .join("");
 
-    this.containerEl.insertAdjacentHTML("afterbegin", goTeamList());
+    this.containerEl.insertAdjacentHTML("afterbegin", goTeamListButton());
     this.memberListEl.insertAdjacentHTML("beforeend", addMemberButton());
 
     this.membersData.map((data) => {

@@ -66,7 +66,7 @@ export const addMemberButton = () => {
   `;
 };
 
-export const goTeamList = () => {
+export const goTeamListButton = () => {
   return `
     <div class="button-container go-team-list">
       <button id="go-team-list-button" class="ripple">
