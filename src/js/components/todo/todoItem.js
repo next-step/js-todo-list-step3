@@ -23,7 +23,7 @@ export function TodoItem(
 }
 
 const priorities = {
-  FRIST: 1,
+  FIRST: 1,
   SECOND: 2,
   NONE: 3,
 };

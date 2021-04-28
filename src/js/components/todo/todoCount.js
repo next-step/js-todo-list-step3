@@ -2,7 +2,6 @@ import { $, $all, $closet, TODO_SELCTOR } from "../../utils/dom.js";
 import {
   checkClassName,
   checkLocalName,
-  getClassName,
   getClosestAttribute,
 } from "../../utils/eventUtils.js";
 
@@ -31,9 +30,9 @@ export default function TodoCount(app) {
 
   const onClickHandler = (event) => {
     if (checkLocalName(event, "a")) {
-      select(event);
-      document.location.hash = getClassName(event);
-      app.render();
+      // select(event);
+      // document.location.hash = getClassName(event);
+      // app.render();
       return;
     }
     if (checkClassName(event, "clear-completed")) {
