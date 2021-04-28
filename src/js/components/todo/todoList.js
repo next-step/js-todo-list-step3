@@ -32,7 +32,7 @@ export default function TodoList(app) {
       const template = member
         .getTodoList()
         .map((item) => todoItemTemplate(item));
-      $(TODO_SELCTOR.TODO_LIST, todoMember).innerHTML = template.join("\n");
+      $(TODO_SELCTOR.TODO_LIST[1], todoMember).innerHTML = template.join("\n");
     });
   };
 
@@ -56,13 +56,6 @@ export default function TodoList(app) {
       );
       return;
     }
-  };
-
-  const checkHash = {
-    "#active": (item) => item.isCompleted() !== true,
-    "#completed": (item) => item.isCompleted() === true,
-    "": () => true,
-    "#": () => true,
   };
 
   const onDbClickHandler = (event) => {

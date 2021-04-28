@@ -108,6 +108,14 @@ export function DELETE_MEMBER_TODOITEM(teamId, memberId, itemId) {
   });
 }
 
+export function DELETE_MEMBER_TODOITEMS(teamId, memberId) {
+  return POST({
+    apiUri: "DELETE_MEMBER_TODOITEMS",
+    parameter: { teamId, memberId },
+    method: "DELETE",
+  });
+}
+
 export function UPDATE_MEMBER_TODOITEM_TOGGLE(teamId, memberId, itemId) {
   return POST({
     apiUri: "UPDATE_MEMBER_TODOITEM_TOGGLE",

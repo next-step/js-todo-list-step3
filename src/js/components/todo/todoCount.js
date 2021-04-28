@@ -1,14 +1,27 @@
+import { $, $all, $closet, TODO_SELCTOR } from "../../utils/dom.js";
 import {
   checkClassName,
   checkLocalName,
   getClassName,
+  getClosestAttribute,
 } from "../../utils/eventUtils.js";
 
 export default function TodoCount(app) {
-  const todoCount = document.querySelector(".count-container");
-
-  this.render = (items) => {
-    todoCount.querySelector("strong").textContent = items.length;
+  this.render = () => {
+    this.todoCount = $all(TODO_SELCTOR.TODO_COUNTER[1]);
+    this.todoCount.forEach((count) =>
+      count.addEventListener("click", onClickHandler)
+    );
+    this.todoCount.forEach((count) => {
+      const closet = $closet(
+        `${TODO_SELCTOR.TODO_MEMBER_ID[0]}[${TODO_SELCTOR.TODO_MEMBER_ID[1]}]`,
+        count
+      );
+      $("strong", count).textContent = $all(
+        `${TODO_SELCTOR.TODO_ID[0]}[${TODO_SELCTOR.TODO_ID[1]}]`,
+        closet
+      ).length;
+    });
   };
 
   const select = (event) => {
@@ -24,9 +37,7 @@ export default function TodoCount(app) {
       return;
     }
     if (checkClassName(event, "clear-completed")) {
-      app.deleteAll();
+      app.deleteAll(getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID));
     }
   };
-
-  todoCount.addEventListener("click", onClickHandler);
 }

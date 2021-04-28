@@ -1,6 +1,7 @@
 import {
   ADD_MEMBER_TODOITEM,
   DELETE_MEMBER_TODOITEM,
+  DELETE_MEMBER_TODOITEMS,
   DELETE_USER_TODOITEM,
   DELETE_USER_TODOITEMS,
   GET_MEMBER_TODOITEMS,
@@ -15,6 +16,7 @@ import { checkNull } from "../../utils/stringUtils.js";
 import TodoInput from "./todoInput.js";
 import TodoList from "./todoList.js";
 import { parseUser } from "../user/user.js";
+import TodoCount from "./todoCount.js";
 
 export default function TodoApp() {
   this.render = async (members) => {
@@ -26,6 +28,7 @@ export default function TodoApp() {
         })
       )) ?? [];
     this.todoList.render(this.members);
+    this.todoCount.render();
   };
 
   const fetch = async (member) => {
@@ -50,9 +53,9 @@ export default function TodoApp() {
     this.render(this.members);
   };
 
-  this.deleteAll = async () => {
-    await DELETE_USER_TODOITEMS(activeUser.getId());
-    this.render();
+  this.deleteAll = async (memberId) => {
+    await DELETE_MEMBER_TODOITEMS(this.teamId, memberId);
+    this.render(this.members);
   };
 
   this.edit = async (memberId, itemId, contents) => {
@@ -73,6 +76,7 @@ export default function TodoApp() {
   this.init = (teamId) => {
     this.todoList = new TodoList(this);
     this.todoInput = new TodoInput(this);
+    this.todoCount = new TodoCount(this);
     this.teamId = teamId;
   };
 }
