@@ -125,6 +125,20 @@ export function UPDATE_MEMBER_TODOITEM(teamId, memberId, itemId, contents) {
   });
 }
 
+export function UPDATE_MEMBER_TODOITEM_PRIORITY(
+  teamId,
+  memberId,
+  itemId,
+  priority
+) {
+  return POST({
+    apiUri: "UPDATE_MEMBER_TODOITEM_PRIORITY",
+    parameter: { teamId, memberId, itemId },
+    data: { priority },
+    method: "PUT",
+  });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

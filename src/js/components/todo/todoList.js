@@ -84,13 +84,16 @@ export default function TodoList(app) {
   };
 
   const onChangeHandler = (event) => {
-    if (checkLocalName(event, "select")) {
-      app.changePriority(getClassLiId(event), getValue(event));
-    }
+    if (!checkLocalName(event, "select")) return;
+    app.changePriority(
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_ID),
+      getValue(event)
+    );
   };
 
   todoList.addEventListener("click", onClickHandler);
   todoList.addEventListener("dblclick", onDbClickHandler);
   todoList.addEventListener("keydown", onKeyHandler);
-  // todoList.addEventListener("change", onChangeHandler);
+  todoList.addEventListener("change", onChangeHandler);
 }
