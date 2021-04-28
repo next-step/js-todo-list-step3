@@ -28,6 +28,7 @@ export const TODO_SELCTOR = {
   TODO_INPUT: ".new-todo",
   TODO_MEMBER_ID: [".todoapp-container", "data-member-id"],
   TODO_ID: ["li", "data-key"],
+  TODO_EDIT: ["editing"],
 };
 
 export const PATH = {

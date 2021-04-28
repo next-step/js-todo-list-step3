@@ -2,8 +2,6 @@ import {
   checkClassName,
   checkLocalName,
   getClassName,
-  removeSelect,
-  setSelect,
 } from "../../utils/eventUtils.js";
 
 export default function TodoCount(app) {
@@ -14,8 +12,8 @@ export default function TodoCount(app) {
   };
 
   const select = (event) => {
-    todoCount.querySelectorAll("a").forEach((each) => removeSelect(each));
-    setSelect(event);
+    // todoCount.querySelectorAll("a").forEach((each) => removeSelect(each));
+    // setSelect(event);
   };
 
   const onClickHandler = (event) => {

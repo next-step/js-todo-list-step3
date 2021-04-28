@@ -16,8 +16,7 @@ export default function TodoInput(app) {
   };
 
   const onKeyHandler = (event) => {
-    console.log(event);
-    console.log(event.target);
+    event.stopPropagation();
     if (!checkKey(event, "Enter")) return;
     if (isEmptyValue(event)) {
       alert(ILLEGAL_MESSAGE.EMPTY_VALUE);

@@ -5,8 +5,10 @@ import {
   checkLocalName,
   getClassLiId,
   getClosestAttribute,
+  getCloset,
   getValue,
   isEmptyValue,
+  setClass,
 } from "../../utils/eventUtils.js";
 import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
 import { userAddButton } from "../user/user.js";
@@ -34,8 +36,9 @@ export default function TodoList(app) {
     });
   };
 
-  this.editing = (id) => {
-    todoList.querySelector(`li[data-id="${id}"]`).className = "editing";
+  const editing = (event) => {
+    const target = getCloset(event, TODO_SELCTOR.TODO_ID[0]);
+    target && setClass(target, TODO_SELCTOR.TODO_EDIT);
   };
 
   const onClickHandler = (event) => {
@@ -63,19 +66,21 @@ export default function TodoList(app) {
   };
 
   const onDbClickHandler = (event) => {
-    if (checkClassName(event, "label")) {
-      app.editing(getClassLiId(event));
-    }
+    if (!checkClassName(event, "label")) return;
+    editing(event);
   };
 
   const onKeyHandler = (event) => {
-    if (checkKey(event, "Enter")) {
-      if (isEmptyValue(event)) {
-        alert(ILLEGAL_MESSAGE["EMPTY_VALUE"]);
-        return;
-      }
-      app.edit(getClassLiId(event), getValue(event));
+    if (!checkKey(event, "Enter")) return;
+    if (isEmptyValue(event)) {
+      alert(ILLEGAL_MESSAGE["EMPTY_VALUE"]);
+      return;
     }
+    app.edit(
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_ID),
+      getValue(event)
+    );
   };
 
   const onChangeHandler = (event) => {
@@ -85,7 +90,7 @@ export default function TodoList(app) {
   };
 
   todoList.addEventListener("click", onClickHandler);
-  // todoList.addEventListener("dblclick", onDbClickHandler);
-  // todoList.addEventListener("keydown", onKeyHandler);
+  todoList.addEventListener("dblclick", onDbClickHandler);
+  todoList.addEventListener("keydown", onKeyHandler);
   // todoList.addEventListener("change", onChangeHandler);
 }
