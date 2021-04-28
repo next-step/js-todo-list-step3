@@ -34,7 +34,7 @@
 
 - [X] 1. 팀에 멤버 추가하기
 - [X] 2. 팀원별 todoList 불러오기
-- [ ] 3. 팀원별 todoItem 추가하기
+- [X] 3. 팀원별 todoItem 추가하기
 - [ ] 4. 팀원별 todoItem 삭제하기
 - [ ] 5. 팀원별 todoItem complete하기
 - [ ] 6. 팀원별 todoItem contents 내용 수정하기

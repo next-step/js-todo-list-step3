@@ -21,4 +21,6 @@ export const uri = {
   GET_MEMBER_TODOITEM: ({ teamId, memberId }) =>
     `/api/teams/${teamId}/members/${memberId}`,
   ADD_MEMBER: (teamId) => `/api/teams/${teamId}/members`,
+  ADD_MEMBER_TODOITEM: ({ teamId, memberId }) =>
+    `/api/teams/${teamId}/members/${memberId}/items`,
 };

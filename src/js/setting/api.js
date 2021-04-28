@@ -92,6 +92,14 @@ export function ADD_MEMBER(teamId, name) {
   return POST({ apiUri: "ADD_MEMBER", parameter: teamId, data: { name } });
 }
 
+export function ADD_MEMBER_TODOITEM(teamId, memberId, contents) {
+  return POST({
+    apiUri: "ADD_MEMBER_TODOITEM",
+    parameter: { teamId, memberId },
+    data: { contents },
+  });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

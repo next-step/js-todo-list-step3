@@ -1,4 +1,5 @@
 import {
+  ADD_MEMBER_TODOITEM,
   ADD_USER_TODOITEM,
   DELETE_USER_TODOITEM,
   DELETE_USER_TODOITEMS,
@@ -17,10 +18,15 @@ import { parseUser } from "../user/user.js";
 import TeamTitle from "../team/teamTitle.js";
 
 export default function TodoApp() {
-  this.render = async () => {
-    await refresh(this.teamId);
-    this.todoList.render(this.members);
+  this.renderMember = () => {
+    refresh(this.teamId);
+    this.todoList.init(this.members);
     this.userEditor.render();
+    this.todoInput.render();
+  };
+
+  this.renderItem = () => {
+    this.todoList.render(this.members);
     // const userTodoItem = checkNull(activeUser)
     //   ? []
     //   : await GET_USER_TODOITEMS(activeUser.getId());
@@ -28,9 +34,9 @@ export default function TodoApp() {
     // this.todoList.render(todoItems);
   };
 
-  this.add = async (content) => {
-    await ADD_USER_TODOITEM(activeUser.getId(), content);
-    this.render();
+  this.add = async (memberId, contents) => {
+    await ADD_MEMBER_TODOITEM(this.teamId, memberId, contents);
+    this.renderItem();
   };
 
   this.complete = async (id) => {
@@ -69,15 +75,17 @@ export default function TodoApp() {
     const members = this.team.getMembers();
     this.members = members ? members.map((member) => parseUser(member)) : [];
     this.members.forEach((member) => member.parseItem());
-    this.teamTitle.render(this.team.getName());
   };
 
-  this.init = (teamId, userEditor) => {
-    this.teamTitle = new TeamTitle();
-    this.teamId = teamId;
-    // new TodoInput(this);
+  this.init = async (teamId, userEditor) => {
     this.todoList = new TodoList(this);
+    this.todoInput = new TodoInput(this);
     this.userEditor = userEditor;
-    this.render();
+    this.teamId = teamId;
+
+    await refresh(teamId);
+    new TeamTitle().render(this.team.getName());
+    this.renderMember();
+    this.renderItem();
   };
 }
