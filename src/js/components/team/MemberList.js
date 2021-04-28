@@ -25,10 +25,10 @@ export default class MemberList {
   init() {
     this.containerEl.addEventListener("click", ({ target }) => {
       if (target.id === "add-user-button") {
-        this.addUserButtonClickHandler();
+        return this.addUserButtonClickHandler();
       }
       if (target.id === "go-team-list-button") {
-        this.handleGetTeamList();
+        return this.handleGetTeamList();
       }
     });
   }

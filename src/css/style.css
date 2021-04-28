@@ -537,10 +537,18 @@ select.chip {
   height: calc(100% - 100px);
 }
 
+.button-container.add-user .material-icons {
+  pointer-events: none;
+}
+
 .button-container.go-team-list {
   position: absolute;
   top: 30px;
   left: 50px;
+}
+
+.button-container.go-team-list .material-icons {
+  pointer-events: none;
 }
 
 .card {
@@ -597,7 +605,4 @@ select.chip {
   bottom: 2px;
   box-shadow: none;
   color: dimgray;
-}
-
-.add-team-button-container #add-team-button.ripple {
 }
