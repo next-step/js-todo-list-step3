@@ -31,4 +31,14 @@ export const UserTemplate = (user) => {
 `;
 };
 
+export const userAddButton = (target) => {
+  const button = document.createElement("li");
+  button.classList.add("add-user-button-container");
+  button.innerHTML = `
+  <button id="add-user-button" class="ripple">
+    <span class="material-icons">add</span>
+  </button>`;
+  target.appendChild(button);
+};
+
 export const parseUser = (user) => new User(user._id, user.name, user.todoList);

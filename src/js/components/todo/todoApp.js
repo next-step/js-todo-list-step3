@@ -18,7 +18,9 @@ import TeamTitle from "../team/teamTitle.js";
 
 export default function TodoApp() {
   this.render = async () => {
+    await refresh(this.teamId);
     this.todoList.render(this.members);
+    this.userEditor.render();
     // const userTodoItem = checkNull(activeUser)
     //   ? []
     //   : await GET_USER_TODOITEMS(activeUser.getId());
@@ -61,15 +63,21 @@ export default function TodoApp() {
     this.render();
   };
 
-  this.init = async (teamId) => {
+  const refresh = async (teamId) => {
     const team = await GET_TEAM(teamId);
     this.team = parseTeam(team);
-    new TeamTitle().render(this.team.getName());
     const members = this.team.getMembers();
     this.members = members ? members.map((member) => parseUser(member)) : [];
     this.members.forEach((member) => member.parseItem());
+    this.teamTitle.render(this.team.getName());
+  };
+
+  this.init = (teamId, userEditor) => {
+    this.teamTitle = new TeamTitle();
+    this.teamId = teamId;
     // new TodoInput(this);
     this.todoList = new TodoList(this);
+    this.userEditor = userEditor;
     this.render();
   };
 }

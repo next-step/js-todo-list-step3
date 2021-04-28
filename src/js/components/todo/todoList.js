@@ -8,16 +8,21 @@ import {
   isEmptyValue,
 } from "../../utils/eventUtils.js";
 import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
+import { userAddButton } from "../user/user.js";
 import TodoCount from "./todoCount.js";
-import { todoItemTemplate, todoTemplate } from "./todoItem.js";
+import {
+  todoItemTemplate,
+  todoTemplate,
+  todoAppendElement,
+} from "./todoItem.js";
 
 export default function TodoList(app) {
   const todoList = $(TODO_SELCTOR.TODO_LIST_CONTAINER);
   // const todoCount = new TodoCount(app);
 
   this.render = (members) => {
-    const templates = members.map((member) => todoTemplate(member));
-    todoList.innerHTML = templates.join("\n");
+    todoList.innerHTML = "";
+    members.forEach((member) => todoAppendElement(member, todoList));
     members.forEach((member) => {
       const todoMember = $(
         TODO_SELCTOR.TODO_APP_CONTAINER(member.getId()),
@@ -28,6 +33,7 @@ export default function TodoList(app) {
         .map((item) => todoItemTemplate(item));
       $(TODO_SELCTOR.TODO_LIST, todoMember).innerHTML = template.join("\n");
     });
+    userAddButton(todoList);
     // const hash = document.location.hash;
     // const checkFilter = checkHash[hash];
     // items = items.filter(checkFilter);

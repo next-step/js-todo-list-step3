@@ -3,7 +3,6 @@ import { ASK_MESSAGE, ILLEGAL_MESSAGE } from "../../utils/Message.js";
 import { checkEmpty } from "../../utils/stringUtils.js";
 
 export default function UserEditor(app) {
-  const createButton = $(MEMBER_SELECTOR.ADD_BUTTON);
   let selectUserName;
 
   this.changeUser = (name) => (selectUserName = name);
@@ -16,5 +15,9 @@ export default function UserEditor(app) {
     }
     app.add(userName);
   };
-  createButton.addEventListener("click", onUserCreateHandler);
+
+  this.render = () => {
+    this.createButton = $(MEMBER_SELECTOR.ADD_BUTTON);
+    this.createButton.addEventListener("click", onUserCreateHandler);
+  };
 }

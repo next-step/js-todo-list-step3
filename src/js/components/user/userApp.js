@@ -16,6 +16,6 @@ export default function UserApp(todoApp) {
     if (location.pathname !== PATH.TEAM) return;
     this.teamId = getQueryId();
     this.userEditor = new UserEditor(this);
-    todoApp.init(this.teamId);
+    todoApp.init(this.teamId, this.userEditor);
   };
 }
