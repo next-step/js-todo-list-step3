@@ -4,6 +4,7 @@ import {
   checkKey,
   checkLocalName,
   getClassLiId,
+  getClosestAttribute,
   getValue,
   isEmptyValue,
 } from "../../utils/eventUtils.js";
@@ -43,7 +44,10 @@ export default function TodoList(app) {
       return;
     }
     if (checkClassName(event, "destroy")) {
-      app.delete(getClassLiId(event));
+      app.delete(
+        getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+        getClosestAttribute(event, ...TODO_SELCTOR.TODO_ID)
+      );
       return;
     }
   };
@@ -77,7 +81,7 @@ export default function TodoList(app) {
     }
   };
 
-  // todoList.addEventListener("click", onClickHandler);
+  todoList.addEventListener("click", onClickHandler);
   // todoList.addEventListener("dblclick", onDbClickHandler);
   // todoList.addEventListener("keydown", onKeyHandler);
   // todoList.addEventListener("change", onChangeHandler);

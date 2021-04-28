@@ -100,6 +100,14 @@ export function ADD_MEMBER_TODOITEM(teamId, memberId, contents) {
   });
 }
 
+export function DELETE_MEMBER_TODOITEM(teamId, memberId, itemId) {
+  return POST({
+    apiUri: "DELETE_MEMBER_TODOITEM",
+    parameter: { teamId, memberId, itemId },
+    method: "DELETE",
+  });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

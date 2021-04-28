@@ -1,5 +1,6 @@
 import {
   ADD_MEMBER_TODOITEM,
+  DELETE_MEMBER_TODOITEM,
   DELETE_USER_TODOITEM,
   DELETE_USER_TODOITEMS,
   GET_MEMBER_TODOITEMS,
@@ -41,9 +42,9 @@ export default function TodoApp() {
     this.render();
   };
 
-  this.delete = async (id) => {
-    await DELETE_USER_TODOITEM(activeUser.getId(), id);
-    this.render();
+  this.delete = async (memberId, itemId) => {
+    await DELETE_MEMBER_TODOITEM(this.teamId, memberId, itemId);
+    this.render(this.members);
   };
 
   this.deleteAll = async () => {

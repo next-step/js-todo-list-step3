@@ -24,10 +24,10 @@ export const MEMBER_SELECTOR = {
 export const TODO_SELCTOR = {
   TODO_LIST_CONTAINER: ".todoapp-list-container",
   TODO_LIST: ".todo-list",
-  TODO_APP: ".todoapp-container",
   TODO_APP_CONTAINER: (id) => `.todoapp-container[data-member-id="${id}"]`,
   TODO_INPUT: ".new-todo",
-  TODO_MEMBER_ID: "data-member-id",
+  TODO_MEMBER_ID: [".todoapp-container", "data-member-id"],
+  TODO_ID: ["li", "data-key"],
 };
 
 export const PATH = {

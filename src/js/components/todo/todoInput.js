@@ -24,11 +24,7 @@ export default function TodoInput(app) {
       return;
     }
     app.add(
-      getClosestAttribute(
-        event,
-        TODO_SELCTOR.TODO_APP,
-        TODO_SELCTOR.TODO_MEMBER_ID
-      ),
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
       getValue(event)
     );
     event.target.value = "";
