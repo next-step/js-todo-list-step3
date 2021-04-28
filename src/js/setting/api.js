@@ -81,9 +81,9 @@ export function GET_TEAM(teamId) {
   return GET({ apiUri: "GET_TEAM", parameter: teamId });
 }
 
-export function GET_MEMBER_TODOITEM(teamId, memberId) {
+export function GET_MEMBER_TODOITEMS(teamId, memberId) {
   return GET({
-    apiUri: "GET_MEMBER_TODOITEM",
+    apiUri: "GET_MEMBER_TODOITEMS",
     parameter: { teamId, memberId },
   });
 }

@@ -20,17 +20,6 @@ export default function TodoList(app) {
   const todoList = $(TODO_SELCTOR.TODO_LIST_CONTAINER);
   // const todoCount = new TodoCount(app);
 
-  this.init = (members) => {
-    todoList.innerHTML = "";
-    members.forEach((member) => todoAppendElement(member, todoList));
-    userAddButton(todoList);
-    // const hash = document.location.hash;
-    // const checkFilter = checkHash[hash];
-    // items = items.filter(checkFilter);
-
-    // todoCount.render(items);
-  };
-
   this.render = (members) => {
     members.forEach((member) => {
       const todoMember = $(
