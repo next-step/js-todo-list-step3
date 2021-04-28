@@ -108,6 +108,14 @@ export function DELETE_MEMBER_TODOITEM(teamId, memberId, itemId) {
   });
 }
 
+export function UPDATE_MEMBER_TODOITEM_TOGGLE(teamId, memberId, itemId) {
+  return POST({
+    apiUri: "UPDATE_MEMBER_TODOITEM_TOGGLE",
+    parameter: { teamId, memberId, itemId },
+    method: "PUT",
+  });
+}
+
 function GET({ apiUri, parameter = "" }) {
   return fetch(baseUrl + uri[apiUri](parameter))
     .then((res) => {

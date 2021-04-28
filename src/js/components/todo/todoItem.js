@@ -82,7 +82,9 @@ export const todoItemTemplate = (item) =>
     item.isCompleted() ? "completed" : ""
   }" data-key="${item.getId()}">
   <div class="view">
-    <input class="toggle" type="checkbox">
+    <input class="toggle" type="checkbox" ${
+      item.isCompleted() ? "checked" : ""
+    }>
     <label class="label">
       <div class="chip-container">
       

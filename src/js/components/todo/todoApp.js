@@ -4,6 +4,7 @@ import {
   DELETE_USER_TODOITEM,
   DELETE_USER_TODOITEMS,
   GET_MEMBER_TODOITEMS,
+  UPDATE_MEMBER_TODOITEM_TOGGLE,
   UPDATE_USER_TODOITEM,
   UPDATE_USER_TODOITEM_COMPLETE,
   UPDATE_USER_TODOITEM_PRIORTY,
@@ -37,9 +38,9 @@ export default function TodoApp() {
     this.render(this.members);
   };
 
-  this.complete = async (id) => {
-    await UPDATE_USER_TODOITEM_COMPLETE(activeUser.getId(), id);
-    this.render();
+  this.complete = async (memberId, itemId) => {
+    await UPDATE_MEMBER_TODOITEM_TOGGLE(this.teamId, memberId, itemId);
+    this.render(this.members);
   };
 
   this.delete = async (memberId, itemId) => {

@@ -25,4 +25,6 @@ export const uri = {
     `/api/teams/${teamId}/members/${memberId}/items`,
   DELETE_MEMBER_TODOITEM: ({ teamId, memberId, itemId }) =>
     `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+  UPDATE_MEMBER_TODOITEM_TOGGLE: ({ teamId, memberId, itemId }) =>
+    `/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
 };

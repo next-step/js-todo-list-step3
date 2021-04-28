@@ -40,7 +40,10 @@ export default function TodoList(app) {
 
   const onClickHandler = (event) => {
     if (checkClassName(event, "toggle")) {
-      app.complete(getClassLiId(event));
+      app.complete(
+        getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+        getClosestAttribute(event, ...TODO_SELCTOR.TODO_ID)
+      );
       return;
     }
     if (checkClassName(event, "destroy")) {
