@@ -3,7 +3,6 @@ import {
   checkClassName,
   checkKey,
   checkLocalName,
-  getClassLiId,
   getClosestAttribute,
   getCloset,
   getValue,
@@ -11,17 +10,10 @@ import {
   setClass,
 } from "../../utils/eventUtils.js";
 import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
-import { userAddButton } from "../user/user.js";
-import TodoCount from "./todoCount.js";
-import {
-  todoItemTemplate,
-  todoTemplate,
-  todoAppendElement,
-} from "./todoItem.js";
+import { todoItemTemplate } from "./todoItem.js";
 
 export default function TodoList(app) {
   const todoList = $(TODO_SELCTOR.TODO_LIST_CONTAINER);
-  // const todoCount = new TodoCount(app);
 
   this.render = (members) => {
     members.forEach((member) => {

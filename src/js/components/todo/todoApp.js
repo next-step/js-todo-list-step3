@@ -2,17 +2,11 @@ import {
   ADD_MEMBER_TODOITEM,
   DELETE_MEMBER_TODOITEM,
   DELETE_MEMBER_TODOITEMS,
-  DELETE_USER_TODOITEM,
-  DELETE_USER_TODOITEMS,
   GET_MEMBER_TODOITEMS,
   UPDATE_MEMBER_TODOITEM,
   UPDATE_MEMBER_TODOITEM_PRIORITY,
   UPDATE_MEMBER_TODOITEM_TOGGLE,
-  UPDATE_USER_TODOITEM,
-  UPDATE_USER_TODOITEM_COMPLETE,
-  UPDATE_USER_TODOITEM_PRIORTY,
 } from "../../setting/api.js";
-import { checkNull } from "../../utils/stringUtils.js";
 import TodoInput from "./todoInput.js";
 import TodoList from "./todoList.js";
 import { parseUser } from "../user/user.js";
@@ -35,6 +29,7 @@ export default function TodoApp() {
     const fetchMember = await GET_MEMBER_TODOITEMS(this.teamId, member.getId());
     const replaceMember = parseUser(fetchMember);
     replaceMember.parseItem();
+    replaceMember.sortItems();
     return replaceMember;
   };
 

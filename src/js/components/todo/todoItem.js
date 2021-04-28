@@ -13,6 +13,8 @@ export function TodoItem(
   this.matchId = (id) => _id === id;
   this.changeContent = (newContent) => (content = newContent);
   this.changePriority = (newPriority) => (priority = newPriority);
+  this.compareTo = (item) =>
+    priorities[priority] - priorities[item.getPriority()];
 
   this.getId = () => _id;
   this.getContent = () => content;
@@ -20,7 +22,13 @@ export function TodoItem(
   this.isCompleted = () => isCompleted;
 }
 
-const priority = {
+const priorities = {
+  FRIST: 1,
+  SECOND: 2,
+  NONE: 3,
+};
+
+const priorityTemplate = {
   NONE: `<select class="chip select" data-action="selectPriority" selectpriority="change">
         <option value="NONE" selected="">순위</option>
         <option value="FIRST">1순위</option>
@@ -88,7 +96,7 @@ export const todoItemTemplate = (item) =>
     <label class="label">
       <div class="chip-container">
       
-      ${priority[item.getPriority()]}
+      ${priorityTemplate[item.getPriority()]}
 
       </div>
         ${item.getContent()}
