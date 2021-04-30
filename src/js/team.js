@@ -12,7 +12,7 @@ const renderNewTeam = (teamId, teamName) => {
 
 $addTeamBtn.addEventListener("click", async () => {
 	const teamName = prompt("팀 이름을 입력해주세요");
-	if (teamName.length === 0) {
+	if (!teamName && teamName.length === 0) {
 		alert("한 글자만이라도 써주세요..!");
 	} else {
 		const team = await teamAPI.fetchAddTeam(teamName);
