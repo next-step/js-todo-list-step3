@@ -4,6 +4,7 @@ import { teamStore } from '../utils/Store.js'
 import AddMember from '../components/kanban/AddMember.js'
 import TeamTitle from '../components/kanban/TeamTitle.js'
 import Member from '../components/kanban/Member.js'
+import { MEMBER_PROPS, TODO_PROPS } from '../constants/PROPERTIES.js'
 
 // function App () {
 //   const $todoApps = document.querySelector('.todoapp-list-container')
@@ -33,17 +34,25 @@ const Kanban = () => {
     teamStore.setTeam(result)
   }
 
-  const handleAddTodo = async (target) => {
-    const memberId = target.closest('li').dataset.id
-    const newTodo = target.value.trim()
-    await API.postTodo(newTodo, TeamId, memberId)
+  const handleTodoActions = {
+    async addTodo (target) {
+      const memberId = target.closest('li').dataset[MEMBER_PROPS.ID]
+      const newTodo = target.value.trim()
+      await API.postTodo(newTodo, TeamId, memberId)
+      await updateTeam()
+    },
 
-    await updateTeam()
+    async deleteTodo  (target) {
+      const todoId = target.closest('li[data-type="todo"]').dataset[TODO_PROPS.ID]
+      const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
+      await API.deleteTodo(TeamId, memberId, todoId)
+      await updateTeam()
+    }
   }
 
   const init = () => {
     TeamTitle()
-    Member({ onAddTodo: handleAddTodo })
+    Member(handleTodoActions)
     AddMember({ onAdd: handleAddUser })
     return updateTeam()
   }

@@ -1,4 +1,4 @@
-import { MEMBER_PROPS, TEAM_PROPS } from '../../constants/PROPERTIES.js'
+import { TEAM_PROPS } from '../../constants/PROPERTIES.js'
 import { teamStore } from '../../utils/Store.js'
 
 import MemberName from './member/MemberName.js'
@@ -6,16 +6,21 @@ import MemberTodoApp from './member/MemberTodoApp.js'
 
 const renderTemplate = (member, children) => {
   return `
-    <li data-id="${member[MEMBER_PROPS.ID]}" class="todoapp-container" data-type="member">
+    <li ${Object.keys(member)
+      .map((key) => `data-${key}="${member[key]}"`)
+      .join('')}
+      class="todoapp-container"
+      data-type="member"
+    >
       ${children}
     </li>
   `
 }
 
-const Member = ({ onAddTodo }) => {
+const Member = (handleTodoActions) => {
   const memberElement = document.getElementById('todoapp-list-container')
   const memberName = MemberName()
-  const memberTodoApp = MemberTodoApp({ onAddTodo })
+  const memberTodoApp = MemberTodoApp(handleTodoActions)
 
   const render = (team) => {
     const childrenArray = [...memberElement.children]

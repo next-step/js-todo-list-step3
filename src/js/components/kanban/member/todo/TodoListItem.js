@@ -8,6 +8,7 @@ const renderTemplate = (Todo, children) => {
       .map((key) => `data-${key}="${Todo[key]}"`)
       .join('')}
       ${Todo[TODO_PROPS.IS_COMPLETED] ? 'class="completed"' : ''}
+      data-type="todo"
     >
       <div class="view">
         <input
@@ -26,12 +27,27 @@ const renderTemplate = (Todo, children) => {
   `
 }
 
-const TodoListItem = () => {
+const TodoListItem = ({ onDeleteTodo }) => {
   const todoListItemPriority = TodoListItemPriority()
   const render = (Todo) => {
     const childrenArray = [todoListItemPriority.render(Todo)]
     return renderTemplate(Todo, childrenArray.join(''))
   }
+
+  const listContainerElement = document.getElementById('todoapp-list-container')
+
+  const deleteTodoItem = (e) => {
+    const { target } = e
+    e.stopPropagation()
+
+    if (!target || target.tagName !== 'BUTTON' || !target.classList.contains('destroy')) {
+      return console.log('not here')
+    }
+
+    onDeleteTodo(target)
+  }
+
+  listContainerElement.addEventListener('click', deleteTodoItem)
 
   return { render }
 }
