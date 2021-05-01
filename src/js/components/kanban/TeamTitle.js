@@ -13,6 +13,15 @@ const TeamTitle = () => {
   const appElement = document.getElementById('app')
 
   const render = (team) => {
+    const childrenArray = [...appElement.children]
+
+    childrenArray.map((child) => {
+      if (child.id !== 'team-title') {
+        return null
+      }
+      return child.remove()
+    })
+
     appElement.insertAdjacentHTML(
       'afterbegin',
       renderTemplate(team)

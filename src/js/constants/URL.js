@@ -4,7 +4,8 @@ const URL = {
   GET_TEAMS: () => `${ORIGIN}/api/teams`,
   POST_TEAM: () => `${ORIGIN}/api/teams`,
   GET_TEAM: (teamId) => `${ORIGIN}/api/teams/${teamId}`,
-  POST_MEMBER: (teamId) => `${ORIGIN}/api/teams/${teamId}/members`
+  POST_MEMBER: (teamId) => `${ORIGIN}/api/teams/${teamId}/members`,
+  POST_TODO: (teamId, memberId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items`
 }
 
 export default URL

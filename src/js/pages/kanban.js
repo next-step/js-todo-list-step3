@@ -36,7 +36,9 @@ const Kanban = () => {
   const handleAddTodo = async (target) => {
     const memberId = target.closest('li').dataset.id
     const newTodo = target.value.trim()
-    console.log(memberId, newTodo)
+    await API.postTodo(newTodo, TeamId, memberId)
+
+    await updateTeam()
   }
 
   const init = () => {
