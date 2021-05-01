@@ -20,7 +20,7 @@ export class TodoApp {
     </div>`;
     let $todoAppContainer = null;
     $$('li.todoapp-container').forEach((li) => {
-      if (li.dataset.memberid == memberId) {
+      if (li.dataset.memberid === memberId) {
         $todoAppContainer = li;
         return;
       }
@@ -31,7 +31,7 @@ export class TodoApp {
     }
 
     this.todoInput.render($todoAppContainer);
-    if (filterState == TodoStatusContainer.FILTER_STATE.PRIORITY) {
+    if (filterState === TodoStatusContainer.FILTER_STATE.PRIORITY) {
       const sortTodoList = [...todoList];
       const comparator = (todoA, todoB) => {
         const priorityValue = {

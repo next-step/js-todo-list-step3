@@ -46,14 +46,14 @@ export class KanbanStore {
   }
 
   async setState({ action }) {
-    if (Object.keys(_state).length == 0) {
+    if (Object.keys(_state).length === 0) {
       new Error("Invalid state. May be the store isn't initiated");
     }
     //상태 변경
     const type = action?.type;
-    if (type == ACTION_TYPES.GET_TEAM) {
+    if (type === ACTION_TYPES.GET_TEAM) {
       _state.team = await _getTeam(this.teamId);
-    } else if (type == ACTION_TYPES.ADD_MEMBER) {
+    } else if (type === ACTION_TYPES.ADD_MEMBER) {
       const memberName = action?.memberName;
       await _addMember(this.teamId, memberName);
       _state.team = await _getTeam(this.teamId);

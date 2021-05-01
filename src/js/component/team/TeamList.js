@@ -5,13 +5,11 @@ export class TeamList {
     this.$teamListContainer = $('div.team-list-container');
 
     const $refreshTeamButton = $('#refresh-team-list');
-    $refreshTeamButton.addEventListener('click', () => {
-      Action.getTeams();
-    });
+    $refreshTeamButton.addEventListener('click', Action.getTeams());
 
     this.$teamListContainer.addEventListener('click', ({ target }) => {
       if (!target) return;
-      if (target.nodeName == 'BUTTON' && target.id == 'add-team-button') {
+      if (target.nodeName === 'BUTTON' && target.id === 'add-team-button') {
         const teamName = prompt('팀 이름을 입력해주세요');
         Action.addTeam(teamName);
       }

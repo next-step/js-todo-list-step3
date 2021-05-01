@@ -9,8 +9,8 @@ export class Dispatcher {
     return _storeCallBacks.length - 1;
   }
   async dispatch(action) {
-    var resolves = [];
-    var rejects = [];
+    const resolves = [];
+    const rejects = [];
     _promises = _storeCallBacks.map((_, i) => {
       return new Promise((resolve, reject) => {
         resolves[i] = resolve;

@@ -7,7 +7,7 @@ const HTTP_REQUEST_METHOD = {
   setFetchOptions: (method, payload) => {
     const options = {};
     options.method = method;
-    if (method == HTTP_REQUEST_METHOD.GET || method == HTTP_REQUEST_METHOD.DELETE) {
+    if (method === HTTP_REQUEST_METHOD.GET || method === HTTP_REQUEST_METHOD.DELETE) {
       return options;
     }
     if (payload) {

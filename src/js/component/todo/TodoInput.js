@@ -6,7 +6,7 @@ export class TodoInput {
     const $app = $('ul.todoapp-list-container');
     const teamId = $app.dataset.teamid;
     $app.addEventListener('keydown', async ({ target, key }) => {
-      if (target.classList.contains('new-todo') && key == 'Enter') {
+      if (target.classList.contains('new-todo') && key === 'Enter') {
         const inputBox = target;
         const $todoList = target.closest('li.todoapp-container');
         const memberId = $todoList.dataset.memberid;

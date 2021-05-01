@@ -15,38 +15,16 @@ export const ACTION_TYPES = {
 };
 
 //interface
-export class Action {
-  static getTeams() {
-    action.getTeams();
-  }
-  static addTeam(teamName) {
-    action.addTeam(teamName);
-  }
-  static getTeam(teamId) {
-    action.getTeam(teamId);
-  }
-  static addMember(teamId, memberName) {
-    action.addMember(teamId, memberName);
-  }
-  static addItem(teamId, memberId, data) {
-    action.addItem(teamId, memberId, data);
-  }
-  static deleteItem(teamId, memberId, itemId) {
-    action.deleteItem(teamId, memberId, itemId);
-  }
-  static deleteItemAll(teamId, memberId) {
-    action.deleteItemAll(teamId, memberId);
-  }
-  static updateItemCompleteToggle(teamId, memberId, itemId) {
-    action.updateItemCompleteToggle(teamId, memberId, itemId);
-  }
-  static updateItem(teamId, memberId, itemId, data) {
-    action.updateItem(teamId, memberId, itemId, data);
-  }
-  static updateItemPriority(teamId, memberId, itemId, priority) {
-    action.updateItemPriority(teamId, memberId, itemId, priority);
-  }
-  static changeFilterState(teamId, memberId, filterState) {
-    action.changeFilterState(teamId, memberId, filterState);
-  }
-}
+export const Action = {
+  getTeams: () => action.getTeams(),
+  addTeam: (teamName) => action.addTeam(teamName),
+  getTeam: (teamId) => action.getTeam(teamId),
+  addMember: (teamId, memberName) => action.addMember(teamId, memberName),
+  addItem: (teamId, memberId, data) => action.addItem(teamId, memberId, data),
+  deleteItem: (teamId, memberId, itemId) => action.deleteItem(teamId, memberId, itemId),
+  deleteItemAll: (teamId, memberId) => action.deleteItemAll(teamId, memberId),
+  updateItemCompleteToggle: (teamId, memberId, itemId) => action.updateItemCompleteToggle(teamId, memberId, itemId),
+  updateItem: (teamId, memberId, itemId, data) => action.updateItem(teamId, memberId, itemId, data),
+  updateItemPriority: (teamId, memberId, itemId, priority) => action.updateItemPriority(teamId, memberId, itemId, priority),
+  changeFilterState: (teamId, memberId, filterState) => action.changeFilterState(teamId, memberId, filterState),
+};

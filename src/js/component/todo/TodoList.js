@@ -19,7 +19,7 @@ export class TodoList {
 
     $app.addEventListener('click', async ({ target }) => {
       if (!target) return;
-      if (target.className == 'destroy') {
+      if (target.classList.contains('destroy')) {
         Action.deleteItem(teamId, _getMemberId(target), _getItemId(target));
       }
     });
@@ -33,18 +33,18 @@ export class TodoList {
 
     $app.addEventListener('dblclick', ({ target }) => {
       if (!target) return;
-      if (target.nodeName == 'LABEL' && target.classList.contains('label')) {
+      if (target.nodeName === 'LABEL' && target.classList.contains('label')) {
         const item = target.closest('li.todo-list-item');
         item.classList.add('editing');
       }
     });
     $app.addEventListener('keydown', async ({ target, key }) => {
       if (!target) return;
-      if (target.nodeName == 'INPUT' && target.classList.contains('edit')) {
+      if (target.nodeName === 'INPUT' && target.classList.contains('edit')) {
         const item = target.closest('li.todo-list-item');
-        if (key == 'Escape') {
+        if (key === 'Escape') {
           item.classList.remove('editing');
-        } else if (key == 'Enter') {
+        } else if (key === 'Enter') {
           Action.updateItem(teamId, _getMemberId(target), _getItemId(target), target.value);
           item.classList.remove('editing');
         }
@@ -52,7 +52,7 @@ export class TodoList {
     });
     $app.addEventListener('change', async ({ target }) => {
       if (!target) return;
-      if (target.nodeName == 'SELECT' && target.classList.contains('chip')) {
+      if (target.nodeName === 'SELECT' && target.classList.contains('chip')) {
         const selectedIndex = target.options.selectedIndex;
         const priority = target.options[selectedIndex].value;
         Action.updateItemPriority(teamId, _getMemberId(target), _getItemId(target), priority);
@@ -85,7 +85,7 @@ export class TodoList {
         <div class="view">
           <input class="toggle" type="checkbox" ${item.isCompleted ? 'checked' : ''} />
           <label class="label">
-            ${item.priority == TodoItem.PRIORITY_NONE ? priorityDom.NONE : item.priority == TodoItem.PRIORITY_FIRST ? priorityDom.FIRST : priorityDom.SECOND}
+            ${item.priority === TodoItem.PRIORITY_NONE ? priorityDom.NONE : item.priority === TodoItem.PRIORITY_FIRST ? priorityDom.FIRST : priorityDom.SECOND}
             ${item.contents}
           </label>
           <button class="destroy"></button>

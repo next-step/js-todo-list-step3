@@ -28,14 +28,14 @@ export class TeamStore {
     this.teamApp.renderAll(copiedState);
   }
   async setState({ action }) {
-    if (Object.keys(_state).length == 0) {
+    if (Object.keys(_state).length === 0) {
       new Error("Invalid state. May be the store isn't initiated");
     }
     //상태 변경
     const type = action?.type;
-    if (type == ACTION_TYPES.GET_TEAMS) {
+    if (type === ACTION_TYPES.GET_TEAMS) {
       _state.teams = await _getTeams();
-    } else if (type == ACTION_TYPES.ADD_TEAM) {
+    } else if (type === ACTION_TYPES.ADD_TEAM) {
       await _addTeam(action?.teamName);
       _state.teams = await _getTeams();
     } else {

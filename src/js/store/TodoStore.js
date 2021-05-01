@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { todoDispatcher } from '../dispatcher/TodoDispatcher.js';
 import { ACTION_TYPES } from '../action/Action.js';
 import { DAO } from '../database/database.js';
@@ -80,7 +81,7 @@ export class TodoStore {
   }
 
   async setState(action) {
-    if (_stateMap.keys().length == 0) {
+    if (_stateMap.keys().length === 0) {
       new Error("Invalid state. May be the store isn't initiated");
     }
 
@@ -89,42 +90,50 @@ export class TodoStore {
     const teamId = action?.teamId;
     const memberId = action?.memberId;
     const itemId = action?.itemId;
-
-    if (type == ACTION_TYPES.ADD_MEMBER) {
-      const addedMemberId = this.kanbanStore.getLastAddedMember()._id;
-      const { _id, todoList = [] } = await _getMemberTodoList(teamId, addedMemberId);
-      _updateMemberState(_id, { todoList: todoList, filterState: TodoStatusContainer.FILTER_STATE.ALL });
-      const copiedState = this.getMemberState(_id);
-      this.todoApp.renderAll(copiedState);
-      return true;
-    } else if (type == ACTION_TYPES.ADD_ITEM) {
-      const data = action?.data;
-      await _addItem(teamId, memberId, data);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.DELETE_ITEM) {
-      await _deleteItem(teamId, memberId, itemId);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.DELETE_ITEM_ALL) {
-      await _deleteItemAll(teamId, memberId);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.UPDATE_ITEM_COMPLETE_TOGGLE) {
-      await _updateItemCompleteToggle(teamId, memberId, itemId);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.UPDATE_ITEM) {
-      const data = action?.data;
-      await _updateItem(teamId, memberId, itemId, data);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.UPDATE_ITEM_PRIORITY) {
-      const priority = action?.priority;
-      await _updateItemPriority(teamId, memberId, itemId, priority);
-      await _refreshMemberTodoList(teamId, memberId);
-    } else if (type == ACTION_TYPES.CHANGE_FILTER_STATE) {
-      const filterState = action?.filterState;
-      await _updateMemberFilterState(memberId, filterState);
-    } else {
-      return true;
+    const data = action?.data;
+    if (!type) {
+      new Error('Invalid Action.');
     }
-
+    switch (type) {
+      case ACTION_TYPES.ADD_MEMBER:
+        const addedMemberId = this.kanbanStore.getLastAddedMember()._id;
+        const { _id, todoList = [] } = await _getMemberTodoList(teamId, addedMemberId);
+        _updateMemberState(_id, { todoList: todoList, filterState: TodoStatusContainer.FILTER_STATE.ALL });
+        const copiedState = this.getMemberState(_id);
+        this.todoApp.renderAll(copiedState);
+        return true;
+      case ACTION_TYPES.ADD_ITEM:
+        await _addItem(teamId, memberId, data);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.DELETE_ITEM:
+        await _deleteItem(teamId, memberId, itemId);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.DELETE_ITEM_ALL:
+        await _deleteItemAll(teamId, memberId);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.UPDATE_ITEM_COMPLETE_TOGGLE:
+        await _updateItemCompleteToggle(teamId, memberId, itemId);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.UPDATE_ITEM:
+        await _updateItem(teamId, memberId, itemId, data);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.UPDATE_ITEM_PRIORITY:
+        const priority = action?.priority;
+        await _updateItemPriority(teamId, memberId, itemId, priority);
+        await _refreshMemberTodoList(teamId, memberId);
+        break;
+      case ACTION_TYPES.CHANGE_FILTER_STATE:
+        const filterState = action?.filterState;
+        await _updateMemberFilterState(memberId, filterState);
+        break;
+      default:
+        return true;
+    }
     const copiedState = this.getMemberState(memberId);
     this.todoApp.renderAll(copiedState);
     return true;

@@ -12,7 +12,7 @@ export class TodoStatusContainer {
     ACTIVE: 'active',
     COMPLETED: 'completed',
     PRIORITY: 'priority',
-  }
+  };
 
   constructor() {
     const $app = $('ul.todoapp-list-container');
@@ -29,7 +29,7 @@ export class TodoStatusContainer {
       const target = e.target;
 
       if (!target.closest('ul.filters')) return;
-      if (!target.nodeName == 'A') return;
+      if (!target.nodeName === 'A') return;
 
       const memberId = _getMemberId(target);
       if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ALL)) {
@@ -71,16 +71,16 @@ export class TodoStatusContainer {
     const countContainerInnerHTML = `<span class="todo-count">총 <strong>${count}</strong> 개</span>
         <ul class="filters">
           <li>
-            <a href="#all" class="${TodoStatusContainer.FILTER_STATE.ALL} ${filterState == TodoStatusContainer.FILTER_STATE.ALL ? 'selected' : ''}">전체보기</a>
+            <a href="#all" class="${TodoStatusContainer.FILTER_STATE.ALL} ${filterState === TodoStatusContainer.FILTER_STATE.ALL ? 'selected' : ''}">전체보기</a>
           </li>
           <li>
-            <a href="#priority" class="${TodoStatusContainer.FILTER_STATE.PRIORITY} ${filterState == TodoStatusContainer.FILTER_STATE.PRIORITY ? 'selected' : ''}">우선 순위</a>
+            <a href="#priority" class="${TodoStatusContainer.FILTER_STATE.PRIORITY} ${filterState === TodoStatusContainer.FILTER_STATE.PRIORITY ? 'selected' : ''}">우선 순위</a>
           </li>
           <li>
-            <a href="#active" class="${TodoStatusContainer.FILTER_STATE.ACTIVE} ${filterState == TodoStatusContainer.FILTER_STATE.ACTIVE ? 'selected' : ''}">해야할 일</a>
+            <a href="#active" class="${TodoStatusContainer.FILTER_STATE.ACTIVE} ${filterState === TodoStatusContainer.FILTER_STATE.ACTIVE ? 'selected' : ''}">해야할 일</a>
           </li>
           <li>
-            <a href="#completed" class="${TodoStatusContainer.FILTER_STATE.COMPLETED} ${filterState == TodoStatusContainer.FILTER_STATE.COMPLETED ? 'selected' : ''}">완료한 일</a>
+            <a href="#completed" class="${TodoStatusContainer.FILTER_STATE.COMPLETED} ${filterState === TodoStatusContainer.FILTER_STATE.COMPLETED ? 'selected' : ''}">완료한 일</a>
           </li>
         </ul>
         <button class="clear-completed">모두 삭제</button>
