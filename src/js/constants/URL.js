@@ -7,7 +7,8 @@ const URL = {
   POST_MEMBER: (teamId) => `${ORIGIN}/api/teams/${teamId}/members`,
   POST_TODO: (teamId, memberId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items`,
   DELETE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-  TOGGLE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`
+  TOGGLE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+  EDIT_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`
 }
 
 export default URL

@@ -54,6 +54,14 @@ const Kanban = () => {
       const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
       await API.toggleTodo(TeamId, memberId, todoId)
       await updateTeam()
+    },
+
+    async editTodo (target) {
+      const todoId = target.closest('li[data-type="todo"]').dataset[TODO_PROPS.ID]
+      const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
+      const editTodo = target.value.trim()
+      await API.editTodo(editTodo, TeamId, memberId, todoId)
+      await updateTeam()
     }
   }
 

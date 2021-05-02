@@ -7,7 +7,7 @@ const renderTemplate = (Todo, children) => {
     <li ${Object.keys(Todo)
       .map((key) => `data-${key}="${Todo[key]}"`)
       .join('')}
-      ${Todo[TODO_PROPS.IS_COMPLETED] ? 'class="completed"' : ''}
+      class="todo-list-item ${Todo[TODO_PROPS.IS_COMPLETED] ? 'completed' : ''}"
       data-type="todo"
     >
       <div class="view">
@@ -58,8 +58,47 @@ const TodoListItem = (handleTodoActions) => {
     handleTodoActions.toggleTodo(target)
   }
 
+  const editModeTodoItem = (e) => {
+    const { target } = e
+    e.stopPropagation()
+
+    if (!target || target.tagName !== 'LABEL' || !target.classList.contains('label')) {
+      return null
+    }
+
+    const todoItem = target.closest('li.todo-list-item')
+    todoItem.classList.add('editing')
+  }
+
+  const editCompleteTodoItem = (e) => {
+    const { target, key } = e
+
+    if (!target || target.tagName !== 'INPUT' || !target.classList.contains('edit')) {
+      return null
+    }
+
+    if (key !== 'Enter' && key !== 'Esc' && key !== 'Escape') {
+      return null
+    }
+
+    if (target.value.trim().length < 2) {
+      return alert('2글자 이상이어야 합니다.')
+    }
+
+    const todoItem = target.closest('li.todo-list-item')
+
+    if (key === 'Esc' || key === 'Escape') {
+      return todoItem.classList.remove('editing')
+    }
+
+    handleTodoActions.editTodo(target)
+    todoItem.classList.remove('editing')
+  }
+
   listContainerElement.addEventListener('click', deleteTodoItem)
   listContainerElement.addEventListener('click', toggleTodoItem)
+  listContainerElement.addEventListener('dblclick', editModeTodoItem)
+  listContainerElement.addEventListener('keydown', editCompleteTodoItem)
 
   return { render }
 }
