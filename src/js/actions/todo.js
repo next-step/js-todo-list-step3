@@ -38,9 +38,9 @@ export const ACTIONS = {
   },
 
   AddNewTodoSuccessAction: (data) => {
-    return { type: TYPES.ADD_USER_SUCCESS, data };
+    return { type: TYPES.ADD_NEW_TODO_SUCCESS, data };
   },
   AddNewTodoFailAction: (error) => {
-    return { type: TYPES.ADD_USER_FAIL, error };
+    return { type: TYPES.ADD_NEW_TODO_FAIL, error };
   },
 };

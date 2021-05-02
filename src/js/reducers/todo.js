@@ -59,6 +59,13 @@ const reducer = (state = initialState, action) => {
         isLoadingAddNewTodo: true,
       };
     case TYPES.ADD_NEW_TODO_SUCCESS:
+      const memberIndex = state.teamInfo.members.findIndex(
+        (member) => member._id === action.data.memberId
+      );
+      const memberInfo = { ...state.teamInfo.members[memberIndex] };
+      memberInfo.todoList.push(action.data);
+      let changedTeamInfo = { ...state.teamInfo };
+      changedTeamInfo.members[memberIndex] = memberInfo;
       return {
         ...state,
         isLoadingAddNewTodo: false,

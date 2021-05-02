@@ -40,6 +40,8 @@ const addUser = async (action) => {
 const addNewTodo = async (action) => {
   try {
     const result = await addNewTodoAPI(action.data);
+    const { memberId } = action.data;
+    result["memberId"] = memberId;
     dispatch(ACTIONS.AddNewTodoSuccessAction(result));
   } catch (error) {
     console.error(error);

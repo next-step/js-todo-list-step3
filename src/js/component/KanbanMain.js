@@ -13,6 +13,8 @@ class KanbanMain extends Component {
   constructor() {
     super();
     this.container = $(SELECTORS.TODO_LIST);
+    this.todoInput = new TodoInput(this.container);
+    this.todoTitle = new TeamTitle({ isLoading: true });
     this.render();
   }
 
@@ -50,13 +52,12 @@ class KanbanMain extends Component {
     this.container.dataset.teamId = teamInfo && teamInfo._id;
     this.container.innerHTML = memberViews;
 
-    new TeamTitle({
+    this.todoTitle = new TeamTitle({
       isLoading: isLoadingGetSingleTeam,
       name: teamInfo ? teamInfo.name : "",
     });
 
-    new TodoInput(this.container);
-    this.bindEvent();
+    // this.bindEvent();
   }
 }
 

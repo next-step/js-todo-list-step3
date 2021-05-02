@@ -5,6 +5,7 @@ export const SELECTORS = {
   USER_TITLE: "#user-title",
   TODO_LIST: ".todoapp-list-container",
   TODO: ".todoapp-container",
+  TODO_ITEMS_CONTAINER: ".todo-list",
   INPUT: ".new-todo",
   USER_ADD_BTN: "#add-user-button",
 };
