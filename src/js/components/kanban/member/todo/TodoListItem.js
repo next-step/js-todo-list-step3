@@ -41,13 +41,25 @@ const TodoListItem = (handleTodoActions) => {
     e.stopPropagation()
 
     if (!target || target.tagName !== 'BUTTON' || !target.classList.contains('destroy')) {
-      return console.log('not here')
+      return null
     }
 
     handleTodoActions.deleteTodo(target)
   }
 
+  const toggleTodoItem = (e) => {
+    const { target } = e
+    e.stopPropagation()
+
+    if (!target || target.tagName !== 'INPUT' || !target.classList.contains('toggle')) {
+      return null
+    }
+
+    handleTodoActions.toggleTodo(target)
+  }
+
   listContainerElement.addEventListener('click', deleteTodoItem)
+  listContainerElement.addEventListener('click', toggleTodoItem)
 
   return { render }
 }
