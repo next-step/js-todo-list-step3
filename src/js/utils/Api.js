@@ -21,28 +21,23 @@ const fetchOptions = {
       method: 'DELETE'
     })
     return await response.json()
+  },
+  async PUT_DATA (url) {
+    const response = await fetch(url, {
+      method: 'PUT'
+    })
+    return await response.json()
   }
 }
 
 const API = {
-  async getTeams () {
-    return await fetchOptions.GET_DATA(URL.GET_TEAMS())
-  },
-  async postTeam (teamName) {
-    return await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName })
-  },
-  async getTeam (teamId) {
-    return await fetchOptions.GET_DATA(URL.GET_TEAM(teamId))
-  },
-  async postMember (memberName, teamId) {
-    return await fetchOptions.POST_DATA(URL.POST_MEMBER(teamId), { [MEMBER_PROPS.NAME]: memberName })
-  },
-  async postTodo (newTodo, teamId, memberId) {
-    return await fetchOptions.POST_DATA(URL.POST_TODO(teamId, memberId), { [TODO_PROPS.CONTENTS]: newTodo })
-  },
-  async deleteTodo (teamId, memberId, itemId) {
-    await fetchOptions.DELETE_DATA(URL.DELETE_TODO(teamId, memberId, itemId))
-  }
+  getTeams: async () => await fetchOptions.GET_DATA(URL.GET_TEAMS()),
+  addNewTeam: async (teamName) => await fetchOptions.POST_DATA(URL.POST_TEAM(), { [TEAM_PROPS.NAME]: teamName }),
+  getTeam: async (teamId) => await fetchOptions.GET_DATA(URL.GET_TEAM(teamId)),
+  addNewMember: async (memberName, teamId) => await fetchOptions.POST_DATA(URL.POST_MEMBER(teamId), { [MEMBER_PROPS.NAME]: memberName }),
+  addNewTodo: async (newTodo, teamId, memberId) => await fetchOptions.POST_DATA(URL.POST_TODO(teamId, memberId), { [TODO_PROPS.CONTENTS]: newTodo }),
+  deleteTodo: async (teamId, memberId, itemId) => fetchOptions.DELETE_DATA(URL.DELETE_TODO(teamId, memberId, itemId)),
+  toggleTodo: async (teamId, memberId, itemId) => fetchOptions.PUT_DATA(URL.TOGGLE_TODO(teamId, memberId, itemId))
 }
 
 export default API

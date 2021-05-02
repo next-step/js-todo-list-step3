@@ -30,22 +30,29 @@ const Kanban = () => {
 
   const handleAddUser = async () => {
     const newMemberName = prompt('새로운 팀원 이름을 입력해주세요')
-    const result = await API.postMember(newMemberName, TeamId)
+    const result = await API.addNewMember(newMemberName, TeamId)
     teamStore.setTeam(result)
   }
 
   const handleTodoActions = {
     async addTodo (target) {
-      const memberId = target.closest('li').dataset[MEMBER_PROPS.ID]
+      const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
       const newTodo = target.value.trim()
-      await API.postTodo(newTodo, TeamId, memberId)
+      await API.addNewTodo(newTodo, TeamId, memberId)
       await updateTeam()
     },
 
-    async deleteTodo  (target) {
+    async deleteTodo (target) {
       const todoId = target.closest('li[data-type="todo"]').dataset[TODO_PROPS.ID]
       const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
       await API.deleteTodo(TeamId, memberId, todoId)
+      await updateTeam()
+    },
+
+    async toggleTodo (target) {
+      const todoId = target.closest('li[data-type="todo"]').dataset[TODO_PROPS.ID]
+      const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
+      await API.toggleTodo(TeamId, memberId, todoId)
       await updateTeam()
     }
   }

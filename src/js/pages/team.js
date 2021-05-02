@@ -12,7 +12,7 @@ const Team = () => {
 
   const handleAddTeam = async () => {
     const result = prompt('팀 이름을 입력해주세요')
-    await API.postTeam(result)
+    await API.addNewTeam(result)
     await updateTeams()
   }
 
