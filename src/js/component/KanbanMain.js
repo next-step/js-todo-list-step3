@@ -47,6 +47,7 @@ class KanbanMain extends Component {
     } else {
       memberViews = addUserBtnView;
     }
+    this.container.dataset.teamId = teamInfo && teamInfo._id;
     this.container.innerHTML = memberViews;
 
     new TeamTitle({
@@ -54,7 +55,7 @@ class KanbanMain extends Component {
       name: teamInfo ? teamInfo.name : "",
     });
 
-    new TodoInput();
+    new TodoInput(this.container);
     this.bindEvent();
   }
 }

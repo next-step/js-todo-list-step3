@@ -22,7 +22,7 @@ const teamAddBtnView = `
 </button>`;
 
 export const todoListView = (member) => `
-  <li class="todoapp-container" dataset-set=${member._id}>
+  <li class="todoapp-container" data-member=${member._id}>
     ${MemberTitleView(member.name)}
     <div class="todoapp">
     ${todoInputView}

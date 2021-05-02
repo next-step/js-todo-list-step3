@@ -11,6 +11,13 @@ const addUserAPI = ({ teamId, name }) => {
   return fetcher(`/${teamId}/members`, options.POST({ name }));
 };
 
+const addNewTodoAPI = ({ teamId, memberId, contents }) => {
+  return fetcher(
+    `/${teamId}/members/${memberId}/items`,
+    options.POST({ contents })
+  );
+};
+
 const getSingleTeam = async (action) => {
   try {
     const result = await getSingleTeamAPI(action.data);
@@ -30,6 +37,16 @@ const addUser = async (action) => {
   }
 };
 
+const addNewTodo = async (action) => {
+  try {
+    const result = await addNewTodoAPI(action.data);
+    dispatch(ACTIONS.AddNewTodoSuccessAction(result));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.AddNewTodoFailAction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -38,7 +55,12 @@ const watchAddUser = () => {
   fork(TYPES.ADD_USER_REQUEST, addUser);
 };
 
+const watchAddNewTodo = () => {
+  fork(TYPES.ADD_NEW_TODO_REQUEST, addNewTodo);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
+  watchAddNewTodo();
 };

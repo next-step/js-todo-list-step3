@@ -5,6 +5,9 @@ export const TYPES = {
   ADD_USER_REQUEST: "ADD_USER_REQUEST",
   ADD_USER_SUCCESS: "ADD_USER_SUCCESS",
   ADD_USER_FAIL: "ADD_USER_FAIL",
+  ADD_NEW_TODO_REQUEST: "ADD_NEW_TODO_REQUEST",
+  ADD_NEW_TODO_SUCCESS: "ADD_NEW_TODO_SUCCESS",
+  ADD_NEW_TODO_FAIL: "ADD_NEW_TODO_FAIL",
 };
 
 export const ACTIONS = {
@@ -27,6 +30,17 @@ export const ACTIONS = {
   },
 
   AddUserFailAction: (error) => {
+    return { type: TYPES.ADD_USER_FAIL, error };
+  },
+
+  AddNewTodoReqAction: (data) => {
+    return { type: TYPES.ADD_NEW_TODO_REQUEST, data };
+  },
+
+  AddNewTodoSuccessAction: (data) => {
+    return { type: TYPES.ADD_USER_SUCCESS, data };
+  },
+  AddNewTodoFailAction: (error) => {
     return { type: TYPES.ADD_USER_FAIL, error };
   },
 };
