@@ -6,7 +6,7 @@ const renderTemplate = () => {
   `
 }
 
-const TodoInput = ({ onAddTodo }) => {
+const TodoInput = (handleTodoActions) => {
   const render = () => {
     return renderTemplate()
   }
@@ -23,7 +23,7 @@ const TodoInput = ({ onAddTodo }) => {
       return alert('2글자 이상이어야 합니다.')
     }
 
-    onAddTodo(target)
+    handleTodoActions.addTodo(target)
     target.value = ''
   }
 

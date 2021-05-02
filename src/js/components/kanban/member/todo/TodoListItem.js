@@ -27,7 +27,7 @@ const renderTemplate = (Todo, children) => {
   `
 }
 
-const TodoListItem = ({ onDeleteTodo }) => {
+const TodoListItem = (handleTodoActions) => {
   const todoListItemPriority = TodoListItemPriority()
   const render = (Todo) => {
     const childrenArray = [todoListItemPriority.render(Todo)]
@@ -44,7 +44,7 @@ const TodoListItem = ({ onDeleteTodo }) => {
       return console.log('not here')
     }
 
-    onDeleteTodo(target)
+    handleTodoActions.deleteTodo(target)
   }
 
   listContainerElement.addEventListener('click', deleteTodoItem)

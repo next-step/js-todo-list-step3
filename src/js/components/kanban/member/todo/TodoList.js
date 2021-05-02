@@ -11,8 +11,8 @@ const renderTemplate = (children) => {
   `
 }
 
-const TodoList = ({ onDeleteTodo }) => {
-  const todoListItem = TodoListItem({ onDeleteTodo })
+const TodoList = (handleTodoActions) => {
+  const todoListItem = TodoListItem(handleTodoActions)
   const render = (member) => {
     const childrenArray = member[MEMBER_PROPS.TODO_LIST].map(Todo => todoListItem.render(Todo))
     return renderTemplate(childrenArray.join(''))

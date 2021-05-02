@@ -9,8 +9,8 @@ const renderTemplate = (children) => {
 }
 
 const MemberTodoApp = (handleTodoActions) => {
-  const todoInput = TodoInput({ onAddTodo: handleTodoActions.addTodo })
-  const todoList = TodoList({ onDeleteTodo: handleTodoActions.deleteTodo })
+  const todoInput = TodoInput(handleTodoActions)
+  const todoList = TodoList(handleTodoActions)
   const todoCount = TodoCount()
 
   const render = (member) => {
