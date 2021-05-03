@@ -68,10 +68,8 @@ export function renderTodoItem(memberId, todoItems) {
 			item.priority
 		);
 	});
-	$todoList(memberId).insertAdjacentHTML(
-		"afterbegin",
-		mergedTemplate.join("")
-	);
+	$todoList(memberId).innerHTML = mergedTemplate.join("");
+
 	itemEventTrigger(memberId);
 	setTodoNum(memberId);
 }
@@ -85,6 +83,7 @@ function updateTodoItem(memberId, _id, contents, isCompleted, priority) {
 		priority,
 	};
 	memberInfo(memberId).todoList.push(todoItemInfo);
+	console.log(getMemberInfo());
 	renderTodoItem(memberId, memberInfo(memberId).todoList);
 }
 
@@ -106,7 +105,7 @@ async function enterItem(event) {
 				memberId,
 				addedItem._id,
 				addedItem.contents,
-				addedItem.completed,
+				addedItem.isCompleted,
 				addedItem.priority
 			);
 			todoInput.value = "";
