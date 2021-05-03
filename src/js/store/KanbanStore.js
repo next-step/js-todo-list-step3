@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { todoDispatcher } from '../dispatcher/TodoDispatcher.js';
 import { ACTION_TYPES } from '../action/Action.js';
 import { DAO } from '../database/database.js';
@@ -49,24 +50,26 @@ export class KanbanStore {
     if (Object.keys(_state).length === 0) {
       new Error("Invalid state. May be the store isn't initiated");
     }
-    //상태 변경
     const type = action?.type;
-    if (type === ACTION_TYPES.GET_TEAM) {
-      _state.team = await _getTeam(this.teamId);
-    } else if (type === ACTION_TYPES.ADD_MEMBER) {
-      const memberName = action?.memberName;
-      await _addMember(this.teamId, memberName);
-      _state.team = await _getTeam(this.teamId);
-      const addedMember = this.getLastAddedMember();
-      const copiedState = _copyState(_state);
-      copiedState.team.members = [addedMember];
-      this.kanbanApp.renderAll(copiedState);
-      return true;
-    } else {
-      return true;
+    if (!type) {
+      new Error('Invalid Action.');
     }
-
-    //상태 복사 후 전파
+    switch (type) {
+      case ACTION_TYPES.GET_TEAMS:
+        _state.team = await _getTeam(this.teamId);
+        break;
+      case ACTION_TYPES.ADD_MEMBER:
+        const memberName = action?.memberName;
+        await _addMember(this.teamId, memberName);
+        _state.team = await _getTeam(this.teamId);
+        const addedMember = this.getLastAddedMember();
+        const copiedState = _copyState(_state);
+        copiedState.team.members = [addedMember];
+        this.kanbanApp.renderAll(copiedState);
+        return true;
+      default:
+        return true;
+    }
     const copiedState = _copyState(_state);
     this.kanbanApp.renderAll(copiedState);
 

@@ -1,19 +1,20 @@
 import { Action } from '../../action/Action.js';
 import { $, $$ } from '../../util/domSelection.js';
 
+const $app = $('ul.todoapp-list-container');
+const _addItem = async ({ target, key }) => {
+  if (target.classList.contains('new-todo') && key === 'Enter') {
+    const inputBox = target;
+    const $todoList = target.closest('li.todoapp-container');
+    const teamId = $app.dataset.teamid;
+    const memberId = $todoList.dataset.memberid;
+    await Action.addItem(teamId, memberId, inputBox.value);
+    inputBox.value = '';
+  }
+};
 export class TodoInput {
   constructor() {
-    const $app = $('ul.todoapp-list-container');
-    const teamId = $app.dataset.teamid;
-    $app.addEventListener('keydown', async ({ target, key }) => {
-      if (target.classList.contains('new-todo') && key === 'Enter') {
-        const inputBox = target;
-        const $todoList = target.closest('li.todoapp-container');
-        const memberId = $todoList.dataset.memberid;
-        await Action.addItem(teamId, memberId, inputBox.value);
-        inputBox.value = '';
-      }
-    });
+    $app.addEventListener('keydown', _addItem);
   }
 
   render($todoAppContainer) {

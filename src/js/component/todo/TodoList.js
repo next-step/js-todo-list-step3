@@ -2,6 +2,7 @@ import { TodoItem } from '../../vo/TodoItem.js';
 import { $, $$ } from '../../util/domSelection.js';
 import { Action } from '../../action/Action.js';
 
+const $app = $('ul.todoapp-list-container');
 const _getMemberId = (target) => {
   const $todoList = target.closest('li.todoapp-container');
   return $todoList.dataset.memberid;
@@ -12,52 +13,60 @@ const _getItemId = (target) => {
   return item.dataset.itemid;
 };
 
+const _deleteItemEvent = async ({ target }) => {
+  if (!target) return;
+  if (target.classList.contains('destroy')) {
+    Action.deleteItem($app.dataset.teamid, _getMemberId(target), _getItemId(target));
+  }
+};
+
+const _updateItemCompleteToggleEvent = async ({ target }) => {
+  if (!target) return;
+  if (target.classList.contains('toggle')) {
+    Action.updateItemCompleteToggle($app.dataset.teamid, _getMemberId(target), _getItemId(target));
+  }
+};
+
+const _makeEditableEvent = ({ target }) => {
+  if (!target) return;
+  if (target.nodeName === 'LABEL' && target.classList.contains('label')) {
+    const item = target.closest('li.todo-list-item');
+    item.classList.add('editing');
+  }
+};
+
+const _updateItemEvent = async ({ target, key }) => {
+  if (!target) return;
+  if (target.nodeName === 'INPUT' && target.classList.contains('edit')) {
+    const item = target.closest('li.todo-list-item');
+    if (key === 'Escape') {
+      item.classList.remove('editing');
+      const [label] = $$('.label', item);
+      const texts = label.childNodes;
+      target.value = texts[texts.length - 1].wholeText.trim();
+    } else if (key === 'Enter') {
+      Action.updateItem($app.dataset.teamid, _getMemberId(target), _getItemId(target), target.value);
+      item.classList.remove('editing');
+    }
+  }
+};
+
+const _updateItemPriority = async ({ target }) => {
+  if (!target) return;
+  if (target.nodeName === 'SELECT' && target.classList.contains('chip')) {
+    const selectedIndex = target.options.selectedIndex;
+    const priority = target.options[selectedIndex].value;
+    Action.updateItemPriority($app.dataset.teamid, _getMemberId(target), _getItemId(target), priority);
+  }
+};
+
 export class TodoList {
   constructor() {
-    const $app = $('ul.todoapp-list-container');
-    const teamId = $app.dataset.teamid;
-
-    $app.addEventListener('click', async ({ target }) => {
-      if (!target) return;
-      if (target.classList.contains('destroy')) {
-        Action.deleteItem(teamId, _getMemberId(target), _getItemId(target));
-      }
-    });
-
-    $app.addEventListener('click', async ({ target }) => {
-      if (!target) return;
-      if (target.classList.contains('toggle')) {
-        Action.updateItemCompleteToggle(teamId, _getMemberId(target), _getItemId(target));
-      }
-    });
-
-    $app.addEventListener('dblclick', ({ target }) => {
-      if (!target) return;
-      if (target.nodeName === 'LABEL' && target.classList.contains('label')) {
-        const item = target.closest('li.todo-list-item');
-        item.classList.add('editing');
-      }
-    });
-    $app.addEventListener('keydown', async ({ target, key }) => {
-      if (!target) return;
-      if (target.nodeName === 'INPUT' && target.classList.contains('edit')) {
-        const item = target.closest('li.todo-list-item');
-        if (key === 'Escape') {
-          item.classList.remove('editing');
-        } else if (key === 'Enter') {
-          Action.updateItem(teamId, _getMemberId(target), _getItemId(target), target.value);
-          item.classList.remove('editing');
-        }
-      }
-    });
-    $app.addEventListener('change', async ({ target }) => {
-      if (!target) return;
-      if (target.nodeName === 'SELECT' && target.classList.contains('chip')) {
-        const selectedIndex = target.options.selectedIndex;
-        const priority = target.options[selectedIndex].value;
-        Action.updateItemPriority(teamId, _getMemberId(target), _getItemId(target), priority);
-      }
-    });
+    $app.addEventListener('click', _deleteItemEvent);
+    $app.addEventListener('click', _updateItemCompleteToggleEvent);
+    $app.addEventListener('dblclick', _makeEditableEvent);
+    $app.addEventListener('keydown', _updateItemEvent);
+    $app.addEventListener('change', _updateItemPriority);
   }
   render(todoList, $todoAppContainer) {
     const [list] = $$('ul.todo-list', $todoAppContainer);

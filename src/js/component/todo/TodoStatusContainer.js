@@ -1,11 +1,38 @@
 import { Action } from '../../action/Action.js';
 import { $, $$ } from '../../util/domSelection.js';
 
+const $app = $('ul.todoapp-list-container');
+
 const _getMemberId = (target) => {
   const $todoList = target.closest('li.todoapp-container');
   return $todoList.dataset.memberid;
 };
 
+const _deleteItemAllEvent = async ({ target }) => {
+  if (!target) return;
+  if (target.classList.contains('clear-completed')) {
+    Action.deleteItemAll($app.dataset.teamid, _getMemberId(target));
+  }
+};
+
+const _changeFilterStateEvent = async (e) => {
+  e.preventDefault();
+  const target = e.target;
+
+  if (!target.closest('ul.filters')) return;
+  if (!target.nodeName === 'A') return;
+
+  const memberId = _getMemberId(target);
+  if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ALL)) {
+    Action.changeFilterState($app.dataset.teamid, memberId, TodoStatusContainer.FILTER_STATE.ALL);
+  } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ACTIVE)) {
+    Action.changeFilterState($app.dataset.teamid, memberId, TodoStatusContainer.FILTER_STATE.ACTIVE);
+  } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.COMPLETED)) {
+    Action.changeFilterState($app.dataset.teamid, memberId, TodoStatusContainer.FILTER_STATE.COMPLETED);
+  } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.PRIORITY)) {
+    Action.changeFilterState($app.dataset.teamid, memberId, TodoStatusContainer.FILTER_STATE.PRIORITY);
+  }
+};
 export class TodoStatusContainer {
   static FILTER_STATE = {
     ALL: 'all',
@@ -15,33 +42,8 @@ export class TodoStatusContainer {
   };
 
   constructor() {
-    const $app = $('ul.todoapp-list-container');
-    const teamId = $app.dataset.teamid;
-
-    $app.addEventListener('click', async ({ target }) => {
-      if (!target) return;
-      if (target.classList.contains('clear-completed')) {
-        Action.deleteItemAll(teamId, _getMemberId(target));
-      }
-    });
-    $app.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const target = e.target;
-
-      if (!target.closest('ul.filters')) return;
-      if (!target.nodeName === 'A') return;
-
-      const memberId = _getMemberId(target);
-      if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ALL)) {
-        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.ALL);
-      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.ACTIVE)) {
-        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.ACTIVE);
-      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.COMPLETED)) {
-        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.COMPLETED);
-      } else if (target.classList.contains(TodoStatusContainer.FILTER_STATE.PRIORITY)) {
-        Action.changeFilterState(teamId, memberId, TodoStatusContainer.FILTER_STATE.PRIORITY);
-      }
-    });
+    $app.addEventListener('click', _deleteItemAllEvent);
+    $app.addEventListener('click', _changeFilterStateEvent);
   }
 
   getItemCount($todoAppContainer) {
