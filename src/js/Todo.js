@@ -35,6 +35,10 @@ function memberInfo(memberId) {
 	)[0];
 }
 
+function findMemberId(target) {
+	return target.closest(".todoapp-container").dataset.memberid;
+}
+
 // 할 일들의 개수
 function setTodoNum(memberId) {
 	const todoNum = $todoList(memberId).children.length;
@@ -50,14 +54,14 @@ function setTodoNum(memberId) {
 // }
 
 // todoItem 이벤트
-// function itemEventTrigger() {
-// 	const $todoList = $todoList(memberName());
-// 	$todoList.addEventListener("click", setItemState);
-// 	$todoList.addEventListener("click", removeItem);
-// 	$todoList.addEventListener("dblclick", editItem);
-// 	$todoList.addEventListener("keyup", finishEdit);
-// 	$todoList.addEventListener("change", selectPriority);
-// }
+function itemEventTrigger(memberId) {
+	const todoList = $todoList(memberId);
+	todoList.addEventListener("click", removeItem);
+	// todoList.addEventListener("click", setItemState);
+	// todoList.addEventListener("dblclick", editItem);
+	// todoList.addEventListener("keyup", finishEdit);
+	// todoList.addEventListener("change", selectPriority);
+}
 
 // 리스트 랜더링
 export function renderTodoItem(memberId, todoItems) {
@@ -73,7 +77,7 @@ export function renderTodoItem(memberId, todoItems) {
 		"afterbegin",
 		mergedTemplate.join("")
 	);
-	// itemEventTrigger();
+	itemEventTrigger(memberId);
 	setTodoNum(memberId);
 }
 
@@ -92,8 +96,7 @@ function updateTodoItem(memberId, _id, contents, isCompleted, priority) {
 // 할 일 입력
 async function enterItem(event) {
 	if (!event.isComposing && event.key === "Enter") {
-		const memberId = event.target.closest(".todoapp-container").dataset
-			.memberid;
+		const memberId = findMemberId(event.target);
 		const inputText = $todoInput(memberId).value;
 		if (inputText.length < 2) {
 			alert("두 글자 이상으로 적어주세요!");
@@ -131,19 +134,19 @@ async function enterItem(event) {
 // 	}
 // }
 
-// // 할 일 삭제
-// async function removeItem(event) {
-// 	if (event.target.className === "destroy") {
-// 		const $user = $(".active");
-// 		const destroy = event.target;
-// 		const $todoItem = destroy.closest("li");
-// 		$todoList.removeChild($todoItem);
-// 		todoItemList = todoItemList.filter((item) => item._id !== $todoItem.id);
-// 		await todoAPI.fetchDeleteItem($user.dataset.id, $todoItem.id);
-// 		saveUserTodoList($todoItemList); // todoItemList는 새로운 주소값
-// 		setTodoNum();
-// 	}
-// }
+// 할 일 삭제
+async function removeItem(event) {
+	if (!event.target.className === "destroy") return;
+	const destroy = event.target;
+	const memberId = findMemberId(destroy);
+	const $todoItem = destroy.closest("li");
+	$todoList(memberId).removeChild($todoItem);
+	await kanbanAPI.fetchDeleteTodo(teamId, memberId, $todoItem.id);
+	memberInfo(memberId).todoList = memberInfo(memberId).todoList.filter(
+		(item) => item._id !== $todoItem.id
+	);
+	setTodoNum(memberId);
+}
 
 // // 할 일 수정
 // function editItem(event) {
