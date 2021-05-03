@@ -23,11 +23,11 @@ const completedBtn = $(".completed");
 const pendingBtn = $(".active");
 const deleteAllBtn = $(".clear-completed");
 
-// const priorityList = {
-// 	NONE: "select",
-// 	FIRST: "primary",
-// 	SECOND: "secondary",
-// };
+const priorityList = {
+	NONE: "select",
+	FIRST: "primary",
+	SECOND: "secondary",
+};
 
 function memberInfo(memberId) {
 	return getMemberInfo().filter(
@@ -60,7 +60,7 @@ function itemEventTrigger(memberId) {
 	todoList.addEventListener("click", setItemState);
 	todoList.addEventListener("dblclick", editItem);
 	todoList.addEventListener("keyup", finishEdit);
-	// todoList.addEventListener("change", selectPriority);
+	todoList.addEventListener("change", selectPriority);
 }
 
 // 리스트 랜더링
@@ -193,24 +193,31 @@ async function finishEdit(event) {
 	}
 }
 
-// // 우선 순위 정하기
-// async function selectPriority(event) {
-// 	const $todoItem = event.target.closest("li");
-// 	const $user = $(".active");
-// 	if (event.target.classList.contains("chip")) {
-// 		const select = event.target;
-// 		const result = select.value;
-// 		Object.keys(priorityList).map((priority) => {
-// 			if (result === priority) {
-// 				select.classList.remove("select", "primary", "secondary");
-// 				select.classList.add(priorityList[result]);
-// 			}
-// 		});
-// 		await todoAPI.fetchPriority($user.dataset.id, $todoItem.id, result);
-// 		const idx = todoItemList.findIndex((item) => item._id === $todoItem.id);
-// 		todoItemList[idx].priority = result;
-// 	}
-// }
+// 우선 순위 정하기
+async function selectPriority(event) {
+	const $todoItem = event.target.closest("li");
+	if (event.target.classList.contains("chip")) {
+		const select = event.target;
+		const memberId = findMemberId(select);
+		const result = select.value;
+		Object.keys(priorityList).map((priority) => {
+			if (result === priority) {
+				select.classList.remove("select", "primary", "secondary");
+				select.classList.add(priorityList[result]);
+			}
+		});
+		await kanbanAPI.fetchPriorityTodo(
+			teamId,
+			memberId,
+			$todoItem.id,
+			result
+		);
+		const idx = memberInfo(memberId).todoList.findIndex(
+			(item) => item._id === $todoItem.id
+		);
+		memberInfo(memberId).todoList[idx].priority = result;
+	}
+}
 
 // // 상태별 보기 버튼 설정
 // function showProgress(event) {
