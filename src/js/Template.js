@@ -31,9 +31,9 @@ export const template = {
         </a>
     </div>
     `,
-	kanbanAddTemplate: (memberName) =>
+	kanbanAddTemplate: (memberId, memberName) =>
 		`
-    <li class="todoapp-container" data-member=${memberName}>
+    <li class="todoapp-container" data-memberId=${memberId}>
 		<h2>
 			<span><strong>${memberName}</strong>'s Todo List</span>
 		</h2>

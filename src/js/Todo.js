@@ -1,5 +1,5 @@
 import { $ } from "./Dom.js";
-import { getMemberTodoList, saveMemberTodoList } from "./MemberTodoList.js";
+import { getMemberInfo, saveMemberInfo } from "./MemberInfo.js";
 import { template } from "./Template.js";
 
 const PENDING = "false";
@@ -8,11 +8,11 @@ const COMPLETED = "completed";
 const $todoInput = () => {
 	return $(".new-todo");
 };
-const $todoList = (member) => {
-	return $(`li[data-member="${member}"] .todo-list`);
+const $todoList = (memberId) => {
+	return $(`li[data-memberId="${memberId}"] .todo-list`);
 };
-const $todoCount = () => {
-	return $(".todo-count strong");
+const $todoCount = (memberId) => {
+	return $(`li[data-memberId="${memberId}"] .todo-count strong`);
 };
 
 const showAllBtn = $(".all");
@@ -26,16 +26,14 @@ const deleteAllBtn = $(".clear-completed");
 // 	SECOND: "secondary",
 // };
 
-let todoItemList = [];
-
-function memberName() {
-	return getMemberTodoList().member;
+function memberInfo() {
+	return getMemberTodoList();
 }
 
 // 할 일들의 개수
-function setTodoNum() {
-	const todoNum = $todoList(memberName()).children.length;
-	$todoCount().textContent = todoNum;
+function setTodoNum(memberId) {
+	const todoNum = $todoList(memberId).children.length;
+	$todoCount(memberId).textContent = todoNum;
 }
 
 // // 완료 여부 확인
@@ -57,7 +55,7 @@ function setTodoNum() {
 // }
 
 // 리스트 랜더링
-export function renderTodoItem(todoItems) {
+export function renderTodoItem(memberId, todoItems) {
 	const mergedTemplate = todoItems.map((item) => {
 		return template.todoItemTemplate(
 			item._id,
@@ -66,50 +64,49 @@ export function renderTodoItem(todoItems) {
 			item.priority
 		);
 	});
-	$todoList(memberName()).insertAdjacentHTML(
+	$todoList(memberId).insertAdjacentHTML(
 		"afterbegin",
 		mergedTemplate.join("")
 	);
 	// itemEventTrigger();
-	todoItemList = getMemberTodoList().todoList; // 얕은 복사
-	setTodoNum();
+	setTodoNum(memberId);
 }
 
-// toDoList 업데이트
-function updatedTodoItems(_id, contents, isCompleted, priority) {
-	const todoItemInfo = {
-		_id,
-		contents,
-		isCompleted,
-		priority,
-	};
-	todoItemList.push(todoItemInfo);
-	return todoItemList;
-}
+// // toDoList 업데이트
+// function updatedTodoItems(_id, contents, isCompleted, priority) {
+// 	const todoItemInfo = {
+// 		_id,
+// 		contents,
+// 		isCompleted,
+// 		priority,
+// 	};
+// 	memberInfo().todoList.push(todoItemInfo);
+// 	return memberInfo().todoList;
+// }
 
-// 할 일 추가
-function addItem(id, inputText, completed, priority) {
-	todoItemList = updatedTodoItems(id, inputText, completed, priority);
-	renderTodoItem(todoItemList);
-}
+// // 할 일 추가
+// function addItem(id, inputText, completed, priority) {
+// 	todoItemList = updatedTodoItems(id, inputText, completed, priority);
+// 	renderTodoItem(todoItemList);
+// }
 
-// 할 일 입력
-async function enterItem(event) {
-	if (!event.isComposing && event.key === "Enter") {
-		const inputText = todoInput.value;
-		if (inputText.length < 2) {
-			alert("두 글자 이상으로 적어주세요!");
-		} else {
-			const user = $(".active");
-			const addedItem = await todoAPI.fetchAddItem(
-				user.dataset.id,
-				inputText
-			);
-			addItem(addedItem._id, inputText, false, "NONE");
-			todoInput.value = "";
-		}
-	}
-}
+// // 할 일 입력
+// async function enterItem(event) {
+// 	if (!event.isComposing && event.key === "Enter") {
+// 		const inputText = todoInput.value;
+// 		if (inputText.length < 2) {
+// 			alert("두 글자 이상으로 적어주세요!");
+// 		} else {
+// 			const user = $(".active");
+// 			const addedItem = await todoAPI.fetchAddItem(
+// 				user.dataset.id,
+// 				inputText
+// 			);
+// 			addItem(addedItem._id, inputText, false, "NONE");
+// 			todoInput.value = "";
+// 		}
+// 	}
+// }
 
 // // 할 일 상태 설정
 // async function setItemState(event) {
