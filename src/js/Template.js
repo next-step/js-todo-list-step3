@@ -75,7 +75,7 @@ export const template = {
 					<div class="chip-container">
 						${priortyTemplate[priority]}
 					</div>
-					${inputText}
+					<span>${inputText}</span>
 				</label>
 			<button class="destroy" id=${id}></button>
 			</div>

@@ -58,8 +58,8 @@ function itemEventTrigger(memberId) {
 	const todoList = $todoList(memberId);
 	todoList.addEventListener("click", removeItem);
 	todoList.addEventListener("click", setItemState);
-	// todoList.addEventListener("dblclick", editItem);
-	// todoList.addEventListener("keyup", finishEdit);
+	todoList.addEventListener("dblclick", editItem);
+	todoList.addEventListener("keyup", finishEdit);
 	// todoList.addEventListener("change", selectPriority);
 }
 
@@ -152,45 +152,46 @@ async function removeItem(event) {
 	}
 }
 
-// // 할 일 수정
-// function editItem(event) {
-// 	if (event.target.className === "label") {
-// 		const label = event.target;
-// 		const $todoItem = label.closest("li");
-// 		$todoItem.classList.add("editing");
-// 	}
-// }
+// 할 일 수정
+function editItem(event) {
+	if (event.target.className === "label") {
+		const label = event.target;
+		const $todoItem = label.closest("li");
+		$todoItem.classList.add("editing");
+	}
+}
 
-// // 수정 종료
-// async function finishEdit(event) {
-// 	const $todoItem = event.target.closest("li");
-// 	const $user = $(".active");
-// 	if (todoItem.classList.contains("editing")) {
-// 		const edit = event.target;
-// 		const $label = $todoItem.querySelector("label");
-// 		const editText = edit.value;
+// 수정 종료
+async function finishEdit(event) {
+	const $todoItem = event.target.closest("li");
+	if ($todoItem.classList.contains("editing")) {
+		const edit = event.target;
+		const memberId = findMemberId(edit);
+		const $label = $todoItem.querySelector("label span");
+		const editText = edit.value;
 
-// 		if (event.key === "Escape") {
-// 			$todoItem.classList.remove("editing");
-// 			edit.value = $label.textContent;
-// 		}
+		if (event.key === "Escape") {
+			$todoItem.classList.remove("editing");
+			edit.value = $label.textContent;
+		}
 
-// 		if (event.key === "Enter") {
-// 			$todoItem.classList.remove("editing");
-// 			edit.setAttribute("value", editText);
-// 			$label.textContent = editText;
-// 			const idx = todoItemList.findIndex(
-// 				(item) => item._id === $todoItem.id
-// 			);
-// 			todoItemList[idx].contents = editText;
-// 			await todoAPI.fetchEditItem(
-// 				$user.dataset.id,
-// 				$todoItem.id,
-// 				editText
-// 			);
-// 		}
-// 	}
-// }
+		if (event.key === "Enter") {
+			$todoItem.classList.remove("editing");
+			edit.setAttribute("value", editText);
+			$label.textContent = editText;
+			const idx = memberInfo(memberId).todoList.findIndex(
+				(item) => item._id === $todoItem.id
+			);
+			memberInfo(memberId).todoList[idx].contents = editText;
+			await kanbanAPI.fetchEditTodo(
+				teamId,
+				memberId,
+				$todoItem.id,
+				editText
+			);
+		}
+	}
+}
 
 // // 우선 순위 정하기
 // async function selectPriority(event) {
