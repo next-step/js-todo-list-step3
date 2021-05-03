@@ -1,12 +1,15 @@
-import { $ } from "./Dom.js";
-import { getMemberInfo, saveMemberInfo } from "./MemberInfo.js";
+import { kanbanAPI } from "./API.js";
+import { $, $all } from "./Dom.js";
+import { getMemberInfo } from "./MemberInfo.js";
 import { template } from "./Template.js";
+
+const teamId = new URLSearchParams(document.location.search).get("id");
 
 const PENDING = "false";
 const COMPLETED = "completed";
 
-const $todoInput = () => {
-	return $(".new-todo");
+const $todoInput = (memberId) => {
+	return $(`li[data-memberId="${memberId}"] .new-todo`);
 };
 const $todoList = (memberId) => {
 	return $(`li[data-memberId="${memberId}"] .todo-list`);
@@ -26,8 +29,10 @@ const deleteAllBtn = $(".clear-completed");
 // 	SECOND: "secondary",
 // };
 
-function memberInfo() {
-	return getMemberTodoList();
+function memberInfo(memberId) {
+	return getMemberInfo().filter(
+		(memberInfo) => memberInfo.memberId === memberId
+	)[0];
 }
 
 // 할 일들의 개수
@@ -72,41 +77,44 @@ export function renderTodoItem(memberId, todoItems) {
 	setTodoNum(memberId);
 }
 
-// // toDoList 업데이트
-// function updatedTodoItems(_id, contents, isCompleted, priority) {
-// 	const todoItemInfo = {
-// 		_id,
-// 		contents,
-// 		isCompleted,
-// 		priority,
-// 	};
-// 	memberInfo().todoList.push(todoItemInfo);
-// 	return memberInfo().todoList;
-// }
+// toDoList 업데이트
+function updateTodoItem(memberId, _id, contents, isCompleted, priority) {
+	const todoItemInfo = {
+		_id,
+		contents,
+		isCompleted,
+		priority,
+	};
+	memberInfo(memberId).todoList.push(todoItemInfo);
+	renderTodoItem(memberId, memberInfo(memberId).todoList);
+}
 
-// // 할 일 추가
-// function addItem(id, inputText, completed, priority) {
-// 	todoItemList = updatedTodoItems(id, inputText, completed, priority);
-// 	renderTodoItem(todoItemList);
-// }
-
-// // 할 일 입력
-// async function enterItem(event) {
-// 	if (!event.isComposing && event.key === "Enter") {
-// 		const inputText = todoInput.value;
-// 		if (inputText.length < 2) {
-// 			alert("두 글자 이상으로 적어주세요!");
-// 		} else {
-// 			const user = $(".active");
-// 			const addedItem = await todoAPI.fetchAddItem(
-// 				user.dataset.id,
-// 				inputText
-// 			);
-// 			addItem(addedItem._id, inputText, false, "NONE");
-// 			todoInput.value = "";
-// 		}
-// 	}
-// }
+// 할 일 입력
+async function enterItem(event) {
+	if (!event.isComposing && event.key === "Enter") {
+		const memberId = event.target.closest(".todoapp-container").dataset
+			.memberid;
+		const inputText = $todoInput(memberId).value;
+		if (inputText.length < 2) {
+			alert("두 글자 이상으로 적어주세요!");
+		} else {
+			const todoInput = $todoInput(memberId);
+			const addedItem = await kanbanAPI.fetchAddTodo(
+				teamId,
+				memberId,
+				inputText
+			);
+			updateTodoItem(
+				memberId,
+				addedItem._id,
+				addedItem.contents,
+				addedItem.completed,
+				addedItem.priority
+			);
+			todoInput.value = "";
+		}
+	}
+}
 
 // // 할 일 상태 설정
 // async function setItemState(event) {
@@ -227,9 +235,12 @@ export function renderTodoItem(memberId, todoItems) {
 // }
 
 export function todoRole() {
-	todoInput.addEventListener("keydown", enterItem);
-	showAllBtn.addEventListener("click", showProgress);
-	completedBtn.addEventListener("click", showProgress);
-	pendingBtn.addEventListener("click", showProgress);
-	deleteAllBtn.addEventListener("click", removeAllItems);
+	const todoInputs = $all(".new-todo");
+	todoInputs.forEach((todoInput) =>
+		todoInput.addEventListener("keydown", enterItem)
+	);
+	// showAllBtn.addEventListener("click", showProgress);
+	// completedBtn.addEventListener("click", showProgress);
+	// pendingBtn.addEventListener("click", showProgress);
+	// deleteAllBtn.addEventListener("click", removeAllItems);
 }

@@ -2,7 +2,7 @@ import { kanbanAPI, teamAPI } from "./API.js";
 import { $ } from "./Dom.js";
 import { saveMemberInfo } from "./MemberInfo.js";
 import { template } from "./Template.js";
-import { renderTodoItem } from "./Todo.js";
+import { renderTodoItem, todoRole } from "./Todo.js";
 
 const teamId = new URLSearchParams(document.location.search).get("id");
 
@@ -25,6 +25,7 @@ const renderNewList = (memberId, memberName) => {
 		".add-user-button-container"
 	);
 	$addUserButtonContainer.insertAdjacentHTML("beforebegin", newMember);
+	todoRole();
 };
 
 const getMemberTodo = async () => {
