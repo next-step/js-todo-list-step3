@@ -16,8 +16,9 @@ export default function TodoList(app) {
   this.render = (members) => {
     members.forEach((member) => {
       const $todoMember = $(TODO_SELCTOR.CONTAINER(member.getId()), $todoList);
-      const items = app.checkStatus(member.getId(), member.getTodoList());
-      const template = items.map((item) => todoItemTemplate(item));
+      const template = app
+        .checkStatus(member.getId(), member.getTodoList())
+        .map((item) => todoItemTemplate(item));
       $(TODO_SELCTOR.TODO_LIST, $todoMember).innerHTML = template.join("\n");
     });
   };
