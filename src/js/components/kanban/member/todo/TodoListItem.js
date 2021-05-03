@@ -28,7 +28,7 @@ const renderTemplate = (Todo, children) => {
 }
 
 const TodoListItem = (handleTodoActions) => {
-  const todoListItemPriority = TodoListItemPriority()
+  const todoListItemPriority = TodoListItemPriority(handleTodoActions)
   const render = (Todo) => {
     const childrenArray = [todoListItemPriority.render(Todo)]
     return renderTemplate(Todo, childrenArray.join(''))

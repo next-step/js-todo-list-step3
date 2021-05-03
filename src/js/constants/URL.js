@@ -8,7 +8,8 @@ const URL = {
   POST_TODO: (teamId, memberId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items`,
   DELETE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
   TOGGLE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
-  EDIT_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`
+  EDIT_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
+  CHANGE_PRIORITY_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`
 }
 
 export default URL

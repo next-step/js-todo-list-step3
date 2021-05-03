@@ -23,7 +23,7 @@ export const FILTER_PROPS = {
 }
 
 export const PRIORITY = {
-  FIRST: { key: 'FIRST', class: 'primary', value: '1순위' },
-  SECOND: { key: 'SECOND', class: 'secondary', value: '2순위' },
-  NONE: { key: 'NONE', class: '', value: '' }
+  FIRST: { key: 'FIRST', class: 'primary', value: '1' },
+  SECOND: { key: 'SECOND', class: 'secondary', value: '2' },
+  NONE: { key: 'NONE', class: '', value: '0' }
 }

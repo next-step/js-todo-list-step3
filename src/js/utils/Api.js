@@ -42,7 +42,8 @@ const API = {
   addNewTodo: async (newTodo, teamId, memberId) => await fetchOptions.POST_DATA(URL.POST_TODO(teamId, memberId), { [TODO_PROPS.CONTENTS]: newTodo }),
   deleteTodo: async (teamId, memberId, itemId) => fetchOptions.DELETE_DATA(URL.DELETE_TODO(teamId, memberId, itemId)),
   toggleTodo: async (teamId, memberId, itemId) => fetchOptions.PUT_DATA(URL.TOGGLE_TODO(teamId, memberId, itemId)),
-  editTodo: async (editTodo, teamId, memberId, itemId) => fetchOptions.PUT_DATA(URL.EDIT_TODO(teamId, memberId, itemId), { [TODO_PROPS.CONTENTS]: editTodo })
+  editTodo: async (editTodo, teamId, memberId, itemId) => fetchOptions.PUT_DATA(URL.EDIT_TODO(teamId, memberId, itemId), { [TODO_PROPS.CONTENTS]: editTodo }),
+  changePriorityTodo: async (priority, teamId, memberId, itemId) => fetchOptions.PUT_DATA(URL.CHANGE_PRIORITY_TODO(teamId, memberId, itemId), { priority })
 }
 
 export default API

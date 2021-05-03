@@ -30,7 +30,7 @@ const TodoCount = (handleTodoActions) => {
 
   const listContainerElement = document.getElementById('todoapp-list-container')
 
-  const handleFilterButton = (e) => {
+  const filterTodo = (e) => {
     const { target } = e
 
     if (!target || target.tagName !== 'BUTTON' || !target.classList.contains('filter')) {
@@ -40,7 +40,7 @@ const TodoCount = (handleTodoActions) => {
     handleTodoActions.filterTodo(target)
   }
 
-  listContainerElement.addEventListener('click', handleFilterButton)
+  listContainerElement.addEventListener('click', filterTodo)
 
   return { render }
 }
