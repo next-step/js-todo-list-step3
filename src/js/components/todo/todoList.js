@@ -15,10 +15,7 @@ export default function TodoList(app) {
 
   this.render = (members) => {
     members.forEach((member) => {
-      const $todoMember = $(
-        TODO_SELCTOR.TODO_APP_CONTAINER(member.getId()),
-        $todoList
-      );
+      const $todoMember = $(TODO_SELCTOR.CONTAINER(member.getId()), $todoList);
       const items = app.checkStatus(member.getId(), member.getTodoList());
       const template = items.map((item) => todoItemTemplate(item));
       $(TODO_SELCTOR.TODO_LIST, $todoMember).innerHTML = template.join("\n");
@@ -27,21 +24,21 @@ export default function TodoList(app) {
 
   const editing = (event) => {
     const target = $closet(event.target, TODO_SELCTOR.TODO_ID[0]);
-    target && setClass(target, [TODO_SELCTOR.TODO_EDIT]);
+    target && setClass(target, [TODO_SELCTOR.EDIT]);
   };
 
   const onClickHandler = (event) => {
     const target = event.target;
     if (checkClassName(event, "toggle")) {
       app.complete(
-        $closetAttr(target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+        $closetAttr(target, ...TODO_SELCTOR.MEMBER_ID),
         $closetAttr(target, ...TODO_SELCTOR.TODO_ID)
       );
       return;
     }
     if (checkClassName(event, "destroy")) {
       app.delete(
-        $closetAttr(target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+        $closetAttr(target, ...TODO_SELCTOR.MEMBER_ID),
         $closetAttr(target, ...TODO_SELCTOR.TODO_ID)
       );
       return;
@@ -60,7 +57,7 @@ export default function TodoList(app) {
       return;
     }
     app.edit(
-      $closetAttr(event.target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      $closetAttr(event.target, ...TODO_SELCTOR.MEMBER_ID),
       $closetAttr(event.target, ...TODO_SELCTOR.TODO_ID),
       getValue(event)
     );
@@ -69,7 +66,7 @@ export default function TodoList(app) {
   const onChangeHandler = (event) => {
     if (!checkLocalName(event, "select")) return;
     app.changePriority(
-      $closetAttr(event.target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      $closetAttr(event.target, ...TODO_SELCTOR.MEMBER_ID),
       $closetAttr(event.target, ...TODO_SELCTOR.TODO_ID),
       getValue(event)
     );

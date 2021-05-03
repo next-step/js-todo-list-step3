@@ -14,10 +14,9 @@ export const DEFAULT_SELECTOR = {
 
 export const TEAM_SELECTOR = {
   TEAM_LIST: ".team-list-container",
-  TEAM_ADD_BUTTON_CONTAINER: ".add-team-button-container",
-  TEAM_ADD_BUTTON: "#add-team-button",
-  TEAM_TITLE: "#team-title",
-  TEAM_TITLE_TAG: "strong",
+  ADD_BUTTON: "#add-team-button",
+  TITLE: ["strong", "#team-title"],
+  LINK: "a",
 };
 
 export const MEMBER_SELECTOR = {
@@ -25,16 +24,16 @@ export const MEMBER_SELECTOR = {
 };
 
 export const TODO_SELCTOR = {
+  CONTAINER: (id) => `.todoapp-container[data-member-id="${id}"]`,
   TODO_LIST_CONTAINER: ".todoapp-list-container",
   TODO_LIST: ".todo-list",
-  TODO_APP_CONTAINER: (id) => `.todoapp-container[data-member-id="${id}"]`,
-  TODO_INPUT: ".new-todo",
-  TODO_MEMBER_ID: [".todoapp-container", "data-member-id"],
+  INPUT: ".new-todo",
+  MEMBER_ID: [".todoapp-container", "data-member-id"],
   TODO_ID: ["li", "data-key"],
-  TODO_EDIT: "editing",
-  TODO_COUNTER: ["div", ".count-container"],
-  TODO_SELECTED: ["a", "selected"],
-  TODO_FILTERS: ["a", "data-type"],
+  EDIT: "editing",
+  COUNTER: ["div", ".count-container"],
+  SELECTED: ["a", "selected"],
+  FILTERS: ["a", "data-type"],
   TODO_ITEMS: ".todo-list-item",
 };
 

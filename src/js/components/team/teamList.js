@@ -10,8 +10,8 @@ export default function TeamList() {
   };
 
   const onClickHandler = (event) => {
-    if (!$closet(event.target, "a")) return;
-    const id = $closetAttr(event.target, "a");
+    if (!$closet(event.target, TEAM_SELECTOR.LINK)) return;
+    const id = $closetAttr(event.target, TEAM_SELECTOR.LINK);
     event.preventDefault();
     location.href = `/kanban.html?id=${id}`;
   };

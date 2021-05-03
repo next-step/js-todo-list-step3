@@ -4,7 +4,7 @@ import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
 
 export default function TodoInput(app) {
   this.render = () => {
-    this.todoInput = $all(TODO_SELCTOR.TODO_INPUT);
+    this.todoInput = $all(TODO_SELCTOR.INPUT);
     this.todoInput.forEach((input) =>
       input.addEventListener("keydown", onKeyHandler)
     );
@@ -18,7 +18,7 @@ export default function TodoInput(app) {
       return;
     }
     app.add(
-      $closetAttr(event.target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      $closetAttr(event.target, ...TODO_SELCTOR.MEMBER_ID),
       getValue(event)
     );
     event.target.value = "";
