@@ -1,8 +1,12 @@
-let memberTodoList = [];
+const memberTodoList = {
+	member: "",
+	todoList: [],
+};
 
 const getMemberTodoList = () => memberTodoList;
-const saveMemberTodoList = (todoList) => {
-	memberTodoList = todoList;
+const saveMemberTodoList = (member, todoList) => {
+	memberTodoList.member = member;
+	memberTodoList.todoList = todoList;
 };
 
 export { getMemberTodoList, saveMemberTodoList };

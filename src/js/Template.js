@@ -33,7 +33,7 @@ export const template = {
     `,
 	kanbanAddTemplate: (memberName) =>
 		`
-    <li class="todoapp-container">
+    <li class="todoapp-container" data-member=${memberName}>
 		<h2>
 			<span><strong>${memberName}</strong>'s Todo List</span>
 		</h2>
@@ -72,7 +72,9 @@ export const template = {
 			<div class="view">
 				<input class="toggle" type="checkbox" id=${id} ${completed ? "checked" : ""}>
 				<label class="label">
-					${priortyTemplate[priority]}
+					<div class="chip-container">
+						${priortyTemplate[priority]}
+					</div>
 					${inputText}
 				</label>
 			<button class="destroy" id=${id}></button>

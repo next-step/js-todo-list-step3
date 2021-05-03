@@ -1,5 +1,6 @@
 import { kanbanAPI, teamAPI } from "./API.js";
 import { $ } from "./Dom.js";
+import { getMemberTodoList, saveMemberTodoList } from "./MemberTodoList.js";
 import { template } from "./Template.js";
 import { renderTodoItem } from "./Todo.js";
 
@@ -14,6 +15,7 @@ const loadTeam = async () => {
 const setTeamName = async () => {
 	const $teamTitle = $("#user-title");
 	const team = await loadTeam();
+	$teamTitle.dataset.username = team.name;
 	$teamTitle.innerHTML = template.teamNameTemplate(team.name);
 };
 
@@ -29,6 +31,7 @@ const getMemberTodo = async () => {
 	const team = await loadTeam();
 	const members = team.members;
 	members.map((member) => {
+		saveMemberTodoList(member.name, member.todoList);
 		renderNewList(member.name);
 		renderTodoItem(member.todoList);
 	});
