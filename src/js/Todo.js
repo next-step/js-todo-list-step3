@@ -1,6 +1,6 @@
 import { kanbanAPI } from "./API.js";
 import { $, $all } from "./Dom.js";
-import { getMemberInfo } from "./MemberInfo.js";
+import { clearMebmerInfo, getMemberInfo } from "./MemberInfo.js";
 import { template } from "./Template.js";
 
 const teamId = new URLSearchParams(document.location.search).get("id");
@@ -17,11 +17,6 @@ const $todoList = (memberId) => {
 const $todoCount = (memberId) => {
 	return $(`li[data-memberId="${memberId}"] .todo-count strong`);
 };
-
-const showAllBtn = $(".all");
-const completedBtn = $(".completed");
-const pendingBtn = $(".active");
-const deleteAllBtn = $(".clear-completed");
 
 const priorityList = {
 	NONE: "select",
@@ -219,43 +214,57 @@ async function selectPriority(event) {
 	}
 }
 
-// // 상태별 보기 버튼 설정
-// function showProgress(event) {
-// 	const completedList = todoItemList.filter(
-// 		(item) => item.isCompleted === true
-// 	);
-// 	const pendingList = todoItemList.filter(
-// 		(item) => item.isCompleted === false
-// 	);
-// 	if (event.target === showAllBtn) {
-// 		renderTodoItem(todoItemList);
-// 	}
-// 	if (event.target === completedBtn) {
-// 		renderTodoItem(completedList);
-// 	}
-// 	if (event.target === pendingBtn) {
-// 		renderTodoItem(pendingList);
-// 	}
-// 	setTodoNum();
-// }
+// 상태별 보기 버튼 설정
+function showProgress(event) {
+	const memberId = findMemberId(event.target);
+	const todoItemList = memberInfo(memberId).todoList;
+	const completedList = todoItemList.filter(
+		(item) => item.isCompleted === true
+	);
+	const pendingList = todoItemList.filter(
+		(item) => item.isCompleted === false
+	);
+	$todoList(memberId).innerHTML = "";
+	if (event.target.classList.contains("all")) {
+		renderTodoItem(memberId, todoItemList);
+	}
+	if (event.target.classList.contains("completed")) {
+		renderTodoItem(memberId, completedList);
+	}
+	if (event.target.classList.contains("active")) {
+		renderTodoItem(memberId, pendingList);
+	}
+	setTodoNum(memberId);
+}
 
-// // 전체 삭제
-// async function removeAllItems(event) {
-// 	const $user = $(".active");
-// 	$todoList.innerHTML = "";
-// 	setTodoNum();
-// 	await todoAPI.fetchDeleteAll($user.dataset.id);
-// 	todoItemList = [];
-// 	saveUserTodoList(todoItemList);
-// }
+// 전체 삭제
+async function removeAllItems(event) {
+	const memberId = findMemberId(event.target);
+	$todoList(memberId).innerHTML = "";
+	setTodoNum(memberId);
+	await kanbanAPI.fetchDeleteAll(teamId, memberId);
+	clearMebmerInfo();
+}
 
 export function todoRole() {
 	const todoInputs = $all(".new-todo");
 	todoInputs.forEach((todoInput) =>
 		todoInput.addEventListener("keydown", enterItem)
 	);
-	// showAllBtn.addEventListener("click", showProgress);
-	// completedBtn.addEventListener("click", showProgress);
-	// pendingBtn.addEventListener("click", showProgress);
-	// deleteAllBtn.addEventListener("click", removeAllItems);
+	const showAllBtns = $all(".all");
+	showAllBtns.forEach((showAllBtn) =>
+		showAllBtn.addEventListener("click", showProgress)
+	);
+	const completedBtns = $all(".completed");
+	completedBtns.forEach((completedBtn) =>
+		completedBtn.addEventListener("click", showProgress)
+	);
+	const pendingBtns = $all(".active");
+	pendingBtns.forEach((pendingBtn) =>
+		pendingBtn.addEventListener("click", showProgress)
+	);
+	const deleteAllBtns = $all(".clear-completed");
+	deleteAllBtns.forEach((deleteAllBtn) =>
+		deleteAllBtn.addEventListener("click", removeAllItems)
+	);
 }
