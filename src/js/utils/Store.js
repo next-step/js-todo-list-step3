@@ -1,4 +1,4 @@
-import { FILTER_PROPS, MEMBER_PROPS } from '../constants/PROPERTIES.js'
+import { FILTER_PROPS, MEMBER_PROPS, TODO_PROPS, PRIORITY_SORT } from '../constants/PROPERTIES.js'
 
 export const teamListStore = (function () {
   let teamList = []
@@ -39,6 +39,16 @@ export const teamStore = (function () {
     if (filter === 'completed') {
       return todoList.filter(todo => todo.isCompleted)
     }
+    if (filter === 'priority') {
+      const prioritySort = (firstEl, secondEl) => {
+        const firstElPriorityValue = PRIORITY_SORT[firstEl[TODO_PROPS.PRIORITY]]
+        const secondElPriorityValue = PRIORITY_SORT[secondEl[TODO_PROPS.PRIORITY]]
+
+        return firstElPriorityValue - secondElPriorityValue
+      }
+
+      return [...todoList].sort(prioritySort)
+    }
     return todoList
   }
 
@@ -47,17 +57,22 @@ export const teamStore = (function () {
   }
 
   const publishTeam = () => {
-    return teamListener.map((listener) => {
-      const filteredTeam = {
-        ...team,
-        members: team.members.map((member) => {
-          const filter = filterList
-            .find((filterItem) => filterItem[FILTER_PROPS.ID] === member[MEMBER_PROPS.ID])
-            ?.[FILTER_PROPS.FILTER] || 'all'
+    const filteredTeam = {
+      ...team,
+      members: team.members.map((member) => {
+        const filter = filterList
+          .find((filterItem) => filterItem[FILTER_PROPS.ID] === member[MEMBER_PROPS.ID])
+          ?.[FILTER_PROPS.FILTER] || 'all'
 
+        if (filter !== 'all') {
           return { ...member, todoList: filteredList(member.todoList, filter) }
-        })
-      }
+        }
+
+        return { ...member }
+      })
+    }
+
+    return teamListener.map((listener) => {
       return listener(filteredTeam)
     })
   }

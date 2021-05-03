@@ -27,3 +27,9 @@ export const PRIORITY = {
   SECOND: { key: 'SECOND', class: 'secondary', value: '2' },
   NONE: { key: 'NONE', class: '', value: '0' }
 }
+
+export const PRIORITY_SORT = {
+  FIRST: 1,
+  SECOND: 2,
+  NONE: 3
+}
