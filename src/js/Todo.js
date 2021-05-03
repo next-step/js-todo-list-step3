@@ -45,19 +45,19 @@ function setTodoNum(memberId) {
 	$todoCount(memberId).textContent = todoNum;
 }
 
-// // 완료 여부 확인
-// function isComplete(toggle) {
-// 	if (!toggle.checked) {
-// 		return false;
-// 	}
-// 	return true;
-// }
+// 완료 여부 확인
+function isComplete(toggle) {
+	if (!toggle.checked) {
+		return false;
+	}
+	return true;
+}
 
 // todoItem 이벤트
 function itemEventTrigger(memberId) {
 	const todoList = $todoList(memberId);
 	todoList.addEventListener("click", removeItem);
-	// todoList.addEventListener("click", setItemState);
+	todoList.addEventListener("click", setItemState);
 	// todoList.addEventListener("dblclick", editItem);
 	// todoList.addEventListener("keyup", finishEdit);
 	// todoList.addEventListener("change", selectPriority);
@@ -119,33 +119,37 @@ async function enterItem(event) {
 	}
 }
 
-// // 할 일 상태 설정
-// async function setItemState(event) {
-// 	if (event.target.className === "toggle") {
-// 		//event.target.classList.contains("toggle")
-// 		const $user = $(".active");
-// 		const toggle = event.target;
-// 		toggle.toggleAttribute("checked");
-// 		const $todoItem = toggle.closest("li");
-// 		$todoItem.className = isComplete(toggle) ? COMPLETED : PENDING;
-// 		const idx = todoItemList.findIndex((item) => item._id === $todoItem.id);
-// 		todoItemList[idx].isCompleted = isComplete(toggle) ? true : false;
-// 		await todoAPI.fetchCompleteItem($user.dataset.id, $todoItem.id);
-// 	}
-// }
+// 할 일 상태 설정
+async function setItemState(event) {
+	if (event.target.classList.contains("toggle")) {
+		const toggle = event.target;
+		const memberId = findMemberId(toggle);
+		toggle.toggleAttribute("checked");
+		const $todoItem = toggle.closest("li");
+		$todoItem.className = isComplete(toggle) ? COMPLETED : PENDING;
+		const idx = memberInfo(memberId).todoList.findIndex(
+			(item) => item._id === $todoItem.id
+		);
+		memberInfo(memberId).todoList[idx].isCompleted = isComplete(toggle)
+			? true
+			: false;
+		await kanbanAPI.fetchTodoToggle(teamId, memberId, $todoItem.id);
+	}
+}
 
 // 할 일 삭제
 async function removeItem(event) {
-	if (!event.target.className === "destroy") return;
-	const destroy = event.target;
-	const memberId = findMemberId(destroy);
-	const $todoItem = destroy.closest("li");
-	$todoList(memberId).removeChild($todoItem);
-	await kanbanAPI.fetchDeleteTodo(teamId, memberId, $todoItem.id);
-	memberInfo(memberId).todoList = memberInfo(memberId).todoList.filter(
-		(item) => item._id !== $todoItem.id
-	);
-	setTodoNum(memberId);
+	if (event.target.className === "destroy") {
+		const destroy = event.target;
+		const memberId = findMemberId(destroy);
+		const $todoItem = destroy.closest("li");
+		$todoList(memberId).removeChild($todoItem);
+		await kanbanAPI.fetchDeleteTodo(teamId, memberId, $todoItem.id);
+		memberInfo(memberId).todoList = memberInfo(memberId).todoList.filter(
+			(item) => item._id !== $todoItem.id
+		);
+		setTodoNum(memberId);
+	}
 }
 
 // // 할 일 수정
