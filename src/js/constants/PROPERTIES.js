@@ -17,6 +17,11 @@ export const TODO_PROPS = {
   IS_COMPLETED: 'isCompleted'
 }
 
+export const FILTER_PROPS = {
+  ID: '_id',
+  FILTER: 'filter'
+}
+
 export const PRIORITY = {
   FIRST: { key: 'FIRST', class: 'primary', value: '1순위' },
   SECOND: { key: 'SECOND', class: 'secondary', value: '2순위' },

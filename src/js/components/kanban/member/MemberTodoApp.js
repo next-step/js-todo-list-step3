@@ -11,7 +11,7 @@ const renderTemplate = (children) => {
 const MemberTodoApp = (handleTodoActions) => {
   const todoInput = TodoInput(handleTodoActions)
   const todoList = TodoList(handleTodoActions)
-  const todoCount = TodoCount()
+  const todoCount = TodoCount(handleTodoActions)
 
   const render = (member) => {
     const childrenArray = [todoInput.render(member), todoList.render(member), todoCount.render(member)]

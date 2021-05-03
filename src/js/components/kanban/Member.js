@@ -1,4 +1,4 @@
-import { TEAM_PROPS } from '../../constants/PROPERTIES.js'
+import { FILTER_PROPS, TEAM_PROPS } from '../../constants/PROPERTIES.js'
 import { teamStore } from '../../utils/Store.js'
 
 import MemberName from './member/MemberName.js'
@@ -22,6 +22,18 @@ const Member = (handleTodoActions) => {
   const memberName = MemberName()
   const memberTodoApp = MemberTodoApp(handleTodoActions)
 
+  const changeFilterClass = (filterState) => {
+    const filterListElement = document.querySelector(`li[data-${FILTER_PROPS.ID}="${filterState[FILTER_PROPS.ID]}"] .filters`)
+    const childFilterArray = [...filterListElement.children]
+
+    childFilterArray.forEach((filterElement) => {
+      const filterButtonElement = filterElement.querySelector('.filter')
+      if (filterState[FILTER_PROPS.FILTER] === filterButtonElement.dataset.type) {
+        filterButtonElement.classList.add('selected')
+      }
+    })
+  }
+
   const render = (team) => {
     const childrenArray = [...memberElement.children]
 
@@ -37,6 +49,9 @@ const Member = (handleTodoActions) => {
       return renderTemplate(member, childrenArray.join(''))
     })
     memberElement.insertAdjacentHTML('afterbegin', renderResult.join(''))
+
+    const currentFilterState = teamStore.getFilter()
+    currentFilterState.forEach(filter => changeFilterClass(filter))
   }
 
   teamStore.subscribeTeam(render)
