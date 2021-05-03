@@ -40,7 +40,18 @@ const TodoCount = (handleTodoActions) => {
     handleTodoActions.filterTodo(target)
   }
 
+  const deleteTodoList = (e) => {
+    const { target } = e
+
+    if (!target || target.tagName !== 'BUTTON' || !target.classList.contains('clear-completed')) {
+      return null
+    }
+
+    handleTodoActions.deleteTodoList(target)
+  }
+
   listContainerElement.addEventListener('click', filterTodo)
+  listContainerElement.addEventListener('click', deleteTodoList)
 
   return { render }
 }

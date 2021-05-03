@@ -66,6 +66,13 @@ const Kanban = () => {
 
       await API.changePriorityTodo(priority, TeamId, memberId, todoId)
       await updateTeam()
+    },
+
+    async deleteTodoList (target) {
+      const memberId = target.closest('li[data-type="member"]').dataset[MEMBER_PROPS.ID]
+
+      await API.deleteTodoList(TeamId, memberId)
+      await updateTeam()
     }
   }
 

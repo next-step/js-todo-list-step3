@@ -9,7 +9,8 @@ const URL = {
   DELETE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
   TOGGLE_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
   EDIT_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-  CHANGE_PRIORITY_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`
+  CHANGE_PRIORITY_TODO: (teamId, memberId, itemId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
+  DELETE_TODO_LIST: (teamId, memberId) => `${ORIGIN}/api/teams/${teamId}/members/${memberId}/items/`
 }
 
 export default URL
