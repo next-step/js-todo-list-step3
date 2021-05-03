@@ -1,10 +1,5 @@
-import { $all, TODO_SELCTOR } from "../../utils/dom.js";
-import {
-  checkKey,
-  getClosestAttribute,
-  getValue,
-  isEmptyValue,
-} from "../../utils/eventUtils.js";
+import { $all, $closetAttr, TODO_SELCTOR } from "../../utils/dom.js";
+import { checkKey, getValue, isEmptyValue } from "../../utils/eventUtils.js";
 import { ILLEGAL_MESSAGE } from "../../utils/Message.js";
 
 export default function TodoInput(app) {
@@ -23,7 +18,7 @@ export default function TodoInput(app) {
       return;
     }
     app.add(
-      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      $closetAttr(event.target, ...TODO_SELCTOR.TODO_MEMBER_ID),
       getValue(event)
     );
     event.target.value = "";

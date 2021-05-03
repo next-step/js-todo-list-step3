@@ -1,42 +1,46 @@
-import { $, $all, $closet, TODO_SELCTOR } from "../../utils/dom.js";
+import {
+  $,
+  $all,
+  $closet,
+  $closetAttr,
+  TODO_SELCTOR,
+} from "../../utils/dom.js";
 import {
   checkClassName,
   checkLocalName,
-  getClosestAttribute,
   removeClass,
   setClass,
 } from "../../utils/eventUtils.js";
 
 export default function TodoCount(app) {
   this.render = () => {
-    this.todoCount = $all(TODO_SELCTOR.TODO_COUNTER[1]);
-    this.todoCount.forEach((count) =>
+    this.$todoCount = $all(TODO_SELCTOR.TODO_COUNTER[1]);
+    this.$todoCount.forEach((count) =>
       count.addEventListener("click", onClickHandler)
     );
-    this.todoCount.forEach((count) => {
-      const closet = $closet(
-        `${TODO_SELCTOR.TODO_MEMBER_ID[0]}[${TODO_SELCTOR.TODO_MEMBER_ID[1]}]`,
-        count
-      );
+    this.$todoCount.forEach((count) => {
+      const closet = $closet(count, TODO_SELCTOR.TODO_MEMBER_ID[0]);
+      console.log(closet);
       $("strong", count).textContent = $all(
-        `${TODO_SELCTOR.TODO_ID[0]}[${TODO_SELCTOR.TODO_ID[1]}]`,
+        TODO_SELCTOR.TODO_ITEMS,
         closet
       ).length;
     });
   };
 
   const select = (event) => {
-    const allFilter = $all(
+    const target = event.target;
+    const $allFilter = $all(
       TODO_SELCTOR.TODO_SELECTED[0],
-      $closet(TODO_SELCTOR.TODO_COUNTER[0], event.target)
+      $closet(target, TODO_SELCTOR.TODO_COUNTER[0])
     );
-    allFilter.forEach((each) =>
+    $allFilter.forEach((each) =>
       removeClass(each, [TODO_SELCTOR.TODO_SELECTED[1]])
     );
-    setClass(event.target, [TODO_SELCTOR.TODO_SELECTED[1]]);
+    setClass(target, [TODO_SELCTOR.TODO_SELECTED[1]]);
     app.changeStatus(
-      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
-      getClosestAttribute(event, ...TODO_SELCTOR.TODO_FILTERS)
+      $closetAttr(target, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      $closetAttr(target, ...TODO_SELCTOR.TODO_FILTERS)
     );
   };
 
@@ -47,7 +51,7 @@ export default function TodoCount(app) {
       return;
     }
     if (checkClassName(event, "clear-completed")) {
-      app.deleteAll(getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID));
+      app.deleteAll($closetAttr(event.target, ...TODO_SELCTOR.TODO_MEMBER_ID));
     }
   };
 }

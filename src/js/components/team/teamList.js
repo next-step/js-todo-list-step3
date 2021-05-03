@@ -1,5 +1,4 @@
-import { $, TEAM_SELECTOR } from "../../utils/dom.js";
-import { getClosestAttribute, getCloset } from "../../utils/eventUtils.js";
+import { $, $closet, $closetAttr, TEAM_SELECTOR } from "../../utils/dom.js";
 import { TeamTemplate } from "./team.js";
 
 export default function TeamList() {
@@ -11,8 +10,8 @@ export default function TeamList() {
   };
 
   const onClickHandler = (event) => {
-    if (!getCloset(event, "a")) return;
-    const id = getClosestAttribute(event, "a", "id");
+    if (!$closet(event.target, "a")) return;
+    const id = $closetAttr(event.target, "a");
     event.preventDefault();
     location.href = `/kanban.html?id=${id}`;
   };

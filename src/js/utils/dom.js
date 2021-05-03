@@ -3,7 +3,9 @@ export const $ = (selector, target = document) =>
 
 export const $all = (selector, target = document) =>
   target.querySelectorAll(selector);
-export const $closet = (selector, target) => target.closest(selector);
+export const $closet = (target, selector) => target.closest(selector);
+export const $closetAttr = (target, selector, attribute = "id") =>
+  target.closest(selector).getAttribute(attribute);
 
 export const DEFAULT_SELECTOR = {
   ID: "#",
@@ -24,15 +26,16 @@ export const MEMBER_SELECTOR = {
 
 export const TODO_SELCTOR = {
   TODO_LIST_CONTAINER: ".todoapp-list-container",
-  TODO_LIST: ["ul", ".todo-list"],
+  TODO_LIST: ".todo-list",
   TODO_APP_CONTAINER: (id) => `.todoapp-container[data-member-id="${id}"]`,
   TODO_INPUT: ".new-todo",
   TODO_MEMBER_ID: [".todoapp-container", "data-member-id"],
   TODO_ID: ["li", "data-key"],
-  TODO_EDIT: ["editing"],
+  TODO_EDIT: "editing",
   TODO_COUNTER: ["div", ".count-container"],
   TODO_SELECTED: ["a", "selected"],
   TODO_FILTERS: ["a", "data-type"],
+  TODO_ITEMS: ".todo-list-item",
 };
 
 export const PATH = {

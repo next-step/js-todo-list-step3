@@ -11,7 +11,7 @@ import TodoInput from "./todoInput.js";
 import TodoList from "./todoList.js";
 import { parseUser } from "../user/user.js";
 import TodoCount from "./todoCount.js";
-import { TodoStatus } from "./todoStatus.js";
+import TodoStatus from "./todoStatus.js";
 
 export default function TodoApp() {
   this.render = async (members = this.members) => {

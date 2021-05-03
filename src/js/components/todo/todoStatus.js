@@ -1,4 +1,4 @@
-export function TodoStatus() {
+export default function TodoStatus() {
   this.status = {};
 
   this.render = (id, status) => {
