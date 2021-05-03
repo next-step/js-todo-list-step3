@@ -21,9 +21,8 @@ export default function TodoList(app) {
         TODO_SELCTOR.TODO_APP_CONTAINER(member.getId()),
         todoList
       );
-      const template = member
-        .getTodoList()
-        .map((item) => todoItemTemplate(item));
+      const items = app.checkStatus(member.getId(), member.getTodoList());
+      const template = items.map((item) => todoItemTemplate(item));
       $(TODO_SELCTOR.TODO_LIST[1], todoMember).innerHTML = template.join("\n");
     });
   };

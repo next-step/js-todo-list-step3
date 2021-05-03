@@ -3,6 +3,8 @@ import {
   checkClassName,
   checkLocalName,
   getClosestAttribute,
+  removeClass,
+  setClass,
 } from "../../utils/eventUtils.js";
 
 export default function TodoCount(app) {
@@ -24,15 +26,24 @@ export default function TodoCount(app) {
   };
 
   const select = (event) => {
-    // todoCount.querySelectorAll("a").forEach((each) => removeSelect(each));
-    // setSelect(event);
+    const allFilter = $all(
+      TODO_SELCTOR.TODO_SELECTED[0],
+      $closet(TODO_SELCTOR.TODO_COUNTER[0], event.target)
+    );
+    allFilter.forEach((each) =>
+      removeClass(each, [TODO_SELCTOR.TODO_SELECTED[1]])
+    );
+    setClass(event.target, [TODO_SELCTOR.TODO_SELECTED[1]]);
+    app.changeStatus(
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_MEMBER_ID),
+      getClosestAttribute(event, ...TODO_SELCTOR.TODO_FILTERS)
+    );
   };
 
   const onClickHandler = (event) => {
+    event.preventDefault();
     if (checkLocalName(event, "a")) {
-      // select(event);
-      // document.location.hash = getClassName(event);
-      // app.render();
+      select(event);
       return;
     }
     if (checkClassName(event, "clear-completed")) {

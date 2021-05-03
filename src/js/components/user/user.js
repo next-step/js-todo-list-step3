@@ -12,8 +12,6 @@ export function User(inputId, inputName, inputTodoList = []) {
   this.matchId = (id) => _id == id;
   this.parseItem = () =>
     todoList.forEach((item, index) => (todoList[index] = parseItem(item)));
-  this.sortItems = () =>
-    todoList.sort((item1, item2) => item1.compareTo(item2));
 
   this.getName = () => name;
   this.getId = () => _id;

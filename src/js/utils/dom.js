@@ -31,6 +31,8 @@ export const TODO_SELCTOR = {
   TODO_ID: ["li", "data-key"],
   TODO_EDIT: ["editing"],
   TODO_COUNTER: ["div", ".count-container"],
+  TODO_SELECTED: ["a", "selected"],
+  TODO_FILTERS: ["a", "data-type"],
 };
 
 export const PATH = {

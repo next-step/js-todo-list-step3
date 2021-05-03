@@ -11,9 +11,10 @@ import TodoInput from "./todoInput.js";
 import TodoList from "./todoList.js";
 import { parseUser } from "../user/user.js";
 import TodoCount from "./todoCount.js";
+import { TodoStatus } from "./todoStatus.js";
 
 export default function TodoApp() {
-  this.render = async (members) => {
+  this.render = async (members = this.members) => {
     this.todoInput.render();
     this.members =
       (await Promise.all(
@@ -29,33 +30,39 @@ export default function TodoApp() {
     const fetchMember = await GET_MEMBER_TODOITEMS(this.teamId, member.getId());
     const replaceMember = parseUser(fetchMember);
     replaceMember.parseItem();
-    replaceMember.sortItems();
     return replaceMember;
   };
 
+  this.changeStatus = (id, status) => {
+    this.status.render(id, status);
+    this.render();
+  };
+
+  this.checkStatus = (id, items) => this.status.check(id, items);
+
   this.add = async (memberId, contents) => {
     await ADD_MEMBER_TODOITEM(this.teamId, memberId, contents);
-    this.render(this.members);
+    this.render();
   };
 
   this.complete = async (memberId, itemId) => {
     await UPDATE_MEMBER_TODOITEM_TOGGLE(this.teamId, memberId, itemId);
-    this.render(this.members);
+    this.render();
   };
 
   this.delete = async (memberId, itemId) => {
     await DELETE_MEMBER_TODOITEM(this.teamId, memberId, itemId);
-    this.render(this.members);
+    this.render();
   };
 
   this.deleteAll = async (memberId) => {
     await DELETE_MEMBER_TODOITEMS(this.teamId, memberId);
-    this.render(this.members);
+    this.render();
   };
 
   this.edit = async (memberId, itemId, contents) => {
     await UPDATE_MEMBER_TODOITEM(this.teamId, memberId, itemId, contents);
-    this.render(this.members);
+    this.render();
   };
 
   this.changePriority = async (memberId, itemId, priority) => {
@@ -65,10 +72,11 @@ export default function TodoApp() {
       itemId,
       priority
     );
-    this.render(this.members);
+    this.render();
   };
 
   this.init = (teamId) => {
+    this.status = new TodoStatus();
     this.todoList = new TodoList(this);
     this.todoInput = new TodoInput(this);
     this.todoCount = new TodoCount(this);
