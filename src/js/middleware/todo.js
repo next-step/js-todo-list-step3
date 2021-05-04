@@ -18,6 +18,14 @@ const addNewTodoAPI = ({ teamId, memberId, contents }) => {
   );
 };
 
+const removeTodoAPI = ({ teamId, memberId, itemId }) => {
+  console.log(teamId, memberId, itemId);
+  return fetcher(
+    `/${teamId}/members/${memberId}/items/${itemId}`,
+    options.DELETE
+  );
+};
+
 const getSingleTeam = async (action) => {
   try {
     const result = await getSingleTeamAPI(action.data);
@@ -49,6 +57,16 @@ const addNewTodo = async (action) => {
   }
 };
 
+const removeTodo = async (action) => {
+  try {
+    await removeTodoAPI(action.data);
+    dispatch(ACTIONS.RemoveTodoSuccessAction(action.data));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.RemoveTodoFailAction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -61,8 +79,13 @@ const watchAddNewTodo = () => {
   fork(TYPES.ADD_NEW_TODO_REQUEST, addNewTodo);
 };
 
+const watchRemoveTodo = () => {
+  fork(TYPES.REMOVE_TODO_REQUEST, removeTodo);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
   watchAddNewTodo();
+  watchRemoveTodo();
 };

@@ -10,6 +10,42 @@ const initialState = {
 
   isLoadingAddNewTodo: false,
   addNewTodoError: null,
+
+  isLoadingRemoveTodo: false,
+  removeTodoError: null,
+};
+
+const helpers = {
+  addUser: (teamInfo, data) => {
+    const length = data.members.length;
+    const lastIndex = length === 0 ? length : length - 1;
+    const newMember = action.data.members[lastIndex];
+    const newTeamInfo = { ...teamInfo };
+    newTeamInfo.members.push(newMember);
+    return newTeamInfo;
+  },
+  addNewTodo: (teamInfo, data) => {
+    const memberIndex = teamInfo.members.findIndex(
+      (member) => member._id === data.memberId
+    );
+    const memberInfo = { ...teamInfo.members[memberIndex] };
+    memberInfo.todoList.push(data);
+    let newTeamInfo = { ...teamInfo };
+    newTeamInfo.members[memberIndex] = memberInfo;
+    return newTeamInfo;
+  },
+  removeTodo: (teamInfo, data) => {
+    const memberIndex = teamInfo.members.findIndex(
+      (member) => member._id === data.memberId
+    );
+    const memberInfo = { ...teamInfo.members[memberIndex] };
+    memberInfo.todoList = memberInfo.todoList.filter(
+      (v) => v._id !== data.itemId
+    );
+    let newTeamInfo = { ...teamInfo };
+    newTeamInfo.members[memberIndex] = memberInfo;
+    return newTeamInfo;
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,15 +73,10 @@ const reducer = (state = initialState, action) => {
         isLoadingAddUser: true,
       };
     case TYPES.ADD_USER_SUCCESS:
-      const length = action.data.members.length;
-      const lastIndex = length === 0 ? length : length - 1;
-      const newMember = action.data.members[lastIndex];
-      const newTeamInfo = { ...state.teamInfo };
-      newTeamInfo.members.push(newMember);
       return {
         ...state,
         isLoadingAddUser: false,
-        teamInfo: newTeamInfo,
+        teamInfo: helpers.addUser(state.teamInfo, action.data),
       };
     case TYPES.ADD_USER_FAIL:
       return {
@@ -59,22 +90,33 @@ const reducer = (state = initialState, action) => {
         isLoadingAddNewTodo: true,
       };
     case TYPES.ADD_NEW_TODO_SUCCESS:
-      const memberIndex = state.teamInfo.members.findIndex(
-        (member) => member._id === action.data.memberId
-      );
-      const memberInfo = { ...state.teamInfo.members[memberIndex] };
-      memberInfo.todoList.push(action.data);
-      let changedTeamInfo = { ...state.teamInfo };
-      changedTeamInfo.members[memberIndex] = memberInfo;
       return {
         ...state,
         isLoadingAddNewTodo: false,
+        teamInfo: helpers.addNewTodo(state.teamInfo, action.data),
       };
     case TYPES.ADD_NEW_TODO_FAIL:
       return {
         ...state,
         isLoadingAddNewTodo: false,
         addNewTodoError: action.error,
+      };
+    case TYPES.REMOVE_TODO_REQUEST:
+      return {
+        ...state,
+        isLoadingRemoveTodo: true,
+      };
+    case TYPES.REMOVE_TODO_SUCCESS:
+      return {
+        ...state,
+        isLoadingRemoveTodo: false,
+        teamInfo: helpers.removeTodo(state.teamInfo, action.data),
+      };
+    case TYPES.REMOVE_TODO_FAIL:
+      return {
+        ...state,
+        isLoadingRemoveTodo: false,
+        removeTodoError: action.error,
       };
     default:
       return state;

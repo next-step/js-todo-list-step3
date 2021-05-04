@@ -55,7 +55,7 @@ const todoCountView = (count) =>
 
 const todoItemView = (todo) => {
   return `
-  <li id=${todo._id} class="todo-list-item ${
+  <li data-item=${todo._id} class="todo-list-item ${
     todo.isCompleted ? CLASS_NAMES.COMPLETED : ""
   }">
     <div class="view">

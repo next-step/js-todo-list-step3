@@ -6,6 +6,7 @@ export const SELECTORS = {
   TODO_LIST: ".todoapp-list-container",
   TODO: ".todoapp-container",
   TODO_ITEMS_CONTAINER: ".todo-list",
+  TODO_ITEM: ".todo-list-item",
   INPUT: ".new-todo",
   USER_ADD_BTN: "#add-user-button",
 };
@@ -18,6 +19,10 @@ export const CLASS_NAMES = {
   COMPLETED: "completed",
   ALL: "all",
   SELECTED: "selected",
+  DESTROY: "destroy",
+  TOGGLE: "toggle",
+  PRIORITY_SELECT: "chip select",
+  EDITING: "editing",
 };
 
 export const KEY_NAMES = {
@@ -33,4 +38,5 @@ export const PRIORITY = {
 export const POPUP_MESSAGES = {
   TYPE_TEAM_NAME: "팀 이름을 입력해주세요",
   TYPE_USER_NAME: "새로운 팀원 이름을 입력해주세요",
+  REMOVE_TODO: "정말로 삭제하시겠습니까?",
 };
