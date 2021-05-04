@@ -21,6 +21,14 @@ const initialState = {
   updateTodoError: null,
 };
 
+const immerMemberInfo = (teamInfo, memberId) => {
+  const memberIndex = teamInfo.members.findIndex(
+    (member) => member._id === memberId
+  );
+  const memberInfo = { ...teamInfo.members[memberIndex] };
+  return { memberIndex, memberInfo };
+};
+
 const helpers = {
   addUser: (teamInfo, data) => {
     const length = data.members.length;
@@ -31,30 +39,24 @@ const helpers = {
     return newTeamInfo;
   },
   addNewTodo: (teamInfo, data) => {
-    const memberIndex = teamInfo.members.findIndex(
-      (member) => member._id === data.memberId
+    const { memberIndex, memberInfo } = immerMemberInfo(
+      teamInfo,
+      data.memberId
     );
-    const memberInfo = { ...teamInfo.members[memberIndex] };
     memberInfo.todoList.push(data);
     let newTeamInfo = { ...teamInfo };
     newTeamInfo.members[memberIndex] = memberInfo;
     return newTeamInfo;
   },
   removeTodo: (teamInfo, { memberId, itemId }) => {
-    const memberIndex = teamInfo.members.findIndex(
-      (member) => member._id === memberId
-    );
-    const memberInfo = { ...teamInfo.members[memberIndex] };
+    const { memberIndex, memberInfo } = immerMemberInfo(teamInfo, memberId);
     memberInfo.todoList = memberInfo.todoList.filter((v) => v._id !== itemId);
     let newTeamInfo = { ...teamInfo };
     newTeamInfo.members[memberIndex] = memberInfo;
     return newTeamInfo;
   },
   toggleTodo: (teamInfo, { memberId, itemId }) => {
-    const memberIndex = teamInfo.members.findIndex(
-      (member) => member._id === memberId
-    );
-    const memberInfo = { ...teamInfo.members[memberIndex] };
+    const { memberIndex, memberInfo } = immerMemberInfo(teamInfo, memberId);
     memberInfo.todoList = memberInfo.todoList.map((v, i) => {
       if (v._id === itemId) {
         return { ...v, isCompleted: !v.isCompleted };
@@ -66,10 +68,7 @@ const helpers = {
     return newTeamInfo;
   },
   updateTodo: (teamInfo, { memberId, itemId, newData }) => {
-    const memberIndex = teamInfo.members.findIndex(
-      (member) => member._id === memberId
-    );
-    const memberInfo = { ...teamInfo.members[memberIndex] };
+    const { memberIndex, memberInfo } = immerMemberInfo(teamInfo, memberId);
     memberInfo.todoList = memberInfo.todoList.map((v, i) => {
       if (v._id === itemId) {
         return newData;
