@@ -19,6 +19,9 @@ const initialState = {
 
   isLoadingUpdateTodo: false,
   updateTodoError: null,
+
+  isLoadingSetPriority: false,
+  setPriorityError: null,
 };
 
 const immerMemberInfo = (teamInfo, memberId) => {
@@ -166,6 +169,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingToggleTodo: false,
+        toggleTodoError: action.error,
       };
     case TYPES.UPDATE_TODO_REQUEST:
       return {
@@ -182,6 +186,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingUpdateTodo: false,
+        updateTodoError: action.error,
+      };
+    case TYPES.SET_PRIORITY_REQUEST:
+      return {
+        ...state,
+        isLoadingSetPriority: true,
+      };
+    case TYPES.SET_PRIORITY_SUCCESS:
+      return {
+        ...state,
+        isLoadingSetPriority: false,
+        teamInfo: helpers.updateTodo(state.teamInfo, action.data),
+      };
+    case TYPES.SET_PRIORITY_FAIL:
+      return {
+        ...state,
+        isLoadingSetPriority: false,
+        setPriorityError: action.error,
       };
     default:
       return state;

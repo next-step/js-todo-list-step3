@@ -1,4 +1,5 @@
 import {
+  PRIORITY,
   SELECTORS,
   KEY_NAMES,
   CLASS_NAMES,
@@ -28,7 +29,10 @@ class TodoItem {
         confirm(POPUP_MESSAGES.REMOVE_TODO) && this.removeTodo(target, teamId),
       [CLASS_NAMES.PRIORITY_SELECT]: () => {
         const priority = target.value;
-        // return priority !== PRIORITY.NONE && this.changePriority();
+        return (
+          priority !== PRIORITY.NONE &&
+          this.changePriority(target, teamId, priority)
+        );
       },
     };
 
@@ -84,7 +88,13 @@ class TodoItem {
     $li.classList.remove(CLASS_NAMES.EDITING);
   }
 
-  changePriority() {}
+  changePriority(target, teamId, priority) {
+    const memberId = getMemberId(target);
+    const itemId = getTodoItemId(target);
+    dispatch(
+      ACTIONS.SetPriorityReqAction({ teamId, memberId, itemId, priority })
+    );
+  }
 }
 
 export default TodoItem;

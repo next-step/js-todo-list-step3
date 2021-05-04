@@ -39,6 +39,13 @@ const updateTodoAPI = ({ teamId, memberId, itemId, contents }) => {
   );
 };
 
+const setPriorityAPI = ({ teamId, memberId, itemId, priority }) => {
+  return fetcher(
+    `/${teamId}/members/${memberId}/items/${itemId}/priority`,
+    options.PUT({ priority })
+  );
+};
+
 const getSingleTeam = async (action) => {
   try {
     const result = await getSingleTeamAPI(action.data);
@@ -105,6 +112,21 @@ const updateTodo = async (action) => {
   }
 };
 
+const setPriority = async (action) => {
+  try {
+    const newData = await setPriorityAPI(action.data);
+    const result = {
+      memberId: action.data.memberId,
+      itemId: action.data.itemId,
+      newData,
+    };
+    dispatch(ACTIONS.SetPrioritySuccessAction(result));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.SetPriorityFailction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -129,6 +151,10 @@ const watchUpdateTodo = () => {
   fork(TYPES.UPDATE_TODO_REQUEST, updateTodo);
 };
 
+const watchSetPriority = () => {
+  fork(TYPES.SET_PRIORITY_REQUEST, setPriority);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
@@ -136,4 +162,5 @@ export default () => {
   watchRemoveTodo();
   watchToggleTodo();
   watchUpdateTodo();
+  watchSetPriority();
 };

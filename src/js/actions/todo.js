@@ -17,6 +17,9 @@ export const TYPES = {
   UPDATE_TODO_REQUEST: "UPDATE_TODO_REQUEST",
   UPDATE_TODO_SUCCESS: "UPDATE_TODO_SUCCESS",
   UPDATE_TODO_FAIL: "UPDATE_TODO_FAIL",
+  SET_PRIORITY_REQUEST: "SET_PRIORITY_REQUEST",
+  SET_PRIORITY_SUCCESS: "SET_PRIORITY_SUCCESS",
+  SET_PRIORITY_FAIL: "SET_PRIORITY_FAIL",
 };
 
 export const ACTIONS = {
@@ -73,5 +76,14 @@ export const ACTIONS = {
   },
   UpdateTodoFailAction: (error) => {
     return { type: TYPES.UPDATE_TODO_FAIL, error };
+  },
+  SetPriorityReqAction: (data) => {
+    return { type: TYPES.SET_PRIORITY_REQUEST, data };
+  },
+  SetPrioritySuccessAction: (data) => {
+    return { type: TYPES.SET_PRIORITY_SUCCESS, data };
+  },
+  SetPriorityFailction: (error) => {
+    return { type: TYPES.SET_PRIORITY_FAIL, error };
   },
 };
