@@ -22,6 +22,9 @@ const initialState = {
 
   isLoadingSetPriority: false,
   setPriorityError: null,
+
+  isLoadingClearAll: false,
+  clearAllError: null,
 };
 
 const immerMemberInfo = (teamInfo, memberId) => {
@@ -79,6 +82,13 @@ const helpers = {
       return v;
     });
     let newTeamInfo = { ...teamInfo };
+    newTeamInfo.members[memberIndex] = memberInfo;
+    return newTeamInfo;
+  },
+  clearAll: (teamInfo, { memberId }) => {
+    const { memberIndex, memberInfo } = immerMemberInfo(teamInfo, memberId);
+    memberInfo.todoList = [];
+    const newTeamInfo = { ...teamInfo };
     newTeamInfo.members[memberIndex] = memberInfo;
     return newTeamInfo;
   },
@@ -204,6 +214,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoadingSetPriority: false,
         setPriorityError: action.error,
+      };
+    case TYPES.CLEAR_ALL_REQUEST:
+      return {
+        ...state,
+        isLoadingClearAll: true,
+      };
+    case TYPES.CLEAR_ALL_SUCCESS:
+      return {
+        ...state,
+        isLoadingClearAll: false,
+        teamInfo: helpers.clearAll(state.teamInfo, action.data),
+      };
+    case TYPES.CLEAR_ALL_FAIL:
+      return {
+        ...state,
+        isLoadingClearAll: false,
+        clearAllError: action.error,
       };
     default:
       return state;

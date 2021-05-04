@@ -20,6 +20,9 @@ export const TYPES = {
   SET_PRIORITY_REQUEST: "SET_PRIORITY_REQUEST",
   SET_PRIORITY_SUCCESS: "SET_PRIORITY_SUCCESS",
   SET_PRIORITY_FAIL: "SET_PRIORITY_FAIL",
+  CLEAR_ALL_REQUEST: "CLEAR_ALL_REQUEST",
+  CLEAR_ALL_SUCCESS: "CLEAR_ALL_SUCCESS",
+  CLEAR_ALL_FAIL: "CLEAR_ALL_FAIL",
 };
 
 export const ACTIONS = {
@@ -85,5 +88,14 @@ export const ACTIONS = {
   },
   SetPriorityFailction: (error) => {
     return { type: TYPES.SET_PRIORITY_FAIL, error };
+  },
+  ClearAllReqAction: (data) => {
+    return { type: TYPES.CLEAR_ALL_REQUEST, data };
+  },
+  ClearAllSuccessAction: (data) => {
+    return { type: TYPES.CLEAR_ALL_SUCCESS, data };
+  },
+  ClearAllFailAction: (error) => {
+    return { type: TYPES.CLEAR_ALL_FAIL, error };
   },
 };

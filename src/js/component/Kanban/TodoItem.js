@@ -34,6 +34,8 @@ class TodoItem {
           this.changePriority(target, teamId, priority)
         );
       },
+      [CLASS_NAMES.CLEAR_ALL]: () =>
+        confirm(POPUP_MESSAGES.CLEAR_ALL) && this.clearAllTodo(target, teamId),
     };
 
     const className = target.className;
@@ -72,6 +74,7 @@ class TodoItem {
 
   closeEditMode(target, key) {
     const $li = target.closest(SELECTORS.TODO_ITEM);
+    if (!$li) return;
     const value = target.value;
     const { contents, item: itemId } = $li.dataset;
     if (key === KEY_NAMES.ENTER && value !== contents) {
@@ -94,6 +97,11 @@ class TodoItem {
     dispatch(
       ACTIONS.SetPriorityReqAction({ teamId, memberId, itemId, priority })
     );
+  }
+
+  clearAllTodo(target, teamId) {
+    const memberId = getMemberId(target);
+    dispatch(ACTIONS.ClearAllReqAction({ teamId, memberId }));
   }
 }
 

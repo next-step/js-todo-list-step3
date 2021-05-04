@@ -25,6 +25,7 @@ export const CLASS_NAMES = {
   PRIORITY_SELECT: "chip select",
   EDITING: "editing",
   LABEL: "label",
+  CLEAR_ALL: "clear-completed",
 };
 
 export const KEY_NAMES = {
@@ -42,4 +43,5 @@ export const POPUP_MESSAGES = {
   TYPE_TEAM_NAME: "팀 이름을 입력해주세요",
   TYPE_USER_NAME: "새로운 팀원 이름을 입력해주세요",
   REMOVE_TODO: "정말로 삭제하시겠습니까?",
+  CLEAR_ALL: "되돌릴 수 없습니다. 정말로 모든 항목을 삭제하시겠습니까?",
 };

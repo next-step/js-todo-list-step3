@@ -46,6 +46,10 @@ const setPriorityAPI = ({ teamId, memberId, itemId, priority }) => {
   );
 };
 
+const clearAllAPI = ({ teamId, memberId }) => {
+  return fetcher(`/${teamId}/members/${memberId}/items/`, options.DELETE);
+};
+
 const getSingleTeam = async (action) => {
   try {
     const result = await getSingleTeamAPI(action.data);
@@ -127,6 +131,16 @@ const setPriority = async (action) => {
   }
 };
 
+const clearAll = async (action) => {
+  try {
+    await clearAllAPI(action.data);
+    dispatch(ACTIONS.ClearAllSuccessAction(action.data));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.ClearAllFailAction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -155,6 +169,10 @@ const watchSetPriority = () => {
   fork(TYPES.SET_PRIORITY_REQUEST, setPriority);
 };
 
+const watchClearAll = () => {
+  fork(TYPES.CLEAR_ALL_REQUEST, clearAll);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
@@ -163,4 +181,5 @@ export default () => {
   watchToggleTodo();
   watchUpdateTodo();
   watchSetPriority();
+  watchClearAll();
 };
