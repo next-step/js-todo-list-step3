@@ -13,6 +13,9 @@ const initialState = {
 
   isLoadingRemoveTodo: false,
   removeTodoError: null,
+
+  isLoadingToggleTodo: false,
+  toggleTodoError: null,
 };
 
 const helpers = {
@@ -34,14 +37,27 @@ const helpers = {
     newTeamInfo.members[memberIndex] = memberInfo;
     return newTeamInfo;
   },
-  removeTodo: (teamInfo, data) => {
+  removeTodo: (teamInfo, { memberId, itemId }) => {
     const memberIndex = teamInfo.members.findIndex(
-      (member) => member._id === data.memberId
+      (member) => member._id === memberId
     );
     const memberInfo = { ...teamInfo.members[memberIndex] };
-    memberInfo.todoList = memberInfo.todoList.filter(
-      (v) => v._id !== data.itemId
+    memberInfo.todoList = memberInfo.todoList.filter((v) => v._id !== itemId);
+    let newTeamInfo = { ...teamInfo };
+    newTeamInfo.members[memberIndex] = memberInfo;
+    return newTeamInfo;
+  },
+  toggleTodo: (teamInfo, { memberId, itemId }) => {
+    const memberIndex = teamInfo.members.findIndex(
+      (member) => member._id === memberId
     );
+    const memberInfo = { ...teamInfo.members[memberIndex] };
+    memberInfo.todoList = memberInfo.todoList.map((v, i) => {
+      if (v._id === itemId) {
+        return { ...v, isCompleted: !v.isCompleted };
+      }
+      return v;
+    });
     let newTeamInfo = { ...teamInfo };
     newTeamInfo.members[memberIndex] = memberInfo;
     return newTeamInfo;
@@ -117,6 +133,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoadingRemoveTodo: false,
         removeTodoError: action.error,
+      };
+    case TYPES.TOGGLE_TODO_REQUEST:
+      return {
+        ...state,
+        isLoadingToggleTodo: true,
+      };
+    case TYPES.TOGGLE_TODO_SUCCESS:
+      return {
+        ...state,
+        isLoadingToggleTodo: false,
+        teamInfo: helpers.toggleTodo(state.teamInfo, action.data),
+      };
+    case TYPES.TOGGLE_TODO_FAIL:
+      return {
+        ...state,
+        isLoadingToggleTodo: false,
       };
     default:
       return state;

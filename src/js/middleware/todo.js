@@ -19,10 +19,16 @@ const addNewTodoAPI = ({ teamId, memberId, contents }) => {
 };
 
 const removeTodoAPI = ({ teamId, memberId, itemId }) => {
-  console.log(teamId, memberId, itemId);
   return fetcher(
     `/${teamId}/members/${memberId}/items/${itemId}`,
     options.DELETE
+  );
+};
+
+const toggleTodoAPI = ({ teamId, memberId, itemId }) => {
+  return fetcher(
+    `/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+    options.PUT()
   );
 };
 
@@ -67,6 +73,16 @@ const removeTodo = async (action) => {
   }
 };
 
+const toggleTodo = async (action) => {
+  try {
+    await toggleTodoAPI(action.data);
+    dispatch(ACTIONS.ToggleTodoSuccessAction(action.data));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.ToggleTodoFailAction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -83,9 +99,14 @@ const watchRemoveTodo = () => {
   fork(TYPES.REMOVE_TODO_REQUEST, removeTodo);
 };
 
+const watchToggleTodo = () => {
+  fork(TYPES.TOGGLE_TODO_REQUEST, toggleTodo);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
   watchAddNewTodo();
   watchRemoveTodo();
+  watchToggleTodo();
 };

@@ -11,6 +11,9 @@ export const TYPES = {
   REMOVE_TODO_REQUEST: "REMOVE_TODO_REQUEST",
   REMOVE_TODO_SUCCESS: "REMOVE_TODO_SUCCESS",
   REMOVE_TODO_FAIL: "REMOVE_TODO_FAIL",
+  TOGGLE_TODO_REQUEST: "TOGGLE_TODO_REQUEST",
+  TOGGLE_TODO_SUCCESS: "TOGGLE_TODO_SUCCESS",
+  TOGGLE_TODO_FAIL: "TOGGLE_TODO_FAIL",
 };
 
 export const ACTIONS = {
@@ -49,5 +52,14 @@ export const ACTIONS = {
   },
   RemoveTodoFailAction: (error) => {
     return { type: TYPES.REMOVE_TODO_FAIL, error };
+  },
+  ToggleTodoReqAction: (data) => {
+    return { type: TYPES.TOGGLE_TODO_REQUEST, data };
+  },
+  ToggleTodoSuccessAction: (data) => {
+    return { type: TYPES.TOGGLE_TODO_SUCCESS, data };
+  },
+  ToggleTodoFailAction: (error) => {
+    return { type: TYPES.TOGGLE_TODO_FAIL, error };
   },
 };

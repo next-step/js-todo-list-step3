@@ -21,7 +21,7 @@ class TodoItem {
   onClick({ target }) {
     const teamId = this.container.dataset.teamId;
     const assignAction = {
-      [CLASS_NAMES.TOGGLE]: () => this.toggleComplete(target),
+      [CLASS_NAMES.TOGGLE]: () => this.toggleComplete(target, teamId),
       [CLASS_NAMES.DESTROY]: () =>
         confirm(POPUP_MESSAGES.REMOVE_TODO) && this.removeTodo(target, teamId),
       [CLASS_NAMES.PRIORITY_SELECT]: () => {
@@ -34,7 +34,11 @@ class TodoItem {
     return assignAction[className] && assignAction[className]();
   }
 
-  toggleComplete() {}
+  toggleComplete(target, teamId) {
+    const memberId = getMemberId(target);
+    const itemId = getTodoItemId(target);
+    dispatch(ACTIONS.ToggleTodoReqAction({ teamId, memberId, itemId }));
+  }
 
   removeTodo(target, teamId) {
     const memberId = getMemberId(target);
