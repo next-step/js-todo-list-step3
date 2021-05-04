@@ -9,6 +9,7 @@ import { ACTIONS } from "../actions/todo.js";
 import TeamTitle from "./Kanban/TeamTitle.js";
 import TodoInput from "./Kanban/TodoInput.js";
 import TodoItem from "./Kanban/TodoItem.js";
+import TodoFilter from "./Kanban/TodoFilter.js";
 
 class KanbanMain extends Component {
   constructor() {
@@ -16,6 +17,7 @@ class KanbanMain extends Component {
     this.container = $(SELECTORS.TODO_LIST);
     this.todoInput = new TodoInput(this.container);
     this.todoItem = new TodoItem(this.container);
+    this.TodoFilter = new TodoFilter(this.container);
     this.todoTitle = new TeamTitle({ isLoading: true });
     this.render();
   }
@@ -59,7 +61,7 @@ class KanbanMain extends Component {
       name: teamInfo ? teamInfo.name : "",
     });
 
-    // this.bindEvent();
+    this.bindEvent();
   }
 }
 

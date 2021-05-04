@@ -1,6 +1,7 @@
 import { TYPES } from "../actions/todo.js";
 
 const initialState = {
+  showState: "all",
   teamInfo: null,
   isLoadingGetSingleTeam: false,
   getSingleTeamError: null,
@@ -96,6 +97,11 @@ const helpers = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case TYPES.CHANGE_SHOW_STATE:
+      return {
+        ...state,
+        showState: action.state,
+      };
     case TYPES.GET_SINGLE_TEAM_REQUEST:
       return {
         ...state,

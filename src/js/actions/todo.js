@@ -1,4 +1,5 @@
 export const TYPES = {
+  CHANGE_SHOW_STATE: "CHANGE_SHOW_STATE",
   GET_SINGLE_TEAM_REQUEST: "GET_SINGLE_TEAM_REQUEST",
   GET_SINGLE_TEAM_SUCCESS: "GET_SINGLE_TEAM_SUCCESS",
   GET_SINGLE_TEAM_FAIL: "GET_SINGLE_TEAM_FAIL",
@@ -26,6 +27,9 @@ export const TYPES = {
 };
 
 export const ACTIONS = {
+  ChangeShowStaetAction: (state) => {
+    return { type: TYPES.CHANGE_SHOW_STATE, state };
+  },
   GetSingleTeamReqAction: (data) => {
     return { type: TYPES.GET_SINGLE_TEAM_REQUEST, data };
   },

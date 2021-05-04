@@ -19,6 +19,8 @@ export const CLASS_NAMES = {
   INPUT: "new-todo",
   COMPLETED: "completed",
   ALL: "all",
+  SORT: "sort",
+  ACTIVE: "active",
   SELECTED: "selected",
   DESTROY: "destroy",
   TOGGLE: "toggle",
@@ -26,6 +28,7 @@ export const CLASS_NAMES = {
   EDITING: "editing",
   LABEL: "label",
   CLEAR_ALL: "clear-completed",
+  FILTERS: "filters",
 };
 
 export const KEY_NAMES = {
