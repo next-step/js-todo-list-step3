@@ -16,6 +16,9 @@ const initialState = {
 
   isLoadingToggleTodo: false,
   toggleTodoError: null,
+
+  isLoadingUpdateTodo: false,
+  updateTodoError: null,
 };
 
 const helpers = {
@@ -55,6 +58,21 @@ const helpers = {
     memberInfo.todoList = memberInfo.todoList.map((v, i) => {
       if (v._id === itemId) {
         return { ...v, isCompleted: !v.isCompleted };
+      }
+      return v;
+    });
+    let newTeamInfo = { ...teamInfo };
+    newTeamInfo.members[memberIndex] = memberInfo;
+    return newTeamInfo;
+  },
+  updateTodo: (teamInfo, { memberId, itemId, newData }) => {
+    const memberIndex = teamInfo.members.findIndex(
+      (member) => member._id === memberId
+    );
+    const memberInfo = { ...teamInfo.members[memberIndex] };
+    memberInfo.todoList = memberInfo.todoList.map((v, i) => {
+      if (v._id === itemId) {
+        return newData;
       }
       return v;
     });
@@ -149,6 +167,22 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingToggleTodo: false,
+      };
+    case TYPES.UPDATE_TODO_REQUEST:
+      return {
+        ...state,
+        isLoadingUpdateTodo: true,
+      };
+    case TYPES.UPDATE_TODO_SUCCESS:
+      return {
+        ...state,
+        isLoadingUpdateTodo: false,
+        teamInfo: helpers.updateTodo(state.teamInfo, action.data),
+      };
+    case TYPES.UPDATE_TODO_FAIL:
+      return {
+        ...state,
+        isLoadingUpdateTodo: false,
       };
     default:
       return state;

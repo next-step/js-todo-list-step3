@@ -9,6 +9,7 @@ export const SELECTORS = {
   TODO_ITEM: ".todo-list-item",
   INPUT: ".new-todo",
   USER_ADD_BTN: "#add-user-button",
+  EDIT_INPUT: ".edit",
 };
 
 export const CLASS_NAMES = {
@@ -23,10 +24,12 @@ export const CLASS_NAMES = {
   TOGGLE: "toggle",
   PRIORITY_SELECT: "chip select",
   EDITING: "editing",
+  LABEL: "label",
 };
 
 export const KEY_NAMES = {
   ENTER: "Enter",
+  ESC: "Escape",
 };
 
 export const PRIORITY = {

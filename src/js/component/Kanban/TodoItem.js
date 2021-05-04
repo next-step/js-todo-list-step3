@@ -16,6 +16,8 @@ class TodoItem {
 
   bindEvent() {
     this.container.addEventListener("click", (e) => this.onClick(e));
+    this.container.addEventListener("dblclick", (e) => this.onDoubleClick(e));
+    this.container.addEventListener("keydown", (e) => this.onKeyDown(e));
   }
 
   onClick({ target }) {
@@ -34,6 +36,18 @@ class TodoItem {
     return assignAction[className] && assignAction[className]();
   }
 
+  onDoubleClick({ target }) {
+    if (target.classList.contains(CLASS_NAMES.LABEL)) {
+      return this.changeToEditMode(target);
+    }
+  }
+
+  onKeyDown({ target, key }) {
+    if (key === KEY_NAMES.ENTER || key === KEY_NAMES.ESC) {
+      return target && this.closeEditMode(target, key);
+    }
+  }
+
   toggleComplete(target, teamId) {
     const memberId = getMemberId(target);
     const itemId = getTodoItemId(target);
@@ -44,6 +58,30 @@ class TodoItem {
     const memberId = getMemberId(target);
     const itemId = getTodoItemId(target);
     dispatch(ACTIONS.RemoveTodoReqAction({ teamId, memberId, itemId }));
+  }
+
+  changeToEditMode(target) {
+    const $li = target.closest(SELECTORS.TODO_ITEM);
+    if ($li.classList.contains(CLASS_NAMES.COMPLETED)) return;
+    $li.classList.add(CLASS_NAMES.EDITING);
+  }
+
+  closeEditMode(target, key) {
+    const $li = target.closest(SELECTORS.TODO_ITEM);
+    const value = target.value;
+    const { contents, item: itemId } = $li.dataset;
+    if (key === KEY_NAMES.ENTER && value !== contents) {
+      const memberId = getMemberId(target);
+      dispatch(
+        ACTIONS.UpdateTodoReqAction({
+          teamId: this.container.dataset.teamId,
+          memberId,
+          itemId,
+          contents: value,
+        })
+      );
+    }
+    $li.classList.remove(CLASS_NAMES.EDITING);
   }
 
   changePriority() {}

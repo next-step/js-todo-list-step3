@@ -14,6 +14,9 @@ export const TYPES = {
   TOGGLE_TODO_REQUEST: "TOGGLE_TODO_REQUEST",
   TOGGLE_TODO_SUCCESS: "TOGGLE_TODO_SUCCESS",
   TOGGLE_TODO_FAIL: "TOGGLE_TODO_FAIL",
+  UPDATE_TODO_REQUEST: "UPDATE_TODO_REQUEST",
+  UPDATE_TODO_SUCCESS: "UPDATE_TODO_SUCCESS",
+  UPDATE_TODO_FAIL: "UPDATE_TODO_FAIL",
 };
 
 export const ACTIONS = {
@@ -61,5 +64,14 @@ export const ACTIONS = {
   },
   ToggleTodoFailAction: (error) => {
     return { type: TYPES.TOGGLE_TODO_FAIL, error };
+  },
+  UpdateTodoReqAction: (data) => {
+    return { type: TYPES.UPDATE_TODO_REQUEST, data };
+  },
+  UpdateTodoSuccessAction: (data) => {
+    return { type: TYPES.UPDATE_TODO_SUCCESS, data };
+  },
+  UpdateTodoFailAction: (error) => {
+    return { type: TYPES.UPDATE_TODO_FAIL, error };
   },
 };

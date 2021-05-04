@@ -32,6 +32,13 @@ const toggleTodoAPI = ({ teamId, memberId, itemId }) => {
   );
 };
 
+const updateTodoAPI = ({ teamId, memberId, itemId, contents }) => {
+  return fetcher(
+    `/${teamId}/members/${memberId}/items/${itemId}`,
+    options.PUT({ contents })
+  );
+};
+
 const getSingleTeam = async (action) => {
   try {
     const result = await getSingleTeamAPI(action.data);
@@ -83,6 +90,21 @@ const toggleTodo = async (action) => {
   }
 };
 
+const updateTodo = async (action) => {
+  try {
+    const newData = await updateTodoAPI(action.data);
+    const result = {
+      memberId: action.data.memberId,
+      itemId: action.data.itemId,
+      newData,
+    };
+    dispatch(ACTIONS.UpdateTodoSuccessAction(result));
+  } catch (error) {
+    console.error(error);
+    dispatch(ACTIONS.UpdateTodoFailAction(error));
+  }
+};
+
 const watchGetSingleTeam = () => {
   fork(TYPES.GET_SINGLE_TEAM_REQUEST, getSingleTeam);
 };
@@ -103,10 +125,15 @@ const watchToggleTodo = () => {
   fork(TYPES.TOGGLE_TODO_REQUEST, toggleTodo);
 };
 
+const watchUpdateTodo = () => {
+  fork(TYPES.UPDATE_TODO_REQUEST, updateTodo);
+};
+
 export default () => {
   watchGetSingleTeam();
   watchAddUser();
   watchAddNewTodo();
   watchRemoveTodo();
   watchToggleTodo();
+  watchUpdateTodo();
 };
