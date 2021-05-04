@@ -8,6 +8,9 @@ const teamId = new URLSearchParams(document.location.search).get("id");
 const PENDING = "false";
 const COMPLETED = "completed";
 
+const $todoContainer = (memberId) => {
+	return $(`li[data-memberId="${memberId}"]`);
+};
 const $todoInput = (memberId) => {
 	return $(`li[data-memberId="${memberId}"] .new-todo`);
 };
@@ -32,6 +35,17 @@ function memberInfo(memberId) {
 
 function findMemberId(target) {
 	return target.closest(".todoapp-container").dataset.memberid;
+}
+
+function isPriorityTab(target) {
+	if (
+		!target
+			.closest(".todoapp-container")
+			.classList.contains("prioritySorting")
+	) {
+		return false;
+	}
+	return true;
 }
 
 // 할 일들의 개수
@@ -83,7 +97,6 @@ function updateTodoItem(memberId, _id, contents, isCompleted, priority) {
 		priority,
 	};
 	memberInfo(memberId).todoList.push(todoItemInfo);
-	console.log(getMemberInfo());
 	renderTodoItem(memberId, memberInfo(memberId).todoList);
 }
 
@@ -210,6 +223,9 @@ async function selectPriority(event) {
 			(item) => item._id === $todoItem.id
 		);
 		memberInfo(memberId).todoList[idx].priority = result;
+		if (isPriorityTab(event.target)) {
+			sortByPriority(event);
+		}
 	}
 }
 
@@ -233,7 +249,7 @@ function showProgress(event) {
 	if (event.target.classList.contains("active")) {
 		renderTodoItem(memberId, pendingList);
 	}
-	setTodoNum(memberId);
+	$todoContainer(memberId).classList.remove("prioritySorting");
 }
 
 // 전체 삭제
@@ -243,6 +259,28 @@ async function removeAllItems(event) {
 	setTodoNum(memberId);
 	await kanbanAPI.fetchDeleteAll(teamId, memberId);
 	clearMebmerInfo();
+	$todoContainer(memberId).classList.remove("prioritySorting");
+}
+
+function sortByPriority(event) {
+	const memberId = findMemberId(event.target);
+	const priorityList = memberInfo(memberId).todoList.slice();
+	const priorityValue = {
+		FIRST: 1,
+		SECOND: 2,
+		NONE: 3,
+	};
+	priorityList.sort((a, b) => {
+		if (priorityValue[a.priority] < priorityValue[b.priority]) {
+			return -1;
+		}
+		if (priorityValue[a.priority] > priorityValue[b.priority]) {
+			return 1;
+		}
+		return 0;
+	});
+	renderTodoItem(memberId, priorityList);
+	$todoContainer(memberId).classList.add("prioritySorting");
 }
 
 export function todoRole() {
@@ -265,5 +303,9 @@ export function todoRole() {
 	const deleteAllBtns = $all(".clear-completed");
 	deleteAllBtns.forEach((deleteAllBtn) =>
 		deleteAllBtn.addEventListener("click", removeAllItems)
+	);
+	const priorityBtns = $all(".priority");
+	priorityBtns.forEach((priorityBtn) =>
+		priorityBtn.addEventListener("click", sortByPriority)
 	);
 }

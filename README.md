@@ -43,7 +43,7 @@
 
 ## 🎯🎯 kanban.html 심화 요구사항
 
--   [ ] 1. todoItem의 우선 순위에 따라 정렬하기
+-   [x] 1. todoItem의 우선 순위에 따라 정렬하기
 
 <br/>
 
