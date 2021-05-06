@@ -87,11 +87,11 @@ const TodoListItem = (handleTodoActions) => {
 
     const todoItem = target.closest('li.todo-list-item')
 
-    if (key === 'Esc' || key === 'Escape') {
-      return todoItem.classList.remove('editing')
-    }
 
-    handleTodoActions.editTodo(target)
+    if (key === 'Enter') {
+      handleTodoActions.editTodo(target)
+    }
+    
     todoItem.classList.remove('editing')
   }
 
