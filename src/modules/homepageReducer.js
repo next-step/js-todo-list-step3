@@ -1,7 +1,9 @@
+import { LOADING_END, LOADING_START } from './common/actions.js'
 import { GET_TEAMS, CREATE_TEAM } from './team/actions.js'
 
 const initialState = {
   teams: [],
+  loading: false,
 }
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -16,6 +18,18 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         teams: [...state.teams, payload.team],
+      }
+
+    case LOADING_START:
+      return {
+        ...state,
+        loading: payload.loading,
+      }
+
+    case LOADING_END:
+      return {
+        ...state,
+        loading: payload.loading,
       }
 
     default:

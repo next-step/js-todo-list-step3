@@ -1,2 +1,4 @@
 import TeamList from './TeamList.js'
-export { TeamList }
+import Loading from './Loading.js'
+
+export { TeamList, Loading }
