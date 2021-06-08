@@ -6,6 +6,10 @@ export default Object.freeze({
     return HttpRequest.get(HttpEndpoint.teams())
   },
 
+  getTeam(teamId) {
+    return HttpRequest.get(HttpEndpoint.team(teamId))
+  },
+
   getTodoList(teamId, memberId) {
     return HttpRequest.get(HttpEndpoint.todos(teamId, memberId))
   },

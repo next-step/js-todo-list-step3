@@ -28,6 +28,7 @@ export default class Loading extends Component {
 
   template() {
     const { loading } = this.$props.store.getState()
+    console.log(loading)
 
     if (loading) {
       return Loader()

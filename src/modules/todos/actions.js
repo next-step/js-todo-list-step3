@@ -1,0 +1,3 @@
+const GET_TEAM_DATA = 'GET_TEAM_DATA'
+
+export { GET_TEAM_DATA }
