@@ -1,19 +1,14 @@
-function App() {
-  const $todoApps = document.querySelector('.todoapp-list-container')
-  $todoApps.addEventListener('click', e => {
-    const $target = e.target
-    const targetClassList = $target.classList
-    if (targetClassList.contains('chip')) {
-      const $chipSelect = $target.closest('.chip-container').querySelector('select')
-      $target.classList.add('hidden')
-      $chipSelect.classList.remove('hidden')
-    }
-  })
+import redux from "./redux/index.js";
+import todo from "./reducers/todo.js";
+import KanbanMain from "./component/KanbanMain.js";
+import { dispatch } from "./redux/functions.js";
+import { ACTIONS } from "./actions/todo.js";
 
-  const $addUserButton = document.querySelector('#add-user-button')
-  $addUserButton.addEventListener('click', () => {
-    const result = prompt('새로운 팀원 이름을 입력해주세요')
-  })
-}
+const App = () => {
+  redux.createStore("todo", todo);
+  const teamId = window.location.search.slice(4);
+  dispatch(ACTIONS.GetSingleTeamReqAction(teamId));
+  new KanbanMain();
+};
 
-new App()
+App();
