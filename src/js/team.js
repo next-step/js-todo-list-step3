@@ -1,4 +1,6 @@
-const $addTeamButton = document.querySelector('#add-team-button')
-$addTeamButton.addEventListener('click', () => {
-  const result = prompt('팀 이름을 입력해주세요')
-})
+import { TeamApp } from './app/TeamApp.js';
+import { TeamStore } from './store/TeamStore.js';
+
+const teamApp = new TeamApp();
+const teamStore = new TeamStore(teamApp);
+teamStore.init();
