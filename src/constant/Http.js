@@ -1,4 +1,4 @@
-const baseURL = 'https://js-todo-list-9ca3a.df.r.appspot.com/'
+const baseURL = 'https://js-todo-list-9ca3a.df.r.appspot.com'
 
 const Method = Object.freeze({
   GET: 'GET',

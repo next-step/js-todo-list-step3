@@ -12,13 +12,11 @@ export default class HttpConnector {
     const self = this
     let attempts_left = THREE
 
-    const fetch_options = data
-      ? { headers: { 'Content-Type': 'application/json' }, method: method }
-      : {
-          headers: { 'Content-Type': 'application/json' },
-          method: method,
-          body: JSON.stringify(data),
-        }
+    const fetch_options = {
+      headers: { 'Content-Type': 'application/json' },
+      method: method,
+      body: JSON.stringify(data),
+    }
 
     const fetchRetry = async (url, options, attempt) => {
       try {
