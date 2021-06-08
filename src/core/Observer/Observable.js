@@ -39,6 +39,7 @@ export default class Observable {
         },
         error(e) {
           observer.error(e)
+          observer.complete()
         },
         complete() {
           observer.complete()
