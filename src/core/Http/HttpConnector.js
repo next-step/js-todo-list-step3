@@ -13,7 +13,7 @@ export default class HttpConnector {
     let attempts_left = THREE
 
     const fetch_options = data
-      ? { method: method }
+      ? { headers: { 'Content-Type': 'application/json' }, method: method }
       : {
           headers: { 'Content-Type': 'application/json' },
           method: method,
