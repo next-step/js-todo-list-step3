@@ -4,7 +4,7 @@ import TeamConnector from '../utils/connector/TeamConnector.js'
 import Observable from '../core/Observer/Observable.js'
 import { createTeam } from '../modules/team/creator.js'
 import { loadingEnd, loadingStart } from '../modules/common/creator.js'
-import Event from '../modules/constant/Event.js'
+import Event from '../constant/Event.js'
 
 const CREATE_TEAM_BUTTON = 'add-team-button'
 

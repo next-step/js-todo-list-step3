@@ -1,3 +1,4 @@
+import TodoContainer from '../../components/kanban/TodoContainer.js'
 import UserTitle from '../../components/kanban/UserTitle.js'
 import Loading from '../../components/Loading.js'
 import Observable from '../../core/Observer/Observable.js'
@@ -25,10 +26,12 @@ class App {
 
     const userTitleTarget = document.querySelector('#user-title')
     const loadingTarget = document.querySelector('#loading')
+    const todoListTarget = document.querySelector('#todo-list')
 
     store.subscribe(() => {
       new Loading(loadingTarget, store)
       new UserTitle(userTitleTarget, store)
+      new TodoContainer(todoListTarget)
     })
 
     this.fetchUsers(teamId)
@@ -43,11 +46,10 @@ class App {
         store.dispatch(getTeamData(teamData))
       },
       error(e) {
-        console.error(e)
+        location.href = '/index.html'
       },
       complete() {
         store.dispatch(loadingEnd())
-        console.log(store.getState())
       },
     })
   }

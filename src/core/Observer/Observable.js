@@ -116,8 +116,8 @@ export default class Observable {
           observer.next(val)
           observer.complete()
         })
-        .catch((e) => {
-          observer.error(val)
+        .catch((err) => {
+          observer.error(err)
           observer.complete()
         })
     })

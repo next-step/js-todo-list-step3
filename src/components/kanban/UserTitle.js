@@ -13,7 +13,6 @@ export default class UserTitle extends Component {
         return `<span>Loading...</span>`
       }
 
-      console.log('hi')
       this.$props.isLoaded = true
 
       return `<span><strong>${name}</strong>'s Todo List</span>`

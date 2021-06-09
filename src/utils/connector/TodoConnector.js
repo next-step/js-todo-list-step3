@@ -6,6 +6,10 @@ export default Object.freeze({
     return HttpRequest.get(HttpEndpoint.teams())
   },
 
+  addMember(teamId, name) {
+    return HttpRequest.post(HttpEndpoint.members(teamId), { name })
+  },
+
   getTeam(teamId) {
     return HttpRequest.get(HttpEndpoint.team(teamId))
   },
@@ -14,12 +18,18 @@ export default Object.freeze({
     return HttpRequest.get(HttpEndpoint.todos(teamId, memberId))
   },
 
-  createTodoItem(teamId, memberId, data) {
-    return HttpRequest.post(HttpEndpoint.items(teamId, memberId), data)
+  createTodoItem(teamId, memberId, contents) {
+    return HttpRequest.post(HttpEndpoint.items(teamId, memberId), { contents })
   },
 
   deleteTodoItem(teamId, memberId, itemId) {
-    return HttpRequest.delete(HttpEndpoint.item(teamId, memberId, itemId))
+    return HttpRequest.del(HttpEndpoint.item(teamId, memberId, itemId))
+  },
+
+  editItem(teamId, memberId, itemId, contents) {
+    return HttpRequest.put(HttpEndpoint.item(teamId, memberId, itemId), {
+      contents,
+    })
   },
 
   toggleTodoItem(teamId, memberId, itemId) {
