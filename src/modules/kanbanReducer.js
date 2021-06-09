@@ -10,6 +10,7 @@ import {
   EDIT_COMPLETE,
   EDIT_TODO,
   GET_TEAM_DATA,
+  MOVE_ITEM_TODO,
   PRIORITY_TODO,
   TOGGLE_TODO,
 } from './todos/actions.js'
@@ -205,6 +206,39 @@ const reducer = (state = initialState, { type, payload }) => {
                 ? { ...todoItem, priority: payload.priority }
                 : todoItem
             ),
+          }
+        }),
+      }
+
+    case MOVE_ITEM_TODO:
+      const prevMemberTodos = state.members
+        .filter((member) => member._id === payload.prevMemberId)
+        .map((member) => member.todoList)[0]
+
+      const newPrevTodo = prevMemberTodos.filter(
+        (todoItem) => todoItem._id !== payload.itemId
+      )
+
+      return {
+        ...state,
+        members: state.members.map((member) => {
+          if (
+            member._id !== payload.prevMemberId &&
+            member._id !== payload.nextMemberId
+          ) {
+            return member
+          }
+
+          if (member._id === payload.prevMemberId) {
+            return {
+              ...member,
+              todoList: newPrevTodo,
+            }
+          }
+
+          return {
+            ...member,
+            todoList: [...member.todoList, payload.newItem],
           }
         }),
       }

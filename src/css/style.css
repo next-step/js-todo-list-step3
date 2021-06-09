@@ -176,38 +176,45 @@ body {
 }
 
 .todo-list {
+  height: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.todo-list li {
+.todo-list li,
+.hover li {
   position: relative;
   font-size: 24px;
   border-bottom: 1px solid #ededed;
 }
 
-.todo-list li:last-child {
+.todo-list li:last-child,
+.hover li:last-child {
   border-bottom: none;
 }
 
-.todo-list li.editing {
+.todo-list li.editing,
+.hover li.editing {
   border-bottom: none;
   padding: 0;
 }
 
-.todo-list li.editing .edit {
+.todo-list li.editing .edit,
+.hover li.editing .edit {
   display: block;
   max-width: calc(100% - 43px);
   padding: 12px 16px;
   margin: 0 0 0 43px;
 }
 
-.todo-list li.editing .view {
+.todo-list li.editing .view,
+.hover li.editing .view {
   display: none;
 }
 
-.todo-list li .toggle {
+.todo-list li .toggle,
+.hover li .toggle {
   text-align: center;
   width: 40px;
   height: auto;
@@ -220,21 +227,25 @@ body {
   appearance: none;
 }
 
-.todo-list li .toggle {
+.todo-list li .toggle,
+.hover li .toggle {
   opacity: 0;
 }
 
-.todo-list li .toggle + label {
+.todo-list li .toggle + label,
+.hover li .toggle + label {
   background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
   background-repeat: no-repeat;
   background-position: center left;
 }
 
-.todo-list li .toggle:checked + label {
+.todo-list li .toggle:checked + label,
+.hover li .toggle:checked + label {
   background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
 }
 
-.todo-list li label {
+.todo-list li label,
+.hover li label {
   word-break: break-all;
   padding: 10px 15px 15px 60px;
   display: block;
@@ -242,12 +253,14 @@ body {
   transition: color 0.4s;
 }
 
-.todo-list li.completed label {
+.todo-list li.completed label,
+.hover li.completed label {
   color: #d9d9d9;
   text-decoration: line-through;
 }
 
-.todo-list li .destroy {
+.todo-list li .destroy,
+.hover li .destroy {
   display: none;
   position: absolute;
   top: 0;
@@ -262,23 +275,28 @@ body {
   transition: color 0.2s ease-out;
 }
 
-.todo-list li .destroy:hover {
+.todo-list li .destroy:hover,
+.hover li .destroy:hover {
   color: #af5b5e;
 }
 
-.todo-list li .destroy:after {
+.todo-list li .destroy:after,
+.hover li .destroy:after {
   content: '×';
 }
 
-.todo-list li:hover .destroy {
+.todo-list li:hover .destroy,
+.hover li:hover .destroy {
   display: block;
 }
 
-.todo-list li .edit {
+.todo-list li .edit,
+.hover li .edit {
   display: none;
 }
 
-.todo-list li.editing:last-child {
+.todo-list li.editing:last-child,
+.hover li.editing:last-child {
   margin-bottom: -1px;
 }
 
@@ -603,4 +621,19 @@ select.chip {
   height: 100%;
   background-color: black;
   opacity: 30%;
+}
+
+.hover {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 550px;
+  transform: rotate(-5deg);
+  background: #c9c9c9;
+}
+
+.temp {
+  background-color: #999999;
+  opacity: 0.3;
 }

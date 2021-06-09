@@ -14,6 +14,7 @@ import {
   deleteTodos,
   editComplete,
   editTodo,
+  moveTodoItem,
   priorityTodo,
   toggleTodo,
 } from '../../modules/todos/creator.js'
@@ -24,13 +25,20 @@ import {
   DELETE_TODO,
   DELETE_TODOS,
   EDIT_COMPLETE,
+  EDIT_TODO,
   TOGGLE_TODO,
 } from '../../modules/todos/actions.js'
-import { loadingEnd, loadingStart } from '../../modules/common/creator.js'
+import {
+  loadingEnd,
+  loadingStart,
+  reload,
+} from '../../modules/common/creator.js'
 import {
   validationTodoContents,
   validationUserName,
 } from '../../utils/dom/index.js'
+import { ZERO } from '../../constant/Number.js'
+import { throttle } from '../../utils/event/throttle.js'
 
 const UserTitle = (name) => {
   return `
@@ -61,6 +69,8 @@ const actions = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
 }
 
+const LEFTCLICK = ZERO
+
 const clickEvents = [
   actions.SHOW_ALL,
   actions.SHOW_PRIORITY,
@@ -80,8 +90,10 @@ const TodoItem = ({
   isEditing = false,
 }) => {
   return `
-    <li class="todo-list-item ${isCompleted && 'completed'}  
-    ${isEditing ? 'editing' : ''}" data-todo=${_id}>
+    <li class="todo-list-item ${isCompleted ? 'completed' : ''}  
+    ${
+      isEditing ? 'editing' : ''
+    }" data-todo=${_id} data-contents='${contents}' data-priority='${priority}' data-completed='${isCompleted}'>
       <div class="view">
         <input class="toggle" type="checkbox" ${
           isCompleted ? 'checked' : ''
@@ -136,8 +148,6 @@ function diffPriority(todo1, todo2) {
 }
 
 const TodoList = ({ _id, name, todoList = [], filter = Filter.ALL }) => {
-  const filteredTodoList = []
-
   switch (filter) {
     case Filter.ACTIVE:
       todoList = todoList.filter((todo) => !todo.isCompleted)
@@ -157,7 +167,7 @@ const TodoList = ({ _id, name, todoList = [], filter = Filter.ALL }) => {
       <div class="todoapp">
         ${TodoInput()}
         <section class="main" id="todo-list">
-          <ul class="todo-list">
+          <ul class="todo-list" data-ul>
             ${todoList.map((todoItem) => TodoItem(todoItem)).join('')}
           </ul>
         </section>
@@ -241,7 +251,162 @@ export default class TodoContainer extends Component {
     this.addClickEvent(target)
     this.addEnterEvent(target)
     this.addEditTodoEvent(target)
+    this.setDragEvent(target)
     this.setPriorityTodoItem(target)
+  }
+
+  setDragEvent(target) {
+    target.addEventListener(Event.MOUSE_DOWN, this.mouseDownHandler.bind(this))
+    target.addEventListener(Event.MOUSE_UP, this.mouseUp.bind(this))
+    target.addEventListener(
+      Event.MOUSE_MOVE,
+      throttle(this.mouseMoveHandler.bind(this))
+    )
+  }
+
+  mouseMoveHandler(event) {
+    if (!this.$props.clicked || !this.$props.hoverTodo) {
+      event.stopImmediatePropagation()
+      return
+    }
+
+    const { pageX, pageY } = event
+
+    const { $hover } = this.$props
+
+    $hover.hidden = true
+    const elemBelow = document.elementFromPoint(pageX, pageY)
+
+    const $todoContainer = elemBelow.closest('[data-ul]')
+    $hover.hidden = false
+
+    $hover.style.left = pageX - $hover.offsetWidth / 2 + 'px'
+    $hover.style.top = pageY - $hover.offsetHeight / 2 + 'px'
+
+    if (!$todoContainer) {
+      event.stopImmediatePropagation()
+      return
+    }
+
+    $todoContainer.appendChild(this.$props.targetTodo)
+  }
+
+  mouseDownHandler(event) {
+    const targetRemoveTodo = event.target.closest('li')
+
+    if (
+      event.button !== LEFTCLICK ||
+      targetRemoveTodo?.dataset?.todo === undefined ||
+      targetRemoveTodo.classList.contains('editing') ||
+      event.target.dataset.action !== EDIT_TODO
+    ) {
+      event.stopImmediatePropagation()
+      return
+    }
+
+    this.$props.clicked = true
+    this.$props.targetTodo = targetRemoveTodo
+    this.$props.targetTodoMemberId = this.getMemberId(targetRemoveTodo)
+    this.$props.hoverTodo = targetRemoveTodo.cloneNode(true)
+
+    targetRemoveTodo.classList.add('temp')
+
+    const { pageX, pageY } = event
+
+    const { $hover } = this.$props
+
+    $hover.appendChild(this.$props.hoverTodo)
+
+    $hover.style.left = pageX - $hover.offsetWidth / 2 + 'px'
+    $hover.style.top = pageY - $hover.offsetHeight / 2 + 'px'
+
+    event.stopImmediatePropagation()
+  }
+
+  async mouseUp(event) {
+    if (!this.$props.clicked) {
+      event.stopImmediatePropagation()
+      return
+    }
+
+    this.$props.clicked = false
+
+    const moveItem = this.$props.targetTodo
+
+    const itemId = moveItem.dataset.todo
+    const prevMemberId = this.$props.targetTodoMemberId
+    const nextMemberId = this.getMemberId(moveItem)
+    const contents = moveItem.dataset.contents
+    const priority = moveItem.dataset.priority
+    const completed = moveItem.dataset.completed
+
+    const teamId = this.getTeamId()
+
+    if (prevMemberId !== nextMemberId) {
+      store.dispatch(loadingStart())
+
+      try {
+        const response = await TodoConnector.deleteTodoItem(
+          teamId,
+          prevMemberId,
+          itemId
+        )
+
+        let newItem = await TodoConnector.createTodoItem(
+          teamId,
+          nextMemberId,
+          contents
+        )
+        console.log(newItem)
+        if (priority !== Priority.NONE) {
+          newItem = await TodoConnector.priorityItem(
+            teamId,
+            nextMemberId,
+            newItem._id,
+            priority
+          )
+        }
+
+        if (completed) {
+          newItem = await TodoConnector.toggleTodoItem(
+            teamId,
+            nextMemberId,
+            newItem._id
+          )
+        }
+
+        store.dispatch(
+          moveTodoItem(prevMemberId, nextMemberId, itemId, newItem)
+        )
+      } catch (error) {
+        console.error(error)
+
+        this.$props.targetTodo = undefined
+        this.$props.targetTodoMemberId = undefined
+        this.$props.hoverTodo = undefined
+
+        event.stopImmediatePropagation()
+        return
+      } finally {
+        store.dispatch(loadingEnd())
+      }
+    } else {
+      store.dispatch(reload())
+    }
+
+    if (this.$props.targetTodo) {
+      this.$props.targetTodo.classList.remove('temp')
+    }
+
+    if (this.$props.hoverTodo) {
+      this.$props.hoverTodo.remove()
+    }
+
+    this.$props.targetTodo = undefined
+    this.$props.targetTodoMemberId = undefined
+    this.$props.hoverTodo = undefined
+
+    event.stopImmediatePropagation()
   }
 
   setPriorityTodoItem(target) {

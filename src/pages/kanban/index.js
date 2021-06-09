@@ -31,7 +31,12 @@ class App {
     store.subscribe(() => {
       new Loading(loadingTarget, store)
       new UserTitle(userTitleTarget, store)
-      new TodoContainer(todoListTarget)
+      new TodoContainer(todoListTarget, {
+        clicked: false,
+        targetTodo: undefined,
+        hoverTodo: undefined,
+        $hover: document.querySelector('.hover'),
+      })
     })
 
     this.fetchUsers(teamId)

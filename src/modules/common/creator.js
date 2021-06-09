@@ -1,4 +1,4 @@
-import { LOADING_END, LOADING_START } from './actions.js'
+import { LOADING_END, LOADING_START, RELOAD } from './actions.js'
 
 const loadingStart = () => {
   return {
@@ -18,4 +18,10 @@ const loadingEnd = () => {
   }
 }
 
-export { loadingStart, loadingEnd }
+const reload = () => {
+  return {
+    type: RELOAD,
+  }
+}
+
+export { loadingStart, loadingEnd, reload }

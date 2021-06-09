@@ -8,6 +8,7 @@ import {
   EDIT_COMPLETE,
   EDIT_TODO,
   GET_TEAM_DATA,
+  MOVE_ITEM_TODO,
   PRIORITY_TODO,
   TOGGLE_TODO,
 } from './actions.js'
@@ -33,6 +34,8 @@ const priorityTodo = (memberId, itemId, priority) =>
 const changeFilter = (memberId, filter) =>
   createAction(CHANGE_FILTER, { memberId, filter })
 
+const moveTodoItem = (prevMemberId, nextMemberId, itemId, newItem) =>
+  createAction(MOVE_ITEM_TODO, { prevMemberId, nextMemberId, itemId, newItem })
 export {
   getTeamData,
   addMember,
@@ -45,4 +48,5 @@ export {
   editTodo,
   cancelEditing,
   editComplete,
+  moveTodoItem,
 }
