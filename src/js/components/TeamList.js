@@ -20,8 +20,8 @@ class TeamList {
   render() {
     const template = this.teamListData.map((team) => {
       return `<div class="team-card-container">
-      <a href="/kanban.html" class="card">
-        <div class="card-title">
+      <a href="/kanban.html?id=${team.id}" class="card">
+        <div class="card-title" value=${team.name}>
           ${team.name}
         </div>
       </a>
