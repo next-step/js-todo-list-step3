@@ -301,8 +301,6 @@ export default class TodoContainer extends Component {
         event.stopImmediatePropagation()
         return
       }
-
-      console.log(contents)
     })
   }
 

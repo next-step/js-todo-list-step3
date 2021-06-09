@@ -37,7 +37,6 @@ export default Object.freeze({
   },
 
   priorityItem(teamId, memberId, itemId, priority) {
-    console.log(priority)
     return HttpRequest.put(
       HttpEndpoint.priorityItem(teamId, memberId, itemId),
       { priority }
