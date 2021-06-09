@@ -36,11 +36,15 @@ export default Object.freeze({
     return HttpRequest.put(HttpEndpoint.toggleItem(teamId, memberId, itemId))
   },
 
-  priorityItem(teamId, memberId, itemId) {
-    return HttpRequest.put(HttpEndpoint.priorityItem(teamId, memberId, itemId))
+  priorityItem(teamId, memberId, itemId, priority) {
+    console.log(priority)
+    return HttpRequest.put(
+      HttpEndpoint.priorityItem(teamId, memberId, itemId),
+      { priority }
+    )
   },
 
   deleteTodoItems(teamId, memberId) {
-    return HttpRequest.delete(HttpEndpoint.items(teamId, memberId))
+    return HttpRequest.del(HttpEndpoint.items(teamId, memberId))
   },
 })

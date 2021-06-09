@@ -3,11 +3,14 @@ import { LOADING_END, LOADING_START } from './common/actions.js'
 import {
   ADD_MEMBER,
   CANCLE_EDIT,
+  CHANGE_FILTER,
   CREATE_TODO,
   DELETE_TODO,
+  DELETE_TODOS,
   EDIT_COMPLETE,
   EDIT_TODO,
   GET_TEAM_DATA,
+  PRIORITY_TODO,
   TOGGLE_TODO,
 } from './todos/actions.js'
 
@@ -157,6 +160,54 @@ const reducer = (state = initialState, { type, payload }) => {
         }),
       }
 
+    case DELETE_TODOS:
+      return {
+        ...state,
+        members: state.members.map((member) => {
+          if (member._id !== payload.memberId) {
+            return member
+          }
+
+          return {
+            ...member,
+            todoList: [],
+          }
+        }),
+      }
+
+    case CHANGE_FILTER:
+      return {
+        ...state,
+        members: state.members.map((member) => {
+          if (member._id !== payload.memberId) {
+            return member
+          }
+
+          return {
+            ...member,
+            filter: payload.filter,
+          }
+        }),
+      }
+
+    case PRIORITY_TODO:
+      return {
+        ...state,
+        members: state.members.map((member) => {
+          if (member._id !== payload.memberId) {
+            return member
+          }
+
+          return {
+            ...member,
+            todoList: member.todoList.map((todoItem) =>
+              todoItem._id === payload.itemId
+                ? { ...todoItem, priority: payload.priority }
+                : todoItem
+            ),
+          }
+        }),
+      }
     default:
       return {
         ...state,
