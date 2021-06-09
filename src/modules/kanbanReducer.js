@@ -219,6 +219,10 @@ const reducer = (state = initialState, { type, payload }) => {
         (todoItem) => todoItem._id !== payload.itemId
       )
 
+      const moveTodo = prevMemberTodos.filter(
+        (todoItem) => todoItem._id === payload.itemId
+      )[0]
+
       return {
         ...state,
         members: state.members.map((member) => {
@@ -238,7 +242,7 @@ const reducer = (state = initialState, { type, payload }) => {
 
           return {
             ...member,
-            todoList: [...member.todoList, payload.newItem],
+            todoList: [...member.todoList, moveTodo],
           }
         }),
       }

@@ -14,6 +14,7 @@ import {
   deleteTodos,
   editComplete,
   editTodo,
+  getTeamData,
   moveTodoItem,
   priorityTodo,
   toggleTodo,
@@ -294,11 +295,13 @@ export default class TodoContainer extends Component {
   mouseDownHandler(event) {
     const targetRemoveTodo = event.target.closest('li')
 
+    console.log(event.target)
     if (
       event.button !== LEFTCLICK ||
       targetRemoveTodo?.dataset?.todo === undefined ||
       targetRemoveTodo.classList.contains('editing') ||
-      event.target.dataset.action !== EDIT_TODO
+      event.target.dataset.action !== undefined ||
+      event.target.classList.contains('chip')
     ) {
       event.stopImmediatePropagation()
       return
@@ -346,20 +349,17 @@ export default class TodoContainer extends Component {
       store.dispatch(loadingStart())
 
       try {
-        const response = await TodoConnector.deleteTodoItem(
-          teamId,
-          prevMemberId,
-          itemId
-        )
+        event.stopImmediatePropagation()
+        await TodoConnector.deleteTodoItem(teamId, prevMemberId, itemId)
 
-        let newItem = await TodoConnector.createTodoItem(
+        const newItem = await TodoConnector.createTodoItem(
           teamId,
           nextMemberId,
           contents
         )
-        console.log(newItem)
+
         if (priority !== Priority.NONE) {
-          newItem = await TodoConnector.priorityItem(
+          await TodoConnector.priorityItem(
             teamId,
             nextMemberId,
             newItem._id,
@@ -367,17 +367,9 @@ export default class TodoContainer extends Component {
           )
         }
 
-        if (completed) {
-          newItem = await TodoConnector.toggleTodoItem(
-            teamId,
-            nextMemberId,
-            newItem._id
-          )
+        if (completed === 'true') {
+          await TodoConnector.toggleTodoItem(teamId, nextMemberId, newItem._id)
         }
-
-        store.dispatch(
-          moveTodoItem(prevMemberId, nextMemberId, itemId, newItem)
-        )
       } catch (error) {
         console.error(error)
 
@@ -388,7 +380,22 @@ export default class TodoContainer extends Component {
         event.stopImmediatePropagation()
         return
       } finally {
-        store.dispatch(loadingEnd())
+        console.log(teamId)
+        const getAllTeams$ = Observable.fromPromise(
+          TodoConnector.getTeam(teamId)
+        )
+
+        getAllTeams$.subscribe({
+          next(teamData) {
+            store.dispatch(getTeamData(teamData))
+          },
+          error(e) {
+            console.log(e)
+          },
+          complete() {
+            store.dispatch(loadingEnd())
+          },
+        })
       }
     } else {
       store.dispatch(reload())
