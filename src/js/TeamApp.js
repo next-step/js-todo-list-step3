@@ -7,7 +7,7 @@ import TeamList from "./components/TeamList.js";
 const init = async () => {
   const { response, error } = await fetchRequest(API_URL.TEAMS, METHOD.GET);
 
-  if (error) alert(ERROR_MESSAGES.GET_TEAM_LIST);
+  if (error) return alert(ERROR_MESSAGES.GET_TEAM_LIST);
 
   new TeamList({ teamListData: response });
 };
