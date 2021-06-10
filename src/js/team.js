@@ -1,41 +1,61 @@
 import api from './api/index.js';
 
-const $addTeamButton = document.querySelector('#add-team-button')
-$addTeamButton.addEventListener('click', () => {
-  const result = prompt('팀 이름을 입력해주세요')
-})
+function TeamList() {
+  this.teams = [];
+  this.teamListContainer = document.querySelector('.team-list-container');
 
-const teamList = async () => {
-  const temp = await api.team.getList();
-  console.log(temp);
-  console.log(temp[0]._id);
-  const team = await api.team.get(temp[0]._id);
-  console.log(team);
-};
+  this.setState = async () => {
+    this.teams = await api.team.getList();
+    await this.render();
+    this.create();
+  }
 
-teamList();
+  this.render = () => {
+    const teamCard = this.teams.map(team => this.teamTemplate(team)).join('');
+    this.teamListContainer.innerHTML = teamCard + this.addBtnTemplate;
+  }
 
+  this.teamTemplate = (team) => {
+    return `
+      <div class="team-card-container">
+        <a href="/kanban.html" class="card">
+          <div class="card-title">
+            ${team.name}
+          </div>
+        </a>
+      </div>
+    `
+  }
 
-const addTeam = async (name) => {
-  const newTeam = await api.team.add({name});
-  console.log(newTeam);
+  this.addBtnTemplate = `
+    <div class="add-team-button-container">
+      <button id="add-team-button" class="ripple">
+        <span class="material-icons">add</span>
+      </button>
+    </div>
+  `
+  
+  this.create = () => {
+    const $addTeamButton = document.querySelector('#add-team-button');
+    $addTeamButton.addEventListener('click', async () => {
+      const name = prompt('팀 이름을 입력해주세요');
+      await api.team.add({ name });
+      this.teams = await api.team.getList();
+      await this.render();
+    })
+  }
+
+  this.delete = async () => {
+    const nameDeletedTeam = prompt('제거할 팀의 이름을 입력해주세요');
+    const deleteTeam = this.teams.find(team => team.name === nameDeletedTeam);
+    console.log(deleteTeam);
+    await api.team.delete(deleteTeam._id);
+  }
+
 }
 
-//addTeam('Dorr123');
+const teamList = new TeamList
+teamList.setState();
 
 
-const deleteTeam = async (teamId) => {
-  const newTeam = await api.team.delete(teamId);
-  console.log(newTeam);
-}
 
-//deleteTeam('ctIa8wzm1');
-/*
-const teamId = teamList()[0]._id;
-
-
-const team = api.team.getTeam(teamId);
-
-
-console.log(team);
-*/

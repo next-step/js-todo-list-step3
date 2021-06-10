@@ -30,9 +30,7 @@ const api = (() => {
   const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/api/teams'
   
   const request = async (uri, config) => await fetch(BASE_URL + uri, config)
-  const requestJsonData = async (uri, config) => 
-    await fetch(BASE_URL + uri, config)
-          .then(data => data.json());
+  const requestJsonData = async (uri, config) => await fetch(BASE_URL + uri, config).then(data => data.json());
 
   const team = {
     add(data) {
@@ -50,13 +48,13 @@ const api = (() => {
     delete(teamId) {
       return request(`/${teamId}`, HTTP_METHOD.DELETE());
     }
-  },
+  };
 
   const member = {
-    addToTeam(teamId, data) {
+    addMember(teamId, data) {
       return requestJsonData(`/${teamId}/members`, HTTP_METHOD.POST(data));
     },
-  },
+  };
 
   const todo = {
     getList(teamId, memberId) {
