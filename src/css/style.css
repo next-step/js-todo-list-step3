@@ -637,3 +637,11 @@ select.chip {
   background-color: #999999;
   opacity: 0.3;
 }
+
+.disable-drag {
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}

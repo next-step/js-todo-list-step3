@@ -15,7 +15,6 @@ import {
   editComplete,
   editTodo,
   getTeamData,
-  moveTodoItem,
   priorityTodo,
   toggleTodo,
 } from '../../modules/todos/creator.js'
@@ -26,7 +25,6 @@ import {
   DELETE_TODO,
   DELETE_TODOS,
   EDIT_COMPLETE,
-  EDIT_TODO,
   TOGGLE_TODO,
 } from '../../modules/todos/actions.js'
 import {
@@ -43,7 +41,7 @@ import { throttle } from '../../utils/event/throttle.js'
 
 const UserTitle = (name) => {
   return `
-    <h2>
+    <h2 class="disable-drag">
       <span><strong>${name}</strong>'s Todo List</span>
     </h2>
   `
@@ -51,9 +49,9 @@ const UserTitle = (name) => {
 
 const TodoInput = () => {
   return `
-    <section class="input-container">
+    <section class="input-container" >
       <input
-        class="new-todo"
+        class="new-todo disable-drag"
         placeholder="할 일을 입력해주세요."
         autofocus
         data-action=${CREATE_TODO}
@@ -100,7 +98,7 @@ const TodoItem = ({
           isCompleted ? 'checked' : ''
         } data-action=${TOGGLE_TODO} />
         <label class="label" data-action=${actions.EDIT_TODO}>
-          <div class="chip-container">
+          <div class="chip-container disable-drag">
           ${
             priority !== Priority.NONE
               ? `<span class="chip ${getLabelColor(
@@ -182,8 +180,8 @@ const Counter = (count, filter) => {
   const { SHOW_ALL, SHOW_PRIORITY, SHOW_ACTIVE, SHOW_COMPLETED } = actions
   return `
     <div class="count-container">
-      <span class="todo-count">총 <strong>${count}</strong> 개</span>
-      <ul class="filters">
+      <span class="todo-count disable-drag">총 <strong>${count}</strong> 개</span>
+      <ul class="filters disable-drag">
         <li>
           <a href="#all" class='${
             filter === Filter.ALL ? 'selected' : ''
@@ -205,7 +203,7 @@ const Counter = (count, filter) => {
           }' data-action=${SHOW_COMPLETED}>완료한 일</a>
         </li>
       </ul>
-      <button class="clear-completed"  data-action=${DELETE_TODOS}>모두 삭제</button>
+      <button class="clear-completed disable-drag"  data-action=${DELETE_TODOS}>모두 삭제</button>
     </div>
   `
 }
@@ -295,7 +293,6 @@ export default class TodoContainer extends Component {
   mouseDownHandler(event) {
     const targetRemoveTodo = event.target.closest('li')
 
-    console.log(event.target)
     if (
       event.button !== LEFTCLICK ||
       targetRemoveTodo?.dataset?.todo === undefined ||
@@ -380,7 +377,6 @@ export default class TodoContainer extends Component {
         event.stopImmediatePropagation()
         return
       } finally {
-        console.log(teamId)
         const getAllTeams$ = Observable.fromPromise(
           TodoConnector.getTeam(teamId)
         )
@@ -390,7 +386,7 @@ export default class TodoContainer extends Component {
             store.dispatch(getTeamData(teamData))
           },
           error(e) {
-            console.log(e)
+            console.error(e)
           },
           complete() {
             store.dispatch(loadingEnd())
