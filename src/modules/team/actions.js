@@ -1,0 +1,4 @@
+const GET_TEAMS = 'GET_TEAMS'
+const CREATE_TEAM = 'CREATE_TEAM'
+
+export { GET_TEAMS, CREATE_TEAM }
