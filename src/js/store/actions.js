@@ -1,4 +1,7 @@
 export default {
+  setCurrentTeam : (context, payload) => {
+    context.commit('setCurrentTeam', payload);
+  },
   addTeam : (context, payload) => {
     context.commit('addTeam', payload);
   },

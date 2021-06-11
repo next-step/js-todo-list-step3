@@ -1,4 +1,10 @@
 export default {
+  setCurrentTeam : (state, payload) => {
+    return {
+      ...state,
+      currentTeam: { ...payload.currentTeam }
+    };
+  },
   addTeam : (state, payload) => {
     return {
       ...state,

@@ -1,3 +1,4 @@
 export default {
-  teams: []
+  teams: [],
+  currentTeam: {},
 };
