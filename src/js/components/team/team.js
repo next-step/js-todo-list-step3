@@ -46,8 +46,8 @@ export default class Team extends Component {
       const { target } = event;
       if (target.className === 'card-delete') {
         event.preventDefault();
-        const index = getIndex(target.closest('.team-card-container'));
-        const id = getId(index, store.getState('teams'));
+        const index = getIndex(target.closest('.team-card-container').dataset);
+        const id = getId(store.getState('teams')[index]);
         this.dataLoader.deleteData(api.deleteTeamURL(id));
         store.dispatch('clearTeam', { index });
       }
