@@ -1,7 +1,15 @@
 /* @jsx createElement */
-import { createElement } from './lib/React.js';
+import TeamTitle from './components/TeamTitle';
+import TeamContainer from './containers/TeamContainer';
+import { createElement } from './lib/React';
 
 const App = () => {
-  return <div>테스트</div>;
+  return (
+    <fragment>
+      <TeamTitle />
+      <TeamContainer />
+    </fragment>
+  );
 };
+
 export default App;
