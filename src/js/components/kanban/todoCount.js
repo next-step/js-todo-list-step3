@@ -1,5 +1,5 @@
-import { ALL, VIEW, COMPLETE, currentFilter } from '../constant/constant.js';
-import { USER_API } from '../constant/api.js';
+import { ALL, VIEW, COMPLETE, currentFilter } from '../../constant/constant.js';
+import { USER_API } from '../../constant/api.js';
 
 class TodoCount {
   constructor($target, { filter, changeFilter, clearList, dataLoader }) {

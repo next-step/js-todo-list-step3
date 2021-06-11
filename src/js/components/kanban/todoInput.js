@@ -1,5 +1,5 @@
-import { USER_API } from '../constant/constant.js';
-import {validLength} from '../utils/utils.js';
+import { USER_API } from '../../constant/constant.js';
+import {validLength} from '../../utils/utils.js';
 
 class TodoInput {
   constructor($target, { dataLoader, onKeyDown }) {

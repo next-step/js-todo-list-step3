@@ -1,4 +1,4 @@
-import { COMPLETE, FIRST, NONE } from "../constant/constant.js";
+import { COMPLETE, FIRST, NONE } from "../../constant/constant.js";
 
 class TodoItem {
   constructor(isCompleted, content, index, priority) {

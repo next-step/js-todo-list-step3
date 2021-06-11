@@ -1,5 +1,5 @@
-import { USER_API } from '../constant/constant.js';
-import { hasName } from '../utils/utils.js';
+import { USER_API } from '../../constant/constant.js';
+import { hasName } from '../../utils/utils.js';
 
 class UserList {
   constructor($target, dataLoader, { onUpdateUser, onDeleteUser }) {

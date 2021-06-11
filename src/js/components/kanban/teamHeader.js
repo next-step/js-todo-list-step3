@@ -12,7 +12,6 @@ export default class TeamHeader extends Component {
   render = () => {
     const team = store.getState('currentTeam');
     const template = title.template(team.name);
-    console.log(team);
     this.$element.innerHTML = '';
     this.$element.insertAdjacentHTML('beforeend', template);
   }

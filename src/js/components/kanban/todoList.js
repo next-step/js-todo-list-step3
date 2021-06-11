@@ -1,6 +1,6 @@
 import TodoItem from './todoItem.js';
-import { ALL, VIEW, COMPLETE, USER_API, NONE, convertToPriority } from '../constant/constant.js';
-import { validLength } from '../utils/utils.js';
+import { ALL, VIEW, COMPLETE, USER_API, NONE, convertToPriority } from '../../constant/constant.js';
+import { validLength } from '../../utils/utils.js';
 
 class TodoList {
   constructor(

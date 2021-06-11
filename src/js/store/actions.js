@@ -7,5 +7,5 @@ export default {
   },
   clearTeam : (context, payload) => {
     context.commit('clearTeam', payload);
-  }
+  },
 }
