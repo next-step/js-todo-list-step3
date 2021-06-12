@@ -1,16 +1,27 @@
-export default function Title(parent, teamName) {
+export default function Title(parent) {
   this.$parent = parent;
-  this.$title = document.createElement('h1');
-  this.$title.id = 'team-title'
-  this.$title.dataset.teamname = teamName;
-  this.$parent.prepend(this.$title);
+  this.teamName = ''
+  this.dom = {};
+
+  this.setDom = () => {
+    this.dom = document.createElement('h1');
+    this.dom.id = 'team-title'
+    this.dom.dataset.teamname = this.teamName;
+    this.$parent.prepend(this.dom);
+  }  
+
+  this.setState = (selectedteamName) => {
+    this.teamName = selectedteamName;
+    this.setDom();
+    this.render();
+  }
 
   this.render = () => {
-    console.log(this.$title)
-    this.$title.innerHTML = `
+    console.log(this.dom)
+    this.dom.innerHTML = `
     <span>
       <strong>
-        ${teamName}
+        ${this.teamName}
       </strong>
         's Todo Lists
     </span>

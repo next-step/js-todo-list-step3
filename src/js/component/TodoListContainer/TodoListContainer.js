@@ -4,6 +4,21 @@ import TodoList from './TodoList/TodoList.js';
 
 export default function TodoListContainer() {
   this.$app = document.querySelector('#app');
+  this.dom = {};
+
+  this.setDom = () => {
+
+  }
+
+
+
+
+
+
+
+
+
+
   this.$todoListContainer = document.createElement('ul');
   this.$todoListContainer.classList.add(['todoapp-container', 'flex-column-container']);
   this.$app.prepend(this.$todoListContainer);
@@ -15,8 +30,9 @@ export default function TodoListContainer() {
 
   this.init = async () => {
     console.log(this.$todoListContainer);
-    await this.setState();
     await this.drawComponent();
+    await this.setState();
+    
     this.render();
   }
 
@@ -27,20 +43,20 @@ export default function TodoListContainer() {
     this.selectedTeam = await team.get(selectedTeamId);
     this.members = this.selectedTeam.members;
     console.log(this.members);
+    this.title.setState(this.selectedTeam.name);
   }
 
   this.drawComponent = () => {
-    this.title = new Title(this.$app, this.selectedTeam.name);
+    this.title = new Title(this.$app);
     this.todoLists = this.members.map(member => new TodoList(
       this.$todoListContainer,
-      member,
-      
+      member
       ));
     }
 
   this.render = () => {
     this.title.render();
-
+    this.todoLists.render();
   }
 
 } 
