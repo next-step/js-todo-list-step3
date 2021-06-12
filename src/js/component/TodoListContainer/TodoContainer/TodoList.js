@@ -1,5 +1,8 @@
 
-function TodoList() {
+function TodoList(parent) {
+  this.$parent = parent;
+  
+
   this.$todoList = document.querySelector('.todo-list');
   this.todoItems = {};
 

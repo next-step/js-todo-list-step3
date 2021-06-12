@@ -1,6 +1,6 @@
 
 import Title from './Title.js';
-import TodoListContainer from './TodoListContainer/TodoListContainer.js';
+import TodoListContainer from './TodoListContainer/TodoMain.js';
 import team from '../store/team.js';
 
 export default function TeamTodoApp() {
