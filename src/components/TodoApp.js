@@ -1,4 +1,4 @@
-import { DOM_ID, KEY, PRIORITY, FILTER } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY } from '../constants/constants.js';
 import { $, getUrlParams } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
@@ -130,7 +130,7 @@ export default class TodoApp {
 
   async toggleTodo(teamId, memberId, todoId) {
     const result = await todoAPI.toggleTodoItem(teamId, memberId, todoId);
-    console.log(result);
+    // console.log(result);
     this.render();
   }
 
@@ -144,16 +144,8 @@ export default class TodoApp {
 
   async allDeleteTodo(teamId, memberId) {
     const result = await todoAPI.allDeleteTodo(teamId, memberId);
-    console.log('allDeleteTodo', result);
+    // console.log('allDeleteTodo', result);
     this.render();
-
-    // const { userId } = this.userState.get();
-
-    // const result = await todoListService.deleteAllItem(userId);
-    // if (result['success']) {
-    //   this.filterState.set(FILTER.ALL);
-    //   this.todoState.set([]);
-    // }
   }
 
   async render() {
@@ -176,6 +168,7 @@ export default class TodoApp {
 
   async closeEditMode({ target, key }) {
     if (!(key === KEY.ESC || key === KEY.ENTER)) return;
+    if (target.classList.contains('new-todo')) return;
 
     const todoItem = target.closest('li');
     if (key === KEY.ESC) {
