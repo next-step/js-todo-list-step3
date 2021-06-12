@@ -1,6 +1,7 @@
 import api from '../../../api/index.js';
 import Title from '../../Title.js';
 import TodoInput from './TodoInput.js'
+import TodoList from './TodoList.js';
 
 export default function TodoContainer(parent) {
   this.$parent = parent;
@@ -10,6 +11,7 @@ export default function TodoContainer(parent) {
   this.teamId = '';
   this.todoInput = {};
   this.$todoApp = {};
+  this.todoList = {};
 
   this.setDom = () => {
     this.dom = document.createElement('li')
@@ -28,6 +30,7 @@ export default function TodoContainer(parent) {
     this.drawComponent();
     this.memberTitle.setState(this.member.name);
     this.todoInput.setState()
+    this.todoList.setState(this.member.todoList);
   }
 
   this.drawComponent = () => {
@@ -39,7 +42,8 @@ export default function TodoContainer(parent) {
           await api.todo.add(this.teamId, member._id, {value})
         }
       }
-    )
+    );
+    this.todoList = new TodoList(this.$todoApp);  
   }
 
 }

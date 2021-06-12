@@ -1,23 +1,36 @@
 
 function TodoList(parent) {
   this.$parent = parent;
-  
+  this.todoItems = [];  
+  this.dom = {};
+  this.$todoContainer = {};
+
+  this.setDom = () => {
+    this.dom = document.createElement('section');
+    this.$todoContainer = document.createElement('ul');
+    this.dom.className = 'main';
+    this.$todoContainer.className = 'todo-list';
+    this.$parent.append(this.dom);
+    this.dom.prepend(this.$todoContainer);
+  }
 
   this.$todoList = document.querySelector('.todo-list');
   this.todoItems = {};
 
   this.setState = updatedTodoItems => {
     this.todoItems = updatedTodoItems;
+    this.setDom();
     this.render(this.todoItems);
   }
 
   this.render = items => {
     const template = items.map(item => this.template(item)).join('');
-    this.$todoList.innerHTML = template
+    this.$todoContainer.innerHTML = template
 
   }
 
   this.template = item => {
+    console.log(item);
     return `
       <li class="todo-list-item">
         <div class="view">
@@ -30,7 +43,7 @@ function TodoList(parent) {
                 <option value="2">2순위</option>
               </select>
             </div>
-            ${item.todo}
+            ${item.contents}
           </label>
           <button class="destroy"></button>
         </div>

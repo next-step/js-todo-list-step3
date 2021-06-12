@@ -17,7 +17,8 @@ export default function TodoMain() {
 
   this.setDom = () => {
     this.dom = document.createElement('ul');
-    this.dom.classList.add(['todoapp-container', 'flex-column-container']);
+    this.dom.className ='todoapp-container';
+    this.dom.classList.add('flex-column-container');
     this.$app.prepend(this.dom);
   }
 
