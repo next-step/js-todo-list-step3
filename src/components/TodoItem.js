@@ -16,7 +16,7 @@ const TodoItem = ({ todo }) => {
               <option value="2">2순위</option>
             </select>
           </div>
-          해야할 아이템
+          {todo.contents}
         </label>
         <button className="destroy"></button>
       </div>

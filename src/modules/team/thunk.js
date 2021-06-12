@@ -1,0 +1,29 @@
+import {
+  GET_TEAM,
+  GET_TEAMS,
+  GET_TEAMS_ERROR,
+  GET_TEAMS_SUCCESS,
+  GET_TEAM_ERROR,
+  GET_TEAM_SUCCESS,
+} from './actions';
+import * as teamAPI from '../../apis/team';
+
+export const getTeams = () => async (dispatch) => {
+  dispatch({ type: GET_TEAMS });
+  try {
+    const teams = await teamAPI.getTeams();
+    dispatch({ type: GET_TEAMS_SUCCESS, payload: teams });
+  } catch (error) {
+    dispatch({ type: GET_TEAMS_ERROR, payload: error });
+  }
+};
+
+export const getTeam = (teamId) => async (dispatch) => {
+  dispatch({ type: GET_TEAM });
+  try {
+    const team = await teamAPI.getTeamById(teamId);
+    dispatch({ type: GET_TEAM_SUCCESS, payload: team });
+  } catch (error) {
+    dispatch({ type: GET_TEAM_ERROR, payload: error });
+  }
+};

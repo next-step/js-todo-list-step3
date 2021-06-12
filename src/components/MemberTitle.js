@@ -1,11 +1,11 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 
-const MemberTitle = ({ member }) => {
+const MemberTitle = ({ name }) => {
   return (
     <h2>
       <span>
-        <strong>{member}</strong>'s Todo List
+        <strong>{name}</strong>'s Todo List
       </span>
     </h2>
   );

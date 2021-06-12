@@ -7,6 +7,7 @@ import thunk from './lib/middlewares/thunk';
 import rootReducer from './modules';
 import App from './App';
 import './style/style.css';
+import { getTeams } from './modules/team/thunk';
 
 // 스토어 생성
 export const store = createStore(rootReducer, [thunk, logger]);
@@ -14,11 +15,13 @@ export const store = createStore(rootReducer, [thunk, logger]);
 // 리스너
 const listener = () => {
   const $root = document.querySelector('#root');
-  if ($root.firstElementChild) {
-    document.querySelector('#root').removeChild($root.firstElementChild);
+  while ($root.hasChildNodes()) {
+    $root.removeChild($root.firstChild);
   }
   render(<App />, $root);
 };
+
+store.dispatch(getTeams());
 
 // 리스너 등록
 store.subscribe(listener);

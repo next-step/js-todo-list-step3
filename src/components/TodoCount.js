@@ -7,7 +7,7 @@ const TodoCount = ({ todos }) => {
       <span className="todo-count">
         총 <strong>0</strong> 개
       </span>
-      <ul class="filters">
+      <ul className="filters">
         <li>
           <a href="#all" className="selected">
             전체보기

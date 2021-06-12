@@ -6,8 +6,8 @@ import TodoApp from './TodoApp';
 const MemberContainer = ({ member }) => {
   return (
     <li className="todoapp-container">
-      <MemberTitle />
-      <TodoApp />
+      <MemberTitle name={member.name} />
+      <TodoApp member={member} />
     </li>
   );
 };

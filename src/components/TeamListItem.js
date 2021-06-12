@@ -1,12 +1,13 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
+import { useSelector } from '../lib/Redux';
 
-const TeamListItem = ({ team }) => {
+const TeamListItem = ({ team, onSelect }) => {
   return (
-    <div className="team-card-container">
-      <a href="/kanban.html" className="card">
-        <div className="card-title">Team A</div>
-      </a>
+    <div className="team-card-container" onclick={() => onSelect(team._id)}>
+      <dic className="card">
+        <div className="card-title">{team.name}</div>
+      </dic>
     </div>
   );
 };

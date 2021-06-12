@@ -1,13 +1,17 @@
 /* @jsx createElement */
+import { createElement } from './lib/React';
+import { useSelector } from './lib/Redux';
 import TeamTitle from './components/TeamTitle';
 import TeamContainer from './containers/TeamContainer';
-import { createElement } from './lib/React';
+import MemberListContainer from './containers/MemberListContainer';
 
 const App = () => {
+  const { selectedTeam } = useSelector((state) => state.team);
+
   return (
     <fragment>
-      <TeamTitle />
-      <TeamContainer />
+      <TeamTitle name={selectedTeam?.name} />
+      {selectedTeam ? <MemberListContainer /> : <TeamContainer />}
     </fragment>
   );
 };

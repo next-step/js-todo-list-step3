@@ -4,12 +4,12 @@ import TodoInput from '../components/TodoInput';
 import TodoList from '../components/TodoList';
 import TodoCount from '../components/TodoCount';
 
-const TodoApp = () => {
+const TodoApp = ({ member }) => {
   return (
     <div className="todoapp">
       <TodoInput />
-      <TodoList todos={todos} />
-      <TodoCount todos={todos} />
+      <TodoList todos={member.todoList} />
+      <TodoCount todos={member.todoList} />
     </div>
   );
 };
