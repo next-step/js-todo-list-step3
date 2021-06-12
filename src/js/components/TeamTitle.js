@@ -1,6 +1,6 @@
 import { $ } from "../lib/util.js";
 
-class TodoTitle {
+class TeamTitle {
   constructor({ titleName }) {
     this.target = $("#user-title strong");
     this.titleName = titleName;
@@ -12,4 +12,4 @@ class TodoTitle {
   }
 }
 
-export default TodoTitle;
+export default TeamTitle;
