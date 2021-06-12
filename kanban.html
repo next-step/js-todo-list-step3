@@ -8,20 +8,29 @@
   </head>
   <body>
     <div id="app">
-      <h1 id="user-title" data-username="eastjun">
+    
+    
+      <!--<h1 id="team-title" data-teamname="eastjun">
         <span><strong>Team</strong>'s Todo List</span>
-      </h1>
-      <ul class="todoapp-list-container flex-column-container">
+      </h1>-->
+
+      <!-- <ul class="todoapp-list-container flex-column-container"> -->
+      
         <li class="todoapp-container">
+          
           <h2>
             <span><strong>eastjun</strong>'s Todo List</span>
           </h2>
+          
           <div class="todoapp">
+          
             <section class="input-container">
               <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
             </section>
+          
             <section class="main">
-              <ul class="todo-list">
+              <ul class="todo-list">               
+                
                 <li class="todo-list-item">
                   <div class="view">
                     <input class="toggle" type="checkbox" />
@@ -39,6 +48,7 @@
                   </div>
                   <input class="edit" value="완료된 타이틀" />
                 </li>
+                
                 <li class="todo-list-item">
                   <div class="view">
                     <input class="toggle" type="checkbox" />
@@ -56,6 +66,7 @@
                   </div>
                   <input class="edit" value="완료된 타이틀" />
                 </li>
+                
                 <li class="todo-list-item">
                   <div class="view">
                     <input class="toggle" type="checkbox" />
@@ -73,6 +84,7 @@
                     <button class="delete"></button>
                   </div>
                   <input class="edit" value="완료된 타이틀" />
+                
                 </li>
                 <li class="todo-list-item">
                   <div class="view">
@@ -92,6 +104,7 @@
                   </div>
                   <input class="edit" value="완료된 타이틀" />
                 </li>
+                
                 <li class="todo-list-item completed">
                   <div class="view">
                     <input class="toggle" type="checkbox" checked />
@@ -110,6 +123,7 @@
                   </div>
                   <input class="edit" value="완료된 타이틀" />
                 </li>
+                
                 <li class="todo-list-item editing">
                   <div class="view">
                     <input class="toggle" type="checkbox" checked />
@@ -128,8 +142,10 @@
                   </div>
                   <input class="edit" value="수정중인 타이틀" />
                 </li>
+
               </ul>
             </section>
+            
             <div class="count-container">
               <span class="todo-count">총 <strong>0</strong> 개</span>
               <ul class="filters">
@@ -150,6 +166,8 @@
             </div>
           </div>
         </li>
+
+        
         <li class="todoapp-container">
           <h2>
             <span><strong>westjun</strong>'s Todo List</span>
@@ -292,9 +310,10 @@
           <button id="add-user-button" class="ripple">
             <span class="material-icons">add</span>
           </button>
-        </li>
+        </li> 
+
       </ul>
     </div>
-    <script src="./src/js/kanban.js"></script>
+    <script type="module" src="./src/js/component/TodoListContainer/TodoListContainer.js"></script>
   </body>
 </html>
