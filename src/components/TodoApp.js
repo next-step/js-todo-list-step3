@@ -1,4 +1,4 @@
-import { DOM_ID, KEY, PRIORITY } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY, FILTER } from '../constants/constants.js';
 import { $, getUrlParams } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
@@ -79,6 +79,11 @@ export default class TodoApp {
       this.toggleTodo(teamId, memberId, todoId);
       return;
     }
+
+    if (target.classList.contains('clear-completed')) {
+      this.allDeleteTodo(teamId, memberId);
+      // console.log('all delete');
+    }
   }
 
   async changeSelector({ target }) {
@@ -135,6 +140,20 @@ export default class TodoApp {
     });
     // console.log(result);
     this.render();
+  }
+
+  async allDeleteTodo(teamId, memberId) {
+    const result = await todoAPI.allDeleteTodo(teamId, memberId);
+    console.log('allDeleteTodo', result);
+    this.render();
+
+    // const { userId } = this.userState.get();
+
+    // const result = await todoListService.deleteAllItem(userId);
+    // if (result['success']) {
+    //   this.filterState.set(FILTER.ALL);
+    //   this.todoState.set([]);
+    // }
   }
 
   async render() {
