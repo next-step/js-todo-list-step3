@@ -2,13 +2,16 @@ import { $ } from "../lib/util.js";
 
 class TeamTitle {
   constructor({ titleName }) {
-    this.target = $("#user-title strong");
     this.titleName = titleName;
     this.init();
   }
 
   init() {
-    this.target.innerHTML = this.titleName;
+    this.render();
+  }
+
+  render() {
+    $("#user-title strong").innerHTML = this.titleName;
   }
 }
 
