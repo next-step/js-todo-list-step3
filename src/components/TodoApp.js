@@ -64,12 +64,18 @@ export default class TodoApp {
   }
 
   async test({ target }) {
+    const teamId = getTeamId();
+    const memberId = getMemberId(target);
+    const todoId = target.id;
+
     if (target.classList.contains('destroy')) {
-      const teamId = getTeamId();
-      const memberId = getMemberId(target);
-      const todoId = target.id;
       this.deleteTodo(teamId, memberId, todoId);
       return;
+    }
+
+    if (target.classList.contains('toggle')) {
+      console.log('toggle', teamId, memberId, todoId);
+      this.toggleTodo(teamId, memberId, todoId);
     }
   }
 
@@ -93,6 +99,12 @@ export default class TodoApp {
 
   async deleteTodo(teamId, memberId, todoId) {
     const result = await todoAPI.deleteTodoItem(teamId, memberId, todoId);
+    this.render();
+  }
+
+  async toggleTodo(teamId, memberId, todoId) {
+    const result = await todoAPI.toggleTodoItem(teamId, memberId, todoId);
+    console.log(result);
     this.render();
   }
 
