@@ -12,7 +12,7 @@ class TeamState extends Subject {
 
   set(updateTeam) {
     this._team = updateTeam;
-    console.log(this.get());
+    // console.log(this.get());
     this.publish();
   }
 }

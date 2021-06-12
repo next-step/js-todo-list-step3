@@ -6,7 +6,7 @@ export const DOM_ID = {
   ADD_TODOLIST: '#add-user-button',
 
   TODO_INPUT: '.new-todo',
-  TODO_LIST: '.todo-list',
+  TODO_LIST: '.todoapp-list-container',
   TODO_COUNT: '.count-container',
   TODO_COUNT_RENDER: '.todo-count > strong',
 

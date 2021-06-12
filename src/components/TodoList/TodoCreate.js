@@ -1,9 +1,9 @@
 import { DOM_ID, KEY, MESSAGGE } from '@constants/constants.js';
 import { $, isEmptyObject } from '@utils/utils.js';
-import { todoListService } from '@api/todolist.js';
+// import { todoListService } from '@api/todolist.js';
 
-import todoState from '@store/todoState.js';
-import userState from '@store/userState.js';
+// import todoState from '@store/todoState.js';
+// import userState from '@store/userState.js';
 
 export default class TodoInput {
   constructor() {
@@ -29,7 +29,7 @@ export default class TodoInput {
     }
 
     const { userId } = this.userState.get();
-    const result = await todoListService.createTodoItem(userId, { contents: todoContents });
+    // const result = await todoListService.createTodoItem(userId, { contents: todoContents });
     if (isEmptyObject(result)) return;
 
     // 상태 업데이트
