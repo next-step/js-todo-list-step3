@@ -16,19 +16,20 @@ export function TodoInput() {
 }
 
 export function getPriortyTemplate(priority) {
-  return PRIORITY[priority] === 'select'
-    ? `
+  return `
     <div class="chip-container">
-      <select class="chip select">
-        <option value="${PRIORITY['NONE']}" selected>순위</option>
-        <option value="${PRIORITY['FIRST']}">1순위</option>
-        <option value="${PRIORITY['SECOND']}">2순위</option>
+      <select class="chip select ${PRIORITY[priority]}" >
+        <option value="NONE" ${PRIORITY[priority] === 'select' ? 'selected' : ''}>
+          순위
+        </option>
+        <option value="FIRST" ${PRIORITY[priority] === 'primary' ? 'selected' : ''}>
+          1순위
+        </option>
+        <option value="SECOND" ${PRIORITY[priority] === 'secondary' ? 'selected' : ''}>2순위
+        </option>
       </select>
     </div>
-    `
-    : `
-        <span class="chip ${priority}">${priority === PRIORITY['FIRST'] ? '1' : '2'}순위</span>
-      `;
+    `;
 }
 
 export function TodoItem({ _id, contents, isCompleted, priority }) {

@@ -1,4 +1,4 @@
-import { DOM_ID, KEY } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY } from '../constants/constants.js';
 import { $, getUrlParams } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
@@ -62,6 +62,7 @@ export default class TodoApp {
     this.$target.addEventListener('keyup', this.closeEditMode.bind(this));
     this.$target.addEventListener('click', this.clickHandler.bind(this));
     this.$target.addEventListener('dblclick', this.openEditMode.bind(this));
+    this.$target.addEventListener('change', this.changeSelector.bind(this));
   }
 
   async clickHandler({ target }) {
@@ -75,9 +76,27 @@ export default class TodoApp {
     }
 
     if (target.classList.contains('toggle')) {
-      console.log('toggle', teamId, memberId, todoId);
       this.toggleTodo(teamId, memberId, todoId);
+      return;
     }
+  }
+
+  async changeSelector({ target }) {
+    if (!target.classList.contains('chip')) return;
+
+    const $todoApp = target.closest('.todoapp');
+    const teamId = getTeamId();
+    const memberId = $todoApp && $todoApp.dataset['memberId'];
+    const itemId = target.closest('li').id;
+
+    const selectValue = target.value;
+    if (selectValue === PRIORITY['select']) return;
+
+    const result = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
+      priority: selectValue,
+    });
+    // console.log(result);
+    this.render();
   }
 
   async addTodo({ code, target }) {
