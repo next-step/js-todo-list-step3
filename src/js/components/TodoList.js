@@ -11,7 +11,9 @@ class TodoList {
         return `<li  class="todo-list-item ${item.isCompleted ? "completed" : ""} 
         ${item.editing ? "editing" : ""}" >
         <div class="view">
-          <input class="toggle" type="checkbox" ${item.isCompleted ? "checked" : ""}/>
+          <input class="toggle" data-memberid = ${this.memberId} data-itemid = ${
+          item.id
+        } type="checkbox" ${item.isCompleted ? "checked" : ""}/>
           <label class="label">
           <div class="chip-container">
           ${

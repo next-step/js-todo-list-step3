@@ -7,7 +7,8 @@ const API_URL = {
   ITEM: (teamId, memberId) => `${baseUrl}/api/teams/${teamId}/members/${memberId}/items`,
   MEMBER_ITEM: (teamId, memberId, itemId) =>
     `${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
-  ITEM_TOGGLE: (userId, itemId) => `${baseUrl}/api/users/${userId}/items/${itemId}/toggle`,
+  ITEM_TOGGLE: (teamId, memberId, itemId) =>
+    `${baseUrl}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`,
   ITEM_PRIORITY: (userId, itemId) => `${baseUrl}/api/users/${userId}/items/${itemId}/priority`,
 };
 

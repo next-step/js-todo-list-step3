@@ -11,7 +11,7 @@ import TodoDeleteAll from "./TodoDeleteAll.js";
 import { onAddMember } from "./event/Team.js";
 import { onAddItem } from "./event/TodoInput.js";
 import { onDeleteAllItem } from "./event/TodoDeleteAll.js";
-import { onDeleteItem } from "./event/TodoList.js";
+import { onDeleteItem, onCompleteItem } from "./event/TodoList.js";
 
 class Team {
   constructor({ teamData }) {
@@ -28,6 +28,7 @@ class Team {
     new TeamTitle({ titleName: this.teamData.name });
     this.onAddMember = onAddMember;
     this.onDeleteItem = onDeleteItem;
+    this.onCompleteItem = onCompleteItem;
     this.init();
   }
 
@@ -51,9 +52,15 @@ class Team {
   }
 
   registerEventListener() {
+    //Team 이벤트
     $("#add-user-button").addEventListener("click", this.onAddMember.bind(this));
+
+    //TodoList 이벤트
     $$(".destroy").forEach((button) => {
       button.addEventListener("click", (event) => this.onDeleteItem(event));
+    });
+    $$(".toggle").forEach((button) => {
+      button.addEventListener("click", (event) => this.onCompleteItem(event));
     });
   }
 
