@@ -1,6 +1,6 @@
 import { $$ } from "../lib/util.js";
 
-class TodoItems {
+class TodoList {
   constructor() {}
 
   render = (items) => {
@@ -65,4 +65,4 @@ class TodoItems {
   // };
 }
 
-export default TodoItems;
+export default TodoList;
