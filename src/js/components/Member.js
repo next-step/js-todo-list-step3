@@ -1,10 +1,8 @@
-import { $$ } from "../lib/util.js";
-
 import TodoList from "./TodoList.js";
 
 class Member {
   constructor() {}
-  render(member) {
+  render({ index, member }) {
     const template = `<h2>
       <span><strong>${member.name}</strong>'s Todo List</span>
       </h2>
@@ -15,7 +13,7 @@ class Member {
       } placeholder="할 일을 입력하세요." autofocus />
     </section>
     <section class="main">
-      ${new TodoList({ memberId: member.id }).render(member.todoList)}
+      ${new TodoList({ memberIndex: index }).render(member.todoList)}
     </section>
     <div class="count-container">
       <span class="todo-count">총 <strong>0</strong> 개</span>
@@ -40,15 +38,6 @@ class Member {
   }
 
   registerEventHandler = () => {
-    // $$(".toggle").forEach((button) => {
-    //   button.addEventListener("click", (e) => this.onComplete(e.target.dataset.id));
-    // });
-    // $$(".label").forEach((title) => {
-    //   title.addEventListener("dblclick", (e) => this.onEditing(e.target.dataset.id));
-    // });
-    // $$(".edit").forEach((input) => {
-    //   input.addEventListener("keydown", (e) => this.onEdit(e, e.target.dataset.id));
-    // });
     // $$(".select").forEach((select) => {
     //   select.addEventListener("click", (e) => {
     //     this.onSetPriority(e, e.target.dataset.id);

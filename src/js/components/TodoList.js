@@ -1,6 +1,6 @@
 class TodoList {
-  constructor({ memberId }) {
-    this.memberId = memberId;
+  constructor({ memberIndex }) {
+    this.memberIndex = memberIndex;
   }
 
   render = (items) => {
@@ -11,10 +11,10 @@ class TodoList {
         return `<li  class="todo-list-item ${item.isCompleted ? "completed" : ""} 
         ${item.editing ? "editing" : ""}" >
         <div class="view">
-          <input class="toggle" data-memberid = ${this.memberId} data-itemid = ${
+          <input class="toggle" data-memberindex = ${this.memberIndex} data-itemid = ${
           item.id
         } type="checkbox" ${item.isCompleted ? "checked" : ""}/>
-          <label class="label">
+          <label class="label"  data-memberindex = ${this.memberIndex} data-itemid = ${item.id}>
           <div class="chip-container">
           ${
             item.priority === "NONE"
@@ -31,11 +31,13 @@ class TodoList {
           }</div>
             ${item.contents}
           </label>
-          <button class="destroy" data-memberid = ${this.memberId} data-itemid = ${
+          <button class="destroy" data-memberindex = ${this.memberIndex} data-itemid = ${
           item.id
         }></button>
         </div>
-        <input class="edit" value="완료된 타이틀" />
+        <input class="edit" value="${item.contents}"  data-memberindex = ${
+          this.memberIndex
+        } data-itemid = ${item.id} />
       </li>`;
       })
       .join("");

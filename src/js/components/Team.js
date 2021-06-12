@@ -11,7 +11,7 @@ import TodoDeleteAll from "./TodoDeleteAll.js";
 import { onAddMember } from "./event/Team.js";
 import { onAddItem } from "./event/TodoInput.js";
 import { onDeleteAllItem } from "./event/TodoDeleteAll.js";
-import { onDeleteItem, onCompleteItem } from "./event/TodoList.js";
+import { onDeleteItem, onCompleteItem, onEditingItem, onEditItem } from "./event/TodoList.js";
 
 class Team {
   constructor({ teamData }) {
@@ -29,6 +29,8 @@ class Team {
     this.onAddMember = onAddMember;
     this.onDeleteItem = onDeleteItem;
     this.onCompleteItem = onCompleteItem;
+    this.onEditingItem = onEditingItem;
+    this.onEditItem = onEditItem;
     this.init();
   }
 
@@ -38,9 +40,9 @@ class Team {
 
   render() {
     const template = this.memberList
-      .map((member) => {
+      .map((member, index) => {
         return `<li class="todoapp-container" >
-        ${new Member({ onDeleteItem: onDeleteItem.bind(this) }).render(member)}
+        ${new Member().render({ index: index, member: member })}
         </li>`;
       })
       .join("");
@@ -56,11 +58,17 @@ class Team {
     $("#add-user-button").addEventListener("click", this.onAddMember.bind(this));
 
     //TodoList 이벤트
-    $$(".destroy").forEach((button) => {
-      button.addEventListener("click", (event) => this.onDeleteItem(event));
+    $$(".destroy").forEach((element) => {
+      element.addEventListener("click", (event) => this.onDeleteItem(event));
     });
-    $$(".toggle").forEach((button) => {
-      button.addEventListener("click", (event) => this.onCompleteItem(event));
+    $$(".toggle").forEach((element) => {
+      element.addEventListener("click", (event) => this.onCompleteItem(event));
+    });
+    $$(".label").forEach((element) => {
+      element.addEventListener("dblclick", (event) => this.onEditingItem(event));
+    });
+    $$(".edit").forEach((input) => {
+      input.addEventListener("keydown", (event) => this.onEditItem(event));
     });
   }
 
