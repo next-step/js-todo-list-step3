@@ -4,7 +4,7 @@ import { ERROR_MESSAGES } from "../../constants/message.js";
 
 async function onDeleteAllItem(event) {
   const teamId = this.teamData._id;
-  const memberId = event.target.dataset.id;
+  const memberId = event.target.dataset.memberid;
 
   const { error } = await fetchRequest(API_URL.ITEM(teamId, memberId), METHOD.DELETE);
   if (error) return alert(ERROR_MESSAGES.DELETE_ALL_ITEMS);

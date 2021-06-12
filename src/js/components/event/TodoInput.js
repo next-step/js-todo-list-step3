@@ -12,7 +12,7 @@ async function onAddItem(event) {
     return alert(ERROR_MESSAGES.TOO_SHORT_ITEM_CONTENTS);
 
   const teamId = this.teamData._id;
-  const memberId = event.target.dataset.id;
+  const memberId = event.target.dataset.memberid;
   const contents = event.target.value;
 
   const { response, error } = await fetchRequest(API_URL.ITEM(teamId, memberId), METHOD.POST, {
