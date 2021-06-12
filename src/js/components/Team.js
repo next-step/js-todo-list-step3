@@ -60,7 +60,17 @@ class Team {
 
     if (error) return alert(ERROR_MESSAGES.ADD_MEMBER);
 
-    this.memberList = response.members;
+    this.memberList = response.members.map((member) => {
+      return new MemberModel({
+        ...member,
+        id: member._id,
+        todoList: !member.todoList
+          ? []
+          : member.todoList.map((item) => {
+              return new TodoItemModel({ ...item, id: item._id });
+            }),
+      });
+    });
 
     this.render();
   }
