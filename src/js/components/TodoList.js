@@ -1,14 +1,15 @@
-import { $$ } from "../lib/util.js";
-
 class TodoList {
-  constructor() {}
+  constructor({ memberId }) {
+    this.memberId = memberId;
+  }
 
   render = (items) => {
     if (!items) return (items = []);
+
     const template = items
       .map((item) => {
-        return `<li class="todo-list-item ${item.isCompleted ? "completed" : ""} 
-        ${item.editing ? "editing" : ""}">
+        return `<li  class="todo-list-item ${item.isCompleted ? "completed" : ""} 
+        ${item.editing ? "editing" : ""}" >
         <div class="view">
           <input class="toggle" type="checkbox" ${item.isCompleted ? "checked" : ""}/>
           <label class="label">
@@ -28,41 +29,19 @@ class TodoList {
           }</div>
             ${item.contents}
           </label>
-          <button class="destroy"></button>
+          <button class="destroy" data-memberid = ${this.memberId} data-itemid = ${
+          item.id
+        }></button>
         </div>
         <input class="edit" value="완료된 타이틀" />
       </li>`;
       })
       .join("");
 
-    return `   <ul class="todo-list">
+    return `<ul class="todo-list">
     ${template}
   </ul>`;
   };
-
-  // registerEventHandler = () => {
-  //   $$(".destroy").forEach((button) => {
-  //     button.addEventListener("click", (e) => this.onDelete(e.target.dataset.id));
-  //   });
-
-  //   $$(".toggle").forEach((button) => {
-  //     button.addEventListener("click", (e) => this.onComplete(e.target.dataset.id));
-  //   });
-
-  //   $$(".label").forEach((title) => {
-  //     title.addEventListener("dblclick", (e) => this.onEditing(e.target.dataset.id));
-  //   });
-
-  //   $$(".edit").forEach((input) => {
-  //     input.addEventListener("keydown", (e) => this.onEdit(e, e.target.dataset.id));
-  //   });
-
-  //   $$(".select").forEach((select) => {
-  //     select.addEventListener("click", (e) => {
-  //       this.onSetPriority(e, e.target.dataset.id);
-  //     });
-  //   });
-  // };
 }
 
 export default TodoList;

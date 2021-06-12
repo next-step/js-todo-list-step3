@@ -1,4 +1,4 @@
-import { $ } from "../lib/util.js";
+import { $, $$ } from "../lib/util.js";
 import { TEMPLATE } from "../constants/template.js";
 
 import MemberModel from "./model/MemberModel.js";
@@ -11,6 +11,7 @@ import TodoDeleteAll from "./TodoDeleteAll.js";
 import { onAddMember } from "./event/Team.js";
 import { onAddItem } from "./event/TodoInput.js";
 import { onDeleteAllItem } from "./event/TodoDeleteAll.js";
+import { onDeleteItem } from "./event/TodoList.js";
 
 class Team {
   constructor({ teamData }) {
@@ -26,6 +27,7 @@ class Team {
     });
     new TeamTitle({ titleName: this.teamData.name });
     this.onAddMember = onAddMember;
+    this.onDeleteItem = onDeleteItem;
     this.init();
   }
 
@@ -37,7 +39,7 @@ class Team {
     const template = this.memberList
       .map((member) => {
         return `<li class="todoapp-container" >
-        ${new Member().render(member)}
+        ${new Member({ onDeleteItem: onDeleteItem.bind(this) }).render(member)}
         </li>`;
       })
       .join("");
@@ -50,6 +52,9 @@ class Team {
 
   registerEventListener() {
     $("#add-user-button").addEventListener("click", this.onAddMember.bind(this));
+    $$(".destroy").forEach((button) => {
+      button.addEventListener("click", (event) => this.onDeleteItem(event));
+    });
   }
 
   addComponentEvent() {
