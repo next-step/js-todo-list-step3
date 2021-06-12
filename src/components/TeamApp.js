@@ -1,5 +1,5 @@
 import { $ } from '../utils/utils.js';
-import { teamService } from '../api/team.js';
+import { teamAPI } from '../api/team.js';
 import { DOM_ID, MESSAGGE } from '../constants/constants';
 
 export default class TeamApp {
@@ -21,14 +21,14 @@ export default class TeamApp {
     const teamName = prompt(MESSAGGE.CREATE_TEAM);
     if (teamName === null) return;
 
-    await teamService.createTeam({ name: teamName });
+    await teamAPI.createTeam({ name: teamName });
     this.render();
   }
 
   async render() {
     $(DOM_ID.ADD_TEAM) && this.clearEvent();
 
-    const teams = await teamService.getTeams();
+    const teams = await teamAPI.getTeams();
     let html = teams.reduce(
       (acc, team) =>
         (acc += `<div class="team-card-container">

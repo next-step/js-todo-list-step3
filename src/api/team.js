@@ -1,5 +1,5 @@
-import { API } from '@utils/api.js';
-import { BASE_URL } from '@constants/constants.js';
+import { API } from '../utils/api.js';
+import { BASE_URL } from '../constants/constants.js';
 
 const URL = {
   createTeam: () => BASE_URL,
@@ -60,7 +60,7 @@ const deleteTeam = async (teamId) => {
   }
 };
 
-export const teamService = {
+export const teamAPI = {
   createTeam,
   getTeams,
   getTeam,

@@ -1,15 +1,15 @@
-import { FILTER } from '@constants/constants.js';
+import { DOM_ID, FILTER } from '../constants/constants.js';
+import { $, getUrlParams } from '../utils/utils.js';
+import { teamAPI } from '../api/team';
 
 // state
 import UserState from '@store/userState.js';
 import TodoState from '@store/todoState.js';
 import FilterState from '@store/filterState.js';
+import teamState from '@store/teamState.js';
 
 // components
-import UserList from '@userList/UserList.js';
-import TodoInput from '@todoList/TodoInput.js';
-import TodoCount from '@todoList/TodoCount.js';
-import TodoList from '@todoList/TodoList.js';
+import UserCreate from './TodoList/UserCreate';
 
 export default class TodoApp {
   constructor() {
@@ -17,20 +17,37 @@ export default class TodoApp {
     this.todoState = TodoState;
     this.filterState = FilterState;
     this.userState = UserState;
+    this.teamState = teamState;
 
-    this.todoState.subscribe(this.render.bind(this));
-    this.filterState.subscribe(this.render.bind(this));
-    this.userState.subscribe(this.render.bind(this));
+    this.init();
 
-    return (async () => {
-      // components
-      this.userList = await new UserList();
-      new TodoInput();
-      this.todoList = new TodoList();
-      this.todoCount = new TodoCount();
+    new UserCreate();
 
-      return this;
-    })();
+    // return (async () => {
+    //   // components
+    //   this.userList = await new UserList();
+    //   new TodoInput();
+    //   this.todoList = new TodoList();
+    //   this.todoCount = new TodoCount();
+
+    //   return this;
+    // })();
+  }
+
+  async init() {
+    const teamId = getUrlParams().id;
+    const result = await teamAPI.getTeam(teamId);
+
+    console.log(result);
+    this.teamState.set(result);
+
+    this.renderTitle();
+  }
+
+  renderTitle() {
+    $(DOM_ID.TEAM_TITLE).innerHTML = `
+      <span><strong>${this.teamState.get().name}</strong>'s Todo List</span>
+    `;
   }
 
   render() {
