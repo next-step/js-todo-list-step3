@@ -1,17 +1,16 @@
 import { $ } from "../lib/util.js";
-import { fetchRequest } from "../lib/fetchRequest.js";
 import { TEMPLATE } from "../constants/template.js";
-import { API_URL, METHOD } from "../constants/config.js";
-import { INFORM_MESSAGES, ERROR_MESSAGES } from "../constants/message.js";
 
 import MemberModel from "./model/MemberModel.js";
 import TodoItemModel from "./model/TodoItemModel.js";
 import TeamTitle from "./TeamTitle.js";
 import Member from "./Member.js";
 import TodoInput from "./TodoInput.js";
+import TodoDeleteAll from "./TodoDeleteAll.js";
 
 import { onAddMember } from "./event/Team.js";
 import { onAddItem } from "./event/TodoInput.js";
+import { onDeleteAllItem } from "./event/TodoDeleteAll.js";
 
 class Team {
   constructor({ teamData }) {
@@ -55,6 +54,7 @@ class Team {
 
   addComponentEvent() {
     new TodoInput({ onAddItem: onAddItem.bind(this) });
+    new TodoDeleteAll({ onDeleteAll: onDeleteAllItem.bind(this) });
   }
 }
 

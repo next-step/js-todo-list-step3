@@ -28,7 +28,7 @@ class Member {
           <a href="#completed">완료한 일</a>
         </li>
       </ul>
-      <button class="clear-completed">모두 삭제</button>
+      <button class="clear-completed"  data-id=${member.id}>모두 삭제</button>
     </div></div>`;
 
     return template;
