@@ -8,6 +8,7 @@ import MemberModel from "./model/MemberModel.js";
 import TodoItemModel from "./model/TodoItemModel.js";
 import TeamTitle from "./TeamTitle.js";
 import Member from "./Member.js";
+import TodoInput from "./TodoInput.js";
 
 class Team {
   constructor({ teamData }) {
@@ -22,11 +23,12 @@ class Team {
       });
     });
     new TeamTitle({ titleName: this.teamData.name });
+    this.todoInput = new TodoInput({ onAddItem: this.onAddItem.bind(this) });
     this.init();
   }
 
   init() {
-    this.render(this.memberList);
+    this.render();
     this.registerEventListener();
   }
 
@@ -40,6 +42,8 @@ class Team {
       .join("");
 
     $(".todoapp-list-container").innerHTML = template + TEMPLATE.ADD_MEMBER_BUTTON;
+
+    this.addEvent();
   }
 
   registerEventListener() {
@@ -72,6 +76,29 @@ class Team {
       });
     });
 
+    this.render();
+  }
+
+  addEvent() {
+    new TodoInput({ onAddItem: this.onAddItem.bind(this) });
+  }
+
+  async onAddItem(target) {
+    const teamId = this.teamData._id;
+    const memberId = target.dataset.id;
+    const contents = target.value;
+
+    const { response, error } = await fetchRequest(API_URL.ITEM(teamId, memberId), METHOD.POST, {
+      contents,
+    });
+
+    if (error) return alert(ERROR_MESSAGES.ADD_ITEM);
+
+    this.memberList.filter((member) => {
+      if (member.id === memberId) {
+        member.todoList.push(new TodoItemModel({ ...response, id: response._id }));
+      }
+    });
     this.render();
   }
 }

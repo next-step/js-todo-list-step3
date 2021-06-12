@@ -1,4 +1,4 @@
-import TodoItems from "./TodoItems.js";
+import TodoList from "./TodoList.js";
 
 class Member {
   render(member) {
@@ -7,10 +7,10 @@ class Member {
       </h2>
       <div class="todoapp">
       <section class="input-container">
-      <input class="new-todo" placeholder="할 일을 입력하세요." autofocus />
+      <input class="new-todo" data-id=${member.id} placeholder="할 일을 입력하세요." autofocus />
     </section>
     <section class="main">
-      ${new TodoItems().render(member.todoList)}
+      ${new TodoList().render(member.todoList)}
     </section>
     <div class="count-container">
       <span class="todo-count">총 <strong>0</strong> 개</span>

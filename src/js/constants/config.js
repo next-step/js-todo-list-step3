@@ -4,7 +4,7 @@ const API_URL = {
   TEAMS: `${baseUrl}/api/teams`,
   TEAM: (teamId) => `${baseUrl}/api/teams/${teamId}`,
   MEMBERS: (teamId) => `${baseUrl}/api/teams/${teamId}/members`,
-  ITEM: (userId) => `${baseUrl}/api/users/${userId}/items/`,
+  ITEM: (teamId, memberId) => `${baseUrl}/api/teams/${teamId}/members/${memberId}/items`,
   USER_ITEM: (userId, itemId) => `${baseUrl}/api/users/${userId}/items/${itemId}`,
   ITEM_TOGGLE: (userId, itemId) => `${baseUrl}/api/users/${userId}/items/${itemId}/toggle`,
   ITEM_PRIORITY: (userId, itemId) => `${baseUrl}/api/users/${userId}/items/${itemId}/priority`,
