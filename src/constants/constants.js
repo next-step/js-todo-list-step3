@@ -1,4 +1,7 @@
 export const DOM_ID = {
+  TEAM_LIST: '.team-list-container',
+  ADD_TEAM: '#add-team-button',
+
   TODO_INPUT: '.new-todo',
   TODO_LIST: '.todo-list',
   TODO_COUNT: '.count-container',
@@ -26,7 +29,7 @@ export const PRIORITY = {
   SECOND: 'secondary',
 };
 
-export const BASE_URL = `https://js-todo-list-9ca3a.df.r.appspot.com/api/users`;
+export const BASE_URL = `https://js-todo-list-9ca3a.df.r.appspot.com/api/teams`;
 
 export const MESSAGGE = {
   CREATE_USER: '추가하고 싶은 이름을 입력해주세요.',
