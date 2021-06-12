@@ -18,12 +18,14 @@ export function TodoInput() {
 export function getPriortyTemplate(priority) {
   return PRIORITY[priority] === 'select'
     ? `
-          <select class="chip select">
-            <option value="${PRIORITY['NONE']}" selected>순위</option>
-            <option value="${PRIORITY['FIRST']}">1순위</option>
-            <option value="${PRIORITY['SECOND']}">2순위</option>
-          </select>
-        `
+    <div class="chip-container">
+      <select class="chip select">
+        <option value="${PRIORITY['NONE']}" selected>순위</option>
+        <option value="${PRIORITY['FIRST']}">1순위</option>
+        <option value="${PRIORITY['SECOND']}">2순위</option>
+      </select>
+    </div>
+    `
     : `
         <span class="chip ${priority}">${priority === PRIORITY['FIRST'] ? '1' : '2'}순위</span>
       `;
@@ -68,26 +70,6 @@ export function TodoCount() {
   </div>
     `;
 }
-
-// export function TodoList(member) {
-//   const todoList = member.todoList;
-//   console.log(member);
-
-//   return `
-//     <li class="todoapp-container">
-//       ${UserTitle(member.name)}
-//     <div class="todoapp"  data-member-id="sdfds">
-//       ${TodoInput()}
-//       <section class="main">
-//         <ul class="todo-list">
-//           ${todoList.map((todoItem) => TodoItem(todoItem))}
-//         </ul>
-//       </section>
-//         ${TodoCount()}
-//     </div>
-//   </li>
-//     `;
-// }
 
 export function KanbanTitle(teamName) {
   return `

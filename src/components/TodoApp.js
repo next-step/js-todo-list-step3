@@ -60,6 +60,17 @@ export default class TodoApp {
 
   addEvent() {
     this.$target.addEventListener('keypress', this.addTodo.bind(this));
+    this.$target.addEventListener('click', this.test.bind(this));
+  }
+
+  async test({ target }) {
+    if (target.classList.contains('destroy')) {
+      const teamId = getTeamId();
+      const memberId = getMemberId(target);
+      const todoId = target.id;
+      this.deleteTodo(teamId, memberId, todoId);
+      return;
+    }
   }
 
   async addTodo({ code, target }) {
@@ -80,6 +91,11 @@ export default class TodoApp {
     this.render();
   }
 
+  async deleteTodo(teamId, memberId, todoId) {
+    const result = await todoAPI.deleteTodoItem(teamId, memberId, todoId);
+    this.render();
+  }
+
   async render() {
     const teamId = getUrlParams().id;
     const result = await teamAPI.getTeam(teamId);
@@ -93,4 +109,8 @@ export default class TodoApp {
 }
 
 const getTeamId = () => teamState.get().teamId;
-const getMemberId = () => membersState.get();
+const getMemberId = (target) => {
+  const $todoApp = target.closest('.todoapp');
+  const memberId = $todoApp && $todoApp.dataset['memberId'];
+  return memberId;
+};
