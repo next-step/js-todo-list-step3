@@ -38,4 +38,6 @@ export const MESSAGGE = {
   DELETE_USER: '정말로 삭제하시겠습니까?',
 
   CREATE_CONTENTS_VALIDATE_ERROR: '컨텐츠 생성 오류 - 최소 2글자 이상이어야 합니다.',
+
+  CREATE_TEAM: '팀 이름을 입력해주세요',
 };

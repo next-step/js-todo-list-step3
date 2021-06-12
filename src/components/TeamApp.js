@@ -1,34 +1,51 @@
 import { $ } from '../utils/utils.js';
 import { teamService } from '../api/team.js';
-import { DOM_ID } from '../constants/constants';
+import { DOM_ID, MESSAGGE } from '../constants/constants';
 
 export default class TeamApp {
   constructor() {
     this.$target = $(DOM_ID.TEAM_LIST);
-    this.$addBtn = $(DOM_ID.ADD_TEAM);
 
-    this.init();
-    this.addEvent();
+    this.render();
   }
 
   addEvent() {
-    this.$addBtn.addEventListener('click', () => console.log('click'));
+    $(DOM_ID.ADD_TEAM).addEventListener('click', this.createTeam.bind(this));
   }
 
-  async init() {
+  clearEvent() {
+    $(DOM_ID.ADD_TEAM).removeEventListener('click', this.createTeam.bind(this));
+  }
+
+  async createTeam() {
+    const teamName = prompt(MESSAGGE.CREATE_TEAM);
+    if (teamName === null) return;
+
+    await teamService.createTeam({ name: teamName });
+    this.render();
+  }
+
+  async render() {
+    $(DOM_ID.ADD_TEAM) && this.clearEvent();
+
     const teams = await teamService.getTeams();
-    this.$target.insertAdjacentHTML('afterbegin', this.render(teams));
-  }
-
-  render(teams) {
-    return teams.reduce(
+    let html = teams.reduce(
       (acc, team) =>
-        (acc += `<div class="team-card-container" data-id=${team._id}>
-          <a href="/kanban.html" class="card">
+        (acc += `<div class="team-card-container">
+          <a href="/kanban.html?id=${team._id}" class="card">
             <div class="card-title">${team.name}</div>
           </a>
         </div>`),
       '',
     );
+
+    html += `
+      <button id="add-team-button" class="ripple">
+        <span class="material-icons">add</span>
+      </button>
+    `;
+
+    this.$target.innerHTML = html;
+    this.addEvent();
   }
 }
