@@ -51,7 +51,6 @@ export default class TodoApp {
     membersState.set(members);
 
     this.render();
-    // this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
   }
 
   renderTeamTitle() {
@@ -60,10 +59,12 @@ export default class TodoApp {
 
   addEvent() {
     this.$target.addEventListener('keypress', this.addTodo.bind(this));
-    this.$target.addEventListener('click', this.test.bind(this));
+    this.$target.addEventListener('keyup', this.closeEditMode.bind(this));
+    this.$target.addEventListener('click', this.clickHandler.bind(this));
+    this.$target.addEventListener('dblclick', this.openEditMode.bind(this));
   }
 
-  async test({ target }) {
+  async clickHandler({ target }) {
     const teamId = getTeamId();
     const memberId = getMemberId(target);
     const todoId = target.id;
@@ -81,6 +82,7 @@ export default class TodoApp {
 
   async addTodo({ code, target }) {
     if (code !== KEY.ENTER) return;
+    if (!target.classList.contains('new-todo')) return;
 
     const todoContents = target.value;
     if (todoContents.length < 2) {
@@ -108,6 +110,14 @@ export default class TodoApp {
     this.render();
   }
 
+  async updateTodoContents(teamId, memberId, itemId, contents) {
+    const result = await todoAPI.updateTodoItemContents(teamId, memberId, itemId, {
+      contents,
+    });
+    // console.log(result);
+    this.render();
+  }
+
   async render() {
     const teamId = getUrlParams().id;
     const result = await teamAPI.getTeam(teamId);
@@ -117,6 +127,30 @@ export default class TodoApp {
     membersState.set(members);
 
     this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
+  }
+
+  openEditMode({ target }) {
+    if (target.classList.value !== 'label') return;
+
+    const todoItem = target.closest('li');
+    todoItem.classList.add('editing');
+  }
+
+  async closeEditMode({ target, key }) {
+    if (!(key === KEY.ESC || key === KEY.ENTER)) return;
+
+    const todoItem = target.closest('li');
+    if (key === KEY.ESC) {
+      todoItem.classList.remove('editing');
+      return;
+    }
+
+    const teamId = getTeamId();
+    const memberId = getMemberId(target);
+    const itemId = target.id;
+    const updatedValue = todoItem.querySelector('.edit').value;
+
+    await this.updateTodoContents(teamId, memberId, itemId, updatedValue);
   }
 }
 

@@ -7,6 +7,8 @@ const URL = {
     `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`,
   toggleTodoItem: (teamId, memberId, itemId) =>
     `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/toggle`,
+  updateTodoItemContents: (teamId, memberId, itemId) =>
+    `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`,
 };
 
 const createTodoItem = async (teamId, memberId, body) => {
@@ -48,8 +50,22 @@ const toggleTodoItem = async (teamId, memberId, itemId) => {
   }
 };
 
+const updateTodoItemContents = async (teamId, memberId, itemId, body) => {
+  try {
+    const response = await API.put(URL.updateTodoItemContents(teamId, memberId, itemId), body);
+    if (response.ok) {
+      return response.json();
+    }
+
+    throw new Error(`${response.status}, ${response.statusText}`);
+  } catch (error) {
+    console.error(`Create Member Error: ${error}`);
+  }
+};
+
 export const todoAPI = {
   createTodoItem,
   deleteTodoItem,
   toggleTodoItem,
+  updateTodoItemContents,
 };
