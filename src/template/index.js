@@ -69,24 +69,25 @@ export function TodoCount() {
     `;
 }
 
-export function TodoList(member) {
-  const todoList = member.todoList;
+// export function TodoList(member) {
+//   const todoList = member.todoList;
+//   console.log(member);
 
-  return `
-    <li class="todoapp-container">
-      ${UserTitle(member.name)}
-    <div class="todoapp">
-      ${TodoInput()}
-      <section class="main">
-        <ul class="todo-list">
-          ${todoList.map((todoItem) => TodoItem(todoItem))}
-        </ul>
-      </section>
-        ${TodoCount()}
-    </div>
-  </li>
-    `;
-}
+//   return `
+//     <li class="todoapp-container">
+//       ${UserTitle(member.name)}
+//     <div class="todoapp"  data-member-id="sdfds">
+//       ${TodoInput()}
+//       <section class="main">
+//         <ul class="todo-list">
+//           ${todoList.map((todoItem) => TodoItem(todoItem))}
+//         </ul>
+//       </section>
+//         ${TodoCount()}
+//     </div>
+//   </li>
+//     `;
+// }
 
 export function KanbanTitle(teamName) {
   return `
