@@ -11,7 +11,13 @@ import TodoFilter from "./TodoFilter.js";
 import { onAddMember } from "./event/Team.js";
 import { onAddItem } from "./event/TodoInput.js";
 import { onDeleteAllItem } from "./event/TodoDeleteAll.js";
-import { onDeleteItem, onCompleteItem, onEditingItem, onEditItem } from "./event/TodoList.js";
+import {
+  onDeleteItem,
+  onCompleteItem,
+  onEditingItem,
+  onEditItem,
+  onSetPriority,
+} from "./event/TodoList.js";
 import { filtering } from "./event/TodoFilter.js";
 
 class Team {
@@ -33,6 +39,7 @@ class Team {
     this.onCompleteItem = onCompleteItem;
     this.onEditingItem = onEditingItem;
     this.onEditItem = onEditItem;
+    this.onSetPriority = onSetPriority;
     this.init();
   }
 
@@ -61,6 +68,11 @@ class Team {
     });
     $$(".edit").forEach((element) => {
       element.addEventListener("keydown", (event) => this.onEditItem(event));
+    });
+    $$(".select").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        this.onSetPriority(event);
+      });
     });
   }
 

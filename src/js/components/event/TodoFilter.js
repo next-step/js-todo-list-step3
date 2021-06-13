@@ -1,4 +1,4 @@
-import { $, $$ } from "../../lib/util.js";
+import { $$ } from "../../lib/util.js";
 
 const removeSelectedClass = (memberIndex) => {
   $$(".filters")

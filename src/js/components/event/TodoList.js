@@ -2,6 +2,7 @@ import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { ERROR_MESSAGES } from "../../constants/message.js";
 import { KEY } from "../../constants/eventKey.js";
+import { PRIORITY } from "../../constants/constant.js";
 
 async function onDeleteItem(event) {
   const teamId = this.teamData._id;
@@ -87,4 +88,29 @@ async function onEditItem(event) {
   }
 }
 
-export { onDeleteItem, onCompleteItem, onEditingItem, onEditItem };
+async function onSetPriority(event) {
+  if (event.target.value == 0) return;
+
+  const teamId = this.teamData._id;
+  const memberIndex = event.target.dataset.memberindex;
+  const memberId = this.memberListData[memberIndex].id;
+  const itemId = event.target.dataset.itemid;
+
+  const { response, error } = await fetchRequest(
+    API_URL.ITEM_PRIORITY(teamId, memberId, itemId),
+    METHOD.PUT,
+    { priority: PRIORITY[event.target.value] }
+  );
+
+  if (error) return alert(ERROR_MESSAGES.SET_PRIORITY);
+
+  this.memberListData[memberIndex].todoList.map((item) => {
+    if (item.id === itemId) {
+      item.priority = response.priority;
+    }
+  });
+
+  this.render(this.memberListData);
+}
+
+export { onDeleteItem, onCompleteItem, onEditingItem, onEditItem, onSetPriority };
