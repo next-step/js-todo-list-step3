@@ -37,12 +37,14 @@ export function TodoItem({ _id, contents, isCompleted, priority }) {
   return `
     <li id="${_id}" class="${isCompleted && 'completed'}">
       <div class="view">
-        <input id="${_id}" class="toggle" type="checkbox" ${isCompleted && 'checked'}/>
+        <input id="${_id}" data-action="toggle" class="toggle" type="checkbox" ${
+    isCompleted && 'checked'
+  }/>
         <label class="label">
           ${selectView}
           ${contents}
         </label>
-        <button id=${_id} class="destroy"></button>
+        <button id=${_id} data-action="destroy" class="destroy"></button>
       </div>
       <input id="${_id}" class="edit" value=${contents} />
     </li>
@@ -55,31 +57,35 @@ export function TodoCount(todoCount, filter) {
     <span class="todo-count">총 <strong>${todoCount}</strong> 개</span>
     <ul class="filters">
       <li>
-        <a href="#all" class="${filter === FILTER.ALL ? 'selected' : ''}" data-type="all">
+        <a href="#all" data-action="change-filter" data-type="all" 
+          class="${filter === FILTER.ALL ? 'selected' : ''}"  
+        >
           전체보기
         </a>
       </li>
       <li>
-        <a href="#priority" class="${
-          filter === FILTER.PRIORITY ? 'selected' : ''
-        }" data-type="priority">
+        <a href="#priority" data-action="change-filter" data-type="priority"
+          class="${filter === FILTER.PRIORITY ? 'selected' : ''}"
+        >
           우선 순위
         </a>
       </li>
       <li>
-        <a href="#active" class="${filter === FILTER.ACTIVE ? 'selected' : ''}" data-type="active">
+        <a href="#active" data-action="change-filter" data-type="active"
+          class="${filter === FILTER.ACTIVE ? 'selected' : ''}"
+        >
           해야할 일
         </a>
       </li>
       <li>
-        <a href="#completed" class="${
-          filter === FILTER.COMPLETED ? 'selected' : ''
-        }" data-type="completed">
+        <a href="#completed"  data-action="change-filter"  data-type="completed" 
+          class="${filter === FILTER.COMPLETED ? 'selected' : ''}" data-type="completed"
+        >
           완료한 일
         </a>
       </li>
     </ul>
-    <button class="clear-completed" >모두 삭제</button>
+    <button data-action="clear-completed" class="clear-completed" >모두 삭제</button>
   </div>
     `;
 }

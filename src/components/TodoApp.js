@@ -1,4 +1,4 @@
-import { DOM_ID, KEY, PRIORITY, FILTER, MESSAGGE } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY, FILTER, MESSAGGE, ACTION } from '../constants/constants.js';
 import { $, getUrlParams, isEmptyObject } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
@@ -85,38 +85,24 @@ export default class TodoApp {
     const memberId = getMemberId(target);
     const todoId = target.id;
 
-    if (target.classList.contains('destroy')) {
-      this.deleteTodo(teamId, memberId, todoId);
-      return;
-    }
+    if (!target.dataset['action']) return;
 
-    if (target.classList.contains('toggle')) {
-      this.toggleTodo(teamId, memberId, todoId);
-      return;
-    }
-
-    if (target.classList.contains('clear-completed')) {
-      this.allDeleteTodo(teamId, memberId);
-      return;
-    }
-
-    if (target.tagName === 'A') {
-      this.changeFilter(memberId, target);
-      return;
-    }
-
-    if (target.dataset && target.dataset.action === 'add-member') {
-      this.createMember(teamId);
-      return;
-    }
+    const _ = {
+      [ACTION.DELETE_TODO]: () => this.deleteTodo(teamId, memberId, todoId),
+      [ACTION.TOGGLE_TODO]: () => this.toggleTodo(teamId, memberId, todoId),
+      [ACTION.ALL_DELETE_TODO]: () => this.allDeleteTodo(teamId, memberId),
+      [ACTION.CHANGE_FILTER]: () => this.changeFilter(memberId, target),
+      [ACTION.CREATE_MEMBER]: () => this.createMember(teamId),
+    }[target.dataset['action']]();
   }
 
   async changeSelector({ target }) {
     if (!target.classList.contains('chip')) return;
 
-    const $todoApp = target.closest('.todoapp');
+    console.log('changeSelector');
+
     const teamId = getTeamId();
-    const memberId = $todoApp && $todoApp.dataset['memberId'];
+    const memberId = getMemberId(target);
     const itemId = target.closest('li').id;
 
     const selectValue = target.value;
@@ -125,6 +111,7 @@ export default class TodoApp {
     const result = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
       priority: selectValue,
     });
+
     if (isEmptyObject(result)) return;
     this.render();
   }
@@ -150,8 +137,7 @@ export default class TodoApp {
   }
 
   async deleteTodo(teamId, memberId, todoId) {
-    const result = await todoAPI.deleteTodoItem(teamId, memberId, todoId);
-    if (isEmptyObject(result)) return;
+    await todoAPI.deleteTodoItem(teamId, memberId, todoId);
     this.render();
   }
 
@@ -170,7 +156,15 @@ export default class TodoApp {
   }
 
   async allDeleteTodo(teamId, memberId) {
-    const result = await todoAPI.allDeleteTodo(teamId, memberId);
+    await todoAPI.allDeleteTodo(teamId, memberId);
+    this.render();
+  }
+
+  async createMember(teamId) {
+    const memberName = prompt(MESSAGGE.CREATE_USER);
+    if (!memberName) return;
+
+    const result = await memberAPI.createMember(teamId, { name: memberName });
     if (isEmptyObject(result)) return;
     this.render();
   }
@@ -187,13 +181,29 @@ export default class TodoApp {
     this.render();
   }
 
-  async createMember(teamId) {
-    const memberName = prompt(MESSAGGE.CREATE_TEAM);
-    if (memberName === null) return;
+  openEditMode({ target }) {
+    if (target.classList.value !== 'label') return;
 
-    const result = await memberAPI.createMember(teamId, { name: memberName });
-    if (isEmptyObject(result)) return;
-    this.render();
+    const todoItem = target.closest('li');
+    todoItem.classList.add('editing');
+  }
+
+  closeEditMode({ target, key }) {
+    if (!(key === KEY.ESC || key === KEY.ENTER)) return;
+    if (target.classList.contains('new-todo')) return;
+
+    const todoItem = target.closest('li');
+    if (key === KEY.ESC) {
+      todoItem.classList.remove('editing');
+      return;
+    }
+
+    const teamId = getTeamId();
+    const memberId = getMemberId(target);
+    const itemId = target.id;
+    const updatedValue = todoItem.querySelector('.edit').value;
+
+    this.updateTodoContents(teamId, memberId, itemId, updatedValue);
   }
 
   async render() {
@@ -213,31 +223,6 @@ export default class TodoApp {
         </button>
       </li>  
     `;
-  }
-
-  openEditMode({ target }) {
-    if (target.classList.value !== 'label') return;
-
-    const todoItem = target.closest('li');
-    todoItem.classList.add('editing');
-  }
-
-  async closeEditMode({ target, key }) {
-    if (!(key === KEY.ESC || key === KEY.ENTER)) return;
-    if (target.classList.contains('new-todo')) return;
-
-    const todoItem = target.closest('li');
-    if (key === KEY.ESC) {
-      todoItem.classList.remove('editing');
-      return;
-    }
-
-    const teamId = getTeamId();
-    const memberId = getMemberId(target);
-    const itemId = target.id;
-    const updatedValue = todoItem.querySelector('.edit').value;
-
-    await this.updateTodoContents(teamId, memberId, itemId, updatedValue);
   }
 }
 

@@ -7,6 +7,14 @@ export const DOM_ID = {
   TODO_LIST: '.todoapp-list-container',
 };
 
+export const ACTION = {
+  DELETE_TODO: 'destroy',
+  TOGGLE_TODO: 'toggle',
+  ALL_DELETE_TODO: 'clear-completed',
+  CHANGE_FILTER: 'change-filter',
+  CREATE_MEMBER: 'add-member',
+};
+
 export const KEY = {
   ENTER: 'Enter',
   ESC: 'Escape',
@@ -17,7 +25,6 @@ export const FILTER = {
   PRIORITY: 'priority',
   ACTIVE: 'active',
   COMPLETED: 'completed',
-  // ALL_DELETED: 'clear-completed',
 };
 
 export const PRIORITY = {
@@ -29,12 +36,7 @@ export const PRIORITY = {
 export const BASE_URL = `https://js-todo-list-9ca3a.df.r.appspot.com/api/teams`;
 
 export const MESSAGGE = {
-  CREATE_USER: '이름을 입력해주세요.',
-  CREATE_USER_VALIDATE_ERROR: '유저 생성 오류 - 최소 2글자 이상이어야 합니다.',
-
-  DELETE_USER: '정말로 삭제하시겠습니까?',
-
-  CREATE_CONTENTS_VALIDATE_ERROR: '컨텐츠 생성 오류 - 최소 2글자 이상이어야 합니다.',
-
   CREATE_TEAM: '팀 이름을 입력해주세요',
+  CREATE_USER: '이름을 입력해주세요.',
+  CREATE_CONTENTS_VALIDATE_ERROR: '컨텐츠 생성 오류 - 최소 2글자 이상이어야 합니다.',
 };
