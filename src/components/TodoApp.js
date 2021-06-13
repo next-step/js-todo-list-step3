@@ -1,5 +1,5 @@
 import { DOM_ID, KEY, PRIORITY, FILTER, MESSAGGE } from '../constants/constants.js';
-import { $, getUrlParams } from '../utils/utils.js';
+import { $, getUrlParams, isEmptyObject } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
 
@@ -61,8 +61,8 @@ export default class TodoApp {
 
   async init() {
     const teamId = getUrlParams().id;
-    const result = await teamAPI.getTeam(teamId);
-    const { _id, members, name } = result;
+    const team = await teamAPI.getTeam(teamId);
+    const { _id, members, name } = team;
 
     teamState.set({ teamId: _id, teamName: name });
     membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
@@ -106,14 +106,9 @@ export default class TodoApp {
     }
 
     if (target.dataset && target.dataset.action === 'add-member') {
-      console.log(target.dataset);
-
-      console.log('addMemver', teamId);
       this.createMember(teamId);
-
       return;
     }
-    // if (target.classList.contains('')) console.log(target);
   }
 
   async changeSelector({ target }) {
@@ -130,7 +125,7 @@ export default class TodoApp {
     const result = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
       priority: selectValue,
     });
-    // console.log(result);
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
@@ -150,17 +145,19 @@ export default class TodoApp {
     const contents = target.value;
 
     const result = await todoAPI.createTodoItem(teamId, memberId, { contents });
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
   async deleteTodo(teamId, memberId, todoId) {
     const result = await todoAPI.deleteTodoItem(teamId, memberId, todoId);
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
   async toggleTodo(teamId, memberId, todoId) {
     const result = await todoAPI.toggleTodoItem(teamId, memberId, todoId);
-    // console.log(result);
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
@@ -168,13 +165,13 @@ export default class TodoApp {
     const result = await todoAPI.updateTodoItemContents(teamId, memberId, itemId, {
       contents,
     });
-    // console.log(result);
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
   async allDeleteTodo(teamId, memberId) {
     const result = await todoAPI.allDeleteTodo(teamId, memberId);
-    // console.log('allDeleteTodo', result);
+    if (isEmptyObject(result)) return;
     this.render();
   }
 
@@ -195,8 +192,7 @@ export default class TodoApp {
     if (memberName === null) return;
 
     const result = await memberAPI.createMember(teamId, { name: memberName });
-    // console.log(result);
-
+    if (isEmptyObject(result)) return;
     this.render();
   }
 

@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    team: './src/js/team.js',
-    kanban: './src/js/kanban.js',
+    team: './src/team.js',
+    kanban: './src/kanban.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
