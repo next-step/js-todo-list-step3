@@ -171,6 +171,9 @@ export default class TodoApp {
     const filters = membersState.get().map((member) => member.filter);
     membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
 
+    console.log('teamState', teamState.get());
+    console.log('membersState', membersState.get());
+
     this.$target.innerHTML = `
       ${membersState.get().map((member) => TodoList(member))}
       <li class="add-user-button-container">

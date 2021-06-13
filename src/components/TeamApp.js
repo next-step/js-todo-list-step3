@@ -2,33 +2,42 @@ import { $ } from '@utils/utils.js';
 import { teamAPI } from '@api/team.js';
 import { DOM_ID, MESSAGGE } from '@constants/constants';
 
+import teamsState from '@store/teamsState';
+
 export default class TeamApp {
   constructor() {
     this.$target = $(DOM_ID.TEAM_LIST);
 
-    this.render();
+    teamsState.subscribe(this.render.bind(this));
+
+    this.init();
   }
 
   addEvent() {
-    $(DOM_ID.ADD_TEAM).addEventListener('click', this.createTeam.bind(this));
+    this.$target.addEventListener('click', this.createTeam.bind(this));
   }
 
-  clearEvent() {
-    $(DOM_ID.ADD_TEAM).removeEventListener('click', this.createTeam.bind(this));
-  }
+  async createTeam({ target }) {
+    if (target.id !== 'add-team-button') return;
 
-  async createTeam() {
     const teamName = prompt(MESSAGGE.CREATE_TEAM);
     if (teamName === null) return;
 
-    await teamAPI.createTeam({ name: teamName });
-    this.render();
+    const team = await teamAPI.createTeam({ name: teamName });
+    const prevTeams = teamsState.get();
+    teamsState.set(prevTeams.concat(team));
+  }
+
+  async init() {
+    const teams = await teamAPI.getTeams();
+    teamsState.set(teams);
+
+    this.addEvent();
   }
 
   async render() {
-    $(DOM_ID.ADD_TEAM) && this.clearEvent();
+    const teams = teamsState.get();
 
-    const teams = await teamAPI.getTeams();
     let html = teams.reduce(
       (acc, team) =>
         (acc += `<div class="team-card-container">
@@ -38,7 +47,6 @@ export default class TeamApp {
         </div>`),
       '',
     );
-
     html += `
       <button id="add-team-button" class="ripple">
         <span class="material-icons">add</span>
@@ -46,6 +54,5 @@ export default class TeamApp {
     `;
 
     this.$target.innerHTML = html;
-    this.addEvent();
   }
 }

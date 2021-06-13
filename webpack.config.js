@@ -18,6 +18,7 @@ module.exports = {
       '@utils': path.resolve(__dirname, 'src/utils/'),
       '@api': path.resolve(__dirname, 'src/api/'),
       '@template': path.resolve(__dirname, 'src/template/'),
+      '@core': path.resolve(__dirname, 'src/core/'),
     },
     extensions: ['.js'],
   },
