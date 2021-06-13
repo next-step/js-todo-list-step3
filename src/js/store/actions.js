@@ -8,6 +8,9 @@ export default {
   addTodoItem : (context, payload) => {
     context.commit('addTodoItem', payload);
   },
+  modifyTodoItem : (context, payload) => {
+    context.commit('modifyTodoItem', payload);
+  },
   addMember : (context, payload) => {
     context.commit('addMember', payload);
   },

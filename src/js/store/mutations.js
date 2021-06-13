@@ -12,10 +12,21 @@ export default {
     };
   },
   addTodoItem : (state, payload) => {
-    const { todoList, index } = payload;
+    const { todoItem, index } = payload;
     const { teams, teamIndex } = state;
-    const newTodoList = [...teams[teamIndex].members[index].todoList, todoList];
-    teams[teamIndex].members[index].todoList = newTodoList;
+    const newTodoList = [...teams[teamIndex].members[index].todoList, todoItem];
+    teams[teamIndex].members[index].todoList = [...newTodoList];
+    return {
+      ...state,
+      teams: [...teams]
+    };
+  },
+  modifyTodoItem : (state, payload) => {
+    const { memberIndex , itemIndex, todoItem } = payload;
+    const { teams, teamIndex } = state;
+    const newTodoList = [...teams[teamIndex].members[memberIndex].todoList];
+    newTodoList[itemIndex] = todoItem;
+    teams[teamIndex].members[memberIndex].todoList = newTodoList;
     return {
       ...state,
       teams: [...teams]
