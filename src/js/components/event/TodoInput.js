@@ -2,7 +2,7 @@ import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { ERROR_MESSAGES } from "../../constants/message.js";
 import { KEY } from "../../constants/eventKey.js";
-import { MINIMUM_LENGTH } from "../../constants/constant.js";
+import { MINIMUM_LENGTH, PRIORITY } from "../../constants/constant.js";
 
 import TodoItemModel from "../model/TodoItemModel.js";
 
@@ -24,7 +24,9 @@ async function onAddItem(event) {
 
   this.memberListData.filter((member) => {
     if (member.id === memberId) {
-      member.todoList.push(new TodoItemModel({ ...response, id: response._id }));
+      member.todoList.push(
+        new TodoItemModel({ ...response, id: response._id, priority: PRIORITY[response.priority] })
+      );
     }
   });
 

@@ -2,6 +2,8 @@ import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { INFORM_MESSAGES, ERROR_MESSAGES } from "../../constants/message.js";
 
+import TeamModel from "../model/TeamModel.js";
+
 async function addTeam() {
   const teamName = prompt(INFORM_MESSAGES.ADD_TEAM);
   if (!teamName) return;

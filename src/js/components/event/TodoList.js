@@ -2,7 +2,7 @@ import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { ERROR_MESSAGES } from "../../constants/message.js";
 import { KEY } from "../../constants/eventKey.js";
-import { PRIORITY_VALUE } from "../../constants/constant.js";
+import { PRIORITY_VALUE, PRIORITY } from "../../constants/constant.js";
 
 async function onDeleteItem(event) {
   const teamId = this.teamData._id;
@@ -45,6 +45,8 @@ async function onCompleteItem(event) {
 }
 
 function onEditingItem(event) {
+  if (event.target.className !== "label") return;
+
   const memberIndex = event.target.dataset.memberindex;
   const itemId = event.target.dataset.itemid;
 
@@ -106,7 +108,7 @@ async function onSetPriority(event) {
 
   this.memberListData[memberIndex].todoList.map((item) => {
     if (item.id === itemId) {
-      item.priority = response.priority;
+      item.priority = PRIORITY[response.priority];
     }
   });
 
