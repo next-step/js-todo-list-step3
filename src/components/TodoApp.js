@@ -10,12 +10,25 @@ import teamState from '@store/teamState.js';
 import membersState from '@store/membersState.js';
 
 function TodoList(member) {
+  function comparePriority(todoItem1, todoItem2) {
+    const priority1 = changePriorityToNumber(todoItem1.priority);
+    const priority2 = changePriorityToNumber(todoItem2.priority);
+
+    return priority1 - priority2;
+  }
+
+  function changePriorityToNumber(priority) {
+    if (priority === 'FIRST') return 1;
+    if (priority === 'SECOND') return 2;
+    if (priority === 'NONE') return 3;
+  }
+
   function getFilteredTodoList(todoList, filter = 'all') {
     return {
       [FILTER.ALL]: todoList,
       [FILTER.ACTIVE]: todoList.filter((todoItem) => !todoItem.isCompleted),
       [FILTER.COMPLETED]: todoList.filter((todoItem) => todoItem.isCompleted),
-      [FILTER.PRIORITY]: todoList,
+      [FILTER.PRIORITY]: [...todoList].sort(comparePriority),
     }[filter];
   }
 

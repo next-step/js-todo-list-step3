@@ -1,17 +1,10 @@
 export const DOM_ID = {
   TEAM_LIST: '.team-list-container',
   ADD_TEAM: '#add-team-button',
+
   TEAM_TITLE: '#user-title',
 
-  ADD_TODOLIST: '#add-user-button',
-
-  TODO_INPUT: '.new-todo',
   TODO_LIST: '.todoapp-list-container',
-  TODO_COUNT: '.count-container',
-  TODO_COUNT_RENDER: '.todo-count > strong',
-
-  // USER_LIST: '#user-list',
-  // USER_TITLE_RENDER: '#user-title strong',
 };
 
 export const KEY = {
