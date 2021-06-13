@@ -3,6 +3,7 @@ class MemberModel {
     this.id = id;
     this.name = name;
     this.todoList = todoList;
+    this.filter = "all";
   }
 }
 
