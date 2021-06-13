@@ -163,7 +163,7 @@ export default class TodoApp {
   }
 
   async render() {
-    const teamId = getUrlParams().id;
+    const teamId = getTeamId();
     const result = await teamAPI.getTeam(teamId);
     const { _id, members, name } = result;
 
