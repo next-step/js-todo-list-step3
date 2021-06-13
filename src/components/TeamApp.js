@@ -41,7 +41,7 @@ export default class TeamApp {
     let html = teams.reduce(
       (acc, team) =>
         (acc += `<div class="team-card-container">
-          <a href="/kanban.html?id=${team._id}" class="card">
+          <a href="kanban.html?id=${team._id}" class="card">
             <div class="card-title">${team.name}</div>
           </a>
         </div>`),
