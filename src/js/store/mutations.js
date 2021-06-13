@@ -21,6 +21,14 @@ export default {
       teams: [...teams]
     };
   },
+  addMember : (state, payload) => {
+    const { teams, teamIndex } = state;
+    teams[teamIndex] = payload;
+    return {
+      ...state,
+      teams: [...teams]
+    };
+  },
   clearTodoItem : (state, payload) => {
     const { memberIndex, itemIndex } = payload;
     const { teams, teamIndex } = state;

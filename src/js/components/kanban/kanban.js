@@ -41,6 +41,15 @@ export default class Kanban extends Component {
         const itemIndex = target.closest('.todo-list-item').dataset['index'];
         const res = await this.dataLoader.deleteData(api.deleteTodoItemURL(teamId, memberId, todoList[itemIndex]._id));
         store.dispatch('clearTodoItem', { memberIndex: index, itemIndex });
+      } else if (['ripple', 'material-icons'].includes(target.className)) {
+        let name = prompt('새로운 팀원 이름을 입력해주세요');
+        name && name.trim();
+        if (name && name.length > 2) {
+          const body = { name };
+          const { _id: teamId } = store.getState('currentTeam');
+          const res = await this.dataLoader.postData(api.addMemberURL(teamId), body);
+          store.dispatch('addMember', res);
+        }
       }
     })
 
