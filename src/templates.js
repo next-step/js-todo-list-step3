@@ -11,5 +11,5 @@ export const addTeamButtonTemplate = `
 		<button id="add-team-button" class="ripple">
 			<span class="material-icons">add</span>
 		</button>
-	</div>;
+	</div>
 `;
