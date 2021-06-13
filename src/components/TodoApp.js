@@ -1,9 +1,10 @@
-import { DOM_ID, KEY, PRIORITY, FILTER } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY, FILTER, MESSAGGE } from '../constants/constants.js';
 import { $, getUrlParams } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
 
 import { todoAPI } from '../api/todo';
+import { memberAPI } from '../api/member.js';
 
 // state
 import teamState from '@store/teamState.js';
@@ -38,16 +39,16 @@ function TodoList(member) {
   return `
     <li class="todoapp-container">
       ${UserTitle(member.name)}
-    <div class="todoapp" data-member-id="${member._id}">
-      ${TodoInput()}
-      <section class="main">
-        <ul class="todo-list">
-          ${todoList.map((todoItem) => TodoItem(todoItem))}
-        </ul>
-      </section>
+      <div class="todoapp" data-member-id="${member._id}">
+        ${TodoInput()}
+        <section class="main">
+          <ul class="todo-list">
+            ${todoList.map((todoItem) => TodoItem(todoItem))}
+          </ul>
+        </section>
         ${TodoCount(todoList.length, member.filter)}
-    </div>
-  </li>
+      </div>
+    </li>
     `;
 }
 
@@ -55,14 +56,7 @@ export default class TodoApp {
   constructor() {
     this.$target = $(DOM_ID.TODO_LIST);
 
-    return (async () => {
-      await this.init();
-
-      this.renderTeamTitle();
-
-      this.addEvent();
-      return this;
-    })();
+    this.init();
   }
 
   async init() {
@@ -73,11 +67,9 @@ export default class TodoApp {
     teamState.set({ teamId: _id, teamName: name });
     membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
 
-    this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
-  }
-
-  renderTeamTitle() {
-    $(DOM_ID.TEAM_TITLE).innerHTML = KanbanTitle(teamState.get().teamName);
+    $('#user-title').innerHTML = KanbanTitle(name);
+    this.render();
+    this.addEvent();
   }
 
   addEvent() {
@@ -112,6 +104,16 @@ export default class TodoApp {
       this.changeFilter(memberId, target);
       return;
     }
+
+    if (target.dataset && target.dataset.action === 'add-member') {
+      console.log(target.dataset);
+
+      console.log('addMemver', teamId);
+      this.createMember(teamId);
+
+      return;
+    }
+    // if (target.classList.contains('')) console.log(target);
   }
 
   async changeSelector({ target }) {
@@ -188,6 +190,16 @@ export default class TodoApp {
     this.render();
   }
 
+  async createMember(teamId) {
+    const memberName = prompt(MESSAGGE.CREATE_TEAM);
+    if (memberName === null) return;
+
+    const result = await memberAPI.createMember(teamId, { name: memberName });
+    // console.log(result);
+
+    this.render();
+  }
+
   async render() {
     const teamId = getUrlParams().id;
     const result = await teamAPI.getTeam(teamId);
@@ -197,7 +209,14 @@ export default class TodoApp {
     const filters = membersState.get().map((member) => member.filter);
     membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
 
-    this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
+    this.$target.innerHTML = `
+      ${membersState.get().map((member) => TodoList(member))}
+      <li class="add-user-button-container">
+        <button id="add-user-button" class="ripple" data-action="add-member">
+          <span class="material-icons" data-action="add-member">add</span>
+        </button>
+      </li>  
+    `;
   }
 
   openEditMode({ target }) {
