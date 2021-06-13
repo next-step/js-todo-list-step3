@@ -12,7 +12,8 @@ async function onAddItem(event) {
     return alert(ERROR_MESSAGES.TOO_SHORT_ITEM_CONTENTS);
 
   const teamId = this.teamData._id;
-  const memberId = event.target.dataset.memberid;
+  const memberIndex = event.target.dataset.memberindex;
+  const memberId = this.memberListData[memberIndex].id;
   const contents = event.target.value;
 
   const { response, error } = await fetchRequest(API_URL.ITEM(teamId, memberId), METHOD.POST, {
@@ -21,14 +22,14 @@ async function onAddItem(event) {
 
   if (error) return alert(ERROR_MESSAGES.ADD_ITEM);
 
-  this.memberList.filter((member) => {
+  this.memberListData.filter((member) => {
     if (member.id === memberId) {
       member.todoList.push(new TodoItemModel({ ...response, id: response._id }));
     }
   });
 
   event.target.value = "";
-  this.render();
+  this.render(this.memberListData);
 }
 
 export { onAddItem };

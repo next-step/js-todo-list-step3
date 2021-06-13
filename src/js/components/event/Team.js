@@ -15,7 +15,7 @@ async function onAddMember() {
 
   if (error) return alert(ERROR_MESSAGES.ADD_MEMBER);
 
-  this.memberList = response.members.map((member) => {
+  this.memberListData = response.members.map((member) => {
     return new MemberModel({
       ...member,
       id: member._id,
@@ -27,7 +27,7 @@ async function onAddMember() {
     });
   });
 
-  this.render();
+  this.render(this.memberListData);
 }
 
 export { onAddMember };
