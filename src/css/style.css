@@ -508,8 +508,8 @@ select.chip {
   width: 100%;
   display: flex;
   align-items: start;
-  overflow-y: hidden;
-  overflow-x: auto;
+  overflow-y: auto;
+  overflow-x: scroll;
   height: calc(100vh - 170px);
 }
 

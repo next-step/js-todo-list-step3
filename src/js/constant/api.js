@@ -3,5 +3,7 @@ export default {
   userURL: '/api/users',
   teamURL: '/api/teams',
   deleteTeamURL: (id) => `/api/teams/${id}`,
-  todoListURL: (teamId, memberId) => `/api/teams/${teamId}/members/${memberId}`
+  todoListURL: (teamId, memberId) => `/api/teams/${teamId}/members/${memberId}`,
+  addTodoItemURL: (teamId, memberId) => `/api/teams/${teamId}/members/${memberId}/items`,
+  deleteTodoItemURL: (teamId, memberId, itemId) => `/api/teams/${teamId}/members/${memberId}/items/${itemId}`,
 };

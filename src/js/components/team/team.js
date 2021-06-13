@@ -1,6 +1,7 @@
 import Component from '../../lib/component.js';
 import store from '../../store/index.js';
 import api from '../../constant/api.js';
+import { ALL } from '../../constant/constant.js';
 import teamCard from './presentational/teamCard.js';
 import teamContainer from './presentational/teamContainer.js';
 import { getIndex, getId } from '../../utils/utils.js';
@@ -45,7 +46,11 @@ export default class Team extends Component {
       }
       if (['card', 'card-title'].includes(target.className)) {
         const index = getIndex(target.closest('.team-card-container').dataset);
-        store.dispatch('setCurrentTeam', { currentTeam: store.getState('teams')[index] });
+        const currentTeam = store.getState('teams')[index];
+        const { members } = currentTeam;
+        const newMembers = members.map((member) => ({ ...member, filter: ALL }));
+        currentTeam.members = newMembers;
+        store.dispatch('setCurrentTeam', { index });
         this.toggleComponent(document.querySelector('.team-view'), document.querySelector('.kanban-view'));
       }
     });

@@ -1,6 +1,3 @@
-export const ASCII_PRITABLE_START=33;
-export const ASCII_PRITABLE_END=126;
-
 export const VIEW = 0;
 export const COMPLETE = 1;
 export const ALL = 2;

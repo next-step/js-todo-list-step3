@@ -57,6 +57,14 @@ export default class Store {
     return true;
   }
   getState = (key) => {
-    return this.state[key];
+    switch(key) {
+      case 'teams':
+        return this.state[key];
+      case 'currentTeam':
+        const { teamIndex } = this.state;
+        return this.state['teams'][teamIndex];
+      default:
+        return [];
+    }
   }
 }

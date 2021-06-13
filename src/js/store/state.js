@@ -1,7 +1,4 @@
 export default {
   teams: [],
-  currentTeam: {
-    members: [],
-    _id: ''
-  },
+  teamIndex: 0,
 };
