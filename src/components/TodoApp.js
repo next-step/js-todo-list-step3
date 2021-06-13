@@ -40,13 +40,13 @@ export default class TodoApp {
   clickHandler({ target }) {
     const teamId = getTeamId();
     const memberId = getMemberId(target);
-    const todoId = target.id;
+    const itemId = target.id;
 
     if (!target.dataset['action']) return;
 
     const _ = {
-      [ACTION.DELETE_TODO]: () => this.deleteTodo(teamId, memberId, todoId),
-      [ACTION.TOGGLE_TODO]: () => this.toggleTodo(teamId, memberId, todoId),
+      [ACTION.DELETE_TODO]: () => this.deleteTodo(teamId, memberId, itemId),
+      [ACTION.TOGGLE_TODO]: () => this.toggleTodo(teamId, memberId, itemId),
       [ACTION.ALL_DELETE_TODO]: () => this.allDeleteTodo(teamId, memberId),
       [ACTION.CHANGE_FILTER]: () => this.changeFilter(memberId, target),
       [ACTION.CREATE_MEMBER]: () => this.createMember(teamId),
@@ -63,12 +63,24 @@ export default class TodoApp {
     const selectValue = target.value;
     if (selectValue === PRIORITY['select']) return;
 
-    const result = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
+    const updatedPriortyTodoItem = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
       priority: selectValue,
     });
 
-    if (isEmptyObject(result)) return;
-    this.render();
+    if (isEmptyObject(updatedPriortyTodoItem)) return;
+
+    const prevMembers = membersState.get();
+    const updatedSelectorTodo = prevMembers.map((member) =>
+      member._id === memberId
+        ? {
+            ...member,
+            todoList: member.todoList.map((todoItem) =>
+              todoItem._id === itemId ? updatedPriortyTodoItem : todoItem,
+            ),
+          }
+        : member,
+    );
+    membersState.set(updatedSelectorTodo);
   }
 
   async addTodo({ code, target }) {
@@ -88,6 +100,7 @@ export default class TodoApp {
     const todoItem = await todoAPI.createTodoItem(teamId, memberId, { contents });
     if (!todoItem) return;
 
+    // 상태 업데이트
     const prevMembers = membersState.get();
     const addedTodoList = prevMembers.map((member) =>
       member._id === memberId ? { ...member, todoList: member.todoList.concat(todoItem) } : member,
@@ -95,49 +108,95 @@ export default class TodoApp {
     membersState.set(addedTodoList);
   }
 
-  async deleteTodo(teamId, memberId, todoId) {
-    await todoAPI.deleteTodoItem(teamId, memberId, todoId);
-    this.render();
+  async deleteTodo(teamId, memberId, itemId) {
+    await todoAPI.deleteTodoItem(teamId, memberId, itemId);
+
+    // 상태 업데이트
+    const prevMembers = membersState.get();
+    const deletedMembers = prevMembers.map((member) =>
+      member._id === memberId
+        ? { ...member, todoList: member.todoList.filter((todoItem) => todoItem._id !== itemId) }
+        : member,
+    );
+    membersState.set(deletedMembers);
   }
 
-  async toggleTodo(teamId, memberId, todoId) {
-    const result = await todoAPI.toggleTodoItem(teamId, memberId, todoId);
-    if (isEmptyObject(result)) return;
-    this.render();
+  async toggleTodo(teamId, memberId, itemId) {
+    const updatedToggleTodoItem = await todoAPI.toggleTodoItem(teamId, memberId, itemId);
+    if (isEmptyObject(updatedToggleTodoItem)) return;
+
+    // 상태 업데이트
+    const prevMembers = membersState.get();
+    const updatedToggleTodo = prevMembers.map((member) =>
+      member._id === memberId
+        ? {
+            ...member,
+            todoList: member.todoList.map((todoItem) =>
+              todoItem._id === itemId ? updatedToggleTodoItem : todoItem,
+            ),
+          }
+        : member,
+    );
+    membersState.set(updatedToggleTodo);
   }
 
   async updateTodoContents(teamId, memberId, itemId, contents) {
-    const result = await todoAPI.updateTodoItemContents(teamId, memberId, itemId, {
+    const updatedContentsTodoIem = await todoAPI.updateTodoItemContents(teamId, memberId, itemId, {
       contents,
     });
-    if (isEmptyObject(result)) return;
-    this.render();
+    if (isEmptyObject(updatedContentsTodoIem)) return;
+
+    // 상태 업데이트
+    const prevMembers = membersState.get();
+    const updatedContentsTodo = prevMembers.map((member) =>
+      member._id === memberId
+        ? {
+            ...member,
+            todoList: member.todoList.map((todoItem) =>
+              todoItem._id === itemId ? updatedContentsTodoIem : todoItem,
+            ),
+          }
+        : member,
+    );
+    membersState.set(updatedContentsTodo);
   }
 
   async allDeleteTodo(teamId, memberId) {
     await todoAPI.allDeleteTodo(teamId, memberId);
-    this.render();
+
+    // 상태 업데이트
+    const prevMembers = membersState.get();
+    const deleteAllTodoList = prevMembers.map((member) =>
+      member._id === memberId
+        ? {
+            ...member,
+            todoList: [],
+          }
+        : member,
+    );
+    membersState.set(deleteAllTodoList);
   }
 
   async createMember(teamId) {
     const memberName = prompt(MESSAGGE.CREATE_USER);
     if (!memberName) return;
 
-    const result = await memberAPI.createMember(teamId, { name: memberName });
-    if (isEmptyObject(result)) return;
-    this.render();
+    const team = await memberAPI.createMember(teamId, { name: memberName });
+    if (isEmptyObject(team)) return;
+
+    // 상태 업데이트
+    const members = team.members;
+    membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
   }
 
   changeFilter(memberId, target) {
     const filter = target.dataset['type'];
-    const members = membersState.get();
 
+    const members = membersState.get();
     const updatedMembers = members.map((member) =>
       member._id === memberId ? { ...member, filter } : member,
     );
     membersState.set(updatedMembers);
-
-    this.render();
   }
 
   openEditMode({ target }) {
@@ -166,23 +225,6 @@ export default class TodoApp {
   }
 
   async render() {
-    // const teamId = getTeamId();
-    // const result = await teamAPI.getTeam(teamId);
-    // const { _id, members, name } = result;
-    // const members = membersState.get();
-    // console.log('members', members);
-
-    // const filters = membersState.get().map((member) => member.filter);
-    // membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
-
-    // console.log('membersState', membersState.get());
-    const members = membersState.get();
-    // console.log('members', members);
-    members.forEach((member) => {
-      console.log('member', member);
-      console.log('todoList', member.todoList);
-    });
-
     this.$target.innerHTML = `
       ${membersState.get().map((member) => TodoList(member))}
       <li class="add-user-button-container">
