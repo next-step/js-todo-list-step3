@@ -21,9 +21,10 @@ export const KEY = {
 
 export const FILTER = {
   ALL: 'all',
+  PRIORITY: 'priority',
   ACTIVE: 'active',
   COMPLETED: 'completed',
-  ALL_DELETED: 'clear-completed',
+  // ALL_DELETED: 'clear-completed',
 };
 
 export const PRIORITY = {

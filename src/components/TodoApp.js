@@ -1,4 +1,4 @@
-import { DOM_ID, KEY, PRIORITY } from '../constants/constants.js';
+import { DOM_ID, KEY, PRIORITY, FILTER } from '../constants/constants.js';
 import { $, getUrlParams } from '../utils/utils.js';
 import { teamAPI } from '../api/team';
 import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
@@ -10,7 +10,17 @@ import teamState from '@store/teamState.js';
 import membersState from '@store/membersState.js';
 
 function TodoList(member) {
-  const todoList = member.todoList;
+  function getFilteredTodoList(todoList, filter = 'all') {
+    return {
+      [FILTER.ALL]: todoList,
+      [FILTER.ACTIVE]: todoList.filter((todoItem) => !todoItem.isCompleted),
+      [FILTER.COMPLETED]: todoList.filter((todoItem) => todoItem.isCompleted),
+      [FILTER.PRIORITY]: todoList,
+    }[filter];
+  }
+
+  let todoList = member.todoList;
+  todoList = getFilteredTodoList(todoList, member.filter);
 
   return `
     <li class="todoapp-container">
@@ -22,7 +32,7 @@ function TodoList(member) {
           ${todoList.map((todoItem) => TodoItem(todoItem))}
         </ul>
       </section>
-        ${TodoCount()}
+        ${TodoCount(todoList.length, member.filter)}
     </div>
   </li>
     `;
@@ -48,9 +58,9 @@ export default class TodoApp {
     const { _id, members, name } = result;
 
     teamState.set({ teamId: _id, teamName: name });
-    membersState.set(members);
+    membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
 
-    this.render();
+    this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
   }
 
   renderTeamTitle() {
@@ -82,7 +92,12 @@ export default class TodoApp {
 
     if (target.classList.contains('clear-completed')) {
       this.allDeleteTodo(teamId, memberId);
-      // console.log('all delete');
+      return;
+    }
+
+    if (target.tagName === 'A') {
+      this.changeFilter(memberId, target);
+      return;
     }
   }
 
@@ -148,13 +163,26 @@ export default class TodoApp {
     this.render();
   }
 
+  changeFilter(memberId, target) {
+    const filter = target.dataset['type'];
+    const members = membersState.get();
+
+    const updatedMembers = members.map((member) =>
+      member._id === memberId ? { ...member, filter } : member,
+    );
+    membersState.set(updatedMembers);
+
+    this.render();
+  }
+
   async render() {
     const teamId = getUrlParams().id;
     const result = await teamAPI.getTeam(teamId);
     const { _id, members, name } = result;
 
     teamState.set({ teamId: _id, teamName: name });
-    membersState.set(members);
+    const filters = membersState.get().map((member) => member.filter);
+    membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
 
     this.$target.innerHTML = membersState.get().map((member) => TodoList(member));
   }
