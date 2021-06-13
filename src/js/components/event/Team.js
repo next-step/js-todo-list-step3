@@ -1,6 +1,7 @@
 import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { INFORM_MESSAGES, ERROR_MESSAGES } from "../../constants/message.js";
+import { PRIORITY } from "../../constants/constant.js";
 
 import MemberModel from "../model/MemberModel.js";
 import TodoItemModel from "../model/TodoItemModel.js";
@@ -15,17 +16,19 @@ async function onAddMember() {
 
   if (error) return alert(ERROR_MESSAGES.ADD_MEMBER);
 
-  this.memberListData = response.members.map((member) => {
-    return new MemberModel({
-      ...member,
-      id: member._id,
-      todoList: !member.todoList
+  const newMember = response.members[response.members.length - 1];
+
+  this.memberListData.push(
+    new MemberModel({
+      ...newMember,
+      id: newMember._id,
+      todoList: !newMember.todoList
         ? []
-        : member.todoList.map((item) => {
-            return new TodoItemModel({ ...item, id: item._id });
+        : newMember.todoList.map((item) => {
+            return new TodoItemModel({ ...item, id: item._id, priority: PRIORITY[item.priority] });
           }),
-    });
-  });
+    })
+  );
 
   this.render(this.memberListData);
 }

@@ -15,7 +15,7 @@ class MemberList {
       <input class="new-todo" data-memberindex=${index} placeholder="할 일을 입력하세요." autofocus />
     </section>
     <section class="main">
-      ${new TodoList({ memberIndex: index }).render(member.todoList)}
+      ${new TodoList({ memberIndex: index, filterType: member.filter }).render(member.todoList)}
     </section>
     <div class="count-container">
       <span class="todo-count">총 <strong>${member.todoList.length}</strong> 개</span>

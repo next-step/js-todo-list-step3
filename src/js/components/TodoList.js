@@ -1,12 +1,15 @@
+import { filter } from "../lib/renderingFilter.js";
+
 class TodoList {
-  constructor({ memberIndex }) {
+  constructor({ memberIndex, filterType }) {
     this.memberIndex = memberIndex;
+    this.filterType = filterType;
   }
 
   render = (items) => {
     if (!items) return (items = []);
 
-    const template = items
+    const template = filter(items, this.filterType)
       .map((item) => {
         return `<li  class="todo-list-item ${item.isCompleted ? "completed" : ""} 
         ${item.editing ? "editing" : ""}" >
