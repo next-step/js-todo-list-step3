@@ -1,5 +1,8 @@
-class MemberState {
+import Subject from '@core/Subject.js';
+
+class MemberState extends Subject {
   constructor() {
+    super();
     this._members = [];
   }
 
@@ -9,6 +12,7 @@ class MemberState {
 
   set(updatedMembers) {
     this._members = updatedMembers;
+    this.publish();
   }
 }
 

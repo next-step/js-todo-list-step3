@@ -7,12 +7,13 @@ import { todoAPI } from '@api/todo';
 import { memberAPI } from '@api/member.js';
 
 // state
-import teamState from '@store/teamState.js';
 import membersState from '@store/membersState.js';
 
 export default class TodoApp {
   constructor() {
     this.$target = $(DOM_ID.TODO_LIST);
+
+    membersState.subscribe(this.render.bind(this));
 
     this.init();
   }
@@ -20,13 +21,11 @@ export default class TodoApp {
   async init() {
     const teamId = getUrlParams().id;
     const team = await teamAPI.getTeam(teamId);
-    const { _id, members, name } = team;
+    const { members, name } = team;
 
-    teamState.set({ teamId: _id, teamName: name });
     membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
 
     $('#user-title').innerHTML = KanbanTitle(name);
-    this.render();
     this.addEvent();
   }
 
@@ -82,14 +81,18 @@ export default class TodoApp {
       return;
     }
 
-    const $todoApp = target.closest('.todoapp');
     const teamId = getTeamId();
-    const memberId = $todoApp && $todoApp.dataset['memberId'];
+    const memberId = getMemberId(target);
     const contents = target.value;
 
-    const result = await todoAPI.createTodoItem(teamId, memberId, { contents });
-    if (isEmptyObject(result)) return;
-    this.render();
+    const todoItem = await todoAPI.createTodoItem(teamId, memberId, { contents });
+    if (!todoItem) return;
+
+    const prevMembers = membersState.get();
+    const addedTodoList = prevMembers.map((member) =>
+      member._id === memberId ? { ...member, todoList: member.todoList.concat(todoItem) } : member,
+    );
+    membersState.set(addedTodoList);
   }
 
   async deleteTodo(teamId, memberId, todoId) {
@@ -163,16 +166,22 @@ export default class TodoApp {
   }
 
   async render() {
-    const teamId = getTeamId();
-    const result = await teamAPI.getTeam(teamId);
-    const { _id, members, name } = result;
+    // const teamId = getTeamId();
+    // const result = await teamAPI.getTeam(teamId);
+    // const { _id, members, name } = result;
+    // const members = membersState.get();
+    // console.log('members', members);
 
-    teamState.set({ teamId: _id, teamName: name });
-    const filters = membersState.get().map((member) => member.filter);
-    membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
+    // const filters = membersState.get().map((member) => member.filter);
+    // membersState.set(members.map((member, idx) => ({ ...member, filter: filters[idx] })));
 
-    console.log('teamState', teamState.get());
-    console.log('membersState', membersState.get());
+    // console.log('membersState', membersState.get());
+    const members = membersState.get();
+    // console.log('members', members);
+    members.forEach((member) => {
+      console.log('member', member);
+      console.log('todoList', member.todoList);
+    });
 
     this.$target.innerHTML = `
       ${membersState.get().map((member) => TodoList(member))}
@@ -185,7 +194,7 @@ export default class TodoApp {
   }
 }
 
-const getTeamId = () => teamState.get().teamId;
+const getTeamId = () => getUrlParams().id;
 const getMemberId = (target) => {
   const $todoApp = target.closest('.todoapp');
   const memberId = $todoApp && $todoApp.dataset['memberId'];
