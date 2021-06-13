@@ -53,7 +53,13 @@ function filtering(event) {
     },
     "#priority": () => {
       this.memberListData[memberIndex].filter = "priority";
-      console.log("우선순위");
+      let filteredList = JSON.parse(JSON.stringify(this.memberListData));
+
+      filteredList[memberIndex].todoList.sort((a, b) => {
+        if (a.priority === 0) return;
+        return a.priority - b.priority;
+      });
+      this.render(filteredList);
     },
   };
 

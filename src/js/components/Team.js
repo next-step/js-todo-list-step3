@@ -1,4 +1,5 @@
 import { $, $$ } from "../lib/util.js";
+import { PRIORITY } from "../constants/constant.js";
 
 import MemberModel from "./model/MemberModel.js";
 import TodoItemModel from "./model/TodoItemModel.js";
@@ -28,7 +29,7 @@ class Team {
         ...member,
         id: member._id,
         todoList: member.todoList.map((item) => {
-          return new TodoItemModel({ ...item, id: item._id });
+          return new TodoItemModel({ ...item, id: item._id, priority: PRIORITY[item.priority] });
         }),
       });
     });

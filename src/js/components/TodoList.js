@@ -14,10 +14,10 @@ class TodoList {
           <input class="toggle" data-memberindex = ${this.memberIndex} data-itemid = ${
           item.id
         } type="checkbox" ${item.isCompleted ? "checked" : ""}/>
-          <label class="label"  data-memberindex = ${this.memberIndex} data-itemid = ${item.id}>
+          <label class="label"  data-memberindex = ${this.memberIndex} data-itemid = ${item.id} >
           <div class="chip-container">
           ${
-            item.priority === "NONE"
+            item.priority === 0
               ? `
               <select class="chip select" data-memberindex = ${this.memberIndex} data-itemid = ${item.id}>
                 <option value="0" selected>순위</option>
@@ -25,8 +25,8 @@ class TodoList {
                 <option value="2">2순위</option>
               </select>
             `
-              : ` <span class="chip ${item.priority === "FIRST" ? "primary" : "secondary"}">${
-                  item.priority === "FIRST" ? 1 : 2
+              : ` <span class="chip ${item.priority === 1 ? "primary" : "secondary"}">${
+                  item.priority
                 }순위</span>`
           }</div>
             ${item.contents}

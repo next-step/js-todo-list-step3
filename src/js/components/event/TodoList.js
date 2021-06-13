@@ -2,7 +2,7 @@ import { fetchRequest } from "../../lib/fetchRequest.js";
 import { API_URL, METHOD } from "../../constants/config.js";
 import { ERROR_MESSAGES } from "../../constants/message.js";
 import { KEY } from "../../constants/eventKey.js";
-import { PRIORITY } from "../../constants/constant.js";
+import { PRIORITY_VALUE } from "../../constants/constant.js";
 
 async function onDeleteItem(event) {
   const teamId = this.teamData._id;
@@ -99,7 +99,7 @@ async function onSetPriority(event) {
   const { response, error } = await fetchRequest(
     API_URL.ITEM_PRIORITY(teamId, memberId, itemId),
     METHOD.PUT,
-    { priority: PRIORITY[event.target.value] }
+    { priority: PRIORITY_VALUE[event.target.value] }
   );
 
   if (error) return alert(ERROR_MESSAGES.SET_PRIORITY);
