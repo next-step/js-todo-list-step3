@@ -40,14 +40,6 @@ class MemberList {
 
     $(".todoapp-list-container").innerHTML = template + TEMPLATE.ADD_MEMBER_BUTTON;
   }
-
-  registerEventHandler = () => {
-    // $$(".select").forEach((select) => {
-    //   select.addEventListener("click", (e) => {
-    //     this.onSetPriority(e, e.target.dataset.id);
-    //   });
-    // });
-  };
 }
 
 export default MemberList;

@@ -13,8 +13,6 @@ const ERROR_MESSAGES = {
   TOO_SHORT_USER_NAME: `최소 ${MINIMUM_LENGTH.USER_NAME}글자 이상이어야 합니다.`,
   TOO_SHORT_ITEM_CONTENTS: `최소 ${MINIMUM_LENGTH.ITEM_CONTENTS}글자 이상이어야 합니다.`,
   ADD_MEMBER: "멤버 추가에 실패했습니다.",
-  DELETE_USER: "사용자 삭제에 실패했습니다.",
-  GET_USER_LIST: "사용자의 리스트를 불러오는데 실패했습니다.",
   GET_TODO_LIST: "할 일 목록을 불러오는데 실패했습니다.",
   ADD_ITEM: "할 일 추가에 실패했습니다.",
   DELETE_ALL_ITEMS: "모두 삭제하기에 실패했습니다.",
