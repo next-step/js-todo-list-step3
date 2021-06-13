@@ -6,9 +6,8 @@ import { ALL } from "../../../constant/constant.js";
 
 export default {
   template: ({ name, _id, todoList=[], filter }, index) => {
-    const filteredList = filter === ALL ? todoList : todoList.filter((item) => item.isCompleted === filter);
-    // filter가 왜 undefined?
-    console.log(filter, filteredList, todoList);
+    const filteredList = filter === ALL ? todoList : todoList.filter((item) => item.isCompleted == filter);
+    // filter >= PRIORITY && filteredList.sort(priority);
     return `
       <li class="todoapp-container" data-index=${index}>
         ${todoTitle.template(name)}
@@ -17,7 +16,7 @@ export default {
           <section class="main">
             ${todoListContainer.template(filteredList)}
           </section>
-          ${todoCount.template(filteredList.length)}
+          ${todoCount.template(filteredList.length, filter)}
         </div>
       </li>
       `

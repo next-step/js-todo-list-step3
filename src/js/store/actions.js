@@ -17,7 +17,13 @@ export default {
   clearTodoItem : (context, payload) => {
     context.commit('clearTodoItem', payload);
   },
+  clearTodoList : (context, payload) => {
+    context.commit('clearTodoList', payload);
+  },
   clearTeam : (context, payload) => {
     context.commit('clearTeam', payload);
   },
+  changeFilter : (context, payload) => {
+    context.commit('changeFilter', payload);
+  }
 }

@@ -12,10 +12,10 @@ export default {
     };
   },
   addTodoItem : (state, payload) => {
-    const { todoItem, index } = payload;
+    const { todoItem, memberIndex } = payload;
     const { teams, teamIndex } = state;
-    const newTodoList = [...teams[teamIndex].members[index].todoList, todoItem];
-    teams[teamIndex].members[index].todoList = [...newTodoList];
+    const newTodoList = [...teams[teamIndex].members[memberIndex].todoList, todoItem];
+    teams[teamIndex].members[memberIndex].todoList = [...newTodoList];
     return {
       ...state,
       teams: [...teams]
@@ -51,9 +51,27 @@ export default {
       teams: [...teams]
     }
   },
+  clearTodoList : (state, payload) => {
+    const { memberIndex } = payload;
+    const { teams, teamIndex } = state;
+    teams[teamIndex].members[memberIndex].todoList = [];
+    return {
+      ...state,
+      teams: [...teams]
+    };
+  },
   clearTeam : (state, payload) => {
     const newState = { ...state };
     newState.teams.splice(payload.index, 1);
     return newState;
+  },
+  changeFilter : (state, payload) => {
+    const { memberIndex, members } = payload;
+    const { teams, teamIndex } = state;
+    teams[teamIndex].members = [...members];
+    return {
+      ...state,
+      teams: [...teams]
+    }
   }
 }

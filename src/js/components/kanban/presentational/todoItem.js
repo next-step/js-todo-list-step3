@@ -5,7 +5,7 @@ export default {
   template : ({contents, isCompleted, priority, _id}, index) => `
   <li class="todo-list-item ${isCompleted ? 'completed' : ''}" data-index=${index}>
     <div class="view">
-      <input class="toggle" type="checkbox" />
+      <input class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
       <label class="label">
         <div class="chip-container">
           ${priority === 'NONE' ? prioritySelect.defaultTemplate : ''}
