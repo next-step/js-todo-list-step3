@@ -1,6 +1,6 @@
-import { $ } from '../utils/utils.js';
-import { teamAPI } from '../api/team.js';
-import { DOM_ID, MESSAGGE } from '../constants/constants';
+import { $ } from '@utils/utils.js';
+import { teamAPI } from '@api/team.js';
+import { DOM_ID, MESSAGGE } from '@constants/constants';
 
 export default class TeamApp {
   constructor() {

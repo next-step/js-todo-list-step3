@@ -1,5 +1,5 @@
-import { API } from '../utils/api.js';
-import { BASE_URL } from '../constants/constants.js';
+import { API } from '@utils/api.js';
+import { BASE_URL } from '@constants/constants.js';
 
 const URL = {
   createTodoItem: (teamId, memberId) => `${BASE_URL}/${teamId}/members/${memberId}/items`,

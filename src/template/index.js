@@ -1,6 +1,13 @@
-import { FILTER, PRIORITY } from '../constants/constants.js';
+import { FILTER, PRIORITY } from '@constants/constants.js';
+import { getFilteredTodoList } from './helper';
 
-export function UserTitle(memberName) {
+export function KanbanTitle(teamName) {
+  return `
+    <span><strong>${teamName}</strong>'s Todo List</span>
+  `;
+}
+
+function UserTitle(memberName) {
   return `
       <h2>
         <span><strong>${memberName}</strong>'s Todo List</span>
@@ -8,14 +15,14 @@ export function UserTitle(memberName) {
     `;
 }
 
-export function TodoInput() {
+function TodoInput() {
   return `<section class="input-container">
       <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
     </section>
     `;
 }
 
-export function getPriortyTemplate(priority) {
+function getPriortyTemplate(priority) {
   return `
     <div class="chip-container">
       <select class="chip select ${PRIORITY[priority]}" >
@@ -32,7 +39,7 @@ export function getPriortyTemplate(priority) {
     `;
 }
 
-export function TodoItem({ _id, contents, isCompleted, priority }) {
+function TodoItem({ _id, contents, isCompleted, priority }) {
   const selectView = getPriortyTemplate(priority);
   return `
     <li id="${_id}" class="${isCompleted && 'completed'}">
@@ -51,7 +58,7 @@ export function TodoItem({ _id, contents, isCompleted, priority }) {
     `;
 }
 
-export function TodoCount(todoCount, filter) {
+function TodoCount(todoCount, filter) {
   return `
     <div class="count-container">
     <span class="todo-count">총 <strong>${todoCount}</strong> 개</span>
@@ -90,8 +97,22 @@ export function TodoCount(todoCount, filter) {
     `;
 }
 
-export function KanbanTitle(teamName) {
+export function TodoList(member) {
+  let todoList = member.todoList;
+  todoList = getFilteredTodoList(todoList, member.filter);
+
   return `
-    <span><strong>${teamName}</strong>'s Todo List</span>
-  `;
+    <li class="todoapp-container">
+      ${UserTitle(member.name)}
+      <div class="todoapp" data-member-id="${member._id}">
+        ${TodoInput()}
+        <section class="main">
+          <ul class="todo-list">
+            ${todoList.map((todoItem) => TodoItem(todoItem))}
+          </ul>
+        </section>
+        ${TodoCount(todoList.length, member.filter)}
+      </div>
+    </li>
+    `;
 }

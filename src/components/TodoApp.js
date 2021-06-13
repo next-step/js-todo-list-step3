@@ -1,56 +1,14 @@
-import { DOM_ID, KEY, PRIORITY, FILTER, MESSAGGE, ACTION } from '../constants/constants.js';
-import { $, getUrlParams, isEmptyObject } from '../utils/utils.js';
-import { teamAPI } from '../api/team';
-import { UserTitle, TodoInput, TodoItem, TodoCount, KanbanTitle } from '../template/index';
+import { DOM_ID, KEY, PRIORITY, MESSAGGE, ACTION } from '@constants/constants.js';
+import { $, getUrlParams, isEmptyObject } from '@utils/utils.js';
+import { KanbanTitle, TodoList } from '@template/index';
 
-import { todoAPI } from '../api/todo';
-import { memberAPI } from '../api/member.js';
+import { teamAPI } from '@api/team';
+import { todoAPI } from '@api/todo';
+import { memberAPI } from '@api/member.js';
 
 // state
 import teamState from '@store/teamState.js';
 import membersState from '@store/membersState.js';
-
-function TodoList(member) {
-  function comparePriority(todoItem1, todoItem2) {
-    const priority1 = changePriorityToNumber(todoItem1.priority);
-    const priority2 = changePriorityToNumber(todoItem2.priority);
-
-    return priority1 - priority2;
-  }
-
-  function changePriorityToNumber(priority) {
-    if (priority === 'FIRST') return 1;
-    if (priority === 'SECOND') return 2;
-    if (priority === 'NONE') return 3;
-  }
-
-  function getFilteredTodoList(todoList, filter = 'all') {
-    return {
-      [FILTER.ALL]: todoList,
-      [FILTER.ACTIVE]: todoList.filter((todoItem) => !todoItem.isCompleted),
-      [FILTER.COMPLETED]: todoList.filter((todoItem) => todoItem.isCompleted),
-      [FILTER.PRIORITY]: [...todoList].sort(comparePriority),
-    }[filter];
-  }
-
-  let todoList = member.todoList;
-  todoList = getFilteredTodoList(todoList, member.filter);
-
-  return `
-    <li class="todoapp-container">
-      ${UserTitle(member.name)}
-      <div class="todoapp" data-member-id="${member._id}">
-        ${TodoInput()}
-        <section class="main">
-          <ul class="todo-list">
-            ${todoList.map((todoItem) => TodoItem(todoItem))}
-          </ul>
-        </section>
-        ${TodoCount(todoList.length, member.filter)}
-      </div>
-    </li>
-    `;
-}
 
 export default class TodoApp {
   constructor() {
@@ -80,7 +38,7 @@ export default class TodoApp {
     this.$target.addEventListener('change', this.changeSelector.bind(this));
   }
 
-  async clickHandler({ target }) {
+  clickHandler({ target }) {
     const teamId = getTeamId();
     const memberId = getMemberId(target);
     const todoId = target.id;
@@ -98,8 +56,6 @@ export default class TodoApp {
 
   async changeSelector({ target }) {
     if (!target.classList.contains('chip')) return;
-
-    console.log('changeSelector');
 
     const teamId = getTeamId();
     const memberId = getMemberId(target);

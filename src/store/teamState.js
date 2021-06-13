@@ -1,8 +1,5 @@
-import Subject from '@core/Subject.js';
-
-class TeamState extends Subject {
+class TeamState {
   constructor() {
-    super();
     this._team = {};
   }
 
@@ -12,7 +9,6 @@ class TeamState extends Subject {
 
   set(updateTeam) {
     this._team = updateTeam;
-    this.publish();
   }
 }
 

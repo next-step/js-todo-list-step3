@@ -1,5 +1,5 @@
-import { API } from '../utils/api.js';
-import { BASE_URL } from '../constants/constants.js';
+import { API } from '@utils/api.js';
+import { BASE_URL } from '@constants/constants.js';
 
 const URL = {
   createMember: (teamId) => `${BASE_URL}/${teamId}/members`,
