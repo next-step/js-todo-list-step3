@@ -25,6 +25,7 @@ export default function teamDetail () {
 		$listContainer.addEventListener('click', ({target, target:{ value, classList }}) => {
 			if (classList.contains('destroy')) deleteItem(target)
 			else if (classList.contains('toggle')) completeItem(target)
+			else if (classList.contains('clear-completed')) deleteAll(target)
 		});
 
 		$listContainer.addEventListener('change', ({target, target:{ value, classList }}) => {
@@ -37,7 +38,6 @@ export default function teamDetail () {
 
 		$listContainer.addEventListener('keyup', ({target, target:{ value, classList }, key}) => {
 			key === "Enter" && addTodo(target);
-
 		});
 
 		// $(".new-todo").addEventListener("keyup", ({key, currentTarget})=> key === "Enter" && addTodo(currentTarget) )
@@ -184,6 +184,13 @@ export default function teamDetail () {
 		$parentLi.classList.add(chrBool ? "completed" : "new");
 
 		Api.putFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }/toggle`);
+	}
+
+	const deleteAll =  async ($deleteAll) => {
+		const memberId = $deleteAll.closest(".todoapp-container").dataset.memberId;
+
+		await Api.deleteFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/`);
+		setMemberList();
 	}
 
 
