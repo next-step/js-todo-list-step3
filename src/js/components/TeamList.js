@@ -1,6 +1,7 @@
 import { $ } from "../utils/querySelector.js";
+import Api from "../api/api.js";
 
-export default function TeamList() {
+export default function TeamList(render) {
 
 	this.setState = (teams) => {
 		addTeams(teams);
@@ -16,7 +17,7 @@ export default function TeamList() {
 
 		teams.map(({ _id, name }) => teamItems += `
 	        <div class="team-card-container" data-id="${ _id }">
-	          <a href="/kanban.html?id=${ _id }" class="card">
+	          <a href="/kanban.html?page=teamDetail&id=${ _id }" class="card">
 	            <div class="card-title">
 	              ${ name }
 	            </div>
@@ -30,7 +31,13 @@ export default function TeamList() {
 
 	const addEvent = () => {
 		$('#add-team-button').addEventListener('click', () => {
-			const result = prompt('팀 이름을 입력해주세요')
-		})
+			const result = prompt('팀 이름을 입력해주세요');
+			addTeam(result);
+		});
+	}
+
+	const addTeam = async (result) => {
+		await Api.postFetch("/api/teams", { name: result });
+		render();
 	}
 }
