@@ -20,16 +20,13 @@ function App() {
     const $listContainer = $(".todoapp-list-container");
 
     $listContainer.addEventListener('click', ({target, target:{ value, classList }}) => {
-      console.log("classList", classList)
-
       if (classList.contains('chip')) {
         // const $chipSelect = target.closest('.chip-container').querySelector('select');
         // classList.add('hidden')
         // $chipSelect.classList.remove('hidden')
       }
-      else if (classList.contains('destroy')) deleteItem(target);
-      else if (classList.contains('toggle')) {
-      }
+      else if (classList.contains('destroy')) deleteItem(target)
+      else if (classList.contains('toggle')) completeItem(target)
       else if (classList.contains('chip')) {
       }
     });
@@ -182,20 +179,12 @@ function App() {
               </ul>
             </section>
             <div class="count-container">
-              <span class="todo-count">총 <strong>0</strong> 개</span>
+              <span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
               <ul class="filters">
-                <li>
-                  <a href="#all" class="selected">전체보기</a>
-                </li>
-                <li>
-                  <a href="#priority">우선 순위</a>
-                </li>
-                <li>
-                  <a href="#active">해야할 일</a>
-                </li>
-                <li>
-                  <a href="#completed">완료한 일</a>
-                </li>
+                <li><a href="#all" class="selected">전체보기</a></li>
+                <li><a href="#priority">우선 순위</a></li>
+                <li><a href="#active">해야할 일</a></li>
+                <li><a href="#completed">완료한 일</a></li>
               </ul>
               <button class="clear-completed">모두 삭제</button>
             </div>
@@ -226,11 +215,12 @@ function App() {
   const setPriority = (priority) => {
     const className = (priority === "FIRST" && "primary") || (priority === "SECOND" && "secondary");
 
-    const item = `<select class="chip select ${className}">
-                    <option value="0" ${(priority === "NONE") && "selected"}>순위</option>
-                    <option value="1" ${priority === "FIRST" && "selected"}>1순위</option>
-                    <option value="2" ${priority === "SECOND" && "selected"}>2순위</option>
-                  </select>`
+    const item = `
+      <select class="chip select ${className}">
+        <option value="0" ${(priority === "NONE") && "selected"}>순위</option>
+        <option value="1" ${priority === "FIRST" && "selected"}>1순위</option>
+        <option value="2" ${priority === "SECOND" && "selected"}>2순위</option>
+      </select>`
 
     return item;
   }
@@ -274,13 +264,22 @@ function App() {
     const memberId = $delete.closest(".todoapp-container").dataset.memberId;
 
     await Api.deleteFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }`);
-
     setMemberList();
   }
 
 
+  const completeItem = ($toggle) => {
+    const $parentLi = $toggle.closest(".todo-list-item");
+    const itemId = $parentLi.dataset.id;
+    const chrBool = $toggle.checked;
+    const memberId = $toggle.closest(".todoapp-container").dataset.memberId;
 
 
+    $parentLi.classList.remove(chrBool ? "new" : "completed" );
+    $parentLi.classList.add(chrBool ? "completed" : "new");
+
+    Api.putFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }/toggle`);
+  }
 
   const init = () => {
     setMemberList();
@@ -289,7 +288,5 @@ function App() {
   init();
 
 }
-
-
 
 new App()
