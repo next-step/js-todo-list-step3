@@ -2,10 +2,11 @@ import { KEY } from '../constants.js';
 import { addMemberButtonTemplate, memberTemplate } from '../templates.js';
 
 export default class MemberList {
-  constructor({ onAddMember, onAddTodoItem, onDeleteTodoItem, onToggleTodoItem, onUpdateTodoItem }) {
+  constructor({ onAddMember, onFilterTodoList, onAddTodoItem, onDeleteTodoItem, onToggleTodoItem, onUpdateTodoItem }) {
     this.$team = document.querySelector('.todoapp-list-container');
 
     this.$team.addEventListener('click', (event) => this.addMember(event, onAddMember));
+    this.$team.addEventListener('click', (event) => this.filterTodoList(event, onFilterTodoList));
     this.$team.addEventListener('keydown', (event) => this.addTodoItem(event, onAddTodoItem));
     this.$team.addEventListener('click', (event) => this.deleteTodoItem(event, onDeleteTodoItem));
     this.$team.addEventListener('click', (event) => this.toggleTodoItem(event, onToggleTodoItem));
@@ -22,6 +23,20 @@ export default class MemberList {
     const addMemberButtonTarget = event.target;
     if (addMemberButtonTarget.id !== 'add-user-button') return;
     onAddMember();
+  }
+
+  filterTodoList(event, onFilterTodoList) {
+    const filterButtonTarget = event.target;
+    if (filterButtonTarget.tagName !== 'A') return;
+
+    const [filterName] = filterButtonTarget.classList;
+    onFilterTodoList(filterButtonTarget.id, filterName);
+  }
+
+  clearTodoList(event, onClear) {
+    const clearButtonTarget = event.target;
+    if (!clearButtonTarget.classList.contains('clear-completed')) return;
+    onClear();
   }
 
   addTodoItem(event, onAddTodoItem) {

@@ -18,3 +18,10 @@ export const KEY = {
   ENTER: 'Enter',
   ESCAPE: 'Escape',
 };
+
+export const FILTER_STATUS = {
+  ACTIVE: 'active',
+  ALL: 'all',
+  COMPLETED: 'completed',
+  PRIORITY: 'priority',
+};

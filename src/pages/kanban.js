@@ -9,6 +9,7 @@ import {
 } from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
+import { FILTER_STATUS } from '../constants.js';
 
 export default class Kanban {
   constructor() {
@@ -27,6 +28,11 @@ export default class Kanban {
         } catch (error) {
           console.error(error);
         }
+      },
+      onFilterTodoList: async (memberId, filterStatus) => {
+        const member = this.team.members.find(({ _id }) => _id === memberId);
+        member.filterStatus = filterStatus;
+        this.renderMemberList();
       },
       onAddTodoItem: async (memberId, contents) => {
         try {
@@ -89,6 +95,7 @@ export default class Kanban {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     this.team = await getTeamData(params.id);
+    this.team.members.map((member) => (member.filterStatus = FILTER_STATUS.ALL));
     this.renderAll();
   }
 }

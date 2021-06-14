@@ -1,4 +1,4 @@
-import { CLASS_NAME, PRIORITY } from './constants.js';
+import { CLASS_NAME, FILTER_STATUS, PRIORITY } from './constants.js';
 
 export const teamTemplate = ({ _id, name }) => `
   <div class="team-card-container">
@@ -39,8 +39,19 @@ export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
   </li>
 `;
 
-export const memberTemplate = ({ _id, name, todoList }) => {
-  const todoListTemplate = todoList.map(todoItemTemplate);
+function getFilteredTodoList(filterStatus, todoList) {
+  if (filterStatus === FILTER_STATUS.ALL || filterStatus === FILTER_STATUS.PRIORITY) return todoList;
+  if (filterStatus === FILTER_STATUS.ACTIVE) {
+    return todoList.filter((item) => !item.isCompleted);
+  }
+  if (filterStatus === FILTER_STATUS.COMPLETED) {
+    return todoList.filter((item) => item.isCompleted);
+  }
+}
+
+export const memberTemplate = ({ _id, name, todoList, filterStatus }) => {
+  const filteredTodoList = getFilteredTodoList(filterStatus, todoList);
+  const todoListTemplate = filteredTodoList.map(todoItemTemplate);
 
   return `
     <li class="todoapp-container">
@@ -55,19 +66,31 @@ export const memberTemplate = ({ _id, name, todoList }) => {
         <ul class="todo-list" id="${_id}">${todoListTemplate.join('')}</ul>
       </section>
         <div class="count-container">
-          <span class="todo-count">총 <strong>0</strong> 개</span>
+          <span class="todo-count">총 <strong>${filteredTodoList.length}</strong> 개</span>
           <ul class="filters">
             <li>
-              <a href="#all" class="selected">전체보기</a>
+              <a id="${_id}" href="#all" 
+                class="all ${filterStatus === FILTER_STATUS.ALL ? CLASS_NAME.SELECTED : ''}">
+                전체보기 
+              </a>
             </li>
             <li>
-              <a href="#priority" class="priority">우선 순위</a>
+              <a id="${_id}" href="#priority" 
+                class="priority ${filterStatus === FILTER_STATUS.PRIORITY ? CLASS_NAME.SELECTED : ''}">
+                우선 순위
+              </a>
             </li>
             <li>
-              <a href="#active" class="active">해야할 일</a>
+              <a id="${_id}" href="#active" 
+                class="active ${filterStatus === FILTER_STATUS.ACTIVE ? CLASS_NAME.SELECTED : ''}">
+                해야할 일
+              </a>
             </li>
             <li>
-              <a href="#completed" class="completed">완료한 일</a>
+              <a id="${_id}" href="#completed" 
+                class="completed ${filterStatus === FILTER_STATUS.COMPLETED ? CLASS_NAME.SELECTED : ''}">
+                완료한 일
+              </a>
             </li>
           </ul>
           <button class="clear-completed">모두 삭제</button>
