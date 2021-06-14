@@ -1,9 +1,10 @@
 import Subject from '@core/Subject.js';
 
-class MemberState extends Subject {
-  constructor() {
+class MembersState extends Subject {
+  constructor(reducer) {
     super();
     this._members = [];
+    this.reducer = reducer;
   }
 
   get() {
@@ -14,6 +15,13 @@ class MemberState extends Subject {
     this._members = updatedMembers;
     this.publish();
   }
+
+  dispatch(action) {
+    console.log('call dispatch', action.type);
+    const newState = this.reducer(this.get(), action);
+    this.set(newState);
+    console.log('call dispatch after: ', this.get());
+  }
 }
 
-export default new MemberState();
+export default MembersState;

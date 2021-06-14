@@ -7,14 +7,22 @@ import { todoAPI } from '@api/todo';
 import { memberAPI } from '@api/member.js';
 
 // state
-import membersState from '@store/membersState.js';
+import store, {
+  initState,
+  createMember,
+  addTodoItem,
+  deleteTodoItem,
+  toggleTodoItem,
+  updateContentsTodoItem,
+  allDeleteTodoItem,
+  changePirortyTodoItem,
+} from '@modules/member';
 
 export default class TodoApp {
   constructor() {
     this.$target = $(DOM_ID.TODO_LIST);
 
-    membersState.subscribe(this.render.bind(this));
-
+    store.subscribe(this.render.bind(this));
     this.init();
   }
 
@@ -23,9 +31,9 @@ export default class TodoApp {
     const team = await teamAPI.getTeam(teamId);
     const { members, name } = team;
 
-    membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
+    $(DOM_ID.TEAM_TITLE).innerHTML = KanbanTitle(name);
 
-    $('#user-title').innerHTML = KanbanTitle(name);
+    store.dispatch(initState(members));
     this.addEvent();
   }
 
@@ -34,7 +42,7 @@ export default class TodoApp {
     this.$target.addEventListener('keyup', this.closeEditMode.bind(this));
     this.$target.addEventListener('click', this.clickHandler.bind(this));
     this.$target.addEventListener('dblclick', this.openEditMode.bind(this));
-    this.$target.addEventListener('change', this.changeSelector.bind(this));
+    this.$target.addEventListener('change', this.changePirority.bind(this));
   }
 
   clickHandler({ target }) {
@@ -53,34 +61,18 @@ export default class TodoApp {
     }[target.dataset['action']]();
   }
 
-  async changeSelector({ target }) {
-    if (!target.classList.contains('chip')) return;
+  async createMember(teamId) {
+    const memberName = prompt(MESSAGGE.CREATE_USER);
+    if (!memberName) return;
 
-    const teamId = getTeamId();
-    const memberId = getMemberId(target);
-    const itemId = target.closest('li').id;
+    const team = await memberAPI.createMember(teamId, { name: memberName });
+    if (isEmptyObject(team)) return;
 
-    const selectValue = target.value;
-    if (selectValue === PRIORITY['select']) return;
+    // 상태 업데이트
+    const members = team.members;
+    const newMember = members[members.length - 1];
 
-    const updatedPriortyTodoItem = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
-      priority: selectValue,
-    });
-
-    if (isEmptyObject(updatedPriortyTodoItem)) return;
-
-    const prevMembers = membersState.get();
-    const updatedSelectorTodo = prevMembers.map((member) =>
-      member._id === memberId
-        ? {
-            ...member,
-            todoList: member.todoList.map((todoItem) =>
-              todoItem._id === itemId ? updatedPriortyTodoItem : todoItem,
-            ),
-          }
-        : member,
-    );
-    membersState.set(updatedSelectorTodo);
+    store.dispatch(createMember(newMember));
   }
 
   async addTodo({ code, target }) {
@@ -101,43 +93,20 @@ export default class TodoApp {
     if (!todoItem) return;
 
     // 상태 업데이트
-    const prevMembers = membersState.get();
-    const addedTodoList = prevMembers.map((member) =>
-      member._id === memberId ? { ...member, todoList: member.todoList.concat(todoItem) } : member,
-    );
-    membersState.set(addedTodoList);
+    store.dispatch(addTodoItem(memberId, todoItem));
   }
 
   async deleteTodo(teamId, memberId, itemId) {
     await todoAPI.deleteTodoItem(teamId, memberId, itemId);
 
-    // 상태 업데이트
-    const prevMembers = membersState.get();
-    const deletedMembers = prevMembers.map((member) =>
-      member._id === memberId
-        ? { ...member, todoList: member.todoList.filter((todoItem) => todoItem._id !== itemId) }
-        : member,
-    );
-    membersState.set(deletedMembers);
+    store.dispatch(deleteTodoItem(memberId, itemId));
   }
 
   async toggleTodo(teamId, memberId, itemId) {
     const updatedToggleTodoItem = await todoAPI.toggleTodoItem(teamId, memberId, itemId);
     if (isEmptyObject(updatedToggleTodoItem)) return;
 
-    // 상태 업데이트
-    const prevMembers = membersState.get();
-    const updatedToggleTodo = prevMembers.map((member) =>
-      member._id === memberId
-        ? {
-            ...member,
-            todoList: member.todoList.map((todoItem) =>
-              todoItem._id === itemId ? updatedToggleTodoItem : todoItem,
-            ),
-          }
-        : member,
-    );
-    membersState.set(updatedToggleTodo);
+    store.dispatch(toggleTodoItem(memberId, itemId, updatedToggleTodoItem));
   }
 
   async updateTodoContents(teamId, memberId, itemId, contents) {
@@ -146,57 +115,42 @@ export default class TodoApp {
     });
     if (isEmptyObject(updatedContentsTodoIem)) return;
 
-    // 상태 업데이트
-    const prevMembers = membersState.get();
-    const updatedContentsTodo = prevMembers.map((member) =>
-      member._id === memberId
-        ? {
-            ...member,
-            todoList: member.todoList.map((todoItem) =>
-              todoItem._id === itemId ? updatedContentsTodoIem : todoItem,
-            ),
-          }
-        : member,
-    );
-    membersState.set(updatedContentsTodo);
+    store.dispatch(updateContentsTodoItem(memberId, itemId, updatedContentsTodoIem));
   }
 
   async allDeleteTodo(teamId, memberId) {
     await todoAPI.allDeleteTodo(teamId, memberId);
 
-    // 상태 업데이트
-    const prevMembers = membersState.get();
-    const deleteAllTodoList = prevMembers.map((member) =>
-      member._id === memberId
-        ? {
-            ...member,
-            todoList: [],
-          }
-        : member,
-    );
-    membersState.set(deleteAllTodoList);
+    store.dispatch(allDeleteTodoItem(memberId));
   }
 
-  async createMember(teamId) {
-    const memberName = prompt(MESSAGGE.CREATE_USER);
-    if (!memberName) return;
+  async changePirority({ target }) {
+    if (!target.classList.contains('chip')) return;
 
-    const team = await memberAPI.createMember(teamId, { name: memberName });
-    if (isEmptyObject(team)) return;
+    const teamId = getTeamId();
+    const memberId = getMemberId(target);
+    const itemId = target.closest('li').id;
 
-    // 상태 업데이트
-    const members = team.members;
-    membersState.set(members.map((member) => ({ ...member, filter: 'all' })));
+    const selectValue = target.value;
+    if (selectValue === PRIORITY['select']) return;
+
+    const updatedPriortyTodoItem = await todoAPI.priorityTodoItem(teamId, memberId, itemId, {
+      priority: selectValue,
+    });
+
+    if (isEmptyObject(updatedPriortyTodoItem)) return;
+
+    store.dispatch(changePirortyTodoItem(memberId, itemId, updatedPriortyTodoItem));
   }
 
   changeFilter(memberId, target) {
     const filter = target.dataset['type'];
 
-    const members = membersState.get();
+    const members = store.get();
     const updatedMembers = members.map((member) =>
       member._id === memberId ? { ...member, filter } : member,
     );
-    membersState.set(updatedMembers);
+    store.set(updatedMembers);
   }
 
   openEditMode({ target }) {
@@ -224,9 +178,9 @@ export default class TodoApp {
     this.updateTodoContents(teamId, memberId, itemId, updatedValue);
   }
 
-  async render() {
+  render() {
     this.$target.innerHTML = `
-      ${membersState.get().map((member) => TodoList(member))}
+      ${store.get().map((member) => TodoList(member))}
       <li class="add-user-button-container">
         <button id="add-user-button" class="ripple" data-action="add-member">
           <span class="material-icons" data-action="add-member">add</span>
