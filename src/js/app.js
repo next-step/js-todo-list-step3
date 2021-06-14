@@ -18,7 +18,7 @@ export default function App () {
 		render();
 	}
 	else if (pageType === "teamDetail") {
-		this.detail.init();
+		this.teamDetail.init();
 	}
 
 }
