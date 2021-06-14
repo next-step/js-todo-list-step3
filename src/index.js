@@ -3,31 +3,32 @@ import App from './App.js';
 new App(document.querySelector('#app'));
 
 {
-  /* <h1 id="user-title">
-<span><strong>Team</strong>'s Todo Lists</span>
+  /* 
+<h1 id="user-title">
+      <span><strong>Team</strong>'s Todo Lists</span>
 </h1>
 <div class="team-list-container">
-<div class="team-card-container">
-  <a href="/kanban.html" class="card">
-    <div class="card-title">
-      Team A
-    </div>
-  </a>
+  <div class="team-card-container">
+    <a href="/kanban.html" class="card">
+      <div class="card-title">
+        Team A
+      </div>
+    </a>
+  </div>
+  <div class="team-card-container">
+    <a href="/kanban.html" class="card">
+      <div class="card-title">
+        Team B
+      </div>
+    </a>
+  </div>
+  <div class="add-team-button-container">
+    <button id="add-team-button" class="ripple">
+      <span class="material-icons">add</span>
+    </button>
+  </div>
 </div>
-<div class="team-card-container">
-  <a href="/kanban.html" class="card">
-    <div class="card-title">
-      Team B
-    </div>
-  </a>
-</div>
-<div class="add-team-button-container">
-  <button id="add-team-button" class="ripple">
-    <span class="material-icons">add</span>
-  </button>
-</div>
-</div>
-</div> */
+*/
 }
 
 {
