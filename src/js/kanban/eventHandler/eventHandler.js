@@ -1,18 +1,18 @@
 import api from '../../constant/api.js';
 import { ALL, PRIORITY } from '../../constant/constant.js';
-import { convertToFilter, convertToPriority } from "../../utils/utils.js";
+import { convertToFilter, convertToPriority, getIndex } from "../../utils/utils.js";
 
-const getTargetDatas = (target, store) => {
+const getMemberInfo = (target, store) => {
   const { _id: teamId, members } = store.getState('currentTeam');
-  const memberIndex = target?.closest('.todoapp-container')?.dataset['index'];
+  const memberIndex = getIndex(target?.closest('.todoapp-container')?.dataset);
   const { _id: memberId, todoList } = memberIndex ? members[memberIndex] : { _id: null };
-  const itemIndex = target?.closest('.todo-list-item')?.dataset['index'];
+  const itemIndex = getIndex(target?.closest('.todo-list-item')?.dataset);
   const { _id: itemId } = itemIndex ? todoList[itemIndex] : { _id: null };
   return { teamId, memberId, itemId, memberIndex, itemIndex, members };
 };
 
 export const clearTodoItemHandler = async (target, store, dataLoader) => {
-  const { teamId, memberId, itemId, memberIndex, itemIndex } = getTargetDatas(target, store, store);
+  const { teamId, memberId, itemId, memberIndex, itemIndex } = getMemberInfo(target, store, store);
   await dataLoader.deleteData(api.deleteTodoItemURL(teamId, memberId, itemId));
   store.dispatch('clearTodoItem', { memberIndex, itemIndex });
 };
@@ -22,7 +22,7 @@ export const addMemberHandler = async (target, store, dataLoader) => {
   name && name.trim();
   if (!name || name.length < 2) return;
 
-  const { teamId } = getTargetDatas(target, store);
+  const { teamId } = getMemberInfo(target, store);
   const body = { name };
   const res = await dataLoader.postData(api.addMemberURL(teamId), body);
   const { members } = res;
@@ -32,13 +32,13 @@ export const addMemberHandler = async (target, store, dataLoader) => {
 };
 
 export const modifyTodoItemHandler = async (target, store, dataLoader) => {
-  const { teamId, memberId, itemId, memberIndex, itemIndex } = getTargetDatas(target, store);
+  const { teamId, memberId, itemId, memberIndex, itemIndex } = getMemberInfo(target, store);
   const todoItem = await dataLoader.putData(api.toggleTodoItemURL(teamId, memberId, itemId), {});
   store.dispatch('modifyTodoItem', { memberIndex, itemIndex , todoItem });
 };
 
 export const clearTodoListHandler = async (target, store, dataLoader) => {
-  const { teamId, memberId, memberIndex } = getTargetDatas(target, store);
+  const { teamId, memberId, memberIndex } = getMemberInfo(target, store);
   await dataLoader.deleteData(api.deleteTodoListURL(teamId, memberId));
   store.dispatch('clearTodoList', { memberIndex });
 };
@@ -47,7 +47,7 @@ export const changeFilterHandler = (target, store) => {
   const { classList } = target;
   if (!classList.contains('priority') && classList.contains('selected')) return;
 
-  const { memberIndex, members } = getTargetDatas(target, store);
+  const { memberIndex, members } = getMemberInfo(target, store);
   const copyMembers = [...members];
   if (classList.contains('priority') && classList.contains('selected')) {
     copyMembers[memberIndex].filter -= PRIORITY;
@@ -61,7 +61,7 @@ export const changeFilterHandler = (target, store) => {
 };
 
 export const addTodoItemHandler = async (target, store, dataLoader, contents) => {
-  const { teamId, memberId, memberIndex } = getTargetDatas(target, store);
+  const { teamId, memberId, memberIndex } = getMemberInfo(target, store);
   const body = { contents };
   const todoItem = await dataLoader.postData(api.addTodoItemURL(teamId, memberId), body);
   store.dispatch('addTodoItem', { todoItem, memberIndex });
@@ -71,7 +71,7 @@ export const addTodoItemHandler = async (target, store, dataLoader, contents) =>
 export const changeTodoItemContentsHandler = async (target, store, dataLoader, contents, key) => {
   const item = target.closest('.todo-list-item');
   if (key === 'Enter') {
-    const { teamId, memberId, itemId, memberIndex, itemIndex } = getTargetDatas(target, store);
+    const { teamId, memberId, itemId, memberIndex, itemIndex } = getMemberInfo(target, store);
     const body = { contents };
     const todoItem = await dataLoader.putData(api.modifyTodoItemURL(teamId, memberId, itemId), body);
     store.dispatch('modifyTodoItem', { memberIndex, itemIndex , todoItem });
@@ -87,7 +87,7 @@ export const editTodoItemHandler = (target) => {
 };
 
 export const changeTodoItemPriorityHandler = async (target, store, dataLoader) => {
-  const { teamId, memberId, itemId, memberIndex, itemIndex } = getTargetDatas(target, store);
+  const { teamId, memberId, itemId, memberIndex, itemIndex } = getMemberInfo(target, store);
   const body = { priority: convertToPriority[target.value] }
   const todoItem = await dataLoader.putData(api.changeTodoItemPriorityURL(teamId, memberId, itemId), body);
   store.dispatch('modifyTodoItem', { memberIndex, itemIndex , todoItem });

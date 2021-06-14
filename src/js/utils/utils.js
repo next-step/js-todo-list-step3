@@ -24,6 +24,7 @@ export const compareByPriority = (a, b) => {
     'FIRST': 1,
     'SECOND': 2
   };
+  
   if (priorityToValue[a.priority] < priorityToValue[b.priority]) return -1;
   if (priorityToValue[a.priority] > priorityToValue[b.priority]) return 1;
   return 0;
