@@ -27,8 +27,7 @@ function App() {
         // classList.add('hidden')
         // $chipSelect.classList.remove('hidden')
       }
-      else if (classList.contains('destroy')) {
-      }
+      else if (classList.contains('destroy')) deleteItem(target);
       else if (classList.contains('toggle')) {
       }
       else if (classList.contains('chip')) {
@@ -268,6 +267,20 @@ function App() {
     await Api.putFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }`, {contents: $edit.value});
     setMemberList();
   }
+
+
+  const deleteItem = async ($delete) => {
+    const itemId = $delete.closest(".todo-list-item").dataset.id;
+    const memberId = $delete.closest(".todoapp-container").dataset.memberId;
+
+    await Api.deleteFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }`);
+
+    setMemberList();
+  }
+
+
+
+
 
   const init = () => {
     setMemberList();
