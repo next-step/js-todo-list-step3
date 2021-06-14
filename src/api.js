@@ -41,23 +41,6 @@ export async function getTeamListData() {
   }
 }
 
-export async function addTeamData(data = {}) {
-  try {
-    const response = await fetch(BASE_URL, {
-      method: METHOD.POST,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
-
-    return response.json();
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export async function getTeamData(teamId) {
   try {
     const teamURL = getTeamURL(teamId);
@@ -70,10 +53,9 @@ export async function getTeamData(teamId) {
   }
 }
 
-export async function addMemberData(teamId, data = {}) {
+export async function addTeamData(data = {}) {
   try {
-    const membersURL = getMembersURL(teamId);
-    const response = await fetch(membersURL, {
+    const response = await fetch(BASE_URL, {
       method: METHOD.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -92,6 +74,24 @@ export async function getMemberData(teamId, memberId) {
   try {
     const memberURL = getMemberURL(teamId, memberId);
     const response = await fetch(memberURL);
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function addMemberData(teamId, data = {}) {
+  try {
+    const membersURL = getMembersURL(teamId);
+    const response = await fetch(membersURL, {
+      method: METHOD.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
     if (!response.ok) throw new Error('유효하지 않은 URL');
 
     return response.json();

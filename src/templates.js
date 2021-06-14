@@ -39,9 +39,26 @@ export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
   </li>
 `;
 
+function changePriorityToNumber(priority) {
+  if (priority === PRIORITY.NONE) return 99;
+  if (priority === PRIORITY.FIRST) return 1;
+  if (priority === PRIORITY.SECOND) return 2;
+}
+
+function getSortedTodoList(todoList) {
+  const newTodoList = todoList.slice();
+  newTodoList.sort((a, b) => {
+    const A = changePriorityToNumber(a.priority);
+    const B = changePriorityToNumber(b.priority);
+    return A - B;
+  });
+  return newTodoList;
+}
+
 function getFilteredTodoList(filterStatus, todoList) {
   if (!todoList) return [];
-  if (filterStatus === FILTER_STATUS.ALL || filterStatus === FILTER_STATUS.PRIORITY) return todoList;
+  if (filterStatus === FILTER_STATUS.PRIORITY) return getSortedTodoList(todoList);
+  if (filterStatus === FILTER_STATUS.ALL) return todoList;
   if (filterStatus === FILTER_STATUS.ACTIVE) {
     return todoList.filter((item) => !item.isCompleted);
   }
