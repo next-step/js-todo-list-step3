@@ -2,13 +2,13 @@ import { $ } from '@utils/utils.js';
 import { teamAPI } from '@api/team.js';
 import { DOM_ID, MESSAGGE } from '@constants/constants';
 
-import teamsState from '@store/teamsState';
+import store, { initState, createTeam } from '../modules/team';
 
 export default class TeamApp {
   constructor() {
     this.$target = $(DOM_ID.TEAM_LIST);
 
-    teamsState.subscribe(this.render.bind(this));
+    store.subscribe(this.render.bind(this));
 
     this.init();
   }
@@ -24,19 +24,17 @@ export default class TeamApp {
     if (teamName === null) return;
 
     const team = await teamAPI.createTeam({ name: teamName });
-    const prevTeams = teamsState.get();
-    teamsState.set(prevTeams.concat(team));
+    store.dispatch(createTeam(team));
   }
 
   async init() {
     const teams = await teamAPI.getTeams();
-    teamsState.set(teams);
-
+    store.dispatch(initState(teams));
     this.addEvent();
   }
 
   async render() {
-    const teams = teamsState.get();
+    const teams = store.get();
 
     let html = teams.reduce(
       (acc, team) =>

@@ -1,9 +1,10 @@
 import Subject from '@core/Subject.js';
 
 class TeamState extends Subject {
-  constructor() {
+  constructor(reducer) {
     super();
-    this._teams = {};
+    this._teams = [];
+    this.reducer = reducer;
   }
 
   get() {
@@ -14,6 +15,11 @@ class TeamState extends Subject {
     this._teams = updateTeams;
     this.publish();
   }
+
+  dispatch(action) {
+    const newState = this.reducer(this.get(), action);
+    this.set(newState);
+  }
 }
 
-export default new TeamState();
+export default TeamState;
