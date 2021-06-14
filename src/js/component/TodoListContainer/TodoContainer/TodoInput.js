@@ -10,18 +10,23 @@ export default function TodoInput(parent, { onAdd }) {
   }
 
   this.setEvent = () => {
-    const $todoInput = document.querySelector('.new-todo');
-    console.log($todoInput);
-    $todoInput.addEventListener('keyup', event => this.addTodoItem(event));
+    const $todoInputs = document.querySelectorAll('.new-todo');
+    [...$todoInputs].forEach(input => input.addEventListener('keyup', event => this.addTodoItem(event)));
   }
   
-  this.addTodoItem = ({target}) => {
+  this.addTodoItem = ({key, target}) => {
+    console.log(target);
     if (!target.matches('.new-todo')) return;
-    onAdd(target.value.trim());
-    target.value = "";
+    
+    if (key === 'Enter') {
+      console.log(1)
+      onAdd(target.value.trim());
+      target.value = "";
+    }
   }
+
   this.setState = async () => {
     await this.setDom();
-    this.setEvent();
+    await this.setEvent();
   }
 }

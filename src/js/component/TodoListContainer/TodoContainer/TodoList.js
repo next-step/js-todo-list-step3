@@ -1,5 +1,5 @@
 
-function TodoList(parent) {
+function TodoList(parent, {onDelete, onToggle, onEdit}) {
   this.$parent = parent;
   this.todoItems = [];  
   this.dom = {};
@@ -14,27 +14,24 @@ function TodoList(parent) {
     this.dom.prepend(this.$todoContainer);
   }
 
-  this.$todoList = document.querySelector('.todo-list');
-  this.todoItems = {};
-
   this.setState = updatedTodoItems => {
-    this.todoItems = updatedTodoItems;
+    this.todoItems = updatedTodoItems ?? [];
     this.setDom();
     this.render(this.todoItems);
   }
 
-  this.render = items => {
+  this.render = (items) => {
     const template = items.map(item => this.template(item)).join('');
-    this.$todoContainer.innerHTML = template
-
+    this.$todoContainer.innerHTML = template;
+    this.setEvent();
   }
 
   this.template = item => {
     console.log(item);
     return `
-      <li class="todo-list-item">
+      <li class="todo-list-item ${item.isCompleted ? "completed" : ''}"  id=${item._id}>
         <div class="view">
-          <input class="toggle" type="checkbox" />
+          <input class="toggle" type="checkbox" id=${item._id} data-complete=${item.isCompleted}  ${item.isCompleted ? "checked" : null} />
           <label class="label">
             <div class="chip-container">
               <select class="chip select">
@@ -47,9 +44,54 @@ function TodoList(parent) {
           </label>
           <button class="destroy"></button>
         </div>
-        <input class="edit" value="완료된 타이틀" />
+        <input class="edit" value="${item.contents}" />
       </li>`
   }
+  
+  this.setEvent = () => {
+    const $destroyBtns = document.querySelectorAll('.destroy');
+    const $toggleBtns = document.querySelectorAll('.toggle');
+    const $todoLabel = document.querySelectorAll('.label');
+    const $inputEdit = document.querySelectorAll('.edit');
+    [...$destroyBtns].forEach(btn => btn.addEventListener('click', event => this.deleteTodoItem(event)));
+    [...$toggleBtns].forEach(btn => btn.addEventListener('click', event => this.toggleTodo(event)));
+    [...$todoLabel].forEach(label => label.addEventListener('click', event => this.activeEdit(event)));
+    [...$inputEdit].forEach(input => input.addEventListener('keyup', event => this.endEdit(event)));
+    
+  }
+
+  this.deleteTodoItem = ({target}) => {
+    if (!target.matches('.destroy')) return;
+    const $li = target.closest('li');
+    onDelete($li.id);
+  }
+
+  this.toggleTodo = ({target}) => {
+    if (!target.matches('.toggle')) return;
+    const $li = target.closest('li');
+    onToggle($li.id, target.dataset.complete);
+  }
+  
+  this.activeEdit = ({target}) => {
+    if (!target.matches('.label')) return;
+    const $li = target.closest('li');
+    $li.classList.toggle('editing');
+  }
+
+  this.endEdit = ({key, target}) => {
+    const $li = target.closest('li'); 
+    if (!target.matches('.edit')) return;
+  
+    if (key === 'Escape' || key === 'Esc') {
+      $li.classList.toggle('editing');
+    }
+
+    if (key === 'Enter') {
+      onEdit(target.value.trim(), $li.id);
+      $li.classList.toggle('editing');
+    }
+  }
+
 }
 
 export default TodoList;

@@ -17,7 +17,7 @@ export default function TodoMain() {
 
   this.setDom = () => {
     this.dom = document.createElement('ul');
-    this.dom.className ='todoapp-container';
+    this.dom.className ='todoapp-list-container';
     this.dom.classList.add('flex-column-container');
     this.$app.prepend(this.dom);
   }
@@ -39,21 +39,37 @@ export default function TodoMain() {
   this.setState = () => { 
     this.title.setState(this.selectedTeam.name);
     this.todoLists.forEach( (todoList, index) => {
-      todoList.setState(this.members[index], this.selectedTeamId);
+      todoList.setState(this.members[index]._id, this.selectedTeamId);
     });
     this.addMemberBtn.setState();
+  }
+
+  this.update = async () => {
+    this.members = this.selectedTeam.members;
+    this.dom.innerHTML = '';
+    this.todoLists = this.members.map(member => new TodoContainer(this.dom, member))
+    this.addMemberBtn = new AddMemberBtn(
+      this.dom,
+      {onAdd: async (name) => {
+        this.selectedTeam = await api.member.addMember(this.selectedTeamId, {name});
+        this.update();
+      }},
+    );
+    this.todoLists.forEach( (todoList, index) => {
+      todoList.setState(this.members[index]._id, this.selectedTeamId);
+    });
   }
 
   this.drawComponent = () => {
     this.title = new Title(this.$app, 'h1', 'team-title');
     
-    this.todoLists = this.members.reverse().map(member => new TodoContainer(this.dom, member))
+    this.todoLists = this.members.map(member => new TodoContainer(this.dom));
     
     this.addMemberBtn = new AddMemberBtn(
       this.dom,
       {onAdd: async (name) => {
-        const temp = await api.member.addMember(this.selectedTeamId, {name});
-        console.log(temp);
+        this.selectedTeam = await api.member.addMember(this.selectedTeamId, {name});
+        this.update();
       }},
     );
 

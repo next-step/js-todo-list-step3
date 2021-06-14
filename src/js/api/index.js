@@ -68,7 +68,7 @@ const api = (() => {
       );
     },
 
-    delete(teamId,memberId, itemId) {
+    delete(teamId, memberId, itemId) {
       return request(
         `/${teamId}/members/${memberId}/items/${itemId}`,
         HTTP_METHOD.DELETE()
@@ -83,10 +83,7 @@ const api = (() => {
     },
 
     toggle(teamId, memberId, itemId, data) {
-      return requestJsonData(
-        `/${teamId}/members/${memberId}/items/${itemId}/toggle`,
-        HTTP_METHOD.PUT(data)
-      );
+      return requestJsonData(`/${teamId}/members/${memberId}/items/${itemId}/toggle`, HTTP_METHOD.PUT(data));
     },
 
     update(teamId, memberId, itemId, data) {

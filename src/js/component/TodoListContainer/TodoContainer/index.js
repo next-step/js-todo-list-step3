@@ -22,28 +22,60 @@ export default function TodoContainer(parent) {
     this.dom.prepend(this.$todoApp);
   }
 
-  this.setState = (member, id) => {
-    this.member = member;
-    this.teamId = id;
-    this.setDom();
+  this.load = async () => {
+    this.member =  await api.todo.getList(this.teamId, this.memberId);
     console.log(this.member);
+  } 
+
+  this.setState = async (memberId, teamId) => {
+    this.memberId = memberId;
+    this.teamId = teamId;
+    await this.load();
+    this.setDom();
     this.drawComponent();
     this.memberTitle.setState(this.member.name);
-    this.todoInput.setState()
+    this.todoInput.setState();
+    this.todoList.setState(this.member.todoList);
+  }
+
+  this.update = async () => {
+    this.$todoApp.innerHTML = '';
+    await this.load();
+    this.todoInput.setState();
     this.todoList.setState(this.member.todoList);
   }
 
   this.drawComponent = () => {
-    this.memberTitle = new Title(this.dom, 'h2', this.member._id);
+    this.memberTitle = new Title(this.dom, 'h2', this.memberId);
     this.todoInput = new TodoInput(
       this.$todoApp,
       {
-        onAdd: async(value) => {
-          await api.todo.add(this.teamId, member._id, {value})
-        }
+        onAdd: async(contents) => {
+          console.log(this.teamId);
+          console.log(this.member._id);
+          await api.todo.add(this.teamId, this.memberId, {contents})
+          this.update();
+        },
       }
     );
-    this.todoList = new TodoList(this.$todoApp);  
+    this.todoList = new TodoList(
+      this.$todoApp,
+      {
+        onDelete: async (itemId) => {
+          await api.todo.delete(this.teamId, this.memberId, itemId);
+          this.update();
+        },
+        onToggle: async (itemId, isCompleted) => {
+          isCompleted = !isCompleted;
+          await api.todo.toggle(this.teamId, this.memberId, itemId, {isCompleted});
+          this.update()
+        },
+        onEdit: async (contents, itemId) => {
+          await api.todo.update(this.teamId, this.memberId, itemId, {contents});
+          this.update();
+        },
+      }
+    );  
   }
 
 }
