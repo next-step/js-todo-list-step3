@@ -16,6 +16,7 @@ import store, {
   updateContentsTodoItem,
   allDeleteTodoItem,
   changePirortyTodoItem,
+  changeFilter,
 } from '@modules/member';
 
 export default class TodoApp {
@@ -146,11 +147,7 @@ export default class TodoApp {
   changeFilter(memberId, target) {
     const filter = target.dataset['type'];
 
-    const members = store.get();
-    const updatedMembers = members.map((member) =>
-      member._id === memberId ? { ...member, filter } : member,
-    );
-    store.set(updatedMembers);
+    store.dispatch(changeFilter(memberId, filter));
   }
 
   openEditMode({ target }) {

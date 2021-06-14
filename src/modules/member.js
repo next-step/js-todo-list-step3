@@ -3,12 +3,14 @@ import MembersState from '@store/membersState.js';
 // 액션 타입
 const INIT_STATE = 'members/INIT_STATE';
 const CREATE_MEMBER = 'members/CREATE_MEMBER';
+// todo
 const ADD_TODO_ITEM = 'members/ADD_TODO_ITEM';
 const DELETE_TODO_ITEM = 'members/DELETE_TODO_ITEM';
 const TOGGLE_TODO_ITEM = 'members/TOGGLE_TODO_ITEM';
 const UPDTATE_CONTENTS_TODO_ITEM = 'members/UPDTATE_CONTENTS_TODO_ITEM';
 const ALL_DELETE_TODO_ITEM = 'members/ALL_DELETE_TODO_ITEM';
 const CHANGE_PRIORITY_TODO_ITEM = 'members/CHANGE_PRIORITY_TODO_ITEM';
+const CHANGE_FILTER = 'members/CHANGE_FILTER';
 
 // 액션 생성 함수
 export const initState = (members) => ({ type: INIT_STATE, payload: members });
@@ -36,6 +38,10 @@ export const allDeleteTodoItem = (memberId) => ({
 export const changePirortyTodoItem = (memberId, itemId, todoItem) => ({
   type: CHANGE_PRIORITY_TODO_ITEM,
   payload: { memberId, itemId, todoItem },
+});
+export const changeFilter = (memberId, filter) => ({
+  type: CHANGE_FILTER,
+  payload: { memberId, filter },
 });
 
 // 초기화 변수
@@ -114,6 +120,11 @@ function membersReducer(state = initialState, action) {
               ),
             }
           : member,
+      );
+
+    case CHANGE_FILTER:
+      return prevState.map((member) =>
+        member._id === payload.memberId ? { ...member, filter: payload.filter } : member,
       );
 
     default:
