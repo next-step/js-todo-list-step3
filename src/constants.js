@@ -11,3 +11,7 @@ export const PRIORITY = {
 export const CLASS_NAME = {
   SELECTED: 'selected',
 };
+
+export const KEY = {
+  ENTER: 'Enter',
+};

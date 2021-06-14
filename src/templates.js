@@ -49,7 +49,7 @@ export const memberTemplate = ({ _id, name, todoList }) => {
       </h2>
       <div class="todoapp">
         <section class="input-container">
-          <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
+          <input id="${_id}" class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
         </section>
       <section class="main">
         <ul class="todo-list">${todoListTemplate.join('')}</ul>

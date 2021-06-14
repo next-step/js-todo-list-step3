@@ -1,10 +1,10 @@
-import { addMemberData, getTeamData } from '../api.js';
+import { addMemberData, addTodoItemData, getMemberData, getTeamData } from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
 
 export default class Kanban {
   constructor() {
-    this.team = [];
+    this.team = {};
 
     this.TeamName = new TeamName();
 
@@ -16,6 +16,17 @@ export default class Kanban {
 
           await addMemberData(this.team._id, { name });
           this.init();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      onAddTodoItem: async (memberId, contents) => {
+        try {
+          await addTodoItemData(this.team._id, memberId, { contents });
+          const member = this.team.members.find(({ _id }) => _id === memberId);
+          const newMember = await getMemberData(this.team._id, memberId);
+          member.todoList = newMember.todoList;
+          this.renderMemberList();
         } catch (error) {
           console.log(error);
         }

@@ -6,8 +6,16 @@ function getTeamURL(teamId) {
   return `${BASE_URL}/${teamId}`;
 }
 
-function getMemberURL(teamId) {
+function getMembersURL(teamId) {
   return `${BASE_URL}/${teamId}/members`;
+}
+
+function getMemberURL(teamId, memberId) {
+  return `${BASE_URL}/${teamId}/members/${memberId}`;
+}
+
+function getTodoItemURL(teamId, memberId) {
+  return `${BASE_URL}/${teamId}/members/${memberId}/items`;
 }
 
 export async function getTeamListData() {
@@ -52,8 +60,38 @@ export async function getTeamData(teamId) {
 
 export async function addMemberData(teamId, data = {}) {
   try {
-    const memberURL = getMemberURL(teamId);
-    const response = await fetch(memberURL, {
+    const membersURL = getMembersURL(teamId);
+    const response = await fetch(membersURL, {
+      method: METHOD.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getMemberData(teamId, memberId) {
+  try {
+    const memberURL = getMemberURL(teamId, memberId);
+    const response = await fetch(memberURL);
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function addTodoItemData(teamId, memberId, data = {}) {
+  try {
+    const todoItemURL = getTodoItemURL(teamId, memberId);
+    const response = await fetch(todoItemURL, {
       method: METHOD.POST,
       headers: {
         'Content-Type': 'application/json',
