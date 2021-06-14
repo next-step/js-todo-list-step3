@@ -3,7 +3,7 @@ import store from '../../store/index.js';
 import api from '../../constant/api.js';
 import teamCard from './presentational/teamCard.js';
 import teamContainer from './presentational/teamContainer.js';
-import Kanban from '../../components/kanban/kanban.js';
+import Kanban from '../../kanban/components/kanban.js';
 import { $ } from '../../utils/querySelector.js';
 import { addTeamHandler, clearTeamHandler, setCurrentTeamHandler, toggleKanbanViewHandler } from '../eventHandler/eventHandler.js';
 

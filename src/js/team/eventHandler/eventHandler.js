@@ -31,7 +31,7 @@ export const setCurrentTeamHandler = (target, store) => {
   const { teamIndex, team, members } = getTeamInfo(target, store);
   const newTeam = { ...team };
   newTeam.members = members.map((member) => ({ ...member, filter: ALL }));
-  store.dispatch('setCurrentTeam', { teamIndex });
+  store.dispatch('setCurrentTeam', { newTeam, teamIndex });
 };
 
 export const toggleKanbanViewHandler = (team, kanban) => {

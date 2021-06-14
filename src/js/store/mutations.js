@@ -1,7 +1,11 @@
 export default {
   setCurrentTeam : (state, payload) => {
+    const { newTeam, teamIndex } = payload;
+    const { teams } = state;
+    teams[teamIndex] = newTeam;
     return {
       ...state,
+      teams: [...teams],
       teamIndex: payload.teamIndex
     };
   },
