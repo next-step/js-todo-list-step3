@@ -198,29 +198,32 @@ export default function teamDetail() {
 
 
   const filterList = async ($filter) => {
+		const filterType = $filter.dataset.filter;
     const memberId = $filter.closest(".todoapp-container").dataset.memberId;
-
+    const $targetMemberContainer = $(`.todoapp-container[data-member-id="${memberId}"]`);
     const memberInfo = await Api.getFetch(`/api/teams/${this.teamId}/members/${memberId}`);
     let todoList = memberInfo.todoList;
-
-    const filterType = $filter.dataset.filter;
-    const $targetMemberContainer = $(`.todoapp-container[data-member-id="${memberId}"]`);
-
-
-    console.log("filterType :: ", filterType);
-    console.log("todos :: ", memberInfo);
-
-    (filterType !== "ALL" && filterType !== "PRIORITY") && (todoList = todoList.filter(({isCompleted}) => isCompleted === (filterType === "COMPLETED")))
-
 		let todoItems = "";
+
+		console.log(todoList);
+
+		if (filterType !== "ALL") {
+    	if (filterType === "PRIORITY") {
+				let sortArr = [];
+				let sortArr2 = [];
+
+				sortArr = (todoList.filter(({priority}) => priority === "FIRST"));
+				sortArr2 = sortArr.concat(todoList.filter(({priority}) => priority === "SECOND" ));
+				sortArr = sortArr2.concat(todoList.filter(({priority}) => priority === "NONE" ));
+
+				todoList = sortArr;
+			}
+			else todoList = todoList.filter(({isCompleted}) => isCompleted === (filterType === "COMPLETED"));
+		}
+
 		todoList.map(todoItem => todoItems += $new(todoItem));
 
 		$targetMemberContainer.querySelector(".todo-list").innerHTML = todoItems;
-
-
-    // (filter && filter !== "ALL") && (todos = todos.filter(({ isCompleted }) => isCompleted === (filter === "COMPLETED") ))
-
-    // addMembers(todos)
   }
 
 
