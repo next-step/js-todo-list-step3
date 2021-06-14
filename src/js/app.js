@@ -1,9 +1,9 @@
 import Api from "../js/api/api.js";
 import TeamList from "./components/TeamList.js";
-import detail from "./detail.js";
+import teamDetail from "./components/TeamDetail.js";
 
 export default function App () {
-	this.detail = new detail();
+	this.teamDetail = new teamDetail();
 	const parmas = new URLSearchParams(window.location.search);
 	const pageType = parmas.get("page");
 

@@ -1,7 +1,7 @@
-import Api from "./api/api.js";
-import {$, $$} from "./utils/querySelector.js";
+import Api from "../api/api.js";
+import {$, $$} from "../utils/querySelector.js";
 
-export default function detail () {
+export default function teamDetail () {
 	this.teamId = "";
 
 	const setMemberList = async() => {
