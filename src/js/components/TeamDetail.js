@@ -35,7 +35,12 @@ export default function teamDetail () {
 			if (classList.contains('label')) editItem(target);
 		});
 
+		$listContainer.addEventListener('keyup', ({target, target:{ value, classList }, key}) => {
+			key === "Enter" && addTodo(target);
 
+		});
+
+		// $(".new-todo").addEventListener("keyup", ({key, currentTarget})=> key === "Enter" && addTodo(currentTarget) )
 		$('#add-user-button').addEventListener('click', async () => {
 			const result = prompt('새로운 팀원 이름을 입력해주세요');
 
@@ -43,6 +48,18 @@ export default function teamDetail () {
 			await setMemberList();
 		});
 	};
+
+	const addTodo = async ($newTodo) => {
+		const content = $newTodo.value;
+		const memberId = $newTodo.closest(".todoapp-container").dataset.memberId;
+
+		if (content.length < 2) return alert(Message.SHORT_INPUT_LENGTH);
+
+		await Api.postFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/`, { contents: content });
+		setMemberList();
+
+		$newTodo.value = "";
+	}
 
 	const addMembers = (members) => {
 		const $todoappListContainer = $(".todoapp-list-container");
@@ -106,7 +123,7 @@ export default function teamDetail () {
 
 		const item = `
 			<select class="chip select ${className}">
-				<option value="0" ${(priority === "NONE") && "selected"}>순위</option>
+				<option value="0" ${priority === "NONE" && "selected"}>순위</option>
 				<option value="1" ${priority === "FIRST" && "selected"}>1순위</option>
 				<option value="2" ${priority === "SECOND" && "selected"}>2순위</option>
 			</select>`

@@ -3,7 +3,13 @@ import {baseAPI} from "../config/config.js";
 export default {
 	getFetch: async function (url) {
 		try {
-			const data = await fetch(`${baseAPI}${url}`).then((response) => response.json());
+			let data = await fetch(`${baseAPI}${url}`).then((response) => response.json());
+
+			if (data.message) {
+				data = [];
+				alert(data.message);
+			}
+
 			return data;
 		} catch (e) {
 			console.log("[err] ", e);
@@ -21,7 +27,7 @@ export default {
 			})
 			.then((response) => response.json());
 
-			console.log(res);
+			res.message && alert(res.message);
 		} catch (e) {
 			console.log("[err] ", e);
 		}

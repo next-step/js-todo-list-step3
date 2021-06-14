@@ -9,12 +9,10 @@ export default function App () {
 
 	if (!pageType) {
 		const render = async () => setState(await Api.getFetch("/api/teams"));
-
 		const setState = (teams) => this.teamList.setState(teams);
 
 		this.teamList = new TeamList(render);
 
-		// const init = () => render();
 		render();
 	}
 	else if (pageType === "teamDetail") {
