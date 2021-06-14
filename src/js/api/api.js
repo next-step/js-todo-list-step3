@@ -43,6 +43,9 @@ export default {
 				body: JSON.stringify(obj)
 			})
 			.then((response) => response.json());
+
+			res.message && alert(res.message);
+
 		} catch (e) {
 			console.log("[err] ", e);
 		}
@@ -54,6 +57,9 @@ export default {
 				method: "DELETE"
 			})
 			.then((response) => response.json());
+
+			res.message && alert(res.message);
+
 		} catch (e) {
 			console.log("[err] ", e);
 		}
