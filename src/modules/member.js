@@ -13,8 +13,8 @@ const CHANGE_PRIORITY_TODO_ITEM = 'members/CHANGE_PRIORITY_TODO_ITEM';
 const CHANGE_FILTER = 'members/CHANGE_FILTER';
 
 // 액션 생성 함수
-export const initState = (members) => ({ type: INIT_STATE, payload: members });
-export const createMember = (member) => ({ type: CREATE_MEMBER, payload: member });
+export const initState = (members) => ({ type: INIT_STATE, payload: { members } });
+export const createMember = (member) => ({ type: CREATE_MEMBER, payload: { member } });
 export const addTodoItem = (memberId, todoItem) => ({
   type: ADD_TODO_ITEM,
   payload: { memberId, todoItem },
@@ -54,10 +54,10 @@ function membersReducer(state = initialState, action) {
 
   switch (type) {
     case INIT_STATE:
-      return payload.map((member) => ({ ...member, filter: 'all' }));
+      return payload.members.map((member) => ({ ...member, filter: 'all' }));
 
     case CREATE_MEMBER:
-      return prevState.concat({ ...payload, filter: 'all' });
+      return prevState.concat({ ...payload.member, filter: 'all' });
 
     case ADD_TODO_ITEM:
       return prevState.map((member) =>
