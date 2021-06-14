@@ -6,6 +6,10 @@ function getTeamURL(teamId) {
   return `${BASE_URL}/${teamId}`;
 }
 
+function getMemberURL(teamId) {
+  return `${BASE_URL}/${teamId}/members`;
+}
+
 export async function getTeamListData() {
   try {
     const response = await fetch(BASE_URL);
@@ -38,6 +42,24 @@ export async function getTeamData(teamId) {
   try {
     const teamURL = getTeamURL(teamId);
     const response = await fetch(teamURL);
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function addMemberData(teamId, data = {}) {
+  try {
+    const memberURL = getMemberURL(teamId);
+    const response = await fetch(memberURL, {
+      method: METHOD.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
     if (!response.ok) throw new Error('유효하지 않은 URL');
 
     return response.json();

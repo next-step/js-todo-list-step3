@@ -1,4 +1,4 @@
-import { getTeamData } from '../api.js';
+import { addMemberData, getTeamData } from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
 
@@ -8,7 +8,19 @@ export default class Kanban {
 
     this.TeamName = new TeamName();
 
-    this.MemberList = new MemberList();
+    this.MemberList = new MemberList({
+      onAddMember: async () => {
+        try {
+          const name = prompt('추가할 멤버 이름을 입력해주세요.');
+          if (!name) return;
+
+          await addMemberData(this.team._id, { name });
+          this.init();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
 
     this.init();
   }
