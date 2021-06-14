@@ -12,8 +12,11 @@ export default function detail () {
 	const getTeamMembers = async () => {
 		const params = new URLSearchParams(window.location.search);
 		this.teamId = params.get("id");
+		const data = await Api.getFetch(`/api/teams/${this.teamId}`);
 
-		return (await Api.getFetch(`/api/teams/${ this.teamId }`)).members;
+		$("#user-title").querySelector("strong").innerHTML = data.name;
+
+		return data.members;
 	};
 
 	const addEvent = () => {
@@ -33,8 +36,11 @@ export default function detail () {
 		});
 
 
-		$('#add-user-button').addEventListener('click', () => {
-			const result = prompt('새로운 팀원 이름을 입력해주세요')
+		$('#add-user-button').addEventListener('click', async () => {
+			const result = prompt('새로운 팀원 이름을 입력해주세요');
+
+			await Api.postFetch(`/api/teams/${ this.teamId }/members`, { name: result });
+			await setMemberList();
 		});
 	};
 
@@ -50,30 +56,29 @@ export default function detail () {
 			todoList.map(todoItem => todos += $new(todoItem));
 
 			memberItems += `
-        <li class="todoapp-container" data-member-id="${_id}">
-          <h2><span><strong>${ name }</strong>'s Todo List</span></h2>
-          
-          <div class="todoapp">
-            <section class="input-container">
-              <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
-            </section>
-            <section class="main">
-              <ul class="todo-list">
-              ${ todos }
-              </ul>
-            </section>
-            <div class="count-container">
-              <span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
-              <ul class="filters">
-                <li><a href="#all" class="selected">전체보기</a></li>
-                <li><a href="#priority">우선 순위</a></li>
-                <li><a href="#active">해야할 일</a></li>
-                <li><a href="#completed">완료한 일</a></li>
-              </ul>
-              <button class="clear-completed">모두 삭제</button>
-            </div>
-          </div>
-        </li>`;
+				<li class="todoapp-container" data-member-id="${_id}">
+					<h2><span><strong>${ name }</strong>'s Todo List</span></h2>
+					<div class="todoapp">
+						<section class="input-container">
+							<input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
+						</section>
+						<section class="main">
+							<ul class="todo-list">
+							${ todos }
+							</ul>
+						</section>
+						<div class="count-container">
+							<span class="todo-count">총 <strong>${todoList.length}</strong> 개</span>
+							<ul class="filters">
+								<li><a href="#all" class="selected">전체보기</a></li>
+								<li><a href="#priority">우선 순위</a></li>
+								<li><a href="#active">해야할 일</a></li>
+								<li><a href="#completed">완료한 일</a></li>
+							</ul>
+							<button class="clear-completed">모두 삭제</button>
+						</div>
+					</div>
+				</li>`;
 		})
 
 		memberItems += $addUserButtonContainer;
@@ -82,17 +87,17 @@ export default function detail () {
 
 	const $new = ({ _id, contents, isCompleted, priority }) => {
 		return `
-      <li class="todo-list-item ${ isCompleted && "completed" }" data-id="${ _id }">
-        <div class="view">
-            <input class="toggle" type="checkbox" ${ isCompleted && "checked" }/>
-            <label class="label">
-                <div class="chip-container">${ setPriority(priority) }</div>
-                ${ contents }
-            </label>
-            <button class="destroy"></button>
-        </div>
-        <input class="edit" value="${ contents }" />
-      </li>`;
+			<li class="todo-list-item ${ isCompleted && "completed" }" data-id="${ _id }">
+				<div class="view">
+					<input class="toggle" type="checkbox" ${ isCompleted && "checked" }/>
+					<label class="label">
+							<div class="chip-container">${ setPriority(priority) }</div>
+							${ contents }
+					</label>
+					<button class="destroy"></button>
+				</div>
+				<input class="edit" value="${ contents }" />
+			</li>`;
 	};
 
 
@@ -100,11 +105,11 @@ export default function detail () {
 		const className = (priority === "FIRST" && "primary") || (priority === "SECOND" && "secondary");
 
 		const item = `
-	      <select class="chip select ${className}">
-	        <option value="0" ${(priority === "NONE") && "selected"}>순위</option>
-	        <option value="1" ${priority === "FIRST" && "selected"}>1순위</option>
-	        <option value="2" ${priority === "SECOND" && "selected"}>2순위</option>
-	      </select>`
+			<select class="chip select ${className}">
+				<option value="0" ${(priority === "NONE") && "selected"}>순위</option>
+				<option value="1" ${priority === "FIRST" && "selected"}>1순위</option>
+				<option value="2" ${priority === "SECOND" && "selected"}>2순위</option>
+			</select>`
 
 		return item;
 	}
@@ -163,6 +168,7 @@ export default function detail () {
 
 		Api.putFetch(`/api/teams/${ this.teamId }/members/${ memberId }/items/${ itemId }/toggle`);
 	}
+
 
 	this.init = () => {
 		setMemberList();
