@@ -14,8 +14,12 @@ function getMemberURL(teamId, memberId) {
   return `${BASE_URL}/${teamId}/members/${memberId}`;
 }
 
-function getTodoItemURL(teamId, memberId) {
+function getTodoListURL(teamId, memberId) {
   return `${BASE_URL}/${teamId}/members/${memberId}/items`;
+}
+
+function getTodoItemURL(teamId, memberId, itemId) {
+  return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`;
 }
 
 export async function getTeamListData() {
@@ -90,13 +94,27 @@ export async function getMemberData(teamId, memberId) {
 
 export async function addTodoItemData(teamId, memberId, data = {}) {
   try {
-    const todoItemURL = getTodoItemURL(teamId, memberId);
-    const response = await fetch(todoItemURL, {
+    const todoListURL = getTodoListURL(teamId, memberId);
+    const response = await fetch(todoListURL, {
       method: METHOD.POST,
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteTodoItemData(teamId, memberId, itemId) {
+  try {
+    const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
+    const response = await fetch(todoItemURL, {
+      method: METHOD.DELETE,
     });
     if (!response.ok) throw new Error('유효하지 않은 URL');
 

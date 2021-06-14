@@ -1,4 +1,5 @@
 export const METHOD = {
+  DELETE: 'DELETE',
   POST: 'POST',
 };
 

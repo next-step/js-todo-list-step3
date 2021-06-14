@@ -2,11 +2,12 @@ import { KEY } from '../constants.js';
 import { addMemberButtonTemplate, memberTemplate } from '../templates.js';
 
 export default class MemberList {
-  constructor({ onAddMember, onAddTodoItem }) {
+  constructor({ onAddMember, onAddTodoItem, onDeleteTodoItem }) {
     this.$team = document.querySelector('.todoapp-list-container');
 
     this.$team.addEventListener('click', (event) => this.addMember(event, onAddMember));
     this.$team.addEventListener('keydown', (event) => this.addTodoItem(event, onAddTodoItem));
+    this.$team.addEventListener('click', (event) => this.deleteTodoItem(event, onDeleteTodoItem));
   }
 
   render(members) {
@@ -28,5 +29,12 @@ export default class MemberList {
 
     onAddTodoItem(todoInputTarget.id, todoInputTarget.value);
     todoInputTarget.value = '';
+  }
+
+  deleteTodoItem(event, onDeleteTodoItem) {
+    const deleteButtonTarget = event.target;
+    if (!deleteButtonTarget.classList.contains('destroy')) return;
+    const todoList = deleteButtonTarget.closest('ul');
+    onDeleteTodoItem(todoList.id, deleteButtonTarget.id);
   }
 }

@@ -52,7 +52,7 @@ export const memberTemplate = ({ _id, name, todoList }) => {
           <input id="${_id}" class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
         </section>
       <section class="main">
-        <ul class="todo-list">${todoListTemplate.join('')}</ul>
+        <ul class="todo-list" id="${_id}">${todoListTemplate.join('')}</ul>
       </section>
         <div class="count-container">
           <span class="todo-count">총 <strong>0</strong> 개</span>
