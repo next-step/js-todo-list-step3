@@ -6,7 +6,6 @@ import { teamAPI } from '@api/team';
 import { todoAPI } from '@api/todo';
 import { memberAPI } from '@api/member.js';
 
-// state
 import store, {
   initState,
   createMember,

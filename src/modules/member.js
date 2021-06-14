@@ -55,17 +55,14 @@ function membersReducer(state = initialState, action) {
   switch (type) {
     case INIT_STATE:
       return payload.members.map((member) => ({ ...member, filter: 'all' }));
-
     case CREATE_MEMBER:
       return prevState.concat({ ...payload.member, filter: 'all' });
-
     case ADD_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
           ? { ...member, todoList: member.todoList.concat(payload.todoItem) }
           : member,
       );
-
     case DELETE_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
@@ -75,7 +72,6 @@ function membersReducer(state = initialState, action) {
             }
           : member,
       );
-
     case TOGGLE_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
@@ -87,7 +83,6 @@ function membersReducer(state = initialState, action) {
             }
           : member,
       );
-
     case UPDTATE_CONTENTS_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
@@ -99,7 +94,6 @@ function membersReducer(state = initialState, action) {
             }
           : member,
       );
-
     case ALL_DELETE_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
@@ -109,7 +103,6 @@ function membersReducer(state = initialState, action) {
             }
           : member,
       );
-
     case CHANGE_PRIORITY_TODO_ITEM:
       return prevState.map((member) =>
         member._id === payload.memberId
@@ -121,12 +114,10 @@ function membersReducer(state = initialState, action) {
             }
           : member,
       );
-
     case CHANGE_FILTER:
       return prevState.map((member) =>
         member._id === payload.memberId ? { ...member, filter: payload.filter } : member,
       );
-
     default:
       throw new Error(`존재하지 않는 action 입니다: ${type}`);
   }

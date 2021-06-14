@@ -17,10 +17,8 @@ class MembersState extends Subject {
   }
 
   dispatch(action) {
-    console.log('call dispatch', action.type);
     const newState = this.reducer(this.get(), action);
     this.set(newState);
-    console.log('call dispatch after: ', this.get());
   }
 }
 
