@@ -2,6 +2,7 @@ import api from '../../../api/index.js';
 import Title from '../../Title.js';
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js';
+import TodoCount from './TodoCount.js';
 
 export default function TodoContainer(parent) {
   this.$parent = parent;
@@ -12,6 +13,7 @@ export default function TodoContainer(parent) {
   this.todoInput = {};
   this.$todoApp = {};
   this.todoList = {};
+  this.todoCount = {};
 
   this.setDom = () => {
     this.dom = document.createElement('li')
@@ -36,6 +38,7 @@ export default function TodoContainer(parent) {
     this.memberTitle.setState(this.member.name);
     this.todoInput.setState();
     this.todoList.setState(this.member.todoList);
+    this.todoCount.setState(this.member.todoList.length);
   }
 
   this.update = async () => {
@@ -75,7 +78,9 @@ export default function TodoContainer(parent) {
           this.update();
         },
       }
-    );  
+    );
+    this.todoCount = new TodoCount(this.$todoApp);
+      
   }
 
 }
