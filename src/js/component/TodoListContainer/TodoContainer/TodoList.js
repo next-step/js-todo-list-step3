@@ -6,28 +6,24 @@ function TodoList(parent, {onDelete, onToggle, onEdit}) {
   this.$todoContainer = {};
 
   this.setDom = () => {
-    this.dom = document.createElement('section');
-    this.$todoContainer = document.createElement('ul');
-    this.dom.className = 'main';
-    this.$todoContainer.className = 'todo-list';
-    this.$parent.append(this.dom);
-    this.dom.prepend(this.$todoContainer);
+    this.dom = document.createElement('ul');
+    this.dom.className = 'todo-list';
+    this.$parent.prepend(this.dom);
   }
 
   this.setState = updatedTodoItems => {
-    this.todoItems = updatedTodoItems ?? [];
+    this.todoItems = updatedTodoItems;
     this.setDom();
     this.render(this.todoItems);
   }
 
   this.render = (items) => {
     const template = items.map(item => this.template(item)).join('');
-    this.$todoContainer.innerHTML = template;
+    this.dom.innerHTML = template;
     this.setEvent();
   }
 
   this.template = item => {
-    console.log(item);
     return `
       <li class="todo-list-item ${item.isCompleted ? "completed" : ''}"  id=${item._id}>
         <div class="view">

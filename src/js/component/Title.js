@@ -16,7 +16,6 @@ export default function Title(parent, domElementType, id) {
   }
 
   this.render = () => {
-    console.log(this.dom)
     this.dom.innerHTML = `<span><strong>${this.teamName}</strong>'s Todo Lists</span>`
   }
 }

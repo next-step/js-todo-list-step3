@@ -1,6 +1,6 @@
 import team from '../../store/team.js';
 import Title from '../Title.js';
-import TodoContainer from './TodoContainer/index.js';
+import TodoContainer from './TodoContainer/TodoContainer.js';
 import AddMemberBtn from './AddMemberBtn.js';
 import api from '../../api/index.js';
 

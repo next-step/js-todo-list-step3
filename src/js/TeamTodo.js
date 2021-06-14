@@ -5,8 +5,7 @@ function TeamTodo() {
   this.teams = ''
   
   this.init = async() => {
-    this.teams = await team.getList() 
-    console.log(this.teams);
+    this.teams = await team.getList(); 
   }
 
 }

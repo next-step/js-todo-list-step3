@@ -15,7 +15,6 @@ export default function AddMemberBtn(parent, { onAdd }) {
       <span class="material-icons">add</span>
     </button>
     `;
-    console.log(this.dom);
     this.setEvent();
   }
 
@@ -26,7 +25,6 @@ export default function AddMemberBtn(parent, { onAdd }) {
 
   this.onAddMemberHandler = () => {
     const nameNewMember = prompt('이름을 입력해주세요.');
-    console.log(nameNewMember);
     onAdd(nameNewMember);
   }
 

@@ -1,4 +1,3 @@
-import api from '../../api/index.js';
 import team from '../../store/team.js';
 
 function TeamList() {
@@ -48,7 +47,6 @@ function TeamList() {
   this.delete = async () => {
     const nameDeletedTeam = prompt('제거할 팀의 이름을 입력해주세요');
     const deleteTeam = this.teams.find(team => team.name === nameDeletedTeam);
-    console.log(deleteTeam);
     await team.deleteTeam(deleteTeam._id);
   }
 
