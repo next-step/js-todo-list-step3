@@ -2,6 +2,7 @@ import {
   addMemberData,
   addTodoItemData,
   deleteTodoItemData,
+  deleteTodoListData,
   getMemberData,
   getTeamData,
   toggleTodoItemData,
@@ -33,6 +34,14 @@ export default class Kanban {
         const member = this.team.members.find(({ _id }) => _id === memberId);
         member.filterStatus = filterStatus;
         this.renderMemberList();
+      },
+      onDeleteTodoList: async (memberId) => {
+        try {
+          await deleteTodoListData(this.team._id, memberId);
+          this.initMember(memberId);
+        } catch (error) {
+          console.error(error);
+        }
       },
       onAddTodoItem: async (memberId, contents) => {
         try {

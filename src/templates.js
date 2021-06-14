@@ -40,6 +40,7 @@ export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
 `;
 
 function getFilteredTodoList(filterStatus, todoList) {
+  if (!todoList) return [];
   if (filterStatus === FILTER_STATUS.ALL || filterStatus === FILTER_STATUS.PRIORITY) return todoList;
   if (filterStatus === FILTER_STATUS.ACTIVE) {
     return todoList.filter((item) => !item.isCompleted);
@@ -93,7 +94,7 @@ export const memberTemplate = ({ _id, name, todoList, filterStatus }) => {
               </a>
             </li>
           </ul>
-          <button class="clear-completed">모두 삭제</button>
+          <button id="${_id}" class="clear-completed">모두 삭제</button>
         </div>
       </div>
     </li>

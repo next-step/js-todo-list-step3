@@ -96,6 +96,20 @@ export async function getMemberData(teamId, memberId) {
   }
 }
 
+export async function deleteTodoListData(teamId, memberId) {
+  try {
+    const todoListURL = getTodoListURL(teamId, memberId);
+    const response = await fetch(todoListURL, {
+      method: METHOD.DELETE,
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function addTodoItemData(teamId, memberId, data = {}) {
   try {
     const todoListURL = getTodoListURL(teamId, memberId);
