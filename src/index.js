@@ -1,14 +1,37 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Mission 3 Todo List For Team</title>
-    <meta charset="utf-8" />
-    <link href="./src/css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="app">
-      <h1 id="user-title" data-username="eastjun">
+import App from './App.js';
+
+new App(document.querySelector('#app'));
+
+{
+  /* <h1 id="user-title">
+<span><strong>Team</strong>'s Todo Lists</span>
+</h1>
+<div class="team-list-container">
+<div class="team-card-container">
+  <a href="/kanban.html" class="card">
+    <div class="card-title">
+      Team A
+    </div>
+  </a>
+</div>
+<div class="team-card-container">
+  <a href="/kanban.html" class="card">
+    <div class="card-title">
+      Team B
+    </div>
+  </a>
+</div>
+<div class="add-team-button-container">
+  <button id="add-team-button" class="ripple">
+    <span class="material-icons">add</span>
+  </button>
+</div>
+</div>
+</div> */
+}
+
+{
+  /* <h1 id="user-title" data-username="eastjun">
         <span><strong>Team</strong>'s Todo List</span>
       </h1>
       <ul class="todoapp-list-container flex-column-container">
@@ -294,7 +317,5 @@
           </button>
         </li>
       </ul>
-    </div>
-    <script src="./src/js/kanban.js"></script>
-  </body>
-</html>
+    </div> */
+}
