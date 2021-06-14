@@ -62,7 +62,7 @@ export default {
   },
   clearTeam : (state, payload) => {
     const newState = { ...state };
-    newState.teams.splice(payload.index, 1);
+    newState.teams.splice(payload.teamIndex, 1);
     return newState;
   },
   changeFilter : (state, payload) => {
