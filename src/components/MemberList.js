@@ -31,7 +31,8 @@ export default class MemberList {
   }
 
   addMember(event, onAddMember) {
-    const addMemberButtonTarget = event.target;
+    const addMemberButtonTarget = event.target.closest('button');
+    if (!addMemberButtonTarget) return;
     if (addMemberButtonTarget.id !== 'add-user-button') return;
     onAddMember();
   }

@@ -13,7 +13,8 @@ export default class TeamList {
   }
 
   addTeam(event, onAddTeam) {
-    const addTeamButtonTarget = event.target;
+    const addTeamButtonTarget = event.target.closest('button');
+    if (!addTeamButtonTarget) return;
     if (addTeamButtonTarget.id !== 'add-team-button') return;
     onAddTeam();
   }
