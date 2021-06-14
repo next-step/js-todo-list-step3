@@ -5,6 +5,7 @@ import {
   getMemberData,
   getTeamData,
   toggleTodoItemData,
+  updateTodoItemData,
 } from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
@@ -46,6 +47,14 @@ export default class Kanban {
       onToggleTodoItem: async (memberId, itemId) => {
         try {
           await toggleTodoItemData(this.team._id, memberId, itemId);
+          this.initMember(memberId);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      onUpdateTodoItem: async (memberId, itemId, contents) => {
+        try {
+          await updateTodoItemData(this.team._id, memberId, itemId, { contents });
           this.initMember(memberId);
         } catch (error) {
           console.error(error);

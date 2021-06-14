@@ -141,3 +141,21 @@ export async function toggleTodoItemData(teamId, memberId, itemId) {
     console.error(error);
   }
 }
+
+export async function updateTodoItemData(teamId, memberId, itemId, data = {}) {
+  try {
+    const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
+    const response = await fetch(todoItemURL, {
+      method: METHOD.PUT,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
