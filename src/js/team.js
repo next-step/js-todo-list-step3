@@ -15,7 +15,7 @@ const teamTemplate = team => {
   const teamCard =
     `
       <div class="team-card-container">
-      <a id=${team._id} href="/kanban.html" class="card">
+      <a id=${team._id} href="#" class="card">
       <div class="card-title">${team.name}</div>
       </a>
       </div>
@@ -62,9 +62,11 @@ const addTeam = (name, { TEAMS }, { POST }) => {
 };
 
 $teamList.addEventListener('click', ({ target }) => {
-  if (target.className == 'ripple') {
+  if (target.className === 'ripple') {
     const result = prompt('팀 이름을 입력해주세요')
     if (result) addTeam(result, API, METHOD);
+  } else if (target.className === 'card') {
+    location.href = `/kanban.html?id=${target.id}`;
   }
 });
 

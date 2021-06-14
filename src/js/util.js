@@ -11,7 +11,7 @@ const METHOD = {
 
 const API = {
   TEAMS: `${baseUrl}/api/teams`,
-  TEAM: taemId => `${baseUrl}/api/temas/${taemId}`,
+  TEAM: taemId => `${baseUrl}/api/teams/${taemId}`,
   MEMBERS: teamId => `${baseUrl}/api/teams/${teamId}/members`,
   TODOS: (taemId, memberId) => `${baseUrl}/api/teams/${teamId}/members/${memberId}`,
   ITEMS: (taemId, memberId) => `${baseUrl}/api/teams/${teamId}/members/${memberId}/items`,
