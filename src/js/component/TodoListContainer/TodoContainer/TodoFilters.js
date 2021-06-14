@@ -36,15 +36,15 @@ export default function TodoFilters(parent, {onShowAll, onActive, onCompleted}) 
 
   }
 
-  this.onShowAllHandler = ({target}) => {
+  this.onShowAllHandler = () => {
     onShowAll();
   }
 
-  this.onShowActiveHandler = ({target}) => {
+  this.onShowActiveHandler = () => {
     onActive();
   }
 
-  this.onShowCompletedHandler = ({target}) => {
+  this.onShowCompletedHandler = () => {
     onCompleted();
   }
 }
