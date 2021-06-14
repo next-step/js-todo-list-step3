@@ -2,7 +2,7 @@ export default {
   setCurrentTeam : (state, payload) => {
     return {
       ...state,
-      teamIndex: payload.index
+      teamIndex: payload.teamIndex
     };
   },
   addTeam : (state, payload) => {

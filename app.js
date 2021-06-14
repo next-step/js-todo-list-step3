@@ -1,5 +1,5 @@
-import Team from '../../components/team/team.js';
-import DataLoader from '../../services/dataLoader.js';
+import Team from './src/js/team/components/team.js';
+import DataLoader from './src/js/services/dataLoader.js';
 
 export default class App {
   constructor($target, dataController) {

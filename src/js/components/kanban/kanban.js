@@ -4,7 +4,7 @@ import store from "../../store/index.js";
 import Component from "../../lib/component.js";
 import addMemberButton from "./presentational/addMemberButton.js";
 import api from "../../constant/api.js";
-import { ALL } from "../../constant/constant.js";
+import { ALL, PRIORITY } from "../../constant/constant.js";
 import { convertToFilter, convertToPriority } from "../../utils/utils.js";
 
 export default class Kanban extends Component {
@@ -37,6 +37,7 @@ export default class Kanban extends Component {
         let name = prompt('새로운 팀원 이름을 입력해주세요');
         name && name.trim();
         if (!name || name.length < 2) return;
+
         const { teamId } = getTargetDatas(target);
         const body = { name };
         const res = await this.dataLoader.postData(api.addMemberURL(teamId), body);
@@ -55,15 +56,15 @@ export default class Kanban extends Component {
       } else if (target.classList.contains('filter')) {
         const { classList } = target;
         if (!classList.contains('priority') && classList.contains('selected')) return;
+
         const { memberIndex, members } = getTargetDatas(target);
         const copyMembers = [...members];
         if (classList.contains('priority') && classList.contains('selected')) {
-          copyMembers[memberIndex].filter -= 3;
-          store.dispatch('changeFilter', { memberIndex, members: copyMembers })
+          copyMembers[memberIndex].filter -= PRIORITY;
         } else if (classList.contains('priority')) {
-          copyMembers[memberIndex].filter += 3;
+          copyMembers[memberIndex].filter += PRIORITY;
         } else {
-          const prev = copyMembers[memberIndex].filter >= 3 ? 3 : 0;
+          const prev = copyMembers[memberIndex].filter >= PRIORITY ? PRIORITY : 0;
           copyMembers[memberIndex].filter = convertToFilter[classList[0]] + prev;
         }
         store.dispatch('changeFilter', { memberIndex, members: copyMembers })
@@ -75,6 +76,7 @@ export default class Kanban extends Component {
       let contents = target.value;
       contents && contents.trim();
       if (!contents || contents.length < 2) return;
+
       if (target.className === 'new-todo') {
         const { teamId, memberId, memberIndex } = getTargetDatas(target);
         const body = { contents };

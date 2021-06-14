@@ -18,6 +18,17 @@ export const convertToFilter = {
   all : 2,
 }
 
+export const compareByPriority = (a, b) => {
+  const priorityToValue = {
+    'NONE': 0,
+    'FIRST': 1,
+    'SECOND': 2
+  };
+  if (priorityToValue[a.priority] < priorityToValue[b.priority]) return -1;
+  if (priorityToValue[a.priority] > priorityToValue[b.priority]) return 1;
+  return 0;
+}
+
 const rCurry = (fn) => {
   return function(a, b) {
     return arguments.length === 2 ? fn(a, b) : (b) => { return fn(b, a); };
