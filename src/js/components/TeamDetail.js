@@ -23,7 +23,6 @@ export default function teamDetail() {
 
     $listContainer.addEventListener('click', ({target, target: {value, classList}}) => {
 
-      console.log(classList);
       if (classList.contains('destroy')) deleteItem(target)
       else if (classList.contains('toggle')) completeItem(target)
       else if (classList.contains('clear-completed')) deleteAll(target)
@@ -204,8 +203,6 @@ export default function teamDetail() {
     const memberInfo = await Api.getFetch(`/api/teams/${this.teamId}/members/${memberId}`);
     let todoList = memberInfo.todoList;
 		let todoItems = "";
-
-		console.log(todoList);
 
 		if (filterType !== "ALL") {
     	if (filterType === "PRIORITY") {
