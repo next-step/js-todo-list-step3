@@ -1,4 +1,5 @@
 import { $, $$, METHOD, API, baseUrl } from './util.js';
+import { loadToDoItems, toDoRender } from './todo.js';
 
 const $todoApps = $('.todoapp-list-container');
 const urlParams = new URLSearchParams(location.search);
@@ -75,6 +76,11 @@ function App() {
       const result = prompt('새로운 팀원 이름을 입력해주세요');
       if (result) addUser(result, API, METHOD);
     })
+
+    user.members.map(member => {
+      loadToDoItems(teamId, member._id, API);
+    });
+
   };
 
   const loadUser = async ({ TEAM }) => {
