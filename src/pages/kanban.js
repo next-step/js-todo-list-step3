@@ -7,6 +7,7 @@ import {
   getTeamData,
   toggleTodoItemData,
   updateTodoItemData,
+  updateTodoItemPriorityData,
 } from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
@@ -70,6 +71,14 @@ export default class Kanban {
       onUpdateTodoItem: async (memberId, itemId, contents) => {
         try {
           await updateTodoItemData(this.team._id, memberId, itemId, { contents });
+          this.initMember(memberId);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      onUpdateTodoItemPriority: async (memberId, itemId, priority) => {
+        try {
+          await updateTodoItemPriorityData(this.team._id, memberId, itemId, { priority });
           this.initMember(memberId);
         } catch (error) {
           console.error(error);

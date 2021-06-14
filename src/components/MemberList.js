@@ -1,4 +1,4 @@
-import { KEY } from '../constants.js';
+import { KEY, PRIORITY } from '../constants.js';
 import { addMemberButtonTemplate, memberTemplate } from '../templates.js';
 
 export default class MemberList {
@@ -10,6 +10,7 @@ export default class MemberList {
     onDeleteTodoItem,
     onToggleTodoItem,
     onUpdateTodoItem,
+    onUpdateTodoItemPriority,
   }) {
     this.$team = document.querySelector('.todoapp-list-container');
 
@@ -21,6 +22,7 @@ export default class MemberList {
     this.$team.addEventListener('click', (event) => this.toggleTodoItem(event, onToggleTodoItem));
     this.$team.addEventListener('dblclick', (event) => this.editTodoItem(event));
     this.$team.addEventListener('keydown', (event) => this.updateTodoItem(event, onUpdateTodoItem));
+    this.$team.addEventListener('change', (event) => this.updateTodoItemPriority(event, onUpdateTodoItemPriority));
   }
 
   render(members) {
@@ -103,5 +105,20 @@ export default class MemberList {
     if (value === '') return;
     const todoList = editingInputTarget.closest('ul');
     onUpdateTodoItem(todoList.id, todoItem.id, value);
+  }
+
+  updateTodoItemPriority(event, onUpdateTodoItemPriority) {
+    const selectTarget = event.target;
+    if (!selectTarget.classList.contains('select')) return;
+
+    const todoItem = selectTarget.closest('li');
+
+    const { value } = selectTarget;
+    let priority;
+    if (value === '0') priority = PRIORITY.NONE;
+    if (value === '1') priority = PRIORITY.FIRST;
+    if (value === '2') priority = PRIORITY.SECOND;
+    const todoList = selectTarget.closest('ul');
+    onUpdateTodoItemPriority(todoList.id, todoItem.id, priority);
   }
 }

@@ -26,6 +26,10 @@ function getTodoItemToggleURL(teamId, memberId, itemId) {
   return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/toggle`;
 }
 
+function getTodoItemPriorityURL(teamId, memberId, itemId) {
+  return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/priority`;
+}
+
 export async function getTeamListData() {
   try {
     const response = await fetch(BASE_URL);
@@ -160,6 +164,24 @@ export async function updateTodoItemData(teamId, memberId, itemId, data = {}) {
   try {
     const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
     const response = await fetch(todoItemURL, {
+      method: METHOD.PUT,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updateTodoItemPriorityData(teamId, memberId, itemId, data = {}) {
+  try {
+    const todoItemPriorityURL = getTodoItemPriorityURL(teamId, memberId, itemId);
+    const response = await fetch(todoItemPriorityURL, {
       method: METHOD.PUT,
       headers: {
         'Content-Type': 'application/json',

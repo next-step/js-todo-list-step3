@@ -26,9 +26,9 @@ export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
             ${priority === PRIORITY.FIRST ? 'primary' : ''}
             ${priority === PRIORITY.SECOND ? 'secondary' : ''}
           ">
-            <option ${priority === PRIORITY.NONE ? CLASS_NAME.SELECTED : ''}>순위</option>
-            <option ${priority === PRIORITY.FIRST ? CLASS_NAME.SELECTED : ''}>1순위</option>
-            <option ${priority === PRIORITY.SECOND ? CLASS_NAME.SELECTED : ''}>2순위</option>
+            <option value="0" ${priority === PRIORITY.NONE ? CLASS_NAME.SELECTED : ''}>순위</option>
+            <option value="1" ${priority === PRIORITY.FIRST ? CLASS_NAME.SELECTED : ''}>1순위</option>
+            <option value="2" ${priority === PRIORITY.SECOND ? CLASS_NAME.SELECTED : ''}>2순위</option>
           </select>
         </div>
         ${contents}
