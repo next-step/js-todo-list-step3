@@ -22,6 +22,10 @@ function getTodoItemURL(teamId, memberId, itemId) {
   return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`;
 }
 
+function getTodoItemToggleURL(teamId, memberId, itemId) {
+  return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/toggle`;
+}
+
 export async function getTeamListData() {
   try {
     const response = await fetch(BASE_URL);
@@ -115,6 +119,20 @@ export async function deleteTodoItemData(teamId, memberId, itemId) {
     const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
     const response = await fetch(todoItemURL, {
       method: METHOD.DELETE,
+    });
+    if (!response.ok) throw new Error('유효하지 않은 URL');
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function toggleTodoItemData(teamId, memberId, itemId) {
+  try {
+    const todoItemToggleURL = getTodoItemToggleURL(teamId, memberId, itemId);
+    const response = await fetch(todoItemToggleURL, {
+      method: METHOD.PUT,
     });
     if (!response.ok) throw new Error('유효하지 않은 URL');
 

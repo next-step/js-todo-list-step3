@@ -14,7 +14,7 @@ export default class Home {
           await addTeamData({ name });
           this.init();
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
     });

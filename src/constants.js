@@ -1,6 +1,7 @@
 export const METHOD = {
   DELETE: 'DELETE',
   POST: 'POST',
+  PUT: 'PUT',
 };
 
 export const PRIORITY = {

@@ -1,4 +1,11 @@
-import { addMemberData, addTodoItemData, deleteTodoItemData, getMemberData, getTeamData } from '../api.js';
+import {
+  addMemberData,
+  addTodoItemData,
+  deleteTodoItemData,
+  getMemberData,
+  getTeamData,
+  toggleTodoItemData,
+} from '../api.js';
 import MemberList from '../components/MemberList.js';
 import TeamName from '../components/TeamName.js';
 
@@ -17,7 +24,7 @@ export default class Kanban {
           await addMemberData(this.team._id, { name });
           this.init();
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
       onAddTodoItem: async (memberId, contents) => {
@@ -25,14 +32,24 @@ export default class Kanban {
           await addTodoItemData(this.team._id, memberId, { contents });
           this.initMember(memberId);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       },
       onDeleteTodoItem: async (memberId, itemId) => {
         try {
           await deleteTodoItemData(this.team._id, memberId, itemId);
           this.initMember(memberId);
-        } catch (error) {}
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      onToggleTodoItem: async (memberId, itemId) => {
+        try {
+          await toggleTodoItemData(this.team._id, memberId, itemId);
+          this.initMember(memberId);
+        } catch (error) {
+          console.error(error);
+        }
       },
     });
 
