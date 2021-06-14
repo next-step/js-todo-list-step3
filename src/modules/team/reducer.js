@@ -1,4 +1,7 @@
 import {
+  ADD_TEAM,
+  ADD_TEAM_ERROR,
+  ADD_TEAM_SUCCESS,
   GET_TEAM,
   GET_TEAMS,
   GET_TEAMS_ERROR,
@@ -46,6 +49,24 @@ export default function team(state = initialState, action) {
         selectedTeam: action.payload,
       };
     case GET_TEAM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case ADD_TEAM:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_TEAM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        teams: [...state.teams, action.payload],
+      };
+    case ADD_TEAM_ERROR:
       return {
         ...state,
         loading: false,
