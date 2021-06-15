@@ -2,41 +2,32 @@
 import { createElement } from '../lib/React';
 import Mode from '../constant/todoFilter';
 
-const TodoCount = ({ todos, mode, onDeleteAll, onChangeMode }) => {
+const TodoCount = ({ todos, mode, onDeleteAll, onChangeFilter }) => {
   return (
     <div className="count-container">
       <span className="todo-count">
         총 <strong>{todos.length}</strong> 개
       </span>
       <ul className="filters">
-        <li onclick={() => onChangeMode(Mode.ALL)}>
-          <a href="#all" className={`${mode === Mode.ALL ? 'selected' : ''}`}>
+        <li onclick={() => onChangeFilter(Mode.ALL)}>
+          <span className={`${mode === Mode.ALL ? 'selected' : ''}`}>
             전체보기
-          </a>
+          </span>
         </li>
-        <li onclick={() => onChangeMode(Mode.PRIORITY)}>
-          <a
-            href="#priority"
-            className={`${mode === Mode.PRIORITY ? 'selected' : ''}`}
-          >
+        <li onclick={() => onChangeFilter(Mode.PRIORITY)}>
+          <span className={`${mode === Mode.PRIORITY ? 'selected' : ''}`}>
             우선 순위
-          </a>
+          </span>
         </li>
-        <li onclick={() => onChangeMode(Mode.ACTIVE)}>
-          <a
-            href="#active"
-            className={`${mode === Mode.ACTIVE ? 'selected' : ''}`}
-          >
+        <li onclick={() => onChangeFilter(Mode.ACTIVE)}>
+          <span className={`${mode === Mode.ACTIVE ? 'selected' : ''}`}>
             해야할 일
-          </a>
+          </span>
         </li>
-        <li onclick={() => onChangeMode(Mode.COMPLETED)}>
-          <a
-            href="#completed"
-            className={`${mode === Mode.COMPLETED ? 'selected' : ''}`}
-          >
+        <li onclick={() => onChangeFilter(Mode.COMPLETED)}>
+          <span className={`${mode === Mode.COMPLETED ? 'selected' : ''}`}>
             완료한 일
-          </a>
+          </span>
         </li>
       </ul>
       <button className="clear-completed" onclick={onDeleteAll}>

@@ -1,9 +1,19 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 
-const TodoItem = ({ todo, onDelete, onToggle }) => {
+const TodoItem = ({ todo, onDelete, onToggle, onChangeMode, onUpdate }) => {
+  const makeTodoClassName = () => {
+    if (todo.isCompleted) {
+      return todo.editMode ? 'completed editing' : 'completed';
+    }
+    return todo.editMode ? 'editing' : '';
+  };
+
   return (
-    <li className={`todo-list-item ${todo.isCompleted ? 'completed' : ''}`}>
+    <li
+      className={`todo-list-item ${makeTodoClassName()}`}
+      ondblclick={() => onChangeMode(todo._id)}
+    >
       <div className="view">
         <input
           className="toggle"
@@ -25,7 +35,11 @@ const TodoItem = ({ todo, onDelete, onToggle }) => {
         </label>
         <button className="destroy" onclick={() => onDelete(todo._id)}></button>
       </div>
-      <input className="edit" value="완료된 타이틀" />
+      <input
+        className="edit"
+        value={todo.contents}
+        onkeyup={(e) => onUpdate(e, todo._id)}
+      />
     </li>
   );
 };

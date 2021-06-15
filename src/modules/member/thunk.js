@@ -8,7 +8,8 @@ import {
   ADD_TODO,
   ADD_TODO_ERROR,
   ADD_TODO_SUCCESS,
-  CHANGE_MODE,
+  CHANGE_FILTER,
+  CHNAGE_MODE,
   DELETE_ALL_TODO,
   DELETE_ALL_TODO_ERROR,
   DELETE_ALL_TODO_SUCCESS,
@@ -21,6 +22,9 @@ import {
   TOGGLE_TODO,
   TOGGLE_TODO_ERROR,
   TOGGLE_TODO_SUCCESS,
+  UPDATE_TODO,
+  UPDATE_TODO_ERROR,
+  UPDATE_TODO_SUCCESS,
 } from './action';
 
 export const getMembers = (teamId) => async (dispatch) => {
@@ -47,11 +51,28 @@ export const addTodo = (teamId, memberId, contents) => async (dispatch) => {
   dispatch({ type: ADD_TODO });
   try {
     const todo = await todoAPI.addTodo(teamId, memberId, contents);
-    dispatch({ type: ADD_TODO_SUCCESS, payload: { id: memberId, todo } });
+    dispatch({
+      type: ADD_TODO_SUCCESS,
+      payload: { id: memberId, todo: { ...todo, editMode: false } },
+    });
   } catch (error) {
     dispatch({ type: ADD_TODO_ERROR, payload: error });
   }
 };
+
+export const updateTodo =
+  (teamId, memberId, itemId, contents) => async (dispatch) => {
+    dispatch({ type: UPDATE_TODO });
+    try {
+      const todo = await todoAPI.updateTodo(teamId, memberId, itemId, contents);
+      dispatch({
+        type: UPDATE_TODO_SUCCESS,
+        payload: { memberId, itemId, todo: { ...todo, editMode: false } },
+      });
+    } catch (error) {
+      dispatch({ type: UPDATE_TODO_ERROR, payload: error });
+    }
+  };
 
 export const deleteTodo = (teamId, memberId, itemId) => async (dispatch) => {
   dispatch({ type: DELETE_TODO });
@@ -86,6 +107,10 @@ export const toggleTodo = (teamId, memberId, itemId) => async (dispatch) => {
   }
 };
 
-export const changeMode = (memberId, mode) => (dispatch) => {
-  dispatch({ type: CHANGE_MODE, payload: { id: memberId, mode } });
+export const changeFilter = (memberId, mode) => (dispatch) => {
+  dispatch({ type: CHANGE_FILTER, payload: { id: memberId, mode } });
+};
+
+export const changeMode = (memberId, itemId) => (dispatch) => {
+  dispatch({ type: CHNAGE_MODE, payload: { memberId, itemId } });
 };

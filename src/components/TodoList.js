@@ -3,7 +3,14 @@ import { createElement } from '../lib/React';
 import TodoItem from './TodoItem';
 import Mode from '../constant/todoFilter';
 
-const TodoList = ({ todos, mode, onDelete, onToggle }) => {
+const TodoList = ({
+  todos,
+  mode,
+  onDelete,
+  onToggle,
+  onChangeMode,
+  onUpdate,
+}) => {
   return (
     <section className="main">
       <ul className="todo-list">
@@ -15,7 +22,13 @@ const TodoList = ({ todos, mode, onDelete, onToggle }) => {
             if (mode === Mode.COMPLETED) return todo.isCompleted;
           })
           .map((todo) => (
-            <TodoItem todo={todo} onDelete={onDelete} onToggle={onToggle} />
+            <TodoItem
+              todo={todo}
+              onDelete={onDelete}
+              onToggle={onToggle}
+              onChangeMode={onChangeMode}
+              onUpdate={onUpdate}
+            />
           ))}
       </ul>
     </section>

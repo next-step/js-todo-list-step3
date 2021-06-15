@@ -5,7 +5,8 @@ import {
   ADD_TODO,
   ADD_TODO_ERROR,
   ADD_TODO_SUCCESS,
-  CHANGE_MODE,
+  CHANGE_FILTER,
+  CHNAGE_MODE,
   DELETE_ALL_TODO,
   DELETE_ALL_TODO_ERROR,
   DELETE_ALL_TODO_SUCCESS,
@@ -18,6 +19,9 @@ import {
   TOGGLE_TODO,
   TOGGLE_TODO_ERROR,
   TOGGLE_TODO_SUCCESS,
+  UPDATE_TODO,
+  UPDATE_TODO_ERROR,
+  UPDATE_TODO_SUCCESS,
 } from './action';
 
 import Mode from '../../constant/todoFilter';
@@ -40,6 +44,10 @@ export default function member(state = initialState, action) {
         ...state,
         members: action.payload.map((member) => ({
           ...member,
+          todoList: member.todoList.map((todo) => ({
+            ...todo,
+            editMode: false,
+          })),
           mode: Mode.ALL,
         })),
       };
@@ -50,7 +58,7 @@ export default function member(state = initialState, action) {
         error: action.payload,
       };
 
-    case CHANGE_MODE:
+    case CHANGE_FILTER:
       return {
         ...state,
         members: state.members.map((member) =>
@@ -71,6 +79,10 @@ export default function member(state = initialState, action) {
         loading: false,
         members: action.payload.map((member) => ({
           ...member,
+          todoList: member.todoList.map((todo) => ({
+            ...todo,
+            editMode: false,
+          })),
           mode: Mode.ALL,
         })),
       };
@@ -79,6 +91,23 @@ export default function member(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case CHNAGE_MODE:
+      return {
+        ...state,
+        members: state.members.map((member) =>
+          member._id === action.payload.memberId
+            ? {
+                ...member,
+                todoList: member.todoList.map((todo) =>
+                  todo._id === action.payload.itemId
+                    ? { ...todo, editMode: !todo.editMode }
+                    : todo
+                ),
+              }
+            : member
+        ),
       };
 
     case ADD_TODO:
@@ -97,6 +126,35 @@ export default function member(state = initialState, action) {
         ),
       };
     case ADD_TODO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case UPDATE_TODO:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_TODO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        members: state.members.map((member) =>
+          member._id === action.payload.memberId
+            ? {
+                ...member,
+                todoList: member.todoList.map((todo) =>
+                  todo._id === action.payload.itemId
+                    ? action.payload.todo
+                    : todo
+                ),
+              }
+            : member
+        ),
+      };
+    case UPDATE_TODO_ERROR:
       return {
         ...state,
         loading: false,

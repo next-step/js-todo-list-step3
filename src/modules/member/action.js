@@ -7,12 +7,14 @@ export const ADD_MEMBER = 'ADD_MEMBER';
 export const ADD_MEMBER_SUCCESS = 'ADD_MEMBER_SUCCESS';
 export const ADD_MEMBER_ERROR = 'ADD_MEMBER_ERROR';
 
-export const CHANGE_MODE = 'CHANGE_MODE';
+export const CHANGE_FILTER = 'CHANGE_FILTER';
 
 // Todo
 export const GET_TODOS = 'GET_TODOS';
 export const GET_TODOS_SUCCESS = 'GET_TODOS_SUCCESS';
 export const GET_TODOS_ERROR = 'GET_TODOS_ERROR';
+
+export const CHNAGE_MODE = 'CHNAGE_MODE';
 
 export const ADD_TODO = 'ADD_TODO';
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
