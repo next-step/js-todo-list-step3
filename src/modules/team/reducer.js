@@ -1,3 +1,4 @@
+import { ADD_MEMBER_SUCCESS } from '../member/action';
 import {
   ADD_TEAM,
   ADD_TEAM_ERROR,
@@ -72,6 +73,13 @@ export default function team(state = initialState, action) {
         loading: false,
         error: action.payload,
       };
+
+    case ADD_MEMBER_SUCCESS:
+      return {
+        ...state,
+        selectedTeam: { ...state.selectedTeam, members: action.payload },
+      };
+
     default:
       return state;
   }

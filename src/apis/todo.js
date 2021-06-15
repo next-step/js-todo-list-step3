@@ -25,7 +25,7 @@ export const deleteTodo = (teamId, memberId, itemId) =>
 
 // 투두 모두 삭제
 export const deleteAllTodo = (teamId, memberId) =>
-  fetchAPI(`teams/${teamId}/members/${memberId}`, METHOD.DELETE);
+  fetchAPI(`teams/${teamId}/members/${memberId}/items`, METHOD.DELETE);
 
 // 투두 토글
 export const toggleTodo = (teamId, memberId, itemId) =>

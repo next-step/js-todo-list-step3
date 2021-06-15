@@ -3,7 +3,7 @@ import { createElement } from '../lib/React';
 import AddUserBtn from '../components/AddUserBtn';
 import MemberContainer from './MemberContainer';
 import { useSelector } from '../lib/Redux';
-import { addMembers } from '../modules/member/thunk';
+import { addMember } from '../modules/member/thunk';
 import { store } from '..';
 
 const MemberListContainer = () => {
@@ -13,9 +13,9 @@ const MemberListContainer = () => {
   } = useSelector();
 
   const onAddMember = () => {
-    const memberName = prompt('이름을 입력해주세요.').trim();
+    const memberName = prompt('이름을 입력해주세요.')?.trim();
     if (memberName) {
-      store.dispatch(addMembers(selectedTeam._id, memberName));
+      store.dispatch(addMember(selectedTeam._id, memberName));
     }
   };
 

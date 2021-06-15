@@ -1,7 +1,7 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 
-const TodoCount = ({ todos }) => {
+const TodoCount = ({ todos, onDeleteAll }) => {
   return (
     <div className="count-container">
       <span className="todo-count">
@@ -23,7 +23,9 @@ const TodoCount = ({ todos }) => {
           <a href="#completed">완료한 일</a>
         </li>
       </ul>
-      <button className="clear-completed">모두 삭제</button>
+      <button className="clear-completed" onclick={onDeleteAll}>
+        모두 삭제
+      </button>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 
-const TodoItem = ({ todo }) => {
+const TodoItem = ({ todo, onDelete }) => {
   return (
     <li className="todo-list-item">
       <div className="view">
@@ -18,7 +18,7 @@ const TodoItem = ({ todo }) => {
           </div>
           {todo.contents}
         </label>
-        <button className="destroy"></button>
+        <button className="destroy" onclick={() => onDelete(todo._id)}></button>
       </div>
       <input className="edit" value="완료된 타이틀" />
     </li>
