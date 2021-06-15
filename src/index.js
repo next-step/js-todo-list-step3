@@ -2,12 +2,12 @@
 import { createElement } from './lib/React';
 import { createStore } from './lib/Redux';
 import { render } from './lib/ReactDOM';
+import { getTeams } from './modules/team/thunk';
 import logger from './lib/middlewares/logger';
 import thunk from './lib/middlewares/thunk';
 import rootReducer from './modules';
 import App from './App';
 import './style/style.css';
-import { getTeams } from './modules/team/thunk';
 
 // 스토어 생성
 export const store = createStore(rootReducer, [thunk, logger]);

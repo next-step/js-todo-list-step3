@@ -45,6 +45,7 @@ export default function member(state = initialState, action) {
     case GET_MEMBERS_SUCCESS:
       return {
         ...state,
+        loading: false,
         members: action.payload.map((member) => ({
           ...member,
           todoList: member.todoList.map((todo) => ({
