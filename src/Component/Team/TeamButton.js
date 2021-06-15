@@ -1,11 +1,15 @@
 import Component from '../../core/Component.js';
-import { on, qs } from '../../util/helpers.js';
+import { delegate } from '../../util/helpers.js';
 
 export default class TeamButton extends Component {
   constructor($element, props) {
     super($element, props);
     this.addTeam = this.props.addTeam;
     this.render();
+  }
+  setEvent() {
+    delegate(this.$element, 'click', '#add-team-button', () => this.addTeam());
+    delegate(this.$element, 'click', '.material-icons', () => this.addTeam());
   }
 
   template() {
@@ -18,9 +22,5 @@ export default class TeamButton extends Component {
   }
   render() {
     this.$element.innerHTML += this.template();
-    this.mounted();
-  }
-  mounted() {
-    on(qs('.add-team-button-container'), 'click', () => this.addTeam());
   }
 }
