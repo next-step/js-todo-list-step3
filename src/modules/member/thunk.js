@@ -8,6 +8,7 @@ import {
   ADD_TODO,
   ADD_TODO_ERROR,
   ADD_TODO_SUCCESS,
+  CHANGE_MODE,
   DELETE_ALL_TODO,
   DELETE_ALL_TODO_ERROR,
   DELETE_ALL_TODO_SUCCESS,
@@ -17,6 +18,9 @@ import {
   GET_MEMBERS,
   GET_MEMBERS_ERROR,
   GET_MEMBERS_SUCCESS,
+  TOGGLE_TODO,
+  TOGGLE_TODO_ERROR,
+  TOGGLE_TODO_SUCCESS,
 } from './action';
 
 export const getMembers = (teamId) => async (dispatch) => {
@@ -67,4 +71,21 @@ export const deleteAllTodo = (teamId, memberId) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: DELETE_ALL_TODO_ERROR, payload: error });
   }
+};
+
+export const toggleTodo = (teamId, memberId, itemId) => async (dispatch) => {
+  dispatch({ type: TOGGLE_TODO });
+  try {
+    const todo = await todoAPI.toggleTodo(teamId, memberId, itemId);
+    dispatch({
+      type: TOGGLE_TODO_SUCCESS,
+      payload: { memberId, itemId, todo },
+    });
+  } catch (error) {
+    dispatch({ type: TOGGLE_TODO_ERROR, payload: error });
+  }
+};
+
+export const changeMode = (memberId, mode) => (dispatch) => {
+  dispatch({ type: CHANGE_MODE, payload: { id: memberId, mode } });
 };

@@ -5,6 +5,7 @@ import {
   ADD_TODO,
   ADD_TODO_ERROR,
   ADD_TODO_SUCCESS,
+  CHANGE_MODE,
   DELETE_ALL_TODO,
   DELETE_ALL_TODO_ERROR,
   DELETE_ALL_TODO_SUCCESS,
@@ -14,7 +15,12 @@ import {
   GET_MEMBERS,
   GET_MEMBERS_ERROR,
   GET_MEMBERS_SUCCESS,
+  TOGGLE_TODO,
+  TOGGLE_TODO_ERROR,
+  TOGGLE_TODO_SUCCESS,
 } from './action';
+
+import Mode from '../../constant/todoFilter';
 
 const initialState = {
   loading: false,
@@ -32,13 +38,26 @@ export default function member(state = initialState, action) {
     case GET_MEMBERS_SUCCESS:
       return {
         ...state,
-        members: action.payload,
+        members: action.payload.map((member) => ({
+          ...member,
+          mode: Mode.ALL,
+        })),
       };
     case GET_MEMBERS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case CHANGE_MODE:
+      return {
+        ...state,
+        members: state.members.map((member) =>
+          member._id === action.payload.id
+            ? { ...member, mode: action.payload.mode }
+            : member
+        ),
       };
 
     case ADD_MEMBER:
@@ -50,7 +69,10 @@ export default function member(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        members: action.payload,
+        members: action.payload.map((member) => ({
+          ...member,
+          mode: Mode.ALL,
+        })),
       };
     case ADD_MEMBER_ERROR:
       return {
@@ -122,6 +144,35 @@ export default function member(state = initialState, action) {
         ),
       };
     case DELETE_ALL_TODO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case TOGGLE_TODO:
+      return {
+        ...state,
+        loading: true,
+      };
+    case TOGGLE_TODO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        members: state.members.map((member) =>
+          member._id === action.payload.memberId
+            ? {
+                ...member,
+                todoList: member.todoList.map((todo) =>
+                  todo._id === action.payload.itemId
+                    ? action.payload.todo
+                    : todo
+                ),
+              }
+            : member
+        ),
+      };
+    case TOGGLE_TODO_ERROR:
       return {
         ...state,
         loading: false,

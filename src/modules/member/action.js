@@ -7,6 +7,8 @@ export const ADD_MEMBER = 'ADD_MEMBER';
 export const ADD_MEMBER_SUCCESS = 'ADD_MEMBER_SUCCESS';
 export const ADD_MEMBER_ERROR = 'ADD_MEMBER_ERROR';
 
+export const CHANGE_MODE = 'CHANGE_MODE';
+
 // Todo
 export const GET_TODOS = 'GET_TODOS';
 export const GET_TODOS_SUCCESS = 'GET_TODOS_SUCCESS';

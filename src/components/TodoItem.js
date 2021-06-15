@@ -1,11 +1,16 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 
-const TodoItem = ({ todo, onDelete }) => {
+const TodoItem = ({ todo, onDelete, onToggle }) => {
   return (
-    <li className="todo-list-item">
+    <li className={`todo-list-item ${todo.isCompleted ? 'completed' : ''}`}>
       <div className="view">
-        <input className="toggle" type="checkbox" />
+        <input
+          className="toggle"
+          type="checkbox"
+          onchange={() => onToggle(todo._id)}
+          checked={todo.isCompleted}
+        />
         <label className="label">
           <div className="chip-container">
             <select className="chip select">
