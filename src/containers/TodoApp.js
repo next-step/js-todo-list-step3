@@ -12,6 +12,7 @@ import {
   deleteTodo,
   toggleTodo,
   updateTodo,
+  setPriority,
 } from './../modules/member/thunk';
 import { useSelector } from '../lib/Redux';
 import key from '../constant/key';
@@ -45,6 +46,12 @@ const TodoApp = ({ member }) => {
     store.dispatch(deleteAllTodo(selectedTeam._id, member._id));
   };
 
+  const onChangePriority = (e, itemId) => {
+    store.dispatch(
+      setPriority(selectedTeam._id, member._id, itemId, e.target.value)
+    );
+  };
+
   const onChangeFilter = (mode) => {
     store.dispatch(changeFilter(member._id, mode));
   };
@@ -62,6 +69,7 @@ const TodoApp = ({ member }) => {
         onToggle={onToggle}
         onChangeMode={onChangeMode}
         onUpdate={onUpdate}
+        onChangePriority={onChangePriority}
         mode={member.mode}
       />
       <TodoCount

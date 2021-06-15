@@ -16,6 +16,9 @@ import {
   GET_MEMBERS,
   GET_MEMBERS_ERROR,
   GET_MEMBERS_SUCCESS,
+  SET_PRIORITY,
+  SET_PRIORITY_ERROR,
+  SET_PRIORITY_SUCCESS,
   TOGGLE_TODO,
   TOGGLE_TODO_ERROR,
   TOGGLE_TODO_SUCCESS,
@@ -231,6 +234,35 @@ export default function member(state = initialState, action) {
         ),
       };
     case TOGGLE_TODO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case SET_PRIORITY:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SET_PRIORITY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        members: state.members.map((member) =>
+          member._id === action.payload.memberId
+            ? {
+                ...member,
+                todoList: member.todoList.map((todo) =>
+                  todo._id === action.payload.itemId
+                    ? action.payload.todo
+                    : todo
+                ),
+              }
+            : member
+        ),
+      };
+    case SET_PRIORITY_ERROR:
       return {
         ...state,
         loading: false,

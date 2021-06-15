@@ -21,7 +21,6 @@ export const fetchAPI = async (url = '', method = METHOD.GET, payload = {}) => {
     if (!response.ok) throw new Error(response.statusText);
     return await response.json();
   } catch (error) {
-    // TODO: error 객체 확인 후, error.message로 변경
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };

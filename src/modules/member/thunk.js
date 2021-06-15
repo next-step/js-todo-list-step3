@@ -19,6 +19,9 @@ import {
   GET_MEMBERS,
   GET_MEMBERS_ERROR,
   GET_MEMBERS_SUCCESS,
+  SET_PRIORITY,
+  SET_PRIORITY_ERROR,
+  SET_PRIORITY_SUCCESS,
   TOGGLE_TODO,
   TOGGLE_TODO_ERROR,
   TOGGLE_TODO_SUCCESS,
@@ -106,6 +109,25 @@ export const toggleTodo = (teamId, memberId, itemId) => async (dispatch) => {
     dispatch({ type: TOGGLE_TODO_ERROR, payload: error });
   }
 };
+
+export const setPriority =
+  (teamId, memberId, itemId, priority) => async (dispatch) => {
+    dispatch({ type: SET_PRIORITY });
+    try {
+      const todo = await todoAPI.setPriority(
+        teamId,
+        memberId,
+        itemId,
+        priority
+      );
+      dispatch({
+        type: SET_PRIORITY_SUCCESS,
+        payload: { memberId, itemId, todo: { ...todo, editMode: false } },
+      });
+    } catch (error) {
+      dispatch({ type: SET_PRIORITY_ERROR, payload: error });
+    }
+  };
 
 export const changeFilter = (memberId, mode) => (dispatch) => {
   dispatch({ type: CHANGE_FILTER, payload: { id: memberId, mode } });

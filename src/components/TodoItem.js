@@ -1,7 +1,15 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
+import priority from '../constant/priority';
 
-const TodoItem = ({ todo, onDelete, onToggle, onChangeMode, onUpdate }) => {
+const TodoItem = ({
+  todo,
+  onDelete,
+  onToggle,
+  onChangeMode,
+  onUpdate,
+  onChangePriority,
+}) => {
   const makeTodoClassName = () => {
     if (todo.isCompleted) {
       return todo.editMode ? 'completed editing' : 'completed';
@@ -23,12 +31,28 @@ const TodoItem = ({ todo, onDelete, onToggle, onChangeMode, onUpdate }) => {
         />
         <label className="label">
           <div className="chip-container">
-            <select className="chip select">
-              <option value="0" selected>
-                순위
+            <select
+              className={`chip select ${todo.priority}`}
+              onchange={(e) => onChangePriority(e, todo._id)}
+            >
+              <option
+                value={priority.NONE}
+                selected={todo.priority === priority.NONE ? true : false}
+              >
+                미지정
               </option>
-              <option value="1">1순위</option>
-              <option value="2">2순위</option>
+              <option
+                value={priority.FIRST}
+                selected={todo.priority === priority.FIRST ? true : false}
+              >
+                1순위
+              </option>
+              <option
+                value={priority.SECOND}
+                selected={todo.priority === priority.SECOND ? true : false}
+              >
+                2순위
+              </option>
             </select>
           </div>
           {todo.contents}

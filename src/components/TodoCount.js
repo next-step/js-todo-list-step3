@@ -1,12 +1,13 @@
 /* @jsx createElement */
 import { createElement } from '../lib/React';
 import Mode from '../constant/todoFilter';
+import { filterTodo } from '../utils/filterTodo';
 
 const TodoCount = ({ todos, mode, onDeleteAll, onChangeFilter }) => {
   return (
     <div className="count-container">
       <span className="todo-count">
-        총 <strong>{todos.length}</strong> 개
+        총 <strong>{filterTodo(mode, todos).length}</strong> 개
       </span>
       <ul className="filters">
         <li onclick={() => onChangeFilter(Mode.ALL)}>

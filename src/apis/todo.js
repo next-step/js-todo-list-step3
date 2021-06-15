@@ -35,8 +35,11 @@ export const toggleTodo = (teamId, memberId, itemId) =>
   );
 
 // 우선순위 수정
-export const setPriority = (teamId, memberId, itemId) =>
+export const setPriority = (teamId, memberId, itemId, priority) =>
   fetchAPI(
     `teams/${teamId}/members/${memberId}/items/${itemId}/priority`,
-    METHOD.PUT
+    METHOD.PUT,
+    {
+      priority,
+    }
   );

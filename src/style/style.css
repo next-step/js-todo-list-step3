@@ -479,11 +479,11 @@ button.ripple {
   cursor: pointer;
 }
 
-.chip.primary {
+.chip.FIRST {
   background-color: #d63a49;
 }
 
-.chip.secondary {
+.chip.SECOND {
   background-color: #26c6da;
 }
 
