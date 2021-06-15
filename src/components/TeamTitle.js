@@ -1,5 +1,5 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
+import { createElement } from 'react';
 
 const TeamTitle = ({ name = 'Team' }) => {
   return (

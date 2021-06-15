@@ -1,6 +1,6 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import MemberTitle from '../components/MemberTitle';
+import { createElement } from 'react';
+import MemberTitle from '@/components/MemberTitle';
 import TodoApp from './TodoApp';
 
 const MemberContainer = ({ member }) => {

@@ -1,6 +1,6 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import { filterTodo } from '../utils/filterTodo';
+import { createElement } from 'react';
+import { filterTodo } from '@/utils/filterTodo';
 import TodoItem from './TodoItem';
 
 const TodoList = ({

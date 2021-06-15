@@ -1,9 +1,9 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import TodoInput from '../components/TodoInput';
-import TodoList from '../components/TodoList';
-import TodoCount from '../components/TodoCount';
-import { store } from '..';
+import { createElement } from 'react';
+import TodoInput from '@/components/TodoInput';
+import TodoList from '@/components/TodoList';
+import TodoCount from '@/components/TodoCount';
+import { store } from '@';
 import {
   addTodo,
   changeFilter,

@@ -1,10 +1,10 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import { useSelector } from '../lib/Redux';
-import { store } from './../index';
-import { addTeam, getTeam } from '../modules/team/thunk';
-import { getMembers } from '../modules/member/thunk';
-import TeamList from '../components/TeamList';
+import { createElement } from 'react';
+import { useSelector } from 'redux';
+import { store } from '@';
+import { addTeam, getTeam } from '@/modules/team/thunk';
+import { getMembers } from '@/modules/member/thunk';
+import TeamList from '@/components/TeamList';
 
 const TeamContainer = () => {
   const { teams } = useSelector((state) => state.team);

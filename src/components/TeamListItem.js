@@ -1,6 +1,5 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import { useSelector } from '../lib/Redux';
+import { createElement } from 'react';
 
 const TeamListItem = ({ team, onSelect }) => {
   return (

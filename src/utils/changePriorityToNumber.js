@@ -1,4 +1,4 @@
-import Priority from '../constant/priority';
+import Priority from '@/constant/priority';
 
 export const changePriorityToNumber = (priority) => {
   if (priority === Priority.NONE) return 99;

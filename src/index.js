@@ -1,7 +1,7 @@
 /* @jsx createElement */
-import { createElement } from './lib/React';
-import { createStore } from './lib/Redux';
-import { render } from './lib/ReactDOM';
+import { createElement } from 'react';
+import { createStore } from 'redux';
+import { render } from 'reactDOM';
 import { getTeams } from './modules/team/thunk';
 import logger from './lib/middlewares/logger';
 import thunk from './lib/middlewares/thunk';

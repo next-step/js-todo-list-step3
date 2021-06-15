@@ -27,7 +27,7 @@ import {
   UPDATE_TODO_SUCCESS,
 } from './action';
 
-import Mode from '../../constant/todoFilter';
+import Mode from '@/constant/todoFilter';
 
 const initialState = {
   loading: false,

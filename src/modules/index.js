@@ -1,4 +1,4 @@
-import { combineReducers } from '../lib/Redux';
+import { combineReducers } from 'redux';
 import team from './team/reducer';
 import member from './member/reducer';
 

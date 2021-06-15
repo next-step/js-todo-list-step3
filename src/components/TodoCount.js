@@ -1,7 +1,7 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import Mode from '../constant/todoFilter';
-import { filterTodo } from '../utils/filterTodo';
+import { createElement } from 'react';
+import Mode from '@/constant/todoFilter';
+import { filterTodo } from '@/utils/filterTodo';
 
 const TodoCount = ({ todos, mode, onDeleteAll, onChangeFilter }) => {
   return (

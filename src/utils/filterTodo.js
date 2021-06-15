@@ -1,4 +1,4 @@
-import Mode from '../constant/todoFilter';
+import Mode from '@/constant/todoFilter';
 import { sortTodo } from './sortTodo';
 
 export const filterTodo = (mode, todoList) => {

@@ -1,10 +1,10 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import AddUserBtn from '../components/AddUserBtn';
+import { createElement } from 'react';
+import { useSelector } from 'redux';
+import { store } from '@';
+import AddUserBtn from '@/components/AddUserBtn';
+import { addMember } from '@/modules/member/thunk';
 import MemberContainer from './MemberContainer';
-import { useSelector } from '../lib/Redux';
-import { addMember } from '../modules/member/thunk';
-import { store } from '..';
 
 const MemberListContainer = () => {
   const {

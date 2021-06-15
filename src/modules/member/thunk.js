@@ -1,6 +1,6 @@
-import * as teamAPI from '../../apis/team';
-import * as memberAPI from '../../apis/member';
-import * as todoAPI from '../../apis/todo';
+import * as teamAPI from '@/apis/team';
+import * as memberAPI from '@/apis/member';
+import * as todoAPI from '@/apis/todo';
 import {
   ADD_MEMBER,
   ADD_MEMBER_ERROR,

@@ -1,5 +1,5 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
+import { createElement } from 'react';
 
 const TodoInput = ({ onCreate }) => {
   return (

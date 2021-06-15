@@ -1,3 +1,4 @@
+import * as teamAPI from '@/apis/team';
 import {
   ADD_TEAM,
   ADD_TEAM_ERROR,
@@ -9,7 +10,6 @@ import {
   GET_TEAM_ERROR,
   GET_TEAM_SUCCESS,
 } from './actions';
-import * as teamAPI from '../../apis/team';
 
 export const getTeams = () => async (dispatch) => {
   dispatch({ type: GET_TEAMS });

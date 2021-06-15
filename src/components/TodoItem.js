@@ -1,7 +1,7 @@
 /* @jsx createElement */
-import { createElement } from '../lib/React';
-import priority from '../constant/priority';
-import { useSelector } from './../lib/Redux';
+import { createElement } from 'react';
+import priority from '@/constant/priority';
+import { useSelector } from 'redux';
 import Skeleton from './Skeleton';
 
 const TodoItem = ({

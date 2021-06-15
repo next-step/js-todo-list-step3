@@ -7,6 +7,14 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
+  resolve: {
+    alias: {
+      react: path.resolve(__dirname, 'src/lib/React'),
+      reactDOM: path.resolve(__dirname, 'src/lib/ReactDOM'),
+      redux: path.resolve(__dirname, 'src/lib/Redux'),
+      '@': path.resolve(__dirname, 'src/'),
+    },
+  },
   module: {
     rules: [
       {
