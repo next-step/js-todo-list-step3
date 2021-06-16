@@ -42,7 +42,7 @@ const request = async (url, option) => {
 const api = {
   getTeamList: async () => {
     try {
-      const teamList = await request(`${ROUTER.GET_TEAM_LIST}`, options.GET);
+      const teamList = await request(ROUTER.GET_TEAM_LIST, options.GET);
       return {
         isError: false,
         data: teamList,
@@ -54,10 +54,11 @@ const api = {
       };
     }
   },
+
   getTeamMember: async (teamId) => {
     try {
       const teamMember = await request(
-        `${ROUTER.GET_TEAM_MEMBER(teamId)}`,
+        ROUTER.GET_TEAM_MEMBER(teamId),
         options.GET
       );
       return {
@@ -71,11 +72,30 @@ const api = {
       };
     }
   },
+
   addTeamTodoItem: async (teamId, memberId, contents) => {
     try {
       const todoItem = await request(
-        `${ROUTER.ADD_TEAM_TODOITEM(teamId, memberId)}`,
+        ROUTER.ADD_TEAM_TODOITEM(teamId, memberId),
         options.POST({ contents })
+      );
+      return {
+        isError: false,
+        data: todoItem,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
+
+  changeTeamTodoItemPriority: async (teamId, memberId, itemId, priority) => {
+    try {
+      const todoItem = await request(
+        ROUTER.CHANGE_TEAM_TODOITEM_PRIORITY(teamId, memberId, itemId),
+        options.PUT({ priority })
       );
       return {
         isError: false,

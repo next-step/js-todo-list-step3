@@ -8,6 +8,7 @@ export default class DetailTodoList extends Component {
 
     this.members = this.props.members;
     this.addTeamTodoItem = this.props.addTeamTodoItem;
+    this.changeTeamTodoItemPriority = this.props.changeTeamTodoItemPriority;
 
     this.templates = new Templates();
     this.render();
@@ -23,9 +24,22 @@ export default class DetailTodoList extends Component {
     }
   }
 
+  handleChange(event) {
+    const memberId =
+      event.target.closest('.todoapp-container').dataset.memberid;
+    const itemId = event.target.closest('li').dataset.itemid;
+    const priority = event.target.value;
+    if (priority === '0') return;
+
+    this.changeTeamTodoItemPriority(memberId, itemId, priority);
+  }
+
   setEvent() {
     delegate(this.$element, 'keyup', '.new-todo', (event) =>
       this.handleKeyUp(event)
+    );
+    delegate(this.$element, 'change', '.chip.select', (event) =>
+      this.handleChange(event)
     );
   }
 

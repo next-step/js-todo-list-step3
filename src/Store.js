@@ -22,6 +22,18 @@ class Store {
 
     return response.data;
   }
+
+  async changeTeamTodoItemPriority(teamId, memberId, itemId, priority) {
+    const response = await api.changeTeamTodoItemPriority(
+      teamId,
+      memberId,
+      itemId,
+      priority
+    );
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
 }
 
 const store = new Store();

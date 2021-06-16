@@ -3,6 +3,11 @@ import store from '../../Store.js';
 import { getTeamId, qs } from '../../util/helpers.js';
 import DetailTodoList from './DetailTodoList.js';
 
+const priorityType = {
+  0: 'NONE',
+  1: 'FIRST',
+  2: 'SECOND',
+};
 export default class DetailSection extends Component {
   constructor($element) {
     super($element);
@@ -16,6 +21,13 @@ export default class DetailSection extends Component {
   async addTeamTodoItem(memberId, contents) {
     const teamId = getTeamId();
     await store.addTeamTodoItem(teamId, memberId, contents);
+    this.setup();
+  }
+
+  async changeTeamTodoItemPriority(memberId, itemId, priorityNum) {
+    const priority = priorityType[priorityNum];
+    const teamId = getTeamId();
+    await store.changeTeamTodoItemPriority(teamId, memberId, itemId, priority);
     this.setup();
   }
 
@@ -44,6 +56,7 @@ export default class DetailSection extends Component {
       new DetailTodoList(qs('.todoapp-list-container', this.$element), {
         members: this.state.members,
         addTeamTodoItem: this.addTeamTodoItem.bind(this),
+        changeTeamTodoItemPriority: this.changeTeamTodoItemPriority.bind(this),
       });
     }
   }

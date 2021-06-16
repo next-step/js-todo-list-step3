@@ -15,8 +15,8 @@ const TOGGLE_TEAM_TODOITEM = (teamId, memberId, itemId) =>
   `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`;
 const EDIT_TEAM_TODOITEM_CONTENTS = (teamId, memberId, itemId) =>
   `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
-const EDIT_TEAM_TODOITEM_PRIORITY = (teamId, memberId, itemId) =>
-  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
+const CHANGE_TEAM_TODOITEM_PRIORITY = (teamId, memberId, itemId) =>
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority`;
 const DELETE_TEAM_TODOITEM_ALL = (teamId, memberId) =>
   `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`;
 
@@ -31,7 +31,7 @@ const ROUTER = {
   DELETE_TEAM_TODOITEM,
   TOGGLE_TEAM_TODOITEM,
   EDIT_TEAM_TODOITEM_CONTENTS,
-  EDIT_TEAM_TODOITEM_PRIORITY,
+  CHANGE_TEAM_TODOITEM_PRIORITY,
   DELETE_TEAM_TODOITEM_ALL,
 };
 
