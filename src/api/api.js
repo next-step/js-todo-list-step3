@@ -197,6 +197,39 @@ const api = {
       };
     }
   },
+
+  addTeamMember: async (teamId, name) => {
+    try {
+      const response = await request(
+        ROUTER.ADD_TEAM_MEMBER(teamId),
+        options.POST({ name })
+      );
+      return {
+        isError: false,
+        data: response,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
+
+  addTeam: async (name) => {
+    try {
+      const response = await request(ROUTER.ADD_TEAM, options.POST({ name }));
+      return {
+        isError: false,
+        data: response,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
 };
 
 export default api;

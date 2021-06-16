@@ -8,7 +8,6 @@ const priorityType = {
   1: 'FIRST',
   2: 'SECOND',
 };
-const teamId = getTeamId();
 
 export default class DetailSection extends Component {
   constructor($element) {
@@ -19,34 +18,47 @@ export default class DetailSection extends Component {
       loading: true,
     };
   }
+  async addTeamMember(name) {
+    const teamId = getTeamId();
+    const members = await store.addTeamMember(teamId, name);
+    this.setState({
+      members,
+    });
+  }
 
   async addTeamTodoItem(memberId, contents) {
+    const teamId = getTeamId();
     await store.addTeamTodoItem(teamId, memberId, contents);
     this.updateTodoList(memberId);
   }
 
   async changeTeamTodoItemPriority(memberId, itemId, priorityNum) {
+    const teamId = getTeamId();
     const priority = priorityType[priorityNum];
     await store.changeTeamTodoItemPriority(teamId, memberId, itemId, priority);
     this.updateTodoList(memberId);
   }
 
   async toggleTeamTodoItem(memberId, itemId) {
+    const teamId = getTeamId();
     await store.toggleTeamTodoItem(teamId, memberId, itemId);
     this.updateTodoList(memberId);
   }
 
   async deleteTeamTodoItem(memberId, itemId) {
+    const teamId = getTeamId();
     await store.deleteTeamTodoItem(teamId, memberId, itemId);
     this.updateTodoList(memberId);
   }
 
   async editTeamTodoItemContents(memberId, itemId, contents) {
+    const teamId = getTeamId();
     await store.editTeamTodoItemContents(teamId, memberId, itemId, contents);
     this.updateTodoList(memberId);
   }
 
   async deleteTeamTodoItemAll(memberId) {
+    const teamId = getTeamId();
     await store.deleteTeamTodoItemAll(teamId, memberId);
     this.updateTodoList(memberId);
   }
@@ -64,6 +76,7 @@ export default class DetailSection extends Component {
   }
 
   async updateTodoList(memberId) {
+    const teamId = getTeamId();
     const todoList = await store.getTeamTodoList(teamId, memberId);
     const members = this.state.members.map((member) => {
       if (member._id === memberId) {
@@ -77,6 +90,7 @@ export default class DetailSection extends Component {
   }
 
   async setup() {
+    const teamId = getTeamId();
     const members = await store.getTeamMember(teamId);
     this.setState({
       members: members.members,
@@ -107,6 +121,7 @@ export default class DetailSection extends Component {
         editTeamTodoItemContents: this.editTeamTodoItemContents.bind(this),
         deleteTeamTodoItemAll: this.deleteTeamTodoItemAll.bind(this),
         changeFilter: this.changeFilter.bind(this),
+        addTeamMember: this.addTeamMember.bind(this),
       });
     }
   }

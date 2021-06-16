@@ -1,6 +1,7 @@
 import CONSTANT from '../../Constants/Constans.js';
 import Component from '../../core/Component.js';
 import { delegate, on } from '../../util/helpers.js';
+import DetailButton from './DetailButton.js';
 
 export default class DetailTodoList extends Component {
   constructor($element, props) {
@@ -14,57 +15,53 @@ export default class DetailTodoList extends Component {
     this.editTeamTodoItemContents = this.props.editTeamTodoItemContents;
     this.deleteTeamTodoItemAll = this.props.deleteTeamTodoItemAll;
     this.changeFilter = this.props.changeFilter;
+    this.addTeamMember = this.props.addTeamMember;
 
     this.templates = new Templates();
     this.render();
   }
 
-  handleKeyUp(event) {
-    const key = event.key;
-    const contents = event.target.value;
+  handleKeyUp({ key, target }) {
+    const contents = target.value;
 
     if (key === 'Enter' && contents.length > 0) {
-      const memberId = event.target.closest('li').dataset.memberid;
+      const memberId = target.closest('li').dataset.memberid;
       this.addTeamTodoItem(memberId, contents);
     }
   }
 
-  handleChange(event) {
-    const memberId =
-      event.target.closest('.todoapp-container').dataset.memberid;
-    const itemId = event.target.closest('li').dataset.itemid;
-    const priority = event.target.value;
+  handleChange({ target }) {
+    const memberId = target.closest('.todoapp-container').dataset.memberid;
+    const itemId = target.closest('li').dataset.itemid;
+    const priority = target.value;
     if (priority === '0') return;
 
     this.changeTeamTodoItemPriority(memberId, itemId, priority);
   }
 
-  handleToggle(event) {
-    const memberId =
-      event.target.closest('.todoapp-container').dataset.memberid;
-    const itemId = event.target.closest('li').dataset.itemid;
+  handleToggle({ target }) {
+    const memberId = target.closest('.todoapp-container').dataset.memberid;
+    const itemId = target.closest('li').dataset.itemid;
 
     this.toggleTeamTodoItem(memberId, itemId);
   }
 
-  handleDestroy(event) {
-    const memberId =
-      event.target.closest('.todoapp-container').dataset.memberid;
-    const itemId = event.target.closest('li').dataset.itemid;
+  handleDestroy({ target }) {
+    const memberId = target.closest('.todoapp-container').dataset.memberid;
+    const itemId = target.closest('li').dataset.itemid;
 
     this.deleteTeamTodoItem(memberId, itemId);
   }
 
-  handleDbclick(event) {
-    const originValue = event.target.innerText.split('\n')[1];
-    const $li = event.target.closest('li');
+  handleDbclick({ target }) {
+    const originValue = target.innerText.split('\n')[1];
+    const $li = target.closest('li');
     $li.classList.add('editing');
     on($li, 'keyup', (event) => this._editTodoText(event, originValue));
   }
 
-  removeAll(event) {
-    const memberId =
-      event.target.closest('.todoapp-container').dataset.memberid;
+  removeAll({ target }) {
+    const memberId = target.closest('.todoapp-container').dataset.memberid;
     this.deleteTeamTodoItemAll(memberId);
   }
 
@@ -115,7 +112,7 @@ export default class DetailTodoList extends Component {
     );
   }
 
-  _filterTodoList(todoList, filter) {
+  _filterTodoList(todoList = [], filter) {
     if (filter === CONSTANT.ACTIVE) {
       return todoList.filter((item) => !item.isCompleted);
     } else if (filter === CONSTANT.COMPLETED) {
@@ -149,6 +146,10 @@ export default class DetailTodoList extends Component {
       })
       .join('');
   }
+
+  mounted() {
+    new DetailButton(this.$element, { addTeamMember: this.addTeamMember });
+  }
 }
 
 class Templates {
@@ -166,7 +167,7 @@ class Templates {
       FIRST: CONSTANT.FIRST_TEMPLATE,
       SECOND: CONSTANT.SECOND_TEMPLATE,
     }[priority];
-    console.log(isCompleted);
+
     return `
         <li class=${
           isCompleted ? '"todo-list-item completed"' : '"todo-list-item"'

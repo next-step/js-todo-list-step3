@@ -89,8 +89,28 @@ class Store {
     const response = await api.getTeamTodoList(teamId, memberId);
     if (response.isError) return showError(response.data);
 
-    const sortedList = response.data.todoList.sort(this._sortTodoList);
-    return sortedList;
+    if (response.data.todoList && response.data.todoList.length > 1) {
+      return response.data.todoList.sort(this._sortTodoList);
+    }
+    return response.data.todoList || [];
+  }
+
+  async addTeamMember(teamId, name) {
+    const response = await api.addTeamMember(teamId, name);
+    if (response.isError) return showError(response.data);
+
+    const members = response.data.members.map((member) => {
+      return { ...member, filter: CONSTANT.ALL };
+    });
+
+    return members;
+  }
+
+  async addTeam(name) {
+    const response = await api.addTeam(name);
+    if (response.isError) return showError(response.data);
+
+    return response.data;
   }
 }
 

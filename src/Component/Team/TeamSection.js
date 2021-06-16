@@ -24,8 +24,9 @@ export default class TeamSection extends Component {
     });
   }
 
-  addTeam() {
-    console.log('클릭!');
+  async addTeam(name) {
+    await store.addTeam(name);
+    this.setup();
   }
 
   mounted() {
