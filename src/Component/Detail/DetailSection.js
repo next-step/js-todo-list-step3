@@ -12,6 +12,13 @@ export default class DetailSection extends Component {
       loading: true,
     };
   }
+
+  async addTeamTodoItem(memberId, contents) {
+    const teamId = getTeamId();
+    await store.addTeamTodoItem(teamId, memberId, contents);
+    this.setup();
+  }
+
   async setup() {
     const teamId = getTeamId();
     const members = await store.getTeamMember(teamId);
@@ -36,6 +43,7 @@ export default class DetailSection extends Component {
     if (!this.state.loading) {
       new DetailTodoList(qs('.todoapp-list-container', this.$element), {
         members: this.state.members,
+        addTeamTodoItem: this.addTeamTodoItem.bind(this),
       });
     }
   }

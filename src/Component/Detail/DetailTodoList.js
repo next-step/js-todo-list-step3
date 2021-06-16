@@ -1,21 +1,39 @@
 import CONSTANT from '../../Constants/Constans.js';
 import Component from '../../core/Component.js';
+import { delegate } from '../../util/helpers.js';
 
 export default class DetailTodoList extends Component {
   constructor($element, props) {
     super($element, props);
+
     this.members = this.props.members;
+    this.addTeamTodoItem = this.props.addTeamTodoItem;
+
     this.templates = new Templates();
     this.render();
   }
-  sayHi() {
-    return 'hi';
+
+  handleKeyUp(event) {
+    const key = event.key;
+    const contents = event.target.value;
+
+    if (key === 'Enter') {
+      const memberId = event.target.closest('li').dataset.memberid;
+      this.addTeamTodoItem(memberId, contents);
+    }
   }
+
+  setEvent() {
+    delegate(this.$element, 'keyup', '.new-todo', (event) =>
+      this.handleKeyUp(event)
+    );
+  }
+
   template() {
     return this.members
       .map(
-        ({ name, todoList }) => `
-    <li class="todoapp-container">
+        ({ _id, name, todoList }) => `
+    <li class="todoapp-container" data-memberId=${_id}>
         <h2>
             <span><strong>${name}</strong>'s Todo List</span>
         </h2>
@@ -53,7 +71,7 @@ class Templates {
     return `
         <li ${
           isCompleted ? 'class="todo-list-item completed"' : 'todo-list-item'
-        } data-id=${_id}>
+        } data-itemId=${_id}>
         <div class="view">
           <input class="toggle" type="checkbox" ${
             isCompleted ? 'checked' : ''

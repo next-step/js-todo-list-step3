@@ -15,6 +15,13 @@ class Store {
 
     return response.data.members;
   }
+
+  async addTeamTodoItem(teamId, memberId, contents) {
+    const response = await api.addTeamTodoItem(teamId, memberId, contents);
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
 }
 
 const store = new Store();

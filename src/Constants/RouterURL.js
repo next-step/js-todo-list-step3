@@ -6,19 +6,19 @@ const GET_TEAM_LIST = `${BASE_URL}/api/teams`;
 const DELETE_TEAM = (teamId) => `${BASE_URL}/api/teams/${teamId}`;
 const ADD_TEAM_MEMBER = (teamId) => `${BASE_URL}/api/teams/${teamId}/members`;
 const GET_TEAM_TODOLIST = (teamId, memberId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}`;
 const ADD_TEAM_TODOITEM = (teamId, memberId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`;
 const DELETE_TEAM_TODOITEM = (teamId, memberId, itemId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items/${itemId}`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
 const TOGGLE_TEAM_TODOITEM = (teamId, memberId, itemId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items/${itemId}/toggle`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle`;
 const EDIT_TEAM_TODOITEM_CONTENTS = (teamId, memberId, itemId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items/${itemId}`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
 const EDIT_TEAM_TODOITEM_PRIORITY = (teamId, memberId, itemId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items/${itemId}`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items/${itemId}`;
 const DELETE_TEAM_TODOITEM_ALL = (teamId, memberId) =>
-  `${BASE_URL}/api/teams/${teamId}/members${memberId}/items`;
+  `${BASE_URL}/api/teams/${teamId}/members/${memberId}/items`;
 
 const ROUTER = {
   ADD_TEAM,

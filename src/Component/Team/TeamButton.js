@@ -9,7 +9,6 @@ export default class TeamButton extends Component {
   }
   setEvent() {
     delegate(this.$element, 'click', '#add-team-button', () => this.addTeam());
-    delegate(this.$element, 'click', '.material-icons', () => this.addTeam());
   }
 
   template() {

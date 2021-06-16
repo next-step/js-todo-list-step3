@@ -71,6 +71,23 @@ const api = {
       };
     }
   },
+  addTeamTodoItem: async (teamId, memberId, contents) => {
+    try {
+      const todoItem = await request(
+        `${ROUTER.ADD_TEAM_TODOITEM(teamId, memberId)}`,
+        options.POST({ contents })
+      );
+      return {
+        isError: false,
+        data: todoItem,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
 };
 
 export default api;
