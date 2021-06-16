@@ -8,6 +8,7 @@ const priorityType = {
   1: 'FIRST',
   2: 'SECOND',
 };
+const teamId = getTeamId();
 
 export default class DetailSection extends Component {
   constructor($element) {
@@ -20,26 +21,22 @@ export default class DetailSection extends Component {
   }
 
   async addTeamTodoItem(memberId, contents) {
-    const teamId = getTeamId();
     await store.addTeamTodoItem(teamId, memberId, contents);
     this.setup();
   }
 
   async changeTeamTodoItemPriority(memberId, itemId, priorityNum) {
     const priority = priorityType[priorityNum];
-    const teamId = getTeamId();
     await store.changeTeamTodoItemPriority(teamId, memberId, itemId, priority);
     this.setup();
   }
 
   async toggleTeamTodoItem(memberId, itemId) {
-    const teamId = getTeamId();
     await store.toggleTeamTodoItem(teamId, memberId, itemId);
     this.setup();
   }
 
   async deleteTeamTodoItem(memberId, itemId) {
-    const teamId = getTeamId();
     await store.deleteTeamTodoItem(teamId, memberId, itemId);
     this.setup();
   }
