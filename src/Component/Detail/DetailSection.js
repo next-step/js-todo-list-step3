@@ -22,37 +22,61 @@ export default class DetailSection extends Component {
 
   async addTeamTodoItem(memberId, contents) {
     await store.addTeamTodoItem(teamId, memberId, contents);
-    this.setup();
+    this.updateTodoList(memberId);
   }
 
   async changeTeamTodoItemPriority(memberId, itemId, priorityNum) {
     const priority = priorityType[priorityNum];
     await store.changeTeamTodoItemPriority(teamId, memberId, itemId, priority);
-    this.setup();
+    this.updateTodoList(memberId);
   }
 
   async toggleTeamTodoItem(memberId, itemId) {
     await store.toggleTeamTodoItem(teamId, memberId, itemId);
-    this.setup();
+    this.updateTodoList(memberId);
   }
 
   async deleteTeamTodoItem(memberId, itemId) {
     await store.deleteTeamTodoItem(teamId, memberId, itemId);
-    this.setup();
+    this.updateTodoList(memberId);
   }
 
   async editTeamTodoItemContents(memberId, itemId, contents) {
     await store.editTeamTodoItemContents(teamId, memberId, itemId, contents);
-    this.setup();
+    this.updateTodoList(memberId);
   }
 
   async deleteTeamTodoItemAll(memberId) {
     await store.deleteTeamTodoItemAll(teamId, memberId);
-    this.setup();
+    this.updateTodoList(memberId);
+  }
+
+  changeFilter(memberId, filter) {
+    const members = this.state.members.map((member) => {
+      if (member._id === memberId) {
+        member.filter = filter;
+      }
+      return member;
+    });
+    this.setState({
+      members,
+    });
+  }
+
+  async updateTodoList(memberId) {
+    const todoList = await store.getTeamTodoList(teamId, memberId);
+    const members = this.state.members.map((member) => {
+      if (member._id === memberId) {
+        member.todoList = todoList;
+      }
+      return member;
+    });
+    this.setState({
+      members,
+    });
   }
 
   async setup() {
-    const teamId = getTeamId();
     const members = await store.getTeamMember(teamId);
     this.setState({
       members: members.members,
@@ -82,6 +106,7 @@ export default class DetailSection extends Component {
         deleteTeamTodoItem: this.deleteTeamTodoItem.bind(this),
         editTeamTodoItemContents: this.editTeamTodoItemContents.bind(this),
         deleteTeamTodoItemAll: this.deleteTeamTodoItemAll.bind(this),
+        changeFilter: this.changeFilter.bind(this),
       });
     }
   }

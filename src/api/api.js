@@ -179,6 +179,24 @@ const api = {
       };
     }
   },
+
+  getTeamTodoList: async (teamId, memberId) => {
+    try {
+      const response = await request(
+        ROUTER.GET_TEAM_TODOLIST(teamId, memberId),
+        options.GET
+      );
+      return {
+        isError: false,
+        data: response,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
 };
 
 export default api;

@@ -1,4 +1,5 @@
 import api from './api/api.js';
+import CONSTANT from './Constants/Constans.js';
 import { showError } from './util/showError.js';
 
 class Store {
@@ -12,14 +13,15 @@ class Store {
   async getTeamMember(teamId) {
     const response = await api.getTeamMember(teamId);
     if (response.isError) return showError(response.data);
-
-    response.data.members.map((member) => {
+    const members = response.data.members.map((member) => {
       if (member.todoList.length > 1) {
         member.todoList = member.todoList.sort(this._sortTodoList);
       }
-      return member;
+
+      return { ...member, filter: CONSTANT.ALL };
     });
-    return response.data;
+
+    return { ...response.data, members };
   }
 
   _sortTodoList(list1, list2) {
@@ -81,6 +83,14 @@ class Store {
     if (response.isError) return showError(response.data);
 
     return response.data;
+  }
+
+  async getTeamTodoList(teamId, memberId) {
+    const response = await api.getTeamTodoList(teamId, memberId);
+    if (response.isError) return showError(response.data);
+
+    const sortedList = response.data.todoList.sort(this._sortTodoList);
+    return sortedList;
   }
 }
 
