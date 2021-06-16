@@ -14,6 +14,9 @@ const SECOND_TEMPLATE = `<span class="chip secondary">2순위</span>`;
 const ALL = 'all';
 const ACTIVE = 'active';
 const COMPLETED = 'completed';
+const ESC = 'Esc';
+const ESCAPE = 'Escape';
+const ENTER = 'Enter';
 
 const CONSTANT = {
   GET,
@@ -26,6 +29,9 @@ const CONSTANT = {
   ALL,
   ACTIVE,
   COMPLETED,
+  ESC,
+  ESCAPE,
+  ENTER,
 };
 
 export default CONSTANT;

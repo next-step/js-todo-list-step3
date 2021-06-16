@@ -41,6 +41,16 @@ export default class DetailSection extends Component {
     this.setup();
   }
 
+  async editTeamTodoItemContents(memberId, itemId, contents) {
+    await store.editTeamTodoItemContents(teamId, memberId, itemId, contents);
+    this.setup();
+  }
+
+  async deleteTeamTodoItemAll(memberId) {
+    await store.deleteTeamTodoItemAll(teamId, memberId);
+    this.setup();
+  }
+
   async setup() {
     const teamId = getTeamId();
     const members = await store.getTeamMember(teamId);
@@ -70,6 +80,8 @@ export default class DetailSection extends Component {
         changeTeamTodoItemPriority: this.changeTeamTodoItemPriority.bind(this),
         toggleTeamTodoItem: this.toggleTeamTodoItem.bind(this),
         deleteTeamTodoItem: this.deleteTeamTodoItem.bind(this),
+        editTeamTodoItemContents: this.editTeamTodoItemContents.bind(this),
+        deleteTeamTodoItemAll: this.deleteTeamTodoItemAll.bind(this),
       });
     }
   }

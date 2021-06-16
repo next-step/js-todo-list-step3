@@ -12,6 +12,7 @@ class Store {
   async getTeamMember(teamId) {
     const response = await api.getTeamMember(teamId);
     if (response.isError) return showError(response.data);
+
     response.data.members.map((member) => {
       if (member.todoList.length > 1) {
         member.todoList = member.todoList.sort(this._sortTodoList);
@@ -58,6 +59,25 @@ class Store {
 
   async deleteTeamTodoItem(teamId, memberId, itemId) {
     const response = await api.deleteTeamTodoItem(teamId, memberId, itemId);
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
+
+  async editTeamTodoItemContents(teamId, memberId, itemId, contents) {
+    const response = await api.editTeamTodoItemContents(
+      teamId,
+      memberId,
+      itemId,
+      contents
+    );
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
+
+  async deleteTeamTodoItemAll(teamId, memberId) {
+    const response = await api.deleteTeamTodoItemAll(teamId, memberId);
     if (response.isError) return showError(response.data);
 
     return response.data;

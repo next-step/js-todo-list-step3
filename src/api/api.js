@@ -144,6 +144,41 @@ const api = {
       };
     }
   },
+  editTeamTodoItemContents: async (teamId, memberId, itemId, contents) => {
+    try {
+      const todoItem = await request(
+        ROUTER.EDIT_TEAM_TODOITEM_CONTENTS(teamId, memberId, itemId),
+        options.PUT({ contents })
+      );
+      return {
+        isError: false,
+        data: todoItem,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
+
+  deleteTeamTodoItemAll: async (teamId, memberId) => {
+    try {
+      const response = await request(
+        ROUTER.DELETE_TEAM_TODOITEM_ALL(teamId, memberId),
+        options.DELETE
+      );
+      return {
+        isError: false,
+        data: response,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
 };
 
 export default api;
