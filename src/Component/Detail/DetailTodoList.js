@@ -9,6 +9,8 @@ export default class DetailTodoList extends Component {
     this.members = this.props.members;
     this.addTeamTodoItem = this.props.addTeamTodoItem;
     this.changeTeamTodoItemPriority = this.props.changeTeamTodoItemPriority;
+    this.toggleTeamTodoItem = this.props.toggleTeamTodoItem;
+    this.deleteTeamTodoItem = this.props.deleteTeamTodoItem;
 
     this.templates = new Templates();
     this.render();
@@ -34,12 +36,34 @@ export default class DetailTodoList extends Component {
     this.changeTeamTodoItemPriority(memberId, itemId, priority);
   }
 
+  handleToggle(event) {
+    const memberId =
+      event.target.closest('.todoapp-container').dataset.memberid;
+    const itemId = event.target.closest('li').dataset.itemid;
+
+    this.toggleTeamTodoItem(memberId, itemId);
+  }
+
+  handleDestroy(event) {
+    const memberId =
+      event.target.closest('.todoapp-container').dataset.memberid;
+    const itemId = event.target.closest('li').dataset.itemid;
+
+    this.deleteTeamTodoItem(memberId, itemId);
+  }
+
   setEvent() {
     delegate(this.$element, 'keyup', '.new-todo', (event) =>
       this.handleKeyUp(event)
     );
     delegate(this.$element, 'change', '.chip.select', (event) =>
       this.handleChange(event)
+    );
+    delegate(this.$element, 'click', '.toggle', (event) =>
+      this.handleToggle(event)
+    );
+    delegate(this.$element, 'click', '.destroy', (event) =>
+      this.handleDestroy(event)
     );
   }
 

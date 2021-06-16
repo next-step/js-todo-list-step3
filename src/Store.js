@@ -12,8 +12,22 @@ class Store {
   async getTeamMember(teamId) {
     const response = await api.getTeamMember(teamId);
     if (response.isError) return showError(response.data);
+    response.data.members.map((member) => {
+      if (member.todoList.length > 1) {
+        member.todoList = member.todoList.sort(this._sortTodoList);
+      }
+      return member;
+    });
+    return response.data;
+  }
 
-    return response.data.members;
+  _sortTodoList(list1, list2) {
+    const priorityType = {
+      FIRST: 1,
+      SECOND: 2,
+      NONE: 3,
+    };
+    return priorityType[list1.priority] > priorityType[list2.priority];
   }
 
   async addTeamTodoItem(teamId, memberId, contents) {
@@ -30,6 +44,20 @@ class Store {
       itemId,
       priority
     );
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
+
+  async toggleTeamTodoItem(teamId, memberId, itemId) {
+    const response = await api.toggleTeamTodoItem(teamId, memberId, itemId);
+    if (response.isError) return showError(response.data);
+
+    return response.data;
+  }
+
+  async deleteTeamTodoItem(teamId, memberId, itemId) {
+    const response = await api.deleteTeamTodoItem(teamId, memberId, itemId);
     if (response.isError) return showError(response.data);
 
     return response.data;

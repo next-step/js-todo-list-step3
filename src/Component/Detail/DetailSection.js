@@ -8,6 +8,7 @@ const priorityType = {
   1: 'FIRST',
   2: 'SECOND',
 };
+
 export default class DetailSection extends Component {
   constructor($element) {
     super($element);
@@ -31,11 +32,24 @@ export default class DetailSection extends Component {
     this.setup();
   }
 
+  async toggleTeamTodoItem(memberId, itemId) {
+    const teamId = getTeamId();
+    await store.toggleTeamTodoItem(teamId, memberId, itemId);
+    this.setup();
+  }
+
+  async deleteTeamTodoItem(memberId, itemId) {
+    const teamId = getTeamId();
+    await store.deleteTeamTodoItem(teamId, memberId, itemId);
+    this.setup();
+  }
+
   async setup() {
     const teamId = getTeamId();
     const members = await store.getTeamMember(teamId);
     this.setState({
-      members,
+      members: members.members,
+      teamName: members.name,
       loading: false,
     });
   }
@@ -44,7 +58,7 @@ export default class DetailSection extends Component {
     if (this.state.loading) return `<div class="loading"></div>`;
     return `
     <h1 id="user-title" data-username="eastjun">
-        <span><strong>Team</strong>'s Todo Lists</span>
+        <span><strong>${this.state.teamName}</strong>'s Todo Lists</span>
     </h1>
     <ul class="todoapp-list-container flex-column-container">
     </ul>
@@ -57,6 +71,8 @@ export default class DetailSection extends Component {
         members: this.state.members,
         addTeamTodoItem: this.addTeamTodoItem.bind(this),
         changeTeamTodoItemPriority: this.changeTeamTodoItemPriority.bind(this),
+        toggleTeamTodoItem: this.toggleTeamTodoItem.bind(this),
+        deleteTeamTodoItem: this.deleteTeamTodoItem.bind(this),
       });
     }
   }
