@@ -54,6 +54,23 @@ const api = {
       };
     }
   },
+  getTeamMember: async (teamId) => {
+    try {
+      const teamMember = await request(
+        `${ROUTER.GET_TEAM_MEMBER(teamId)}`,
+        options.GET
+      );
+      return {
+        isError: false,
+        data: teamMember,
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        data: error,
+      };
+    }
+  },
 };
 
 export default api;

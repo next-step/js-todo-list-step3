@@ -26,3 +26,7 @@ export function delegate(target, eventName, selector, handler) {
 
   on(target, eventName, emitEvent);
 }
+
+export function getTeamId() {
+  return location.href.split('/')[4];
+}

@@ -1,13 +1,7 @@
+import DetailSection from '../Component/Detail/DetailSection.js';
+
 export default class Detail {
-  constructor() {
-    this.render();
-  }
-  template() {
-    return `
-        <div>디테일</div>
-      `;
-  }
-  render() {
-    this.$element.innerHTML = this.template();
+  constructor($element) {
+    new DetailSection($element);
   }
 }

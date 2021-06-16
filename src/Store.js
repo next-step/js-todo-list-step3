@@ -8,6 +8,13 @@ class Store {
 
     return response.data;
   }
+
+  async getTeamMember(teamId) {
+    const response = await api.getTeamMember(teamId);
+    if (response.isError) return showError(response.data);
+
+    return response.data.members;
+  }
 }
 
 const store = new Store();

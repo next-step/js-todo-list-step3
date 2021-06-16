@@ -39,6 +39,11 @@ export default class TeamSection extends Component {
 
   template() {
     if (this.state.loading) return `<div class="loading"></div>`;
-    return `<div class="team-list-container"></div>`;
+    return `
+    <h1 id="user-title">
+      <span><strong>Team</strong>'s Todo Lists</span>
+    </h1>
+    <div class="team-list-container"></div>
+    `;
   }
 }

@@ -6,7 +6,7 @@ const routes = {
   '/detail': Detail,
 };
 const initialRoutes = ($target) => {
-  renderHTML($target, routes['/']);
+  renderHTML($target, getHashRoute());
   window.addEventListener('hashchange', () => {
     return renderHTML($target, getHashRoute());
   });
