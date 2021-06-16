@@ -588,3 +588,18 @@ select.chip {
 
 .add-team-button-container #add-team-button.ripple {
 }
+
+.loading {
+  position: block;
+  margin: 50px auto;
+  width: 40px;
+  height: 40px;
+  border: 3px solid gray;
+  border-radius: 50%;
+  border-top-color: blueviolet;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
