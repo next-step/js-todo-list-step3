@@ -260,6 +260,7 @@ body {
   color: #cc9a9a;
   margin-bottom: 11px;
   transition: color 0.2s ease-out;
+  cursor: pointer;
 }
 
 .todo-list li .destroy:hover {
@@ -324,20 +325,21 @@ body {
   display: inline;
 }
 
-.filters li a {
+.filters li span {
   color: inherit;
   margin: 3px;
   padding: 3px 7px;
   text-decoration: none;
   border: 1px solid transparent;
   border-radius: 3px;
+  cursor: pointer;
 }
 
-.filters li a:hover {
+.filters li span:hover {
   border-color: rgba(175, 47, 47, 0.1);
 }
 
-.filters li a.selected {
+.filters li span.selected {
   border-color: rgba(175, 47, 47, 0.2);
 }
 
@@ -585,4 +587,19 @@ select.chip {
 }
 
 .add-team-button-container #add-team-button.ripple {
+}
+
+.loading {
+  position: block;
+  margin: 50px auto;
+  width: 40px;
+  height: 40px;
+  border: 3px solid gray;
+  border-radius: 50%;
+  border-top-color: blueviolet;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
