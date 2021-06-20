@@ -30,10 +30,12 @@ function getTodoItemPriorityURL(teamId, memberId, itemId) {
   return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/priority`;
 }
 
+const ERROR = new Error('유효하지 않은 URL');
+
 export async function getTeamListData() {
   try {
     const response = await fetch(BASE_URL);
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -45,7 +47,7 @@ export async function getTeamData(teamId) {
   try {
     const teamURL = getTeamURL(teamId);
     const response = await fetch(teamURL);
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -62,7 +64,7 @@ export async function addTeamData(data = {}) {
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -74,7 +76,7 @@ export async function getMemberData(teamId, memberId) {
   try {
     const memberURL = getMemberURL(teamId, memberId);
     const response = await fetch(memberURL);
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -92,7 +94,7 @@ export async function addMemberData(teamId, data = {}) {
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -106,7 +108,7 @@ export async function deleteTodoListData(teamId, memberId) {
     const response = await fetch(todoListURL, {
       method: METHOD.DELETE,
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -124,7 +126,7 @@ export async function addTodoItemData(teamId, memberId, data = {}) {
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -138,7 +140,7 @@ export async function deleteTodoItemData(teamId, memberId, itemId) {
     const response = await fetch(todoItemURL, {
       method: METHOD.DELETE,
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -152,7 +154,7 @@ export async function toggleTodoItemData(teamId, memberId, itemId) {
     const response = await fetch(todoItemToggleURL, {
       method: METHOD.PUT,
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -170,7 +172,7 @@ export async function updateTodoItemData(teamId, memberId, itemId, data = {}) {
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
@@ -188,7 +190,7 @@ export async function updateTodoItemPriorityData(teamId, memberId, itemId, data 
       },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error('유효하지 않은 URL');
+    if (!response.ok) throw ERROR;
 
     return response.json();
   } catch (error) {
