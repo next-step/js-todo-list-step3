@@ -30,14 +30,24 @@ function getTodoItemPriorityURL(teamId, memberId, itemId) {
   return `${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/priority`;
 }
 
-const ERROR = new Error('유효하지 않은 URL');
+async function myFetch(URL, method, data) {
+  const fetchOption = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+  const response = await fetch(URL, fetchOption);
+  if (!response.ok) throw new Error('유효하지 않은 URL');
+
+  return response.json();
+}
 
 export async function getTeamListData() {
   try {
-    const response = await fetch(BASE_URL);
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(BASE_URL);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -46,10 +56,8 @@ export async function getTeamListData() {
 export async function getTeamData(teamId) {
   try {
     const teamURL = getTeamURL(teamId);
-    const response = await fetch(teamURL);
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(teamURL);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -57,16 +65,8 @@ export async function getTeamData(teamId) {
 
 export async function addTeamData(data = {}) {
   try {
-    const response = await fetch(BASE_URL, {
-      method: METHOD.POST,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(BASE_URL, METHOD.POST, data);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -75,10 +75,8 @@ export async function addTeamData(data = {}) {
 export async function getMemberData(teamId, memberId) {
   try {
     const memberURL = getMemberURL(teamId, memberId);
-    const response = await fetch(memberURL);
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(memberURL);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -87,16 +85,8 @@ export async function getMemberData(teamId, memberId) {
 export async function addMemberData(teamId, data = {}) {
   try {
     const membersURL = getMembersURL(teamId);
-    const response = await fetch(membersURL, {
-      method: METHOD.POST,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(membersURL, METHOD.POST, data);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -105,12 +95,8 @@ export async function addMemberData(teamId, data = {}) {
 export async function deleteTodoListData(teamId, memberId) {
   try {
     const todoListURL = getTodoListURL(teamId, memberId);
-    const response = await fetch(todoListURL, {
-      method: METHOD.DELETE,
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoListURL, METHOD.DELETE);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -119,16 +105,8 @@ export async function deleteTodoListData(teamId, memberId) {
 export async function addTodoItemData(teamId, memberId, data = {}) {
   try {
     const todoListURL = getTodoListURL(teamId, memberId);
-    const response = await fetch(todoListURL, {
-      method: METHOD.POST,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoListURL, METHOD.POST, data);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -137,12 +115,8 @@ export async function addTodoItemData(teamId, memberId, data = {}) {
 export async function deleteTodoItemData(teamId, memberId, itemId) {
   try {
     const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
-    const response = await fetch(todoItemURL, {
-      method: METHOD.DELETE,
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoItemURL, METHOD.DELETE);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -151,12 +125,8 @@ export async function deleteTodoItemData(teamId, memberId, itemId) {
 export async function toggleTodoItemData(teamId, memberId, itemId) {
   try {
     const todoItemToggleURL = getTodoItemToggleURL(teamId, memberId, itemId);
-    const response = await fetch(todoItemToggleURL, {
-      method: METHOD.PUT,
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoItemToggleURL, METHOD.PUT);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -165,16 +135,8 @@ export async function toggleTodoItemData(teamId, memberId, itemId) {
 export async function updateTodoItemData(teamId, memberId, itemId, data = {}) {
   try {
     const todoItemURL = getTodoItemURL(teamId, memberId, itemId);
-    const response = await fetch(todoItemURL, {
-      method: METHOD.PUT,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoItemURL, METHOD.PUT, data);
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -183,16 +145,8 @@ export async function updateTodoItemData(teamId, memberId, itemId, data = {}) {
 export async function updateTodoItemPriorityData(teamId, memberId, itemId, data = {}) {
   try {
     const todoItemPriorityURL = getTodoItemPriorityURL(teamId, memberId, itemId);
-    const response = await fetch(todoItemPriorityURL, {
-      method: METHOD.PUT,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw ERROR;
-
-    return response.json();
+    const result = await myFetch(todoItemPriorityURL, METHOD.PUT, data);
+    return result;
   } catch (error) {
     console.error(error);
   }
