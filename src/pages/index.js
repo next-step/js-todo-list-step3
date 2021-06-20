@@ -1,5 +1,5 @@
-import { addTeamData, getTeamListData } from '../api.js';
 import TeamList from '../components/TeamList.js';
+import { addTeamData, getTeamListData } from '../utils/api.js';
 
 export default class Home {
   constructor() {

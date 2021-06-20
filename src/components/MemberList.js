@@ -1,5 +1,6 @@
 import { KEY, PRIORITY } from '../constants.js';
 import { addMemberButtonTemplate, memberTemplate } from '../templates.js';
+import { getDataAttribute } from '../utils/getDataAttribute.js';
 
 export default class MemberList {
   constructor({
@@ -42,13 +43,16 @@ export default class MemberList {
     if (!filterButtonTarget.classList.contains('filter')) return;
 
     const [_, filterName] = filterButtonTarget.classList;
-    onFilterTodoList(filterButtonTarget.id, filterName);
+    const memberId = getDataAttribute(filterButtonTarget, 'member');
+    onFilterTodoList(memberId, filterName);
   }
 
   deleteTodoList(event, onDeleteTodoList) {
     const clearButtonTarget = event.target;
     if (!clearButtonTarget.classList.contains('clear-completed')) return;
-    onDeleteTodoList(clearButtonTarget.id);
+
+    const memberId = getDataAttribute(clearButtonTarget, 'member');
+    onDeleteTodoList(memberId);
   }
 
   addTodoItem(event, onAddTodoItem) {
@@ -58,22 +62,27 @@ export default class MemberList {
     if (!todoInputTarget.classList.contains('new-todo')) return;
     if (todoInputTarget.value === '') return;
 
-    onAddTodoItem(todoInputTarget.id, todoInputTarget.value);
+    const memberId = getDataAttribute(todoInputTarget, 'member');
+    onAddTodoItem(memberId, todoInputTarget.value);
     todoInputTarget.value = '';
   }
 
   deleteTodoItem(event, onDeleteTodoItem) {
     const deleteButtonTarget = event.target;
     if (!deleteButtonTarget.classList.contains('destroy')) return;
-    const todoList = deleteButtonTarget.closest('ul');
-    onDeleteTodoItem(todoList.id, deleteButtonTarget.id);
+
+    const memberId = getDataAttribute(deleteButtonTarget, 'member');
+    const todoItemId = getDataAttribute(deleteButtonTarget, 'todo-item');
+    onDeleteTodoItem(memberId, todoItemId);
   }
 
   toggleTodoItem(event, onToggleTodoItem) {
     const toggleButtonTarget = event.target;
     if (!toggleButtonTarget.classList.contains('toggle')) return;
-    const todoList = toggleButtonTarget.closest('ul');
-    onToggleTodoItem(todoList.id, toggleButtonTarget.id);
+
+    const memberId = getDataAttribute(toggleButtonTarget, 'member');
+    const todoItemId = getDataAttribute(toggleButtonTarget, 'todo-item');
+    onToggleTodoItem(memberId, todoItemId);
   }
 
   editTodoItem(event) {
@@ -104,22 +113,24 @@ export default class MemberList {
 
     const { value } = editingInputTarget;
     if (value === '') return;
-    const todoList = editingInputTarget.closest('ul');
-    onUpdateTodoItem(todoList.id, todoItem.id, value);
+
+    const memberId = getDataAttribute(editingInputTarget, 'member');
+    const todoItemId = getDataAttribute(editingInputTarget, 'todo-item');
+    onUpdateTodoItem(memberId, todoItemId, value);
   }
 
   updateTodoItemPriority(event, onUpdateTodoItemPriority) {
     const selectTarget = event.target;
     if (!selectTarget.classList.contains('select')) return;
 
-    const todoItem = selectTarget.closest('li');
-
     const { value } = selectTarget;
     let priority;
     if (value === '0') priority = PRIORITY.NONE;
     if (value === '1') priority = PRIORITY.FIRST;
     if (value === '2') priority = PRIORITY.SECOND;
-    const todoList = selectTarget.closest('ul');
-    onUpdateTodoItemPriority(todoList.id, todoItem.id, priority);
+
+    const memberId = getDataAttribute(selectTarget, 'member');
+    const todoItemId = getDataAttribute(selectTarget, 'todo-item');
+    onUpdateTodoItemPriority(memberId, todoItemId, priority);
   }
 }

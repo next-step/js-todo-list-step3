@@ -1,3 +1,6 @@
+import MemberList from '../components/MemberList.js';
+import TeamName from '../components/TeamName.js';
+import { FILTER_STATUS } from '../constants.js';
 import {
   addMemberData,
   addTodoItemData,
@@ -8,10 +11,7 @@ import {
   toggleTodoItemData,
   updateTodoItemData,
   updateTodoItemPriorityData,
-} from '../api.js';
-import MemberList from '../components/MemberList.js';
-import TeamName from '../components/TeamName.js';
-import { FILTER_STATUS } from '../constants.js';
+} from '../utils/api.js';
 
 export default class Kanban {
   constructor() {

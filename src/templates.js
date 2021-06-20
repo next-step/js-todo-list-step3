@@ -17,9 +17,9 @@ export const addTeamButtonTemplate = `
 `;
 
 export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
-  <li id="${_id}" class="todo-list-item ${isCompleted ? 'completed' : ''}">
+  <li data-todo-item="${_id}" class="todo-list-item ${isCompleted ? 'completed' : ''}">
     <div class="view">
-      <input id="${_id}" class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
+      <input class="toggle" type="checkbox" ${isCompleted ? 'checked' : ''}/>
       <label class="label">
         <div class="chip-container">
           <select class="chip select 
@@ -33,7 +33,7 @@ export const todoItemTemplate = ({ _id, contents, isCompleted, priority }) => `
         </div>
         ${contents}
       </label>
-      <button id="${_id}" class="destroy"></button>
+      <button class="destroy"></button>
     </div>
     <input class="edit" value="${contents}" />
   </li>
@@ -72,46 +72,42 @@ export const memberTemplate = ({ _id, name, todoList, filterStatus }) => {
   const todoListTemplate = filteredTodoList.map(todoItemTemplate);
 
   return `
-    <li class="todoapp-container">
+    <li class="todoapp-container" data-member="${_id}">
       <h2>
         <span><strong>${name}</strong>'s Todo List</span>
       </h2>
       <div class="todoapp">
         <section class="input-container">
-          <input id="${_id}" class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
+          <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
         </section>
       <section class="main">
-        <ul class="todo-list" id="${_id}">${todoListTemplate.join('')}</ul>
+        <ul class="todo-list">${todoListTemplate.join('')}</ul>
       </section>
         <div class="count-container">
           <span class="todo-count">총 <strong>${filteredTodoList.length}</strong> 개</span>
           <ul class="filters">
             <li>
-              <a id="${_id}"
-                class="filter all ${filterStatus === FILTER_STATUS.ALL ? CLASS_NAME.SELECTED : ''}">
+              <a class="filter all ${filterStatus === FILTER_STATUS.ALL ? CLASS_NAME.SELECTED : ''}">
                 전체보기 
               </a>
             </li>
             <li>
-              <a id="${_id}"
-                class="filter priority ${filterStatus === FILTER_STATUS.PRIORITY ? CLASS_NAME.SELECTED : ''}">
+              <a class="filter priority ${filterStatus === FILTER_STATUS.PRIORITY ? CLASS_NAME.SELECTED : ''}">
                 우선 순위
               </a>
             </li>
             <li>
-              <a id="${_id}"
-                class="filter active ${filterStatus === FILTER_STATUS.ACTIVE ? CLASS_NAME.SELECTED : ''}">
+              <a class="filter active ${filterStatus === FILTER_STATUS.ACTIVE ? CLASS_NAME.SELECTED : ''}">
                 해야할 일
               </a>
             </li>
             <li>
-              <a id="${_id}"
-                class="filter completed ${filterStatus === FILTER_STATUS.COMPLETED ? CLASS_NAME.SELECTED : ''}">
+              <a class="filter completed ${filterStatus === FILTER_STATUS.COMPLETED ? CLASS_NAME.SELECTED : ''}">
                 완료한 일
               </a>
             </li>
           </ul>
-          <button id="${_id}" class="clear-completed">모두 삭제</button>
+          <button class="clear-completed">모두 삭제</button>
         </div>
       </div>
     </li>
