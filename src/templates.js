@@ -88,25 +88,25 @@ export const memberTemplate = ({ _id, name, todoList, filterStatus }) => {
           <ul class="filters">
             <li>
               <a id="${_id}"
-                class="all ${filterStatus === FILTER_STATUS.ALL ? CLASS_NAME.SELECTED : ''}">
+                class="filter all ${filterStatus === FILTER_STATUS.ALL ? CLASS_NAME.SELECTED : ''}">
                 전체보기 
               </a>
             </li>
             <li>
-              <a id="${_id}" 
-                class="priority ${filterStatus === FILTER_STATUS.PRIORITY ? CLASS_NAME.SELECTED : ''}">
+              <a id="${_id}"
+                class="filter priority ${filterStatus === FILTER_STATUS.PRIORITY ? CLASS_NAME.SELECTED : ''}">
                 우선 순위
               </a>
             </li>
             <li>
-              <a id="${_id}" 
-                class="active ${filterStatus === FILTER_STATUS.ACTIVE ? CLASS_NAME.SELECTED : ''}">
+              <a id="${_id}"
+                class="filter active ${filterStatus === FILTER_STATUS.ACTIVE ? CLASS_NAME.SELECTED : ''}">
                 해야할 일
               </a>
             </li>
             <li>
               <a id="${_id}"
-                class="completed ${filterStatus === FILTER_STATUS.COMPLETED ? CLASS_NAME.SELECTED : ''}">
+                class="filter completed ${filterStatus === FILTER_STATUS.COMPLETED ? CLASS_NAME.SELECTED : ''}">
                 완료한 일
               </a>
             </li>

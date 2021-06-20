@@ -39,9 +39,9 @@ export default class MemberList {
 
   filterTodoList(event, onFilterTodoList) {
     const filterButtonTarget = event.target;
-    if (filterButtonTarget.tagName !== 'A') return;
+    if (!filterButtonTarget.classList.contains('filter')) return;
 
-    const [filterName] = filterButtonTarget.classList;
+    const [_, filterName] = filterButtonTarget.classList;
     onFilterTodoList(filterButtonTarget.id, filterName);
   }
 
