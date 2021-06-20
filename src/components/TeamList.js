@@ -12,8 +12,8 @@ export default class TeamList {
     this.$teamList.innerHTML = template.join('') + addTeamButtonTemplate;
   }
 
-  addTeam(event, onAddTeam) {
-    const addTeamButtonTarget = event.target.closest('button');
+  addTeam({ target }, onAddTeam) {
+    const addTeamButtonTarget = target.closest('button');
     if (!addTeamButtonTarget) return;
     if (addTeamButtonTarget.id !== 'add-team-button') return;
     onAddTeam();

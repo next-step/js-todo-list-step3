@@ -31,15 +31,14 @@ export default class MemberList {
     this.$team.innerHTML = template.join('') + addMemberButtonTemplate;
   }
 
-  addMember(event, onAddMember) {
-    const addMemberButtonTarget = event.target.closest('button');
+  addMember({ target }, onAddMember) {
+    const addMemberButtonTarget = target.closest('button');
     if (!addMemberButtonTarget) return;
     if (addMemberButtonTarget.id !== 'add-user-button') return;
     onAddMember();
   }
 
-  filterTodoList(event, onFilterTodoList) {
-    const filterButtonTarget = event.target;
+  filterTodoList({ target: filterButtonTarget }, onFilterTodoList) {
     if (!filterButtonTarget.classList.contains('filter')) return;
 
     const [_, filterName] = filterButtonTarget.classList;
@@ -47,18 +46,16 @@ export default class MemberList {
     onFilterTodoList(memberId, filterName);
   }
 
-  deleteTodoList(event, onDeleteTodoList) {
-    const clearButtonTarget = event.target;
+  deleteTodoList({ target: clearButtonTarget }, onDeleteTodoList) {
     if (!clearButtonTarget.classList.contains('clear-completed')) return;
 
     const memberId = getDataAttribute(clearButtonTarget, 'member');
     onDeleteTodoList(memberId);
   }
 
-  addTodoItem(event, onAddTodoItem) {
-    if (event.key !== KEY.ENTER) return;
+  addTodoItem({ key, target: todoInputTarget }, onAddTodoItem) {
+    if (key !== KEY.ENTER) return;
 
-    const todoInputTarget = event.target;
     if (!todoInputTarget.classList.contains('new-todo')) return;
     if (todoInputTarget.value === '') return;
 
@@ -67,8 +64,7 @@ export default class MemberList {
     todoInputTarget.value = '';
   }
 
-  deleteTodoItem(event, onDeleteTodoItem) {
-    const deleteButtonTarget = event.target;
+  deleteTodoItem({ target: deleteButtonTarget }, onDeleteTodoItem) {
     if (!deleteButtonTarget.classList.contains('destroy')) return;
 
     const memberId = getDataAttribute(deleteButtonTarget, 'member');
@@ -76,8 +72,7 @@ export default class MemberList {
     onDeleteTodoItem(memberId, todoItemId);
   }
 
-  toggleTodoItem(event, onToggleTodoItem) {
-    const toggleButtonTarget = event.target;
+  toggleTodoItem({ target: toggleButtonTarget }, onToggleTodoItem) {
     if (!toggleButtonTarget.classList.contains('toggle')) return;
 
     const memberId = getDataAttribute(toggleButtonTarget, 'member');
@@ -85,8 +80,7 @@ export default class MemberList {
     onToggleTodoItem(memberId, todoItemId);
   }
 
-  editTodoItem(event) {
-    const labelTarget = event.target;
+  editTodoItem({ target: labelTarget }) {
     if (!labelTarget.classList.contains('label')) return;
 
     const todoItem = labelTarget.closest('li');
@@ -98,8 +92,7 @@ export default class MemberList {
     editingInput.setSelectionRange(length, length);
   }
 
-  updateTodoItem(event, onUpdateTodoItem) {
-    const { key, target: editingInputTarget } = event;
+  updateTodoItem({ key, target: editingInputTarget }, onUpdateTodoItem) {
     if (!editingInputTarget.classList.contains('edit')) return;
 
     const todoItem = editingInputTarget.closest('li');
@@ -119,8 +112,7 @@ export default class MemberList {
     onUpdateTodoItem(memberId, todoItemId, value);
   }
 
-  updateTodoItemPriority(event, onUpdateTodoItemPriority) {
-    const selectTarget = event.target;
+  updateTodoItemPriority({ target: selectTarget }, onUpdateTodoItemPriority) {
     if (!selectTarget.classList.contains('select')) return;
 
     const { value } = selectTarget;
