@@ -12,7 +12,7 @@ export default class Home {
           if (!name) return;
 
           await addTeamData({ name });
-          this.init();
+          await this.updateTeamList();
         } catch (error) {
           console.error(error);
         }
@@ -26,9 +26,13 @@ export default class Home {
     this.TeamList.render(this.teams);
   }
 
-  async init() {
+  async updateTeamList() {
     this.teams = await getTeamListData();
     this.renderTeamList();
+  }
+
+  async init() {
+    await this.updateTeamList();
   }
 }
 

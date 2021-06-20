@@ -16,6 +16,7 @@ import {
 export default class Kanban {
   constructor() {
     this.team = {};
+    this.teamId = '';
 
     this.TeamName = new TeamName();
 
@@ -26,7 +27,7 @@ export default class Kanban {
           if (!name) return;
 
           await addMemberData(this.team._id, { name });
-          this.init();
+          await this.updateAll();
         } catch (error) {
           console.error(error);
         }
@@ -39,7 +40,7 @@ export default class Kanban {
       onDeleteTodoList: async (memberId) => {
         try {
           await deleteTodoListData(this.team._id, memberId);
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -47,7 +48,7 @@ export default class Kanban {
       onAddTodoItem: async (memberId, contents) => {
         try {
           await addTodoItemData(this.team._id, memberId, { contents });
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -55,7 +56,7 @@ export default class Kanban {
       onDeleteTodoItem: async (memberId, itemId) => {
         try {
           await deleteTodoItemData(this.team._id, memberId, itemId);
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -63,7 +64,7 @@ export default class Kanban {
       onToggleTodoItem: async (memberId, itemId) => {
         try {
           await toggleTodoItemData(this.team._id, memberId, itemId);
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -71,7 +72,7 @@ export default class Kanban {
       onUpdateTodoItem: async (memberId, itemId, contents) => {
         try {
           await updateTodoItemData(this.team._id, memberId, itemId, { contents });
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -79,7 +80,7 @@ export default class Kanban {
       onUpdateTodoItemPriority: async (memberId, itemId, priority) => {
         try {
           await updateTodoItemPriorityData(this.team._id, memberId, itemId, { priority });
-          this.initMember(memberId);
+          await this.updateMember(memberId);
         } catch (error) {
           console.error(error);
         }
@@ -102,19 +103,24 @@ export default class Kanban {
     this.renderMemberList();
   }
 
-  async initMember(memberId) {
+  async updateMember(memberId) {
     const member = this.team.members.find(({ _id }) => _id === memberId);
     const newMember = await getMemberData(this.team._id, memberId);
     member.todoList = newMember.todoList;
     this.renderMemberList();
   }
 
+  async updateAll() {
+    this.team = await getTeamData(this.teamId);
+    this.team.members.map((member) => (member.filterStatus = FILTER_STATUS.ALL));
+    this.renderAll();
+  }
+
   async init() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
-    this.team = await getTeamData(params.id);
-    this.team.members.map((member) => (member.filterStatus = FILTER_STATUS.ALL));
-    this.renderAll();
+    this.teamId = params.id;
+    await this.updateAll();
   }
 }
 
