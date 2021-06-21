@@ -1,8 +1,8 @@
 import { $, $$, METHOD, API } from './util.js';
 
 const $todoApps = $('.todoapp-list-container');
-
-const $todoInput = $('.new-todo');
+const urlParams = new URLSearchParams(location.search);
+const teamId = urlParams.get('id');
 
 const toDoItemTemplate = (item) => {
   return (
@@ -28,17 +28,13 @@ const toDoItemTemplate = (item) => {
   );
 }
 
-export const toDoRender = items => {
-  const $todoLists = $todoApps.querySelectorAll('.todoapp-container');
-  $todoLists.forEach(list => {
-    const $todoList = list.querySelector('.todo-list');
-    $todoList.innerHTML += '';
-    items.todoList.map(item => {
-      if (items._id === list.dataset.memberId)
-        $todoList.innerHTML += toDoItemTemplate(item)
-    });
-  }
-  );
+export const toDoRender = (items, memberId) => {
+  const $todoContainer = $todoApps.querySelector(`.todoapp-container[data-member-id=${memberId}]`);
+  const $todoList = $todoContainer.querySelector('.todo-list');
+  $todoList.innerHTML = '';
+  items.todoList.map(item => {
+    $todoList.innerHTML += toDoItemTemplate(item)
+  });
 }
 
 export const loadToDoItems = async (teamId, memberId, { TODOS }) => {
@@ -50,19 +46,30 @@ export const loadToDoItems = async (teamId, memberId, { TODOS }) => {
       return res.json()
     })
     .catch(error => console.log(error))
-  toDoRender(toDoItems);
+  toDoRender(toDoItems, memberId);
 };
 
-$todoInput.addEventListener('keydown', ({ key, target }) => {
+export const AddToDo = (contents, memberId, { ITEMS }, { POST }) => {
+  fetch(ITEMS(teamId, memberId), {
+    method: POST,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contents: contents
+    })
+  });
+}
+
+$todoApps.addEventListener('keydown', ({ key, target }) => {
+  const memberId = target.closest('.todoapp-container').dataset.memberId;
   if (key === 'Enter') {
     if (target.value.length < 2) {
       alert('2글자 이상이어야 합니다.');
     } else {
-      AddToDo(target.value);
+      AddToDo(target.value, memberId, API, METHOD);
       target.value = "";
+      loadToDoItems(teamId, memberId, API);
     }
   }
-  const targetId = $('button.active').dataset.id;
-  const toDoItems = loadToDoItems(targetId, API);
-  toDoRender(toDoItems);
 });

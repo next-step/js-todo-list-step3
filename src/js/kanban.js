@@ -65,8 +65,9 @@ function App() {
   }
 
   const renderMembers = user => {
-    const $userTitle = $('#user-title strong')
-    $userTitle.innerText = user.name;
+    const $userTitle = $('#user-title')
+    $userTitle.dataset.username = user.name;
+    $userTitle.querySelector('strong').innerText = user.name;
 
     const memberList = userTemplate(user);
     $todoApps.innerHTML = memberList.join('') + addMemberBtn;
