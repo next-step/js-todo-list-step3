@@ -1,4 +1,5 @@
 import {baseAPI} from "../config/config.js";
+import Message from "../config/message.js";
 
 export default {
 	getFetch: async function (url) {
@@ -10,9 +11,15 @@ export default {
 				alert(data.message);
 			}
 
+			if (!data.ok) {
+				const errorResult = await res.json();
+				throw errorResult;
+			}
+
 			return data;
-		} catch (e) {
-			console.log("[err] ", e);
+
+		} catch ({message}) {
+			console.log(Message.FETCH_ERROR_MESSAGE, message);
 		}
 	},
 
@@ -25,11 +32,14 @@ export default {
 				},
 				body: JSON.stringify(obj)
 			})
-			.then((response) => response.json());
 
-			res.message && alert(res.message);
-		} catch (e) {
-			console.log("[err] ", e);
+			if (!res.ok) {
+				const errorResult = await res.json();
+				throw errorResult;
+			}
+
+		} catch ({message}) {
+			console.log(Message.FETCH_ERROR_MESSAGE, message);
 		}
 	},
 
@@ -42,12 +52,14 @@ export default {
 				},
 				body: JSON.stringify(obj)
 			})
-			.then((response) => response.json());
 
-			res.message && alert(res.message);
+			if (!res.ok) {
+				const errorResult = await res.json();
+				throw errorResult;
+			}
 
-		} catch (e) {
-			console.log("[err] ", e);
+		} catch ({message}) {
+			console.log(Message.FETCH_ERROR_MESSAGE, message);
 		}
 	},
 
