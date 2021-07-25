@@ -1,25 +1,18 @@
 import { HTTP_REQUEST } from "./util.js";
 
-const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/api/users';
+const BASE_URL = 'https://js-todo-list-9ca3a.df.r.appspot.com/api/teams';
 
 
-export const userAPI = {
-  async getAllUser(){
-    return  await fetch(BASE_URL).then(data => data.json());
+export const teamAPI = {
+  async postTeam(name){
+    return await fetch(BASE_URL, HTTP_REQUEST.POST(name));
   },
-  async deleteUser(id){
-    return await fetch(`${BASE_URL}/${id}`,HTTP_REQUEST.DELETE());
-  },
-  async addUser(data){
-    return await fetch(`${BASE_URL}`,HTTP_REQUEST.POST(data)).then(data=>data.json());
-  },
-  async getUser(id){
-    return await fetch(`${BASE_URL}/${id}`).then(data => data.json());
+  async getTeam(){
+    return await fetch(`${BASE_URL}`).then(data => data.json());
   }
 }
 
-
-export const todoAPI = {
+export const memberAPI = {
   async getTodoItem(id){
     return await fetch(`${BASE_URL}/${id}/items`).then(data => data.json);
   },
