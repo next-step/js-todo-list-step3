@@ -13,25 +13,31 @@ export const teamAPI = {
 }
 
 export const memberAPI = {
-  async getTodoItem(id){
-    return await fetch(`${BASE_URL}/${id}/items`).then(data => data.json);
+  async postMemberAdd(teamId, name){
+    return await fetch(`${BASE_URL}/${teamId}/members`,HTTP_REQUEST.POST(name));
   },
-  async addTodoItem(id, item){
-    return await fetch(`${BASE_URL}/${id}/items`, HTTP_REQUEST.POST(item));
+  async getMemberList(teamId){
+    return await fetch(`${BASE_URL}/${teamId}`).then(data=>data.json());
   },
-  async deleteAllTodoItem(id){
-    return await fetch(`${BASE_URL}/${id}/items`,HTTP_REQUEST.DELETE());
+  async getMemberTodoList(teamId, memberId){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}`).then(data=>data.json());
   },
-  async deleteTodoItem(userId, itemId){
-    return await fetch(`${BASE_URL}/${userId}/items/${itemId}`,HTTP_REQUEST.DELETE());
+  async postMemberTodo(teamId,memberId,contents){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}`,HTTP_REQUEST.POST(contents));
   },
-  async updateTodoItem(userId, itemId, newItem){
-    return await fetch(`${BASE_URL}/${userId}/items/${itemId}`, HTTP_REQUEST.PUT(newItem));
+  async deleteMemberTodo(teamId, memberId,itemId){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`,HTTP_REQUEST.DELETE());
   },
-  async updateTodoPriority(userId, itemId, priority){
-    return await fetch(`${BASE_URL}/${userId}/items/${itemId}/priority`, HTTP_REQUEST.PUT(priority));
+  async putMemberToggleTodo(teamId, memberId,itemId){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/toggle`, HTTP_REQUEST.PUT())
   },
-  async toggleTodoItem(userId, itemId){
-    return await fetch(`${BASE_URL}/${userId}/items/${itemId}/toggle`, HTTP_REQUEST.PUT())
+  async putMemberUpdateTodo(teamId, memberId,itemId, newItem){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`, HTTP_REQUEST.PUT(newItem));
+  },
+  async putTodoPriority(teamId, memberId,itemId, priority){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}/priority`, HTTP_REQUEST.PUT(priority));
+  },
+  async deleteTodoAll(teamId, memberId){
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items`, HTTP_REQUEST.DELETE());
   }
 }

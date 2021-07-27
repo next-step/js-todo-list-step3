@@ -1,5 +1,5 @@
-import Subject from "../js/core/Subject.js";
-import {FILTER} from "../js/constants/constants.js"
+import Subject from "../core/Subject.js";
+import {FILTER} from "../constants/constants.js"
 
 export default class FilterState extends Subject{
     constructor() {
