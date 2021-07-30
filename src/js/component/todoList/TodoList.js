@@ -1,17 +1,21 @@
-import Observer from "../core/observer.js";
-import { PRIORITY } from "../constants/constants.js"
-import { $, $$ } from "../util/util.js";
-import { userAPI, todoAPI } from "../api/api.js";
+import Observer from "../../core/observer.js";
+import { PRIORITY } from "../../constants/constants.js"
+import { $, $$ } from "../../util/util.js";
+import { teamAPI, memberAPI } from "../../api/api.js";
 
 export class TodoList extends Observer{
-    constructor(selectedUserState, filterState){
+    constructor(todolistState, filterState){
         super();
-        this.selectedUserState = selectedUserState;
+        this.todolistState = todolistState;
         this.filterState = filterState;
+        this.memberId = this.todolistState.memberID;
+        console.log(this.memberId);
+        console.log(this.todolistState);
     }
     
      template(){      
-        const todoList =  this.selectedUserState.get().todoList;
+        const todoList =  this.todolistState.getList();
+        //const memberId = this.todolistState._id;
         const filteredList = (() =>{
             const mode = this.filterState.get();
             if(mode=='all'){
@@ -26,12 +30,14 @@ export class TodoList extends Observer{
         })();
         return `
             ${filteredList.map(item =>`                
-            <li class=${item.isCompleted?"completed":""}>
+            <li class="todo-list-item ${item.isCompleted?"completed":""}">
             <div class="view">
               <input id="${item._id}" class="toggle" type="checkbox" ${item.isCompleted?"checked":""} />
               <label id="${item._id}" class="label">
-                ${this.getRanking(item.priority)}
-                ${item.contents}
+                <div class="chip-container">
+                    ${this.getRanking(item.priority)}
+                </div>
+                 ${item.contents}
               </label>
               <button id="${item._id}" class="destroy"></button>
             </div>
@@ -42,7 +48,8 @@ export class TodoList extends Observer{
     }
      
     render(){
-        const target = $(".todo-list");
+        const _selector = "#todo-list-"+this.memberId;
+        const target = $(_selector);
         target.innerHTML = this.template();
         this.mounted();
     }
@@ -132,11 +139,21 @@ export class TodoList extends Observer{
         if(priority==PRIORITY.FIRST){
             return `
             <span class="chip primary">1순위</span>
+            <select class="chip select hidden">
+                <option value="0" selected>순위</option>
+                <option value="1">1순위</option>
+                <option value="2">2순위</option>
+            </select>
             `
         }
         if(priority==PRIORITY.SECOND){
             return `
             <span class="chip secondary">2순위</span>
+            <select class="chip select hidden">
+                <option value="0" selected>순위</option>
+                <option value="1">1순위</option>
+                <option value="2">2순위</option>
+            </select>
             `
         }
         if(priority==PRIORITY.NONE){
