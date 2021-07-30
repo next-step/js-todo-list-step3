@@ -4,49 +4,36 @@
 
 import FilterState from "../store/filterState.js";
 import TodoListState from "../store/todolistState.js";
+import { TodoFilter } from "./todoList/TodoFilter.js";
+import { TodoInput } from "./todoList/TodoInput.js";
+import { TodoList } from "./todoList/TodoList.js";
 
 
 export default class MemberTodoList{
-  constructor(){ 
-      console.log("MemberTodoList");
-      this.filterState = new FilterState;
-      this.todolistState = new TodoListState;
-      this.init();
+  constructor(initData){ 
+    //console.log("MemberTodoList");
+    this.filterState = new FilterState();
+    this.todolistState = new TodoListState(initData._id);
+    this.initData = initData;
+    console.log(this.initData);
+    this.init();
   }
 
-  // constructor(){
-  //   this.selectedUserState = new SelectedUserState;
-  //   this.userState = new UserState;
-  //   this.filterState = new FilterState;
-  //   this.init();
-  // }
-
   async init(){
-    
-      //conponent
-      // this.title = new Title(this.selectedUserState);
-      // this.userList = new UserList(this.userState, this.selectedUserState);
-      // //console.log(this.selectedUserState)
-      // this.todoInput = new TodoInput(this.selectedUserState);
-      // this.todoList = new TodoList(this.selectedUserState, this.filterState);
-      // this.todoFilter = new TodoFilter(this.selectedUserState, this.filterState);
-      // //subscribe
+    //conponent
+    this.todoInput  = new TodoInput(this.todolistState);
+    this.todoList = new TodoList(this.todolistState, this.filterState);
+    this.todoFilter =  new TodoFilter(this.todolistState, this.filterState);
 
-      // this.selectedUserState.subscribe(this.title);
-      // this.selectedUserState.subscribe(this.userList);
-      // this.selectedUserState.subscribe(this.todoFilter);
-      // this.selectedUserState.subscribe(this.todoList);
+    //subscribe
+    this.filterState.subscribe(this.todoList);
+    this.filterState.subscribe(this.todoFilter);
 
+    this.todolistState.subscribe(this.todoList);
+    this.todolistState.subscribe(this.todoFilter);
 
-      // this.userState.subscribe(this.userList);
-      // this.filterState.subscribe(this.todoList);
-      // this.filterState.subscribe(this.todoFilter);
-
-      // //this.countState.subscribe(this.todoFilter);
-      // //초기데이터
-      // const initData = await userAPI.getAllUser();
-      // this.userState.set(initData);
-      // this.selectedUserState.set(initData[0]);
+    // 초기데이터
+    this.todolistState.setList(this.initData.todoList);
 
   }
 }

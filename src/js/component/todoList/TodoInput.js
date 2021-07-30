@@ -1,6 +1,6 @@
 //import Observer from "../core/observer.js";
-import { $ } from "../util/util.js";
-import { userAPI, todoAPI } from "../api/api.js";
+import { $ } from "../../util/util.js";
+import { teamAPI, memberAPI } from "../../api/api.js";
 
 
 export class TodoInput {

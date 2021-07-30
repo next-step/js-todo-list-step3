@@ -1,15 +1,19 @@
 import subject from "../core/Subject.js";
 
 export default class TodoListState extends subject {
-    constructor(){
+    constructor(memberID){
         super();
+        this.memberID = memberID;
         this.todoList = [];
     }
-    get(){
+    getList(){
         return this.todoList;
     } 
-    set(updateList){
+    setList(updateList){
         this.todoList = updateList;
         this.publish();
+    }
+    getMemberId(){
+        return this.memberID;
     }
 }
