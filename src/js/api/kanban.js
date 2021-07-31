@@ -1,6 +1,6 @@
 import { http } from './index.js';
 
-export const KanbanAPI = {
+export const kanbanAPI = {
   addMemberToTeam(teamId, name) {
     return http.post(`/api/teams/${teamId}/members`, { name });
   },

@@ -1,22 +1,20 @@
 import Title from '../components/common/Title.js';
 import TodoAppListContainer from "../components/kanban/TodoAppListContainer.js";
-
 import Component from '../core/Component.js';
-import { teamAPI } from "../api/team.js";
+import { store } from "../store/index.js";
 import { getQueryString } from '../util/queryString.js';
 import { $ } from '../util/selector.js';
 
 class App extends Component {
-  async setup() {
+  async asyncData() {
     const { id } = getQueryString();
-    const { name, members } = await teamAPI.fetchTeam(id);
-    this.$state = { name, members };
-    this.render();
+    store.commit('fetchTeamId', id);
+    await store.dispatch('FETCH_TEAM_TODOLIST');
   }
 
   mounted() {
-    new Title($('#user-title'), { title: this.$state.name });
-    new TodoAppListContainer($('.todoapp-list-container'), this.$state.members);
+    new Title($('#user-title'));
+    new TodoAppListContainer($('.todoapp-list-container'));
   }
 
   template() {

@@ -1,0 +1,4 @@
+export const PRIORITY = ['NONE', 'FIRST', 'SECOND'];
+PRIORITY['NONE'] = 0;
+PRIORITY['FIRST'] = 2;
+PRIORITY['SECOND'] = 1;

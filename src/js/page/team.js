@@ -1,7 +1,6 @@
 import Title from '../components/common/Title.js';
 import TeamListContainer from '../components/team/TeamListContainer.js';
 import Component from '../core/Component.js';
-
 import { $ } from '../util/selector.js';
 
 class App extends Component {

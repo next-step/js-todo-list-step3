@@ -1,25 +1,24 @@
 import Component from '../../core/Component.js';
-import { teamAPI } from '../../api/team.js';
+import { teamAPI } from "../../api/team.js";
+import { store } from "../../store/index.js";
 
 export default class TeamListContainer extends Component {
-  async setup() {
-    const teamList = await teamAPI.fetchTeamList();
-    this.$state = { teamList };
-    this.render();
+  async asyncData() {
+    await store.dispatch('FETCH_TEAM_LIST');
   }
-
+  
   setEvent() {
-    this.addEvent('click', 'addTeam', async (el) => {
+    this.addEvent('click', 'addTeam', async _ => {
       const teamName = prompt('팀 이름을 입력해주세요');
-      if (!teamName.length) return;
-      const { _id, name } = await teamAPI.addTeam(teamName);
-      this.render();
+      if (teamName.length < 2) return;
+      await teamAPI.addTeam(teamName);
+      await store.dispatch('FETCH_TEAM_LIST');
     });
   }
 
   template() {
     return `
-      ${this.$state.teamList
+      ${store.state.teamList
         .map(
           ({ _id, name }) =>
             `<div class="team-card-container">

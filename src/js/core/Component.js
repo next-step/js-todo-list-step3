@@ -1,4 +1,5 @@
 import { observable, observe } from "./observer.js";
+import { store } from "../store/index.js";
 
 export default class Component {
   $target;
@@ -8,10 +9,10 @@ export default class Component {
     this.$target = $target;
     this.$props = $props;
     this.setup();
-    this.setEvent();
   }
 
   async setup(){
+    await this.asyncData();
     this.$state = observable({});
     observe(() => {
       this.render();
@@ -20,18 +21,23 @@ export default class Component {
     });
   };
 
+  asyncData(){};
   mounted(){};
   template(){ return '' };
   render(){
     this.$target.innerHTML = this.template();
     this.mounted();
   }
+  setState(nextState){
+    this.$state = { ...this.$state, ...nextState };
+    this.render();
+  }
   setEvent(){};
   addEvent(eventType, action, callback) {
-    const isTarget = target => target.dataset.action === action;
-    this.$target.addEventListener(eventType, (event) => {
-      if (!isTarget(event.target)) return;
-      callback(event);
+    this.$target.addEventListener(eventType, async (event) => {
+      if (event.target.dataset.action === action)
+        callback(event);
+        await store.dispatch('FETCH_TEAM_TODOLIST');
     })
   }
 }
