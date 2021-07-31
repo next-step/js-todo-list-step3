@@ -10,18 +10,18 @@ export default class Component {
     this.$props = $props;
     this.setup();
   }
-
+  
   async setup(){
     await this.asyncData();
-    this.$state = observable({});
+    this.$state = observable(this.initState());
     observe(() => {
-      this.render();
       this.setEvent();
-      this.mounted();
+      this.render();
     });
   };
 
   asyncData(){};
+  initState(){ return {} };
   mounted(){};
   template(){ return '' };
   render(){

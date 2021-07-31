@@ -3,7 +3,7 @@ import { teamAPI } from "../api/team.js";
 
 export const store = new Store({
   state: {
-    id: '',
+    id: null,
     name: 'Team',
     members: [],
     teamList: [],
@@ -32,6 +32,7 @@ export const store = new Store({
     },
 
     FETCH_TEAM_TODOLIST: async ({ state, commit }) => {
+      if (!state.id) return;
       const { name, members } = await teamAPI.fetchTeam(state.id);
       commit('fetchTeamName', name);
       commit('fetchTeamTodolist', members);

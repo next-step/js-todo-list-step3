@@ -5,7 +5,7 @@ import { $ } from '../util/selector.js';
 
 class App extends Component {
   mounted() {
-    new Title($('#user-title'), { title: 'Team' });
+    new Title($('#user-title'));
     new TeamListContainer($('.team-list-container'));
   }
 
