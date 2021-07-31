@@ -4,5 +4,7 @@ export default class TodoAppContainer {
     this.render();
   }
 
-  render() {}
+  render() {
+    this.$target.innerHTML = `<ul class="todoapp-list-container flex-column-container"></ul>`;
+  }
 }

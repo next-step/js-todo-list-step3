@@ -1,10 +1,9 @@
-export default class Title {
-  constructor($target) {
-    this.$target = $target;
-    this.render();
-  }
+import Component from '../../core/Component.js';
 
-  render() {
-    this.$target.innerHTML = `<span><strong>Team</strong>'s Todo Lists</span>`;
+export default class Title extends Component {
+  template() {
+    return `
+      <span><strong>${this.$props.title}</strong>'s Todo Lists</span>
+    `;
   }
 }

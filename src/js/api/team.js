@@ -1,4 +1,4 @@
-import { http } from 'index.js';
+import { http } from './index.js';
 
 export const teamAPI = {
   addTeam(name) {

@@ -2,7 +2,7 @@ import { BASE_URL, GET, POST, PUT, DELETE } from "../constant/api.js";
 
 const request = async (url = '', options) => {
   try {
-    const res = await fetch(`${BASE_URL}/${url}`, options);
+    const res = await fetch(`${BASE_URL}${url}`, options);
     if (!res.ok) throw new Error(res.status);
     return await res.json();
   } catch (error) {
