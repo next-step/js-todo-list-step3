@@ -1,5 +1,5 @@
 import Observer from "../../core/observer.js";
-import { PRIORITY } from "../../constants/constants.js"
+import { FILTER, PRIORITY } from "../../constants/constants.js"
 import { $, $$ } from "../../util/util.js";
 import { teamAPI, memberAPI } from "../../api/api.js";
 
@@ -66,7 +66,12 @@ export class TodoList extends Observer{
         editInputs.forEach(Btn => Btn.addEventListener('keydown', this.onEditKey.bind(this)));
     
         const selectedBoxs = $$('.select');
-        selectedBoxs.forEach(Btn => Btn.addEventListener('click', this.onSelectPriority.bind(this)));
+        selectedBoxs.forEach(Btn => {
+            if(Btn.dataset.id==this.todolistState.getMemberID()){
+                console.log("ddddd");
+                Btn.addEventListener('change', this.onSelectPriority.bind(this));
+            }
+        })
     }
 
     update(){
@@ -83,18 +88,22 @@ export class TodoList extends Observer{
         e.target.parentNode.parentNode.classList.add('editing');
     }
     async onSelectPriority(e){
-        //e.stopPropagation();
-        const selectedPriroty = {'priority' : e.target.value};
-        if(selectedPriroty == PRIORITY.NONE) return;
-        //console.log(e.target.parentNode.parentNode)
+        e.stopPropagation();
+        
+        let option ='';
+        if(e.target.value =='1') option = "FIRST";
+        if(e.target.value =='2') option ="SECOND";
+        if(e.target.value =='0') option ="NONE";
+
+        const selectedPriroty = {'priority' : option};
+        
         const itemId = e.target.parentNode.parentNode.id;
         const memberId = this.todolistState.getMemberID();
-        
         const response = await memberAPI.putTodoPriority(this.teamID, memberId,itemId, selectedPriroty);
         
         if(response.ok){
             const data = await memberAPI.getMemberTodoList(this.teamID, memberId);
-           // this.todolistState.setTodo(data.todoList);
+            this.todolistState.setTodo(data.todoList);
         }
     }
 
@@ -141,10 +150,9 @@ export class TodoList extends Observer{
         if(priority==PRIORITY.FIRST){
             return `
             <div class="chip-container">
-              <span class="chip primary">1순위</span>
-              <select class="chip select hidden">
-                <option value="0" selected>순위</option>
-                <option value="1">1순위</option>
+              <select class="chip select primary" data-id=${this.todolistState.getMemberID()}>
+                <option value="0" >순위</option>
+                <option value="1" selected>1순위</option>
                 <option value="2">2순위</option>
               </select>
             </div>
@@ -153,11 +161,10 @@ export class TodoList extends Observer{
         if(priority==PRIORITY.SECOND){
             return `
             <div class="chip-container">
-              <span class="chip primary">2순위</span>
-              <select class="chip select hidden">
-                <option value="0" selected>순위</option>
+              <select class="chip select secondary" data-id=${this.todolistState.getMemberID()}>
+                <option value="0">순위</option>
                 <option value="1">1순위</option>
-                <option value="2">2순위</option>
+                <option value="2" selected>2순위</option>
               </select>
             </div>
             `
@@ -165,10 +172,10 @@ export class TodoList extends Observer{
         if(priority==PRIORITY.NONE){
             return `
             <div class="chip-container">
-                <select  class="chip select">
-                    <option value="NONE" selected>순위</option>
-                    <option value="FIRST">1순위</option>
-                    <option value="SECOND">2순위</option>
+                <select  class="chip select" data-id=${this.todolistState.getMemberID()}>
+                    <option value="0" selected>순위</option>
+                    <option value="1">1순위</option>
+                    <option value="2">2순위</option>
                 </select>   
             </div>
             `
