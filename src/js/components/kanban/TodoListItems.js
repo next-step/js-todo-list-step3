@@ -23,7 +23,7 @@ export default class TodoListItems extends Component {
 
     this.addEvent('dblclick', 'onEdit', async ({ target }) => {
       const todo = target.closest('[data-todo-id]');
-      todo.className += ' editing';
+      todo.classList.add('editing');
     });
 
     this.addEvent('keypress', 'edit', async ({ key, target }) => {

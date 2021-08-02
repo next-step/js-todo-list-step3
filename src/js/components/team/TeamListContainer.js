@@ -16,7 +16,6 @@ export default class TeamListContainer extends Component {
   }
 
   template() {
-    console.log('ss');
     return `
       ${store.state.teamList
         .map(

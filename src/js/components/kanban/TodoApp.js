@@ -3,7 +3,7 @@ import TodoListItems from './TodoListItems.js';
 import TodoListCounter from './TodoListCounter.js';
 import Component from '../../core/Component.js';
 import { $ } from '../../util/selector.js';
-import { PRIORITY } from '../../constant/todo.js';
+import { PRIORITY, SHOW } from '../../constant/todo.js';
 
 export default class TodoApp extends Component {
   setup() {
@@ -37,7 +37,7 @@ export default class TodoApp extends Component {
   allTodos() {
     const allTodos = this.$props.todoList;
     this.setState({
-      show: 'ALL',
+      show: SHOW.ALL,
       todoList: allTodos,
       count: allTodos.length,
     });
@@ -48,7 +48,7 @@ export default class TodoApp extends Component {
       .slice()
       .sort((a, b) => PRIORITY[b.priority] - PRIORITY[a.priority]);
     this.setState({
-      show: 'PRIORITY',
+      show: SHOW.PRIORITY,
       todoList: prioritySortedTodos,
       count: prioritySortedTodos.length,
     });
@@ -57,7 +57,7 @@ export default class TodoApp extends Component {
   activeTodos() {
     const activeTodos = this.$props.todoList.filter(({ isCompleted }) => !isCompleted);
     this.setState({
-      show: 'ACTIVE',
+      show: SHOW.ACTIVE,
       todoList: activeTodos,
       count: activeTodos.length,
     });
@@ -66,7 +66,7 @@ export default class TodoApp extends Component {
   completedTodos() {
     const completedTodos = this.$props.todoList.filter(({ isCompleted }) => isCompleted);
     this.setState({
-      show: 'COMPLETED',
+      show: SHOW.COMPLETED,
       todoList: completedTodos,
       count: completedTodos.length,
     });

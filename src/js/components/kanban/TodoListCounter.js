@@ -1,6 +1,7 @@
 import Component from '../../core/Component.js';
 import { store } from "../../store/index.js";
 import { kanbanAPI } from "../../api/kanban.js";
+import { SHOW } from "../../constant/todo.js";
 
 export default class TodoListCounter extends Component {
   setEvent() {
@@ -10,9 +11,8 @@ export default class TodoListCounter extends Component {
       await kanbanAPI.removeTodoItems(id, memberId);
     });
 
-    this.$target.addEventListener('click', e => {
+    this.addEvent('click', 'filter', e => {
       e.preventDefault();
-      if (e.target.dataset.action !== 'filter') return;
       const { type } = e.target.closest('[data-type]').dataset;
       this.$props[`${type}Todos`]();
     });
@@ -24,22 +24,22 @@ export default class TodoListCounter extends Component {
       <ul class="filters">
         <li data-type="all">
           <a data-action="filter" href="#all"${
-            this.$props.show === 'ALL' ? ' class="selected"' : ''
+            this.$props.show === SHOW.ALL ? ' class="selected"' : ''
           }>전체보기</a>
         </li>
         <li data-type="priority">
           <a data-action="filter" href="#priority"${
-            this.$props.show === 'PRIORITY' ? ' class="selected"' : ''
+            this.$props.show === SHOW.PRIORITY ? ' class="selected"' : ''
           }>우선 순위</a>
         </li>
         <li data-type="active">
           <a data-action="filter" href="#active"${
-            this.$props.show === 'ACTIVE' ? ' class="selected"' : ''
+            this.$props.show === SHOW.ACTIVE ? ' class="selected"' : ''
           }>해야할 일</a>
         </li>
         <li data-type="completed">
           <a data-action="filter" href="#completed"${
-            this.$props.show === 'COMPLETED' ? ' class="selected"' : ''
+            this.$props.show === SHOW.COMPLETED ? ' class="selected"' : ''
           }>완료한 일</a>
         </li>
       </ul>
