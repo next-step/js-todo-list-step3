@@ -8,7 +8,8 @@ export const teamAPI = {
     return await fetch(BASE_URL, HTTP_REQUEST.POST(name));
   },
   async getTeam(){
-    return await fetch(`${BASE_URL}`).then(data => data.json());
+    const response =  await fetch(`${BASE_URL}`)
+    return await response.json();
   }
 }
 
@@ -17,10 +18,12 @@ export const memberAPI = {
     return await fetch(`${BASE_URL}/${teamId}/members`,HTTP_REQUEST.POST(name));
   },
   async getMemberList(teamId){
-    return await fetch(`${BASE_URL}/${teamId}`).then(data=>data.json());
+    const response =  await fetch(`${BASE_URL}/${teamId}`)
+    return await response.json();
   },
   async getMemberTodoList(teamId, memberId){
-    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}`).then(data=>data.json());
+    const response = await fetch(`${BASE_URL}/${teamId}/members/${memberId}`)
+    return await response.json();
   },
   async postMemberTodo(teamId,memberId,contents){
     return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items`,HTTP_REQUEST.POST(contents));

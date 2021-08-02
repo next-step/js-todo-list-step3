@@ -13,7 +13,6 @@ export default class Team{
 
     const initdata = await teamAPI.getTeam();
     
-   // console.log(initdata);
     this.teamState.set(initdata);
   }
 }
