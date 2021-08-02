@@ -17,7 +17,7 @@ export class TodoList extends Observer{
         const todoList =  this.todolistState.getTodo();
         const filteredList = (() =>{
             const mode = this.filterState.get();
-            console.log(mode);
+            
             if(mode=='all'){
                 return todoList;
             }
@@ -26,6 +26,18 @@ export class TodoList extends Observer{
             }
             if(mode=='completed'){
                 return todoList.filter(item => item.isCompleted)
+            }
+            if(mode=='ranking'){
+                let sortedArr = todoList.sort(function(a,b){
+                    if(a.priority=="NONE") a.priority=0;
+                    if(a.priority=="FIRST") a.priority=2;
+                    if(a.priority=="SECOND") a.priority=1;
+                    if(b.priority=="NONE") b.priority=0;
+                    if(b.priority=="FIRST") b.priority=2;
+                    if(b.priority=="SECOND") b.priority=1;
+                    return b.priority -a.priority;
+                });
+                return sortedArr;
             }
         })();
        console.log(filteredList);
@@ -147,7 +159,7 @@ export class TodoList extends Observer{
     }
 
     getRanking(priority){
-        if(priority==PRIORITY.FIRST){
+        if(priority==PRIORITY.FIRST||priority==2){
             return `
             <div class="chip-container">
               <select class="chip select primary" data-id=${this.todolistState.getMemberID()}>
@@ -158,7 +170,7 @@ export class TodoList extends Observer{
             </div>
             `
         }
-        if(priority==PRIORITY.SECOND){
+        if(priority==PRIORITY.SECOND||priority==1){
             return `
             <div class="chip-container">
               <select class="chip select secondary" data-id=${this.todolistState.getMemberID()}>
@@ -169,7 +181,7 @@ export class TodoList extends Observer{
             </div>
             `
         }
-        if(priority==PRIORITY.NONE){
+        if(priority==PRIORITY.NONE||priority==0){
             return `
             <div class="chip-container">
                 <select  class="chip select" data-id=${this.todolistState.getMemberID()}>

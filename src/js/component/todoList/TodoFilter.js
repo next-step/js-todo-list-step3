@@ -59,7 +59,6 @@ export class TodoFilter extends Observer{
         
         if(response.ok){
           const data = await memberAPI.getMemberTodoList(this.teamID, memberID);
-          console.log(data.todoList);
           if(data.todoList==undefined) this.todolistState.setTodo([]);
         }
     }
@@ -76,6 +75,8 @@ export class TodoFilter extends Observer{
         }
         if(filter == FILTER.COMPLETED){
             return todo.filter(item => item.isCompleted).length
+        }else{
+          return todo.length;
         }
     }
 }
