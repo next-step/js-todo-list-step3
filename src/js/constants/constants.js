@@ -1,7 +1,8 @@
 export const FILTER = {
     ALL: 'all',
     ACTIVE: 'active',
-    COMPLETED: 'completed'
+    COMPLETED: 'completed',
+    RANK :'ranking'
   };
 
 

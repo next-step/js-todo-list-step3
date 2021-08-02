@@ -18,16 +18,16 @@ export class TodoFilter extends Observer{
         return `
         <span class="todo-count">총 <strong>${count}</strong> 개</span>
         <ul class="filters">
-          <li class="li-filter">
+          <li class="li-filter" data-id=${this.todolistState.getMemberID()}>
             <a href="#" class="all ${filter =="all"?"selected":""}">전체보기</a>
           </li>
-          <li>
-            <a href="#priority">우선 순위</a>
+          <li class="li-filter" data-id=${this.todolistState.getMemberID()}>
+            <a href="#priority" class="ranking ${filter =="ranking"?"selected":""}">우선 순위</a>
           </li>
-          <li class="li-filter">
+          <li class="li-filter" data-id=${this.todolistState.getMemberID()}>
             <a href="#active" class="active ${filter =="active"?"selected":""}">해야할 일</a>
           </li>
-          <li class="li-filter">
+          <li class="li-filter" data-id=${this.todolistState.getMemberID()}>
             <a href="#completed" class="completed  ${filter =="completed"?"selected":""}">완료한 일</a>
           </li>
         </ul>
@@ -42,7 +42,10 @@ export class TodoFilter extends Observer{
     }
     mounted(){
         const filterBtn = $$('.li-filter');
-        filterBtn.forEach(btn => btn.addEventListener('click',this.onFilterChange.bind(this)));
+        filterBtn.forEach(btn =>{
+          if(btn.dataset.id==this.todolistState.getMemberID())
+            btn.addEventListener('click',this.onFilterChange.bind(this));
+        });
     
         const deleteAllBtn = document.getElementById(`deleteAll${this.todolistState.getMemberID()}`);
         deleteAllBtn.addEventListener('click', this.onDeleteAllTodo.bind(this));
@@ -56,7 +59,8 @@ export class TodoFilter extends Observer{
         
         if(response.ok){
           const data = await memberAPI.getMemberTodoList(this.teamID, memberID);
-          this.todolistState.setTodo([]);
+          console.log(data.todoList);
+          if(data.todoList==undefined) this.todolistState.setTodo([]);
         }
     }
     onFilterChange(e){  
@@ -67,7 +71,6 @@ export class TodoFilter extends Observer{
         if(filter ==FILTER.ALL){
             return todo.length;
         }
-
         if(filter == FILTER.ACTIVE){
             return todo.filter(item => !item.isCompleted).length
         }
