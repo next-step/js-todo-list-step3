@@ -27,33 +27,33 @@
 
 ## 🎯 index.html 팀 페이지 요구사항
 
-- [ ] 1. 팀 추가하기
-- [ ] 2. 팀 리스트 불러와서 화면에 보여주기
+- [x] 1. 팀 추가하기
+- [x] 2. 팀 리스트 불러와서 화면에 보여주기
 
 ## 🎯 kanban.html 팀의 투두리스트 페이지 요구사항
 
-- [ ] 1. 팀에 멤버 추가하기
-- [ ] 2. 팀원별 todoList 불러오기
-- [ ] 3. 팀원별 todoItem 추가하기
-- [ ] 4. 팀원별 todoItem 삭제하기
-- [ ] 5. 팀원별 todoItem complete하기
-- [ ] 6. 팀원별 todoItem contents 내용 수정하기
+- [x] 1. 팀에 멤버 추가하기
+- [x] 2. 팀원별 todoList 불러오기
+- [x] 3. 팀원별 todoItem 추가하기
+- [x] 4. 팀원별 todoItem 삭제하기
+- [x] 5. 팀원별 todoItem complete하기
+- [x] 6. 팀원별 todoItem contents 내용 수정하기
 - [ ] 7. todoItem의 우선 순위 정하기 (defulat값:0, 1순위:1, 2순위: 2)
 - [ ] 8. todoList의 우측 하단의 `전체 삭제`버튼을 누르면 해당 유저의 아이템을 전체 삭제하기
 
-
 ## 🎯🎯 kanban.html 심화 요구사항
-- [ ] 1. todoItem의 우선 순위에 따라 정렬하기
 
+- [ ] 1. todoItem의 우선 순위에 따라 정렬하기
 
 <br/>
 
 ## 📝 API
+
 ### 팀 추가
 
-| method | uri |
-|---|---|
-|POST|/api/teams|
+| method | uri        |
+| ------ | ---------- |
+| POST   | /api/teams |
 
 ```javascript
 {
@@ -70,9 +70,9 @@
 
 ### 팀 불러오기
 
-| method | uri |
-|---|---|
-|GET|/api/teams/${teamId}|
+| method | uri                  |
+| ------ | -------------------- |
+| GET    | /api/teams/${teamId} |
 
 ```javascript
 {
@@ -86,9 +86,10 @@
 
 ### 팀 리스트 불러오기
 
-| method | uri |
-|---|---|
-|GET|/api/teams|
+| method | uri        |
+| ------ | ---------- |
+| GET    | /api/teams |
+
 ```javascript
 {
  response: [
@@ -104,21 +105,22 @@
 
 ### 팀 삭제
 
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}|
+| method | uri                  |
+| ------ | -------------------- |
+| DELETE | /api/teams/${teamId} |
 
 ```javascript
 {
- response: {}
+  response: {
+  }
 }
 ```
 
 ### 팀에 멤버 추가
 
-| method | uri |
-|---|---|
-|POST|/api/teams/${teamId}/members|
+| method | uri                          |
+| ------ | ---------------------------- |
+| POST   | /api/teams/${teamId}/members |
 
 ```javascript
 {
@@ -135,27 +137,27 @@
 
 ### 팀원별 TodoList 불러오기
 
-| method | uri |
-|---|---|
-|GET|/api/teams/${teamId}/members/${memberId}|
+| method | uri                                      |
+| ------ | ---------------------------------------- |
+| GET    | /api/teams/${teamId}/members/${memberId} |
 
 ```javascript
 {
- response: [
-  {
-    "_id": "string",
-   "name": "string",
-   "todoList": []
-  }
- ]
+  response: [
+    {
+      _id: "string",
+      name: "string",
+      todoList: [],
+    },
+  ];
 }
 ```
 
 ### 팀원의 TodoItem 추가하기
 
-| method | uri |
-|---|---|
-|POST|/api/teams/${teamId}/members/${memberId}/items|
+| method | uri                                            |
+| ------ | ---------------------------------------------- |
+| POST   | /api/teams/${teamId}/members/${memberId}/items |
 
 ```javascript
 {
@@ -176,22 +178,22 @@
 
 ### 팀원의 TodoItem 삭제하기
 
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}/members/${memberId}/items/${itemId}|
+| method | uri                                                      |
+| ------ | -------------------------------------------------------- |
+| DELETE | /api/teams/${teamId}/members/${memberId}/items/${itemId} |
 
 ```javascript
 {
- response: {}
+  response: {
+  }
 }
 ```
 
 ### 팀원의 TodoItem toggle하기
 
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle|
-
+| method | uri                                                             |
+| ------ | --------------------------------------------------------------- |
+| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId}/toggle |
 
 ```javascript
 {
@@ -206,9 +208,9 @@
 
 ### 팀원의 TodoItem contents 수정하기
 
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}|
+| method | uri                                                      |
+| ------ | -------------------------------------------------------- |
+| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId} |
 
 ```javascript
 {
@@ -226,9 +228,9 @@
 
 ### 팀원의 TodoItem 우선순위 수정하기
 
-| method | uri |
-|---|---|
-|PUT|/api/teams/${teamId}/members/${memberId}/items/${itemId}/priority|
+| method | uri                                                               |
+| ------ | ----------------------------------------------------------------- |
+| PUT    | /api/teams/${teamId}/members/${memberId}/items/${itemId}/priority |
 
 ```javascript
 {
@@ -246,27 +248,28 @@
 
 ### 팀원의 TodoItem 전부 삭제
 
-| method | uri |
-|---|---|
-|DELETE|/api/teams/${teamId}/members/${memberId}/items/|
-
+| method | uri                                             |
+| ------ | ----------------------------------------------- |
+| DELETE | /api/teams/${teamId}/members/${memberId}/items/ |
 
 ```javascript
 {
- response: {}
+  response: {
+  }
 }
 ```
 
 <br/>
 
 # ☕️ 코드리뷰 모임 - Black Coffee
+
 <br/>
 
 > '훌륭한 의사소통은 블랙커피처럼 자극적이며, 후에 잠들기가 어렵다'. <br> A.M. 린드버그(미국의 작가, 수필가) -
 
 <br/>
 
-블랙커피처럼 서로를 자극해주고, 동기부여 해주며, 그 성장과정으로 인해 의미있는 가치를 만들어내고자 하는   
+블랙커피처럼 서로를 자극해주고, 동기부여 해주며, 그 성장과정으로 인해 의미있는 가치를 만들어내고자 하는  
 **프론트엔드 코드리뷰 모임** ☕️ **Black Coffee**입니다.
 
 <br/>
@@ -289,7 +292,6 @@ live-server 폴더명
 
 <br/>
 
-
 ## 👏🏼 Contributing
 
 만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
@@ -305,5 +307,3 @@ live-server 폴더명
 ## 📝 License
 
 This project is [MIT](https://github.com/next-step/js-todo-list-step3/blob/main/LICENSE) licensed.
-
-
