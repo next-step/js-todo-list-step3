@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="kr">
-  <head>
-    <title>Mission 3 Todo List For Team</title>
-    <meta charset="utf-8" />
-    <link href="./src/css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="app">
-      <h1 id="user-title">
-        <span><strong>Team</strong>'s Todo Lists</span>
+
+<head>
+  <title>Mission 3 Todo List For Team</title>
+  <meta charset="utf-8" />
+  <link href="./src/css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="team-view" style="display: block;">
+      <h1 id="user-title team-title">
+        <span><strong>All teams</strong>'s Todo Lists</span>
       </h1>
-      <div class="team-list-container">
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Team A
-            </div>
-          </a>
-        </div>
-        <div class="team-card-container">
-          <a href="/kanban.html" class="card">
-            <div class="card-title">
-              Team B
-            </div>
-          </a>
-        </div>
-        <div class="add-team-button-container">
-          <button id="add-team-button" class="ripple">
-            <span class="material-icons">add</span>
-          </button>
-        </div>
-      </div>
+      <div class="team-list-container"></div>
     </div>
-    <script src="src/js/team.js"></script>
-  </body>
+    <div class="kanban-view" style="display: none;">
+      <h1 id="user-title" data-username="eastjun">
+        <span><strong>Team</strong>'s Todo List</span>
+      </h1>
+      <ul class="todoapp-list-container flex-column-container"></ul>
+    </div>
+  </div>
+  <script type="module" src="./index.js"></script>
+</body>
+
 </html>
