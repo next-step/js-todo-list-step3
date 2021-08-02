@@ -10,7 +10,6 @@ export class TodoList extends Observer{
         this.filterState = filterState;
         const target = $("#user-title");
         this.teamID = target.dataset.id ;
-        //console.log(this.teamID);
     }
     
      template(){      
@@ -40,7 +39,6 @@ export class TodoList extends Observer{
                 return sortedArr;
             }
         })();
-       console.log(filteredList);
 
         return `${filteredList.map(item =>`                
             <li class=${item.isCompleted?"completed":""}>

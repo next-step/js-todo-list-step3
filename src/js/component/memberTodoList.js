@@ -11,11 +11,9 @@ import { TodoList } from "./todoList/TodoList.js";
 
 export default class MemberTodoList{
   constructor(initData){ 
-    //console.log("MemberTodoList");
     this.filterState = new FilterState();
     this.todolistState = new TodoListState(initData._id);
     this.initData = initData;
-    console.log(this.initData);
     this.init();
   }
 

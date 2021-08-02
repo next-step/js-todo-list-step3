@@ -27,7 +27,7 @@ export class TodoInput {
             const teamID= $('#user-title').dataset.id;
             const contents = {"contents":e.target.value};
             await memberAPI.postMemberTodo(teamID,memberId,contents);
-            //(id, {"contents":value});
+            
             const data = await memberAPI.getMemberTodoList(teamID, memberId);
             this.todolistState.setTodo(data.todoList);
             e.target.value = "";
