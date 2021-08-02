@@ -1,79 +1,67 @@
-import { $ } from "../../utils/selectors.js";
-import Component from "../../core/Component.js";
-import TodoInput from "../../components/TodoInput/index.js";
-import TodoItem from "../../components/TodoItem/index.js";
-import { buildNewState } from "./helpers.js";
+import Store from '../../store/index.js'
+import Component from '../../core/Component.js'
+import TodoInput from '../../components/TodoInput/index.js'
+import TodoItem from '../../components/TodoItem/index.js'
+import { buildNewState } from './helpers.js'
+import TodoTotal from '../../components/TodoTotal/index.js'
 export default class TodoList extends Component {
   constructor(app, props) {
-    super();
-    this.app = app;
-    this.props = props;
-    this.state = { member: props.member, teamId: props.teamId };
-    this.init();
+    super(app, props)
+    this.store = new Store()
+    this.state = {
+      member: props.member,
+      teamId: props.teamId,
+      filter: 'all',
+    }
+    this.init()
   }
 
   init = () => {
-    this.TodoItem = new TodoItem(`#${this.state.member._id}`, {
+    this.TodoItem = new TodoItem(`#todo-item-${this.state.member._id}`, {
       getState: this.getState,
-    });
+      setState: this.setState,
+    })
     this.TodoInput = new TodoInput(`#todoapp-${this.state.member._id}`, {
       getState: this.getState,
       setState: this.setState,
-    });
-  };
-  getState = () => {
-    return this.state;
-  };
-  setState = (message) => {
-    console.log("this.state: ", this.state);
-    this.state = buildNewState(this.state, message);
-    console.log("this.newState: ", this.state);
-    this.render();
-    this.mount();
-  };
-  mount() {
-    this.TodoItem.mount();
-    this.TodoInput.mount();
+    })
+    this.TodoTotal = new TodoTotal(`#count-${this.state.member._id}`, {
+      getState: this.getState,
+      setState: this.setState,
+    })
+    this.store.registerObserver(this.TodoItem, this.TodoInput, this.TodoTotal)
   }
-  //#todoapp-list
-  render = () => {
-    $(this.app).innerHTML = this.template();
-  };
-  template() {
-    const {
-      member: { name, _id },
-    } = this.state;
+  getState = () => {
+    return this.state
+  }
+  setState = (message) => {
+    this.state = buildNewState(this.state, message)
+    this.store.notifyObservers('RENDER')
+  }
+  mount = () => {
+    this.store.notifyObservers('MOUNT')
+  }
+  template = () => {
+    //prettier-ignore
+    const { member: { name, _id }} = this.state
     return `<li class="todoapp-container">
     <h2>
       <span><strong>${name}</strong>'s Todo List</span>
     </h2>
-    <div id="todoapp-${_id}"class="todoapp">
+    <div class="todoapp">
+      <section id="todoapp-${_id}" class="input-container">
       ${this.TodoInput.template()}
+      </section>
       <section class="main">
-        <ul id="${_id}" class="todo-list">
+        <ul id="todo-item-${_id}" class="todo-list">
             ${this.TodoItem.template()}
         </ul>
       </section>
-      <div class="count-container">
-        <span class="todo-count">총 <strong>0</strong> 개</span>
-        <ul class="filters">
-          <li>
-            <a href="#all" class="selected">전체보기</a>
-          </li>
-          <li>
-            <a href="#priority">우선 순위</a>
-          </li>
-          <li>
-            <a href="#active">해야할 일</a>
-          </li>
-          <li>
-            <a href="#completed">완료한 일</a>
-          </li>
-        </ul>
-        <button class="clear-completed">모두 삭제</button>
+      <div id="count-${_id}" class="count-container">
+        ${this.TodoTotal.template()}
       </div>
     </div>
   </li>
-`;
+`
   }
 }

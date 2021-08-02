@@ -6,9 +6,6 @@ export default class TodoInput extends Component {
   constructor(app, props) {
     super(app, props)
   }
-  template = () => {
-    return `<input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />`
-  }
   mount = () => {
     $(this.app).addEventListener('keypress', async (e) => {
       if (e.code === 'Enter') {
@@ -23,5 +20,10 @@ export default class TodoInput extends Component {
         }
       }
     })
+  }
+  template = () => {
+    return `<section class="input-container">
+        <input class="new-todo" placeholder="할 일을 입력해주세요." autofocus />
+      </section>`
   }
 }

@@ -1,3 +1,3 @@
-import App from "./pages/index.js";
+import App from './pages/index.js'
 
-new App();
+new App()
