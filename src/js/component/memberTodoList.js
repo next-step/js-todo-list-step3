@@ -33,7 +33,7 @@ export default class MemberTodoList{
     this.todolistState.subscribe(this.todoFilter);
 
     // 초기데이터
-    this.todolistState.setList(this.initData.todoList);
+    this.todolistState.setTodo(this.initData.todoList);
 
   }
 }

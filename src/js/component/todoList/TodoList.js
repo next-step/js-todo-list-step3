@@ -8,16 +8,16 @@ export class TodoList extends Observer{
         super();
         this.todolistState = todolistState;
         this.filterState = filterState;
-        this.memberId = this.todolistState.memberID;
-        console.log(this.memberId);
-        console.log(this.todolistState);
+        const target = $("#user-title");
+        this.teamID = target.dataset.id ;
+        //console.log(this.teamID);
     }
     
      template(){      
-        const todoList =  this.todolistState.getList();
-        //const memberId = this.todolistState._id;
+        const todoList =  this.todolistState.getTodo();
         const filteredList = (() =>{
             const mode = this.filterState.get();
+            console.log(mode);
             if(mode=='all'){
                 return todoList;
             }
@@ -28,16 +28,15 @@ export class TodoList extends Observer{
                 return todoList.filter(item => item.isCompleted)
             }
         })();
-        return `
-            ${filteredList.map(item =>`                
-            <li class="todo-list-item ${item.isCompleted?"completed":""}">
+       console.log(filteredList);
+
+        return `${filteredList.map(item =>`                
+            <li class=${item.isCompleted?"completed":""}>
             <div class="view">
               <input id="${item._id}" class="toggle" type="checkbox" ${item.isCompleted?"checked":""} />
               <label id="${item._id}" class="label">
-                <div class="chip-container">
-                    ${this.getRanking(item.priority)}
-                </div>
-                 ${item.contents}
+                ${this.getRanking(item.priority)}
+                ${item.contents}
               </label>
               <button id="${item._id}" class="destroy"></button>
             </div>
@@ -48,8 +47,7 @@ export class TodoList extends Observer{
     }
      
     render(){
-        const _selector = "#todo-list-"+this.memberId;
-        const target = $(_selector);
+        const target = document.getElementById(this.todolistState.getMemberID());
         target.innerHTML = this.template();
         this.mounted();
     }
@@ -85,30 +83,33 @@ export class TodoList extends Observer{
         e.target.parentNode.parentNode.classList.add('editing');
     }
     async onSelectPriority(e){
-        e.stopPropagation();
-        const selectedPriroty = e.target.value;
+        //e.stopPropagation();
+        const selectedPriroty = {'priority' : e.target.value};
         if(selectedPriroty == PRIORITY.NONE) return;
-
-        const itemId = e.target.parentNode.id;
-        const userId = this.selectedUserState.get()._id;
+        //console.log(e.target.parentNode.parentNode)
+        const itemId = e.target.parentNode.parentNode.id;
+        const memberId = this.todolistState.getMemberID();
         
-        const response = await todoAPI.updateTodoPriority(userId, itemId, {"priority": selectedPriroty});
+        const response = await memberAPI.putTodoPriority(this.teamID, memberId,itemId, selectedPriroty);
+        
         if(response.ok){
-            const data = await userAPI.getUser(userId);
-            this.selectedUserState.set(data);
+            const data = await memberAPI.getMemberTodoList(this.teamID, memberId);
+           // this.todolistState.setTodo(data.todoList);
         }
     }
 
     async onEditKey(e){
         e.stopPropagation();
         if (e.key == 'Enter') {
-           const userId = this.selectedUserState.get()._id;
+           e.stopPropagation();
+           const memberId = this.todolistState.getMemberID();
            const itemId = e.target.id;
-           const newItem = e.target.value;
-           const response = await todoAPI.updateTodoItem(userId, itemId, {"contents": newItem});
+           const newItem = {'contents': e.target.value};
+           const response = await memberAPI.putMemberUpdateTodo(this.teamID, memberId,itemId, newItem)
+           //(userId, itemId, {"contents": newItem});
             if(response.ok){
-                const data = await userAPI.getUser(userId);
-                this.selectedUserState.set(data);
+                const data = await memberAPI.getMemberTodoList(this.teamID, memberId);
+                this.todolistState.setTodo(data.todoList);
            }
         }
         if (e.key == 'Escape') {
@@ -118,51 +119,58 @@ export class TodoList extends Observer{
 
 
     async onToggleTodo(e){
+        const memberId = this.todolistState.getMemberID();
         const itemId = e.target.id;
-        const userId = this.selectedUserState.get()._id;
-        await todoAPI.toggleTodoItem(userId, itemId);
-        const data = await userAPI.getUser(userId);
-        this.selectedUserState.set(data);
+
+        await memberAPI.putMemberToggleTodo(this.teamID, memberId,itemId);
+        const data = await memberAPI.getMemberTodoList(this.teamID, memberId);
+        this.todolistState.setTodo(data.todoList);
     }
 
     async onDeleteTodo(e){
+        const memberId = this.todolistState.getMemberID();
         const itemId = e.target.id;
-        const userId = this.selectedUserState.get()._id;
-        const response = await todoAPI.deleteTodoItem(userId, itemId);
+        const response = await memberAPI.deleteMemberTodo(this.teamID, memberId,itemId);
         if(response.ok){
-            const data = await userAPI.getUser(userId);
-            this.selectedUserState.set(data);
+            const data = await memberAPI.getMemberTodoList(this.teamID, memberId);
+            this.todolistState.setTodo(data.todoList);
         }
     }
 
     getRanking(priority){
         if(priority==PRIORITY.FIRST){
             return `
-            <span class="chip primary">1순위</span>
-            <select class="chip select hidden">
+            <div class="chip-container">
+              <span class="chip primary">1순위</span>
+              <select class="chip select hidden">
                 <option value="0" selected>순위</option>
                 <option value="1">1순위</option>
                 <option value="2">2순위</option>
-            </select>
+              </select>
+            </div>
             `
         }
         if(priority==PRIORITY.SECOND){
             return `
-            <span class="chip secondary">2순위</span>
-            <select class="chip select hidden">
+            <div class="chip-container">
+              <span class="chip primary">2순위</span>
+              <select class="chip select hidden">
                 <option value="0" selected>순위</option>
                 <option value="1">1순위</option>
                 <option value="2">2순위</option>
-            </select>
+              </select>
+            </div>
             `
         }
         if(priority==PRIORITY.NONE){
             return `
-            <select  class="chip select">
-                  <option value="NONE" selected>순위</option>
-                  <option value="FIRST">1순위</option>
-                  <option value="SECOND">2순위</option>
-            </select>
+            <div class="chip-container">
+                <select  class="chip select">
+                    <option value="NONE" selected>순위</option>
+                    <option value="FIRST">1순위</option>
+                    <option value="SECOND">2순위</option>
+                </select>   
+            </div>
             `
         }
     }

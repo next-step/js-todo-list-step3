@@ -1,16 +1,13 @@
 import { $ } from "../util/util.js";
 
-export default class Title{
-   constructor(prop){
-       this.teamName = prop;
-       console.log(prop)
-        this.render();
+export class Title{
+   constructor(teamName){
+       this.title = teamName;
+       this.render();
    }  
    template(){
-        const name = this.teamName;
-        console.log(name)
         return `
-        <span><strong>${name}</strong>'s Todo List</span>
+        <span><strong>${this.title}</strong>'s Todo List</span>
         `
    }
    render(){

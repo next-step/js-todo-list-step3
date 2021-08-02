@@ -4,16 +4,18 @@ export default class TodoListState extends subject {
     constructor(memberID){
         super();
         this.memberID = memberID;
+        console.log(memberID)
+        console.log(this.memberID);
         this.todoList = [];
     }
-    getList(){
+    getTodo(){
         return this.todoList;
-    } 
-    setList(updateList){
+    }
+    setTodo(updateList){
         this.todoList = updateList;
         this.publish();
     }
-    getMemberId(){
+    getMemberID(){
         return this.memberID;
     }
 }

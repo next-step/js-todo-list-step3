@@ -23,7 +23,7 @@ export const memberAPI = {
     return await fetch(`${BASE_URL}/${teamId}/members/${memberId}`).then(data=>data.json());
   },
   async postMemberTodo(teamId,memberId,contents){
-    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}`,HTTP_REQUEST.POST(contents));
+    return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items`,HTTP_REQUEST.POST(contents));
   },
   async deleteMemberTodo(teamId, memberId,itemId){
     return await fetch(`${BASE_URL}/${teamId}/members/${memberId}/items/${itemId}`,HTTP_REQUEST.DELETE());
